@@ -23,6 +23,14 @@ GNU General Public License Version 3
     * Version information (m\_version.f90)
 
 * Subroutines
+    * Warning and error messages (s\_error.f90)
+    * Fourier transformation (s\_fourier.f90)
+    * Special functions (s\_function.f90)
+    * Numerical integrl (s\_integrator.f90)
+    * Matrix computation (s\_matrix.f90)
+    * Spline interpolation (s\_spline.f90)
+    * Some auxiliary subroutines, such as sorting algorithm (s\_util.f90)
+    * Vector computation (s\_vector.90)
 
 ## Installation
 
