@@ -18,7 +18,7 @@
 ## 2. quick build
 ## --------------
 ##
-## 'make' or 'make flink'
+## 'make flink'
 ##
 ## 3. clean the directories
 ## ------------------------
@@ -40,23 +40,21 @@
 ##
 ##
 
-# targets for help
+# target for help
 help:
 	@echo '  Interacting Quantum Impurity Solver Toolkit Building System'
 	@echo
 	@echo
 	@echo '  targets:'
 	@echo '     help              print short usage information         '
-	@echo '     help-more         print full usage information          '
 	@echo
-	@echo '     all               build all components and tools        '
+	@echo '     flink             build all components and tools        '
 	@echo '     clean             clean all directories                 '
-	@echo
-	@echo '     solver            build impurity solver components      '
-	@echo '     clean-solver      clean objects for impurity solvers    '
-	@echo
-	@echo '     tool              build auxiliary tool components       '
-	@echo '     clean-tool        clean objects for auxiliary tools     '
 
-# all-in-one building target
-all: base solver tool
+# target for making flink
+flink:
+	@echo 'make flink'
+
+# target for cleaning flink
+clean:
+	@echo 'clean flink'
