@@ -13,6 +13,15 @@ GNU General Public License Version 3
 ## Features
 
 * Modules
+    * Physical and numerical constants (m\_constants.f90)
+    * Linked list (m\_linkedlist.f90)
+    * Message passing interface (m\_mpi.f90)
+    * Sparse matrix (m\_sparse.f90)
+    * Configuration file (m\_parser.f90)
+    * Pseudo random number generator (m\_spring.f90)
+    * Stack (m\_stack.f90)
+    * Version information (m\_version.f90)
+
 * Subroutines
 
 ## Installation
