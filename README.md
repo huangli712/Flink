@@ -17,6 +17,12 @@ GNU General Public License Version 3
 
 ## Installation
 
+```sh
+$ cd flink/build
+$ editor make.sys
+$ make
+```
+
 ## Documentation
 
 See the comments in the source codes.
