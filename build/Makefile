@@ -10,17 +10,12 @@
 ## Usage
 ## =====
 ##
-## 1. get help
-## -----------
-##
-## 'make help'
-##
-## 2. quick build
+## 1. quick build
 ## --------------
 ##
-## 'make flink'
+## 'make' or 'make flink'
 ##
-## 3. clean the directories
+## 2. clean the directories
 ## ------------------------
 ##
 ## 'make clean'
@@ -40,21 +35,10 @@
 ##
 ##
 
-# target for help
-help:
-	@echo '  Interacting Quantum Impurity Solver Toolkit Building System'
-	@echo
-	@echo
-	@echo '  targets:'
-	@echo '     help              print short usage information         '
-	@echo
-	@echo '     flink             build all components and tools        '
-	@echo '     clean             clean all directories                 '
-
-# target for making flink
+# target for building flink
 flink:
-	@echo 'make flink'
+	@echo 'building flink'
 
 # target for cleaning flink
 clean:
-	@echo 'clean flink'
+	@echo 'cleaning flink'
