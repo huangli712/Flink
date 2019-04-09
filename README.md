@@ -12,15 +12,29 @@ GNU General Public License Version 3
 
 ## Features
 
-* modules
-* subroutines
+* Modules
+* Subroutines
 
 ## Installation
 
 ## Documentation
 
+See the comments in the source codes.
+
 ## Development
+
+The FLINK software package is developed and maintained by the FLINK Developer Team.
+
+Find a bug? Want to contribute? Want new features? Great! Please contact with us as soon as possible.
 
 ## Reference
 
+N/A
+
 ## Contact
+
+```sh
+Li Huang
+Institute of Materials, China Academy of Engineering Physics, Sichuan Jiangyou, PRC
+email: lihuang.dmft at gmail.com
+```
