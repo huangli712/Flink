@@ -1,5 +1,5 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSSL (Common Service Subroutines Library)
+!!! project : flink @ sakura
 !!! program : s_leg_basis
 !!!           s_che_basis
 !!!           s_svd_basis
@@ -13,7 +13,7 @@
 !!! type    : subroutines & functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           08/17/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : these subroutines are used to generate some auxiliary
 !!!           functions, such as the Legendre orthogonal polynomial and
 !!!           Chebyshev orthogonal polynomial, Bessel function, etc.
