@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura
 !!! program : sparse
 !!! source  : m_sparse.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 02/01/2010 by li huang (created)
-!!!           04/19/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
