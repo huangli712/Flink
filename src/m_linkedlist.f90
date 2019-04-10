@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura
 !!! program : linkedlist
 !!! source  : m_linkedlist.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/10/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : this purpose of this module is to implement a typical and
 !!!           useful data structure --- linked list. it is a generic
 !!!           linked list, capable of storing arbitrary data.
