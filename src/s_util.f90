@@ -1,5 +1,5 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSSL (Common Service Subroutines Library)
+!!! project : flink @ sakura
 !!! program : s_assert
 !!!           s_assert2
 !!!           s_sorter
@@ -17,7 +17,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           05/31/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful facilities
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
