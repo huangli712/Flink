@@ -38,7 +38,7 @@
 # target for building flink
 flink:
 	@echo 'building flink'
-	cd ../src; pwd
+	cd ../src; pwd; make
 
 # target for cleaning flink
 clean:
