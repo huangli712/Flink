@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura 
 !!! program : constants
 !!! source  : m_constants.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/15/2009 by li huang (created)
-!!!           05/31/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : this module is to provide the definition of some (selected)
 !!!           numerical and physical constants.
 !!! status  : stable
