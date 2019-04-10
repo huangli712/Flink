@@ -35,10 +35,10 @@ objects = $(csml) $(cssl)
 
 default: all
 
-all: build-lib
+all: lib
 
-build-lib: $(objects)
-	$(ARCHIVER) libMM.a $(objects)
+lib: $(objects)
+	$(ARCHIVER) libflink.a $(objects)
 
 .f90.o:
 	$(F90) $(FFLAGS) $*.f90
@@ -46,7 +46,7 @@ build-lib: $(objects)
 clean:
 	rm -f *.mod
 	rm -f *.o
-	rm -f libMM.a
+	rm -f libflink.a
 
 clean-dat:
 	rm -f *.dat
