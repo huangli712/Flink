@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura
 !!! program : stack
 !!! source  : m_stack.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/14/2009 by li huang (created)
-!!!           04/19/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define a stack-type (LIFO)
 !!!           data structure in fortran version.
 !!! status  : unstable
