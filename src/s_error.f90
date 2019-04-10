@@ -1,5 +1,5 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSSL (Common Service Subroutines Library)
+!!! project : flink @ sakura
 !!! program : s_print_error
 !!!           s_write_error
 !!!           s_print_exception
@@ -10,7 +10,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/15/2009 by li huang (created)
-!!!           04/19/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : these subroutines are used to display the (error/exception/
 !!!           normal) messages in the console, and then STOP or CONTINUE
 !!!           the code according to the error level.
