@@ -1,5 +1,5 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSSL (Common Service Subroutines Library)
+!!! project : flink @ sakura
 !!! program : s_fft_tails
 !!!           s_fft_forward
 !!!           s_fft_backward
@@ -7,7 +7,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           05/31/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : these subroutines are used to do fast fourier transformation
 !!!           for green's or hybridization functions.
 !!! status  : unstable
