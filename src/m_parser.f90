@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura
 !!! program : parser
 !!! source  : m_parser.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           05/12/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement a generic and
 !!!           flexible config/input file reader and analyzer.
 !!! status  : unstable
