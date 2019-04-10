@@ -1,11 +1,11 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSML (Common Service Modules Library)
+!!! project : flink @ sakura
 !!! program : spring
 !!! source  : m_spring.f90
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/03/2008 by li huang (created)
-!!!           04/19/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define several modern, fast
 !!!           highly reliable, ease-to-use, and state-of-the-art pseudo-
 !!!           random number generators, which are essential in massively
