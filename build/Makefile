@@ -31,14 +31,16 @@
 ## =======
 ##
 ## 04/09/2019 by li huang (created)
-## 04/09/2019 by li huang (last modified)
+## 04/10/2019 by li huang (last modified)
 ##
 ##
 
 # target for building flink
 flink:
 	@echo 'building flink'
+	cd ../src; pwd
 
 # target for cleaning flink
 clean:
 	@echo 'cleaning flink'
+	cd ../src; pwd; make clean
