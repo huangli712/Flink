@@ -1,12 +1,12 @@
 !!!-----------------------------------------------------------------------
-!!! project : CSSL (Common Service Subroutines Library)
+!!! project : flink @ sakura
 !!! program : s_int_trapezoid
 !!!           s_int_simpson
 !!! source  : s_integrator.f90
 !!! type    : functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/20/2014 by li huang (created)
-!!!           05/31/2017 by li huang (last modified)
+!!!           04/10/2019 by li huang (last modified)
 !!! purpose : these functions are used to do numerical integration with
 !!!           composite trapezoid or composite simpson algorithms.
 !!! status  : unstable
