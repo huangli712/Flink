@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/26/2017 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           04/11/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define version strings.
 !!! status  : unstable
 !!! comment :
@@ -36,14 +36,14 @@
 !!
 !! version string, version number + date info. + status info.
 !!
-     character(len=20), public, parameter :: V_FULL = 'v0.7.0 @ 2019.04.10D'
+     character(len=20), public, parameter :: V_FULL = 'v0.8.0 @ 2019.04.10D'
 
 !!
 !! @var V_CURR
 !!
 !! version string, only version number
 !!
-     character(len=06), public, parameter :: V_CURR = 'v0.7.0'
+     character(len=06), public, parameter :: V_CURR = 'v0.8.0'
 
 !!
 !! @var V_DATE
