@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/26/2017 by li huang (created)
-!!!           04/11/2019 by li huang (last modified)
+!!!           04/12/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define version strings.
 !!! status  : unstable
 !!! comment :
@@ -16,15 +16,21 @@
 !! Introduction
 !! ============
 !!
-!! It is a common module which defines the current version of iQIST.
+!! It is a common module which defines the current version of iQIST (and
+!! the other numerical applications).
+!!
+!! List of suffixes:
+!!    _IQ => iQIST
+!!    _FL => FLINK
+!!    _DF => DFAPP
 !!
 !! Usage
 !! =====
 !!
-!! use version, only : V_FULL
+!! use version, only : V_FULL_IQ
 !! implicit none
 !!
-!! print *, V_FULL
+!! print *, V_FULL_IQ
 !!
 !!
 
