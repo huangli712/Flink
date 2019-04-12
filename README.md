@@ -4,7 +4,7 @@ The FLINK project is a collection of some useful fortran modules and subroutines
 
 ## Version
 
-v0.8.0 (devel)
+v0.1.1 (devel)
 
 ## License
 
