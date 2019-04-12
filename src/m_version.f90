@@ -87,13 +87,17 @@
 !!
 !! version string, email info.
 !!
-     character(len=22), public, parameter :: V_MAIL = 'lihuang.dmft@gmail.com'
+     character(len=22), public, parameter :: V_MAIL_IQ = 'lihuang.dmft@gmail.com'
+     character(len=22), public, parameter :: V_MAIL_FL = 'lihuang.dmft@gmail.com'
+     character(len=22), public, parameter :: V_MAIL_DF = 'lihuang.dmft@gmail.com'
 
 !!
 !! @var V_GPL3
 !!
 !! version string, license info.
 !!
-     character(len=36), public, parameter :: V_GPL3 = 'GNU General Public License version 3'
+     character(len=36), public, parameter :: V_GPL3_IQ = 'GNU General Public License version 3'
+     character(len=36), public, parameter :: V_GPL3_FL = 'GNU General Public License version 3'
+     character(len=36), public, parameter :: V_GPL3_DF = 'GNU General Public License version 3'
 
   end module version
