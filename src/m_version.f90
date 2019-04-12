@@ -44,35 +44,43 @@
 !!
      character(len=20), public, parameter :: V_FULL_IQ = 'v0.8.0 @ 2019.04.10D'
      character(len=20), public, parameter :: V_FULL_FL = 'v0.1.1 @ 2019.04.12D'
-     character(len=20), public, parameter :: V_FULL_DF = 'v0.0.1 @ 2019.04.11D'
+     character(len=20), public, parameter :: V_FULL_DF = 'v0.0.1 @ 2019.04.12D'
 
 !!
 !! @var V_CURR
 !!
 !! version string, only version number
 !!
-     character(len=06), public, parameter :: V_CURR = 'v0.8.0'
+     character(len=06), public, parameter :: V_CURR_IQ = 'v0.8.0'
+     character(len=06), public, parameter :: V_CURR_FL = 'v0.1.1'
+     character(len=06), public, parameter :: V_CURR_DF = 'v0.0.1'
 
 !!
 !! @var V_DATE
 !!
 !! version string, only date info.
 !!
-     character(len=11), public, parameter :: V_DATE = '2019.04.10'
+     character(len=11), public, parameter :: V_DATE_IQ = '2019.04.10'
+     character(len=11), public, parameter :: V_DATE_FL = '2019.04.12'
+     character(len=11), public, parameter :: V_DATE_DF = '2019.04.12'
 
 !!
 !! @var V_STAT
 !!
 !! version string, only status info., D means devel, T testing, R released.
 !!
-     character(len=01), public, parameter :: V_STAT = 'D'
+     character(len=01), public, parameter :: V_STAT_IQ = 'D'
+     character(len=01), public, parameter :: V_STAT_FL = 'D'
+     character(len=01), public, parameter :: V_STAT_DF = 'D'
 
 !!
 !! @var V_AUTH
 !!
 !! version string, author info.
 !!
-     character(len=46), public, parameter :: V_AUTH = 'by li huang (China Academy of Engineering Physics)'
+     character(len=46), public, parameter :: V_AUTH_IQ = 'by li huang (China Academy of Engineering Physics)'
+     character(len=46), public, parameter :: V_AUTH_FL = 'by li huang (China Academy of Engineering Physics)'
+     character(len=46), public, parameter :: V_AUTH_DF = 'by li huang (China Academy of Engineering Physics)'
 
 !!
 !! @var V_MAIL
