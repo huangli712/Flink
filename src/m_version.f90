@@ -42,7 +42,9 @@
 !!
 !! version string, version number + date info. + status info.
 !!
-     character(len=20), public, parameter :: V_FULL = 'v0.8.0 @ 2019.04.10D'
+     character(len=20), public, parameter :: V_FULL_IQ = 'v0.8.0 @ 2019.04.10D'
+     character(len=20), public, parameter :: V_FULL_FL = 'v0.1.1 @ 2019.04.12D'
+     character(len=20), public, parameter :: V_FULL_DF = 'v0.0.1 @ 2019.04.11D'
 
 !!
 !! @var V_CURR
