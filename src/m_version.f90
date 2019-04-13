@@ -78,9 +78,9 @@
 !!
 !! version string, author info.
 !!
-     character(len=46), public, parameter :: V_AUTH_IQ = 'by li huang (China Academy of Engineering Physics)'
-     character(len=46), public, parameter :: V_AUTH_FL = 'by li huang (China Academy of Engineering Physics)'
-     character(len=46), public, parameter :: V_AUTH_DF = 'by li huang (China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_AUTH_IQ = 'by li huang (China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_AUTH_FL = 'by li huang (China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_AUTH_DF = 'by li huang (China Academy of Engineering Physics)'
 
 !!
 !! @var V_MAIL
