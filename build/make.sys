@@ -37,7 +37,7 @@
 
 # Fortran compiler, linker, and archiver
 #-------------------------------------------------------------------------
-F90    = mpifort
+F90    = /opt/local/mpich/bin/mpif90
 LINKER = $(F90)
 ARCHIVER = ar -ruv
 
