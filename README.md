@@ -1,4 +1,4 @@
-# FLINK
+# FLINK (General Purpose Fortran Modules and Subroutines)
 
 The FLINK library is a collection of some useful fortran modules and subroutines, which are widely used in the other (home-made) numerical programs. 
 

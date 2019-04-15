@@ -1,4 +1,4 @@
-# FLINK
+# FLINK (General Purpose Fortran Modules and Subroutines)
 
 ## v0.1.1 @         // Apr 12, 2019
 
