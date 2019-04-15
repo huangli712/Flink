@@ -1,6 +1,6 @@
 # FLINK
 
-The FLINK project is a collection of some useful fortran modules and subroutines, which are widely used in the other numerical programs. 
+The FLINK library is a collection of some useful fortran modules and subroutines, which are widely used in the other (home-made) numerical programs. 
 
 ## Version
 
@@ -46,7 +46,7 @@ See the comments in the source codes.
 
 ## Development
 
-The FLINK software package is developed and maintained by the FLINK Developer Team.
+The FLINK library is developed and maintained by the FLINK Developer Team.
 
 Find a bug? Want to contribute? Want new features? Great! Please contact with us as soon as possible.
 
