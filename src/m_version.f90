@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/26/2017 by li huang (created)
-!!!           04/12/2019 by li huang (last modified)
+!!!           04/15/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define version strings.
 !!! status  : unstable
 !!! comment :
@@ -78,9 +78,18 @@
 !!
 !! version string, author info.
 !!
-     character(len=50), public, parameter :: V_AUTH_IQ = 'by li huang (China Academy of Engineering Physics)'
-     character(len=50), public, parameter :: V_AUTH_FL = 'by li huang (China Academy of Engineering Physics)'
-     character(len=50), public, parameter :: V_AUTH_DF = 'by li huang (China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_AUTH_IQ = 'by li huang'
+     character(len=50), public, parameter :: V_AUTH_FL = 'by li huang'
+     character(len=50), public, parameter :: V_AUTH_DF = 'by li huang'
+
+!!
+!! @var V_INST
+!!
+!! version string, affiliation info.
+!!
+     character(len=50), public, parameter :: V_INST_IQ = '(China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_INST_FL = '(China Academy of Engineering Physics)'
+     character(len=50), public, parameter :: V_INST_DF = '(China Academy of Engineering Physics)'
 
 !!
 !! @var V_MAIL
