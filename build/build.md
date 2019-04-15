@@ -1,4 +1,4 @@
-# FLINK
+# FLINK (General Purpose Fortran Modules and Subroutines)
 
 ## Introduction
 
