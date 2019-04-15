@@ -14,4 +14,6 @@
 *.dSYM
 .DS_Store
 fort.*
+atom.cix
+test.py
 test.f90
