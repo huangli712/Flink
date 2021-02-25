@@ -1,10 +1,10 @@
-# FLINK (General Purpose Fortran Modules and Subroutines)
+# FLINK
 
-The FLINK library is a collection of some useful fortran modules and subroutines, which are widely used in the other (home-made) numerical programs. 
+The FLINK library is a collection of some useful fortran modules and subroutines for scientific computing.
 
 ## Version
 
-v0.1.1 (devel)
+v0.1.2 (devel)
 
 ## License
 
@@ -20,6 +20,7 @@ GNU General Public License Version 3
     * Configuration file (m\_parser.f90)
     * Pseudo random number generator (m\_spring.f90)
     * Stack (m\_stack.f90)
+    * Analytical tetrahedron method (m\_tetra.f90)
     * Version information (m\_version.f90)
 
 * Subroutines
