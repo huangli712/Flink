@@ -1,6 +1,6 @@
 # FLINK
 
-The FLINK library is a collection of some useful fortran modules and subroutines for scientific computing.
+The FLINK library is a collection of fortran modules and subroutines for scientific computing.
 
 ## Version
 
@@ -40,7 +40,7 @@ $ cd flink/build
 $ editor make.sys
 $ make
 ```
-Once the compilation is finished, we can see **libflink.a** and a lot of ***.mod files** under the **flink/src** directory. 
+Once the compilation is finished, we can see **libflink.a** and a lot of ***.mod files** under the **flink/src** directory. Then we need to link them with our executable programs manually.
 
 ## Documentation
 
