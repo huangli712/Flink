@@ -1,5 +1,3 @@
-# FLINK
-
 ## Introduction
 
 The make.sys file is the key component of the building system. You have to modify it to fulfill your requirements. If it is not configured correctly, the building system won't work correctly as well. So in the following we would like to provide a detailed explanations for it.
@@ -34,7 +32,7 @@ Though it is not mandatory, we still strongly recommend to update the above soft
 
 ### F90
 
-The Fortran compiler. Both the parallel and sequential fortran compilers are supported. Note that only the Intel fortran compiler was extensively tested. And we recommend to use the very latest version of Intel fortran compiler (i.e, Intel Parallel Studio 2017).
+The Fortran compiler. Both the parallel and sequential fortran compilers are supported. Note that only the Intel fortran compiler was extensively tested. And we recommend to use the very latest version of Intel fortran compiler (i.e, Intel Parallel Studio 2019).
 
 **Possible options**:
 
