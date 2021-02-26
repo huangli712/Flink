@@ -1,55 +1,48 @@
-!-------------------------------------------------------------------------
-! project : sirius@fantasy
-! program : mtetra
-! source  : mod_tetra.f90
-! type    : module
-! author  : G. Palsson, V. Oudovenko, K. Haule, and V. I. Poteryave
-!           adapted by li huang (email:huangli712@yahoo.com.cn)
-! history : 06/07/2006 by li huang
-!           06/11/2006 by li huang
-!           06/24/2006 by li huang
-!           06/27/2006 by li huang
-!           07/01/2006 by li huang
-!           07/03/2006 by li huang
-!           08/24/2006 by li huang
-!           01/28/2007 by li huang
-!           03/06/2009 by li huang
-!           03/24/2009 by li huang
-!           04/06/2009 by li huang
-!           04/14/2009 by li huang
-!           07/09/2009 by li huang
-!           03/12/2010 by li huang
-!           03/15/2010 by li huang
-! purpose : this module is devoted to compute the analytical integration
-!           weights for brillouin zone integration
-!
-!           in this module, five different algorithms are implemented:
-!
-!           (1) P. E. Blochl tetrahedron integration algorithm
-!               tetra_blochl_weight1()     subroutine
-!               tetra_blochl_weight2()     subroutine
-!
-!           (2) Lambin-Vigneron tetrahedron integration algorithm
-!               tetra_lambin_weight()      subroutine
-!
-!           (3) Gaussian smearing algorithm
-!               smearing_gauss_weight1()   subroutine
-!               smearing_gauss_weight2()   subroutine
-!               smearing_gauss_weight3()   subroutine
-!
-!           (4) Fermi-Dirac smearing algorithm
-!               smearing_fermi_weight1()   subroutine
-!               smearing_fermi_weight2()   subroutine
-!               smearing_fermi_weight3()   subroutine
-!
-!           (5) Marzari-Vanderbilt cold smearing algorithm
-!               smearing_marzari_weight1() subroutine
-!               smearing_marzari_weight2() subroutine
-!               smearing_marzari_weight3() subroutine
-!
-! status  : unstable
-! comment :
-!-------------------------------------------------------------------------
+!!!-----------------------------------------------------------------------
+!!! project : flink @ sakura
+!!! program : mtetra
+!!! source  : m_tetra.f90
+!!! type    : module
+!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! history : 06/07/2006 by li huang (created)
+!!!           02/26/2021 by li huang (last modified)
+!!! purpose : this module is devoted to compute the analytical integration
+!!!           weights for brillouin zone sampling.
+!!! status  : unstable
+!!! comment :
+!!!-----------------------------------------------------------------------
+
+!!
+!!
+!! Introduction
+!! ============
+!!
+!!           in this module, five different algorithms are implemented:
+!!
+!!           (1) P. E. Blochl tetrahedron integration algorithm
+!!               tetra_blochl_weight1()     subroutine
+!!               tetra_blochl_weight2()     subroutine
+!!
+!!           (2) Lambin-Vigneron tetrahedron integration algorithm
+!!               tetra_lambin_weight()      subroutine
+!!
+!!           (3) Gaussian smearing algorithm
+!!               smearing_gauss_weight1()   subroutine
+!!               smearing_gauss_weight2()   subroutine
+!!               smearing_gauss_weight3()   subroutine
+!!
+!!           (4) Fermi-Dirac smearing algorithm
+!!               smearing_fermi_weight1()   subroutine
+!!               smearing_fermi_weight2()   subroutine
+!!               smearing_fermi_weight3()   subroutine
+!!
+!!           (5) Marzari-Vanderbilt cold smearing algorithm
+!!               smearing_marzari_weight1() subroutine
+!!               smearing_marzari_weight2() subroutine
+!!               smearing_marzari_weight3() subroutine
+!!
+!!
+
 
   module mtetra
      implicit none
