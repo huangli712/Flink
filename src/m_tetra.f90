@@ -1068,19 +1068,23 @@
      return
   end subroutine tetra_lv_ek4idn
 
-!>>> this subroutine reorders four complex energies, e(i), in such a way
-! that any identical energies are in the low index array slots. there are
-! a total of 15 different possibilities that can occur and to distinguish
-! between these we set up a unique array of prime numbers and then use the
-! product of the array elements to identify which case occurs.
-!
-! note that the way we check for identical elements could in principle
-! result in more than 15 possibilities if say element 1 and 2 are close
-! within tolerance and element 2 and 3 are close within tolerance it could
-! occur that element 1 and 3 would not be counted as equal if they were
-! not within the tolerance limit. this case is identified by a negative
-! value for the flag, flg, and should be treated (as error) in the calling
-! routine.
+!!
+!! @sub tetra_lv_creorder
+!!
+!! this subroutine reorders four complex energies, e(i), in such a way
+!! that any identical energies are in the low index array slots. there are
+!! a total of 15 different possibilities that can occur and to distinguish
+!! between these we set up a unique array of prime numbers and then use the
+!! product of the array elements to identify which case occurs.
+!!
+!! note that the way we check for identical elements could in principle
+!! result in more than 15 possibilities if say element 1 and 2 are close
+!! within tolerance and element 2 and 3 are close within tolerance it could
+!! occur that element 1 and 3 would not be counted as equal if they were
+!! not within the tolerance limit. this case is identified by a negative
+!! value for the flag, flg, and should be treated (as error) in the calling
+!! routine.
+!!
   subroutine tetra_lv_creorder(e, isrt, flg)
      implicit none
 
