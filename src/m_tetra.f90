@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 06/07/2006 by li huang (created)
-!!!           02/26/2021 by li huang (last modified)
+!!!           02/27/2021 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -18,7 +18,7 @@
 !! ============
 !!
 !! In this module, two tetrahedron integration algorithms are implemented.
-!! They are
+!! They are:
 !!     (1) P. E. Blochl tetrahedron integration algorithm,
 !!     (2) Lambin-Vigneron tetrahedron integration algorithm.
 !! Note that the former is used to calculate the DFT density of states,
@@ -26,12 +26,10 @@
 !! during the DFT + DMFT calculations.
 !!
 !! Besides, we also implement three smearing algorithm, which can be used
-!! to calculate 
-!!           (3) Gaussian smearing algorithm
-!!
-!!           (4) Fermi-Dirac smearing algorithm
-!!
-!!           (5) Marzari-Vanderbilt cold smearing algorithm
+!! to calculate the DFT density of states. They are:
+!!     (1) Gaussian smearing algorithm
+!!     (2) Fermi-Dirac smearing algorithm
+!!     (3) Marzari-Vanderbilt cold smearing algorithm
 !!
 !!               tetra_blochl_weight1()     subroutine
 !!               tetra_blochl_weight2()     subroutine
