@@ -169,15 +169,20 @@
      private :: tetra_lv_prime
      private :: tetra_lv_setmap
 
-  contains
+  contains ! encapsulated functionality
 
-!=========================================================================
-!>>> Blochl algorithm, driver layer                                    <<<
-!=========================================================================
-!>>> Peter E. Blochl algorithm for (integrated) density of states and
-! relevant integration weights, Blochl corrections are taken into
-! considersions as well, implemented by myself following the equations
-! of Phys. Rev. B, 49, 16223, 1994
+!!========================================================================
+!!>>> Blochl algorithm, driver layer                                   <<<
+!!========================================================================
+
+!!
+!! @sub tetra_blochl_weight1
+!!
+!! Peter E. Blochl algorithm for (integrated) density of states and
+!! relevant integration weights. Blochl corrections are taken into
+!! considersions as well, implemented by myself following the equations
+!! of Phys. Rev. B, 49, 16223, 1994
+!!
   subroutine tetra_blochl_weight1(z, e, dos, tos)
      implicit none
 
