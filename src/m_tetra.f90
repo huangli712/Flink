@@ -847,7 +847,11 @@
      return
   end subroutine tetra_lv_ekarb
 
-!>>> evaluate integrated weights when two corner energies are identical
+!!
+!! @sub tetra_lv_ek2idn
+!!
+!! evaluate integrated weights when two corner energies are identical
+!!
   subroutine tetra_lv_ek2idn(z, e, res)
      implicit none
 
