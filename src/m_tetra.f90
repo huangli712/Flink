@@ -387,9 +387,10 @@
      return
   end subroutine tetra_blochl_weight2
 
-!=========================================================================
-!>>> Blochl algorithm, service layer                                   <<<
-!=========================================================================
+!!========================================================================
+!!>>> Blochl algorithm, service layer                                  <<<
+!!========================================================================
+
 !>>> Blochl algorithm, case 1, for fully unoccupied tetrahedron
   subroutine tetra_p_ek1()
      implicit none
