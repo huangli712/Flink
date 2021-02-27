@@ -93,12 +93,12 @@
   module mtetra
      implicit none
 
-!-------------------------------------------------------------------------
-!::: declare common parameters                                         :::
-!-------------------------------------------------------------------------
+!!========================================================================
+!!>>> declare global parameters                                        <<<
+!!========================================================================
 
 ! kind for double precision
-     integer, private, parameter :: dp    = kind(1.0d0)
+     integer, private, parameter  :: dp   = kind(1.0d0)
 
 ! well-known $\pi$
      real(dp), private, parameter :: pi   = 3.141592653589793238462643383279_dp
@@ -112,9 +112,9 @@
 ! broadening parameter for smearing algorithm
      real(dp), private, parameter :: gamm = 0.15_dp
 
-!-------------------------------------------------------------------------
-!::: declare common variables                                          :::
-!-------------------------------------------------------------------------
+!!========================================================================
+!!>>> declare common variables                                         <<<
+!!========================================================================
 
 ! blochl corrections for dweight
      real(dp), save, private :: cweight
@@ -125,9 +125,9 @@
 ! integration weights at the four corners of a given tetrahedron
      real(dp), save, private :: tweight(4)
 
-!-------------------------------------------------------------------------
-!::: declare accessibility for module routines                         :::
-!-------------------------------------------------------------------------
+!!========================================================================
+!!>>> declare accessibility for module routines                        <<<
+!!========================================================================
 
 ! Blochl algorithm for (integrated) density of states
      public  :: tetra_blochl_weight1
@@ -151,23 +151,20 @@
      public  :: smearing_marzari_weight2
      public  :: smearing_marzari_weight3
 
-! private procedures invoked by tetra_blochl_weight() subroutine
+! private procedures invoked by tetra_blochl_weightX() subroutine
      private :: tetra_p_ek1
      private :: tetra_p_ek12
      private :: tetra_p_ek23
      private :: tetra_p_ek34
      private :: tetra_p_ek4
 
-! private procedures invoked by tetra_lambin_weight() subroutine
+! private procedures invoked by tetra_lambin_weightX() subroutine
      private :: tetra_lv
-
      private :: tetra_lv_ekarb
      private :: tetra_lv_ek2idn
      private :: tetra_lv_ek22idn
      private :: tetra_lv_ek3idn
      private :: tetra_lv_ek4idn
-
-! private utility procedures
      private :: tetra_lv_creorder
      private :: tetra_lv_prime
      private :: tetra_lv_setmap
