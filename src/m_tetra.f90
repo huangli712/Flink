@@ -606,7 +606,11 @@
      return
   end subroutine tetra_p_ek34
 
-!>>> Blochl algorithm, case 5, for fully occupied tetrahedron
+!!
+!! @sub tetra_p_ek4
+!!
+!! Blochl algorithm, case 5, for fully occupied tetrahedron
+!!
   subroutine tetra_p_ek4()
      implicit none
 
