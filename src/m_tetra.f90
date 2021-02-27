@@ -1497,11 +1497,15 @@
   end subroutine smearing_fermi_weight3
 
 !!========================================================================
-!=========================================================================
-!>>> cold smearing algorithm                                           <<<
-!=========================================================================
+!!>>> cold smearing algorithm                                          <<<
 !!========================================================================
-!>>> cold smearing algorithm, by Marzari and Vanderbilt, for (integrated) density of states
+
+!!
+!! @sub smearing_marzari_weight1
+!!
+!! cold smearing algorithm, by Marzari and Vanderbilt, for (integrated)
+!! density of states
+!!
   subroutine smearing_marzari_weight1(z, e, dos, tos)
      implicit none
 
