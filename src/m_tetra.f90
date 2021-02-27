@@ -36,26 +36,51 @@
 !!
 !! 1. P. E. Blochl tetrahedron integration algorithm
 !! -------------------------------------------------
-!!               tetra_blochl_weight1()     subroutine
-!!               tetra_blochl_weight2()     subroutine
+!!
+!! call tetra_blochl_weight1(...)
+!!
+!! or
+!!
+!! call tetra_blochl_weight2(...)
 !!
 !! 2. Lambin-Vigneron tetrahedron integration algorithm
 !! ----------------------------------------------------
-!!               tetra_lambin_weight()      subroutine
 !!
-!! 3.
-!!               smearing_gauss_weight1()   subroutine
-!!               smearing_gauss_weight2()   subroutine
-!!               smearing_gauss_weight3()   subroutine
-!! 4.
-!!               smearing_fermi_weight1()   subroutine
-!!               smearing_fermi_weight2()   subroutine
-!!               smearing_fermi_weight3()   subroutine
+!! call tetra_lambin_weight(...)
 !!
-!! 5.
-!!               smearing_marzari_weight1() subroutine
-!!               smearing_marzari_weight2() subroutine
-!!               smearing_marzari_weight3() subroutine
+!! 3. Gaussian smearing algorithm
+!! ------------------------------
+!!
+!! call smearing_gauss_weight1(...)
+!!
+!! or
+!!
+!! call smearing_gauss_weight2(...)
+!!
+!! or
+!!
+!! call smearing_gauss_weight3(...)
+!!
+!! 4. Fermi-Dirac smearing algorithm
+!! ---------------------------------
+!!
+!! call smearing_fermi_weight1(...)
+!!
+!! or
+!!
+!! call smearing_fermi_weight2(...)
+!!
+!! or
+!!
+!! call smearing_fermi_weight3(...)
+!!
+!! 5. Marzari-Vanderbilt cold smearing algorithm
+!! ---------------------------------------------
+!!
+!! call smearing_marzari_weight1(...)
+!! call smearing_marzari_weight2(...)
+!! call smearing_marzari_weight3(...)
+!!
 !!
 
 
