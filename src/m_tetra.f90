@@ -1188,9 +1188,18 @@
      return
   end subroutine tetra_lv_creorder
 
-!>>> this function associates a prime number to pairs of small integers.
-! the association is the following:
-!    (1,2) = 2, (1,3) = 3, (1,4) = 5, (2,3) = 7, (2,4) = 11, (3,4) = 13
+!!
+!! @sub tetra_lv_prime
+!!
+!! this function associates a prime number to pairs of small integers.
+!! the association is the following:
+!!    (1,2) = 2,
+!!    (1,3) = 3,
+!!    (1,4) = 5,
+!!    (2,3) = 7,
+!!    (2,4) = 11,
+!!    (3,4) = 13
+!!
   function tetra_lv_prime(p, q) result(prime)
      implicit none
 
