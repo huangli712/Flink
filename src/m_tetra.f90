@@ -626,9 +626,10 @@
      return
   end subroutine tetra_p_ek4
 
-!=========================================================================
-!>>> Lambin-Vigneron algorithm, driver layer                           <<<
-!=========================================================================
+!!========================================================================
+!!>>> Lambin-Vigneron algorithm, driver layer                          <<<
+!!========================================================================
+
 !>>> Lambin-Vigneron algorithm for crystal Green's function, here we have
 ! implemented the equations presented in G. Palsson's Ph.D thesis. The
 ! following codes are totally rewritten in a simpler, and more readable form.
@@ -698,9 +699,11 @@
      return
   end subroutine tetra_lambin_weight
 
+!!========================================================================
 !=========================================================================
 !>>> Lambin-Vigneron algorithm, service layer                          <<<
 !=========================================================================
+!!========================================================================
 !>>> We define the Lambin-Vigneron function as follows
 !    lv(x,y) = z ( 1 - z * log[1 + 1/z] )  where z = x / y
 ! or
@@ -1198,9 +1201,11 @@
      return
   end subroutine tetra_lv_setmap
 
+!!========================================================================
 !=========================================================================
 !>>> Gaussian smearing algorithm                                       <<<
 !=========================================================================
+!!========================================================================
 !>>> standard Gaussian broadening algorithm for (integrated) density of states
   subroutine smearing_gauss_weight1(z, e, dos, tos)
      implicit none
@@ -1307,9 +1312,11 @@
      return
   end subroutine smearing_gauss_weight3
 
+!!========================================================================
 !=========================================================================
 !>>> Fermi-Dirac smearing algorithm                                    <<<
 !=========================================================================
+!!========================================================================
 !>>> Fermi-Dirac broadening algorithm for (integrated) density of states
   subroutine smearing_fermi_weight1(z, e, dos, tos)
      implicit none
@@ -1416,9 +1423,11 @@
      return
   end subroutine smearing_fermi_weight3
 
+!!========================================================================
 !=========================================================================
 !>>> cold smearing algorithm                                           <<<
 !=========================================================================
+!!========================================================================
 !>>> cold smearing algorithm, by Marzari and Vanderbilt, for (integrated) density of states
   subroutine smearing_marzari_weight1(z, e, dos, tos)
      implicit none
