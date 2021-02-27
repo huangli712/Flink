@@ -1375,11 +1375,14 @@
   end subroutine smearing_gauss_weight3
 
 !!========================================================================
-!=========================================================================
-!>>> Fermi-Dirac smearing algorithm                                    <<<
-!=========================================================================
+!!>>> Fermi-Dirac smearing algorithm                                   <<<
 !!========================================================================
-!>>> Fermi-Dirac broadening algorithm for (integrated) density of states
+
+!!
+!! @sub smearing_fermi_weight1
+!!
+!! Fermi-Dirac broadening algorithm for (integrated) density of states
+!!
   subroutine smearing_fermi_weight1(z, e, dos, tos)
      implicit none
 
