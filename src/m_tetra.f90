@@ -27,19 +27,32 @@
 !!
 !! Besides, we also implement three smearing algorithm, which can be used
 !! to calculate the DFT density of states. They are:
-!!     (1) Gaussian smearing algorithm
-!!     (2) Fermi-Dirac smearing algorithm
-!!     (3) Marzari-Vanderbilt cold smearing algorithm
+!!     (3) Gaussian smearing algorithm,
+!!     (4) Fermi-Dirac smearing algorithm,
+!!     (5) Marzari-Vanderbilt cold smearing algorithm.
 !!
+!! Usage
+!! =====
+!!
+!! 1. P. E. Blochl tetrahedron integration algorithm
+!! -------------------------------------------------
 !!               tetra_blochl_weight1()     subroutine
 !!               tetra_blochl_weight2()     subroutine
+!!
+!! 2. Lambin-Vigneron tetrahedron integration algorithm
+!! ----------------------------------------------------
 !!               tetra_lambin_weight()      subroutine
+!!
+!! 3.
 !!               smearing_gauss_weight1()   subroutine
 !!               smearing_gauss_weight2()   subroutine
 !!               smearing_gauss_weight3()   subroutine
+!! 4.
 !!               smearing_fermi_weight1()   subroutine
 !!               smearing_fermi_weight2()   subroutine
 !!               smearing_fermi_weight3()   subroutine
+!!
+!! 5.
 !!               smearing_marzari_weight1() subroutine
 !!               smearing_marzari_weight2() subroutine
 !!               smearing_marzari_weight3() subroutine
