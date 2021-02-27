@@ -216,7 +216,7 @@
      cweight = zero
 
 ! sort the corner energy according to increasing values
-     call wann_make_qsorter(4, e)
+     call s_qsorter(4, e)
 
 ! remove degenerate
      do i=1,3
@@ -324,7 +324,7 @@
      cweight = zero
 
 ! sort the corner energy according to increasing values
-     call wann_make_qsorter(4, e)
+     call s_qsorter(4, e)
 
 ! remove degenerate
      do i=1,3
