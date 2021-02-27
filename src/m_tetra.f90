@@ -757,7 +757,12 @@
      return
   end function tetra_lv
 
-!>>> evaluate integrated weights when eigenvalues at each corner are explicit
+!!
+!! @sub tetra_lv_ekarb
+!!
+!! evaluate integrated weights when eigenvalues at each corner
+!! are explicit
+!!
   subroutine tetra_lv_ekarb(z, e, res)
      implicit none
 
