@@ -1581,7 +1581,12 @@
      return
   end subroutine smearing_marzari_weight2
 
-!>>> cold smearing algorithm, by Marzari and Vanderbilt, for (integrated) density of states
+!!
+!! @sub smearing_marzari_weight3
+!!
+!! cold smearing algorithm, by Marzari and Vanderbilt, for (integrated)
+!! density of states
+!!
   subroutine smearing_marzari_weight3(z, e, dd, tt)
      implicit none
 
