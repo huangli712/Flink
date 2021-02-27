@@ -277,10 +277,14 @@
      return
   end subroutine tetra_blochl_weight1
 
-!>>> Peter E. Blochl algorithm for (integrated) density of states and
-! relevant integration weights, Blochl corrections are taken into
-! considersions as well, implemented by myself following the equations
-! of Phys. Rev. B, 49, 16223, 1994
+!!
+!! @sub tetra_blochl_weight2
+!!
+!! Peter E. Blochl algorithm for (integrated) density of states and
+!! relevant integration weights. Blochl corrections are taken into
+!! considersions as well, implemented by myself following the equations
+!! of Phys. Rev. B, 49, 16223, 1994
+!!
   subroutine tetra_blochl_weight2(z, e, ddd, ttt)
      implicit none
 
