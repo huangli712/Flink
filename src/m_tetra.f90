@@ -630,9 +630,14 @@
 !!>>> Lambin-Vigneron algorithm, driver layer                          <<<
 !!========================================================================
 
-!>>> Lambin-Vigneron algorithm for crystal Green's function, here we have
-! implemented the equations presented in G. Palsson's Ph.D thesis. The
-! following codes are totally rewritten in a simpler, and more readable form.
+!!
+!! @sub
+!!
+!! Lambin-Vigneron algorithm for crystal Green's function. Here we have
+!! implemented the equations presented in G. Palsson's Ph.D thesis. The
+!! following codes are totally rewritten in a simpler, and more readable
+!! form.
+!!
   subroutine tetra_lambin_weight(z, e, weights)
      implicit none
 
