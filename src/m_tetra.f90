@@ -31,6 +31,8 @@
 !!     (4) Fermi-Dirac smearing algorithm,
 !!     (5) Marzari-Vanderbilt cold smearing algorithm.
 !!
+!! This module depends on s_util.f90/s_qsorter() subroutine. 
+!!
 !! Usage
 !! =====
 !!
@@ -183,6 +185,8 @@
 !! considersions as well, implemented by myself following the equations
 !! of Phys. Rev. B, 49, 16223, 1994
 !!
+!! note: s_qsorter() is implemented in s_util.f90.
+!!
   subroutine tetra_blochl_weight1(z, e, dos, tos)
      implicit none
 
@@ -284,6 +288,8 @@
 !! relevant integration weights. Blochl corrections are taken into
 !! considersions as well, implemented by myself following the equations
 !! of Phys. Rev. B, 49, 16223, 1994
+!!
+!! note: s_qsorter() is implemented in s_util.f90.
 !!
   subroutine tetra_blochl_weight2(z, e, ddd, ttt)
      implicit none
