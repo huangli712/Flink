@@ -411,7 +411,11 @@
      return
   end subroutine tetra_p_ek1
 
-!>>> Blochl algorithm, case 2, for partially occupied tetrahedron
+!!
+!! @sub tetra_p_ek12
+!!
+!! Blochl algorithm, case 2, for partially occupied tetrahedron
+!!
   subroutine tetra_p_ek12(z, e)
      implicit none
 
@@ -467,7 +471,11 @@
      return
   end subroutine tetra_p_ek12
 
-!>>> Blochl algorithm, case 3, for partially occupied tetrahedron
+!!
+!! @sub tetra_p_ek23
+!!
+!! Blochl algorithm, case 3, for partially occupied tetrahedron
+!!
   subroutine tetra_p_ek23(z, e)
      implicit none
 
