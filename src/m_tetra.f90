@@ -1038,7 +1038,12 @@
      return
   end subroutine tetra_lv_ek3idn
 
-!>>> evaluate integrated weights when eigenvalues at four corners are the same
+!!
+!! @sub tetra_lv_ek4idn
+!!
+!! evaluate integrated weights when eigenvalues at four corners are
+!! the same
+!!
   subroutine tetra_lv_ek4idn(z,e,res)
      implicit none
 
