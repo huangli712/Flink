@@ -1253,7 +1253,12 @@
 !!>>> Gaussian smearing algorithm                                      <<<
 !!========================================================================
 
-!>>> standard Gaussian broadening algorithm for (integrated) density of states
+!!
+!! @sub smearing_gauss_weight1
+!!
+!! standard Gaussian broadening algorithm for (integrated) density
+!! of states
+!!
   subroutine smearing_gauss_weight1(z, e, dos, tos)
      implicit none
 
