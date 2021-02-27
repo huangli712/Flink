@@ -1453,7 +1453,11 @@
      return
   end subroutine smearing_fermi_weight2
 
-!>>> Fermi-Dirac broadening algorithm for (integrated) density of states
+!!
+!! @sub smearing_fermi_weight3
+!!
+!! Fermi-Dirac broadening algorithm for (integrated) density of states
+!!
   subroutine smearing_fermi_weight3(z, e, dd, tt)
      implicit none
 
