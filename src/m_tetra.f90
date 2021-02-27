@@ -17,30 +17,34 @@
 !! Introduction
 !! ============
 !!
-!!           in this module, five different algorithms are implemented:
+!! In this module, two tetrahedron integration algorithms are implemented.
+!! They are
+!!     (1) P. E. Blochl tetrahedron integration algorithm,
+!!     (2) Lambin-Vigneron tetrahedron integration algorithm.
+!! Note that the former is used to calculate the DFT density of states,
+!! while the later is used to calculate the lattice Green's functions
+!! during the DFT + DMFT calculations.
 !!
-!!           (1) P. E. Blochl tetrahedron integration algorithm
+!! Besides, we also implement three smearing algorithm, which can be used
+!! to calculate 
+!!           (3) Gaussian smearing algorithm
+!!
+!!           (4) Fermi-Dirac smearing algorithm
+!!
+!!           (5) Marzari-Vanderbilt cold smearing algorithm
+!!
 !!               tetra_blochl_weight1()     subroutine
 !!               tetra_blochl_weight2()     subroutine
-!!
-!!           (2) Lambin-Vigneron tetrahedron integration algorithm
 !!               tetra_lambin_weight()      subroutine
-!!
-!!           (3) Gaussian smearing algorithm
 !!               smearing_gauss_weight1()   subroutine
 !!               smearing_gauss_weight2()   subroutine
 !!               smearing_gauss_weight3()   subroutine
-!!
-!!           (4) Fermi-Dirac smearing algorithm
 !!               smearing_fermi_weight1()   subroutine
 !!               smearing_fermi_weight2()   subroutine
 !!               smearing_fermi_weight3()   subroutine
-!!
-!!           (5) Marzari-Vanderbilt cold smearing algorithm
 !!               smearing_marzari_weight1() subroutine
 !!               smearing_marzari_weight2() subroutine
 !!               smearing_marzari_weight3() subroutine
-!!
 !!
 
 
