@@ -391,7 +391,11 @@
 !!>>> Blochl algorithm, service layer                                  <<<
 !!========================================================================
 
-!>>> Blochl algorithm, case 1, for fully unoccupied tetrahedron
+!!
+!! @sub tetra_p_ek1
+!!
+!! Blochl algorithm, case 1, for fully unoccupied tetrahedron
+!!
   subroutine tetra_p_ek1()
      implicit none
 
