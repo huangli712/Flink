@@ -1250,10 +1250,9 @@
   end subroutine tetra_lv_setmap
 
 !!========================================================================
-!=========================================================================
-!>>> Gaussian smearing algorithm                                       <<<
-!=========================================================================
+!!>>> Gaussian smearing algorithm                                      <<<
 !!========================================================================
+
 !>>> standard Gaussian broadening algorithm for (integrated) density of states
   subroutine smearing_gauss_weight1(z, e, dos, tos)
      implicit none
