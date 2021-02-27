@@ -1223,8 +1223,13 @@
      return
   end function tetra_lv_prime
 
-!>>> this subroutine takes in one vector, v, of integers and four numbers a, b,
-! c, d and assigns them the elements of the vector v, which is of length four.
+!!
+!! @sub tetra_lv_setmap
+!!
+! this subroutine takes in one vector, v, of integers and four numbers
+!! a, b, c, d and assigns them the elements of the vector v, which is
+!! of length four.
+!!
   subroutine tetra_lv_setmap(v, a, b, c, d)
      implicit none
 
