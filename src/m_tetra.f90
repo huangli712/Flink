@@ -631,7 +631,7 @@
 !!========================================================================
 
 !!
-!! @sub
+!! @sub tetra_lambin_weight
 !!
 !! Lambin-Vigneron algorithm for crystal Green's function. Here we have
 !! implemented the equations presented in G. Palsson's Ph.D thesis. The
@@ -705,17 +705,20 @@
   end subroutine tetra_lambin_weight
 
 !!========================================================================
-!=========================================================================
-!>>> Lambin-Vigneron algorithm, service layer                          <<<
-!=========================================================================
+!!>>> Lambin-Vigneron algorithm, service layer                         <<<
 !!========================================================================
-!>>> We define the Lambin-Vigneron function as follows
-!    lv(x,y) = z ( 1 - z * log[1 + 1/z] )  where z = x / y
-! or
-!    lv(x,y) = ( 1 - log[1+w] / w ) / w   where w = y / x.
-! for small z or w we use the series expansions:
-!    lv(x,y) = z ( 1 + z ( log(z) - z ( 1 - z ( 1/2 - z ( 1/3 - z ( 1/4 - z ...
-!    lv(x,y) = 1/2 - w ( 1/3 - w ( 1/4 - w ( 1/5 - ...
+
+!!
+!! @sub tetra_lv
+!!
+!! We define the Lambin-Vigneron function as follows
+!!    lv(x,y) = z ( 1 - z * log[1 + 1/z] )  where z = x / y
+!! or
+!!    lv(x,y) = ( 1 - log[1+w] / w ) / w   where w = y / x.
+!! for small z or w we use the series expansions:
+!!    lv(x,y) = z ( 1 + z ( log(z) - z ( 1 - z ( 1/2 - z ( 1/3 - z ( 1/4 - z ...
+!!    lv(x,y) = 1/2 - w ( 1/3 - w ( 1/4 - w ( 1/5 - ...
+!!
   function tetra_lv(x, y) result(lv)
      implicit none
 
