@@ -78,7 +78,13 @@
 !! ---------------------------------------------
 !!
 !! call smearing_marzari_weight1(...)
+!!
+!! or
+!!
 !! call smearing_marzari_weight2(...)
+!!
+!! or
+!!
 !! call smearing_marzari_weight3(...)
 !!
 !!
