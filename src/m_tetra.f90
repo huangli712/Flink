@@ -920,7 +920,11 @@
      return
   end subroutine tetra_lv_ek2idn
 
-!>>> evaluate integrated weights when e1 = e2 and e3 = e4
+!!
+!! @sub tetra_lv_ek22idn
+!!
+!! evaluate integrated weights when e1 = e2 and e3 = e4
+!!
   subroutine tetra_lv_ek22idn(z, e, res)
      implicit none
 
@@ -972,7 +976,11 @@
      return
   end subroutine tetra_lv_ek22idn
 
-!>>> evaluate integrated weights when e1 = e2 = e3
+!!
+!! @sub tetra_lv_ek3idn
+!!
+!! evaluate integrated weights when e1 = e2 = e3
+!!
   subroutine tetra_lv_ek3idn(z, e, res)
      implicit none
 
