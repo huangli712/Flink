@@ -1,4 +1,4 @@
-# FLINK
+# Flink
 
 ## v0.1.1 @ f2ccd31 // Apr 12, 2019
 
