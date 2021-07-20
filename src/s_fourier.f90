@@ -222,3 +222,50 @@
 
      return
   end subroutine s_fft_backward
+
+  subroutine s_fft_density(mfreq, rmesh, fmat, density, beta)
+     use constants, only : dp
+     use constants, only : pi, zero, two, half
+
+     implicit none
+
+! external arguments
+! number of matsubara frequency points
+     integer, intent(in)   :: mfreq
+
+! inverse temperature
+     real(dp), intent(in)  :: beta
+
+! matsubara frequency mesh
+     real(dp), intent(in)  :: rmesh(mfreq)
+
+! function on matsubara frequency axis
+     complex(dp), intent(in)  :: fmat(mfreq)
+
+! function on imaginary time axis
+     complex(dp), intent(out) :: density
+
+! local variables
+! loop index
+     integer  :: j
+
+! real(dp) dummy variables
+     real(dp) :: raux
+     real(dp) :: tail
+
+! calculate high frequency tails need to be subtracted
+     call s_fft_tails(tail, mfreq, rmesh, fmat)
+
+! perform infourier transformation
+     raux = zero
+     do j=1,mfreq
+         raux = raux + real( fmat(j) )
+     enddo ! over j={1,mfreq} loop
+     density = two * raux / beta - half * tail
+
+! corrections for the boundary point
+     raux = real( fmat(mfreq) ) * rmesh(mfreq) / pi
+     density = density + raux
+
+     return
+  end subroutine s_fft_density
