@@ -177,29 +177,33 @@
 !!
 !! @sub list_put
 !!
-!! store the encoded data in list node [self]
+!! store the encoded data in list node [self].
 !!
   subroutine list_put(self, data)
      implicit none
 
-! external arguments
-! element in the linked list
+!! external arguments
+     ! element in the linked list
      type (list_t), pointer :: self
 
-! the data to be stored
+     ! the data to be stored
      integer, intent(in) :: data(:)
 
-! release old memory at first
+!! [body
+
+     ! release old memory at first
      if ( associated(self%data) ) then
          deallocate(self%data)
          nullify(self%data)
      endif ! back if ( associated(self%data) ) block
 
-! allocate new memory
+     ! allocate new memory
      allocate( self%data( size(data) ) )
 
-! save the data
+     ! save the data
      self%data = data
+
+!! body]
 
      return
   end subroutine list_put
