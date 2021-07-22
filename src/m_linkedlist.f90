@@ -211,19 +211,23 @@
 !!
 !! @fun list_get
 !!
-!! return the data stored in the node [self]
+!! return the data stored in the node [self].
 !!
   function list_get(self) result(data)
      implicit none
 
-! external arguments
-! node in the linked list
+!! external arguments
+     ! node in the linked list
      type (list_t), pointer :: self
 
-! function value, the node's data
+     ! function value, the node's data
      integer, pointer :: data(:)
 
+!! [body
+
      data => self%data
+
+!! body]
 
      return
   end function list_get
@@ -231,19 +235,23 @@
 !!
 !! @fun list_next
 !!
-!! return the next node after node [self]
+!! return the next node after node [self].
 !!
   function list_next(self) result(next)
      implicit none
 
-! external arguments
-! pointer to the list
+!! external arguments
+     ! pointer to the list
      type (list_t), pointer :: self
 
-! function value, pointer to the next node
+     ! function value, pointer to the next node
      type (list_t), pointer :: next
 
+!! [body
+
      next => self%next
+
+!! body]
 
      return
   end function list_next
@@ -251,22 +259,24 @@
 !!
 !! @fun list_count
 !!
-!! count the number of nodes in the list [self], in fact, this function
-!! can be used to return the number of nodes after a given node
+!! count the number of nodes in the list [self]. in fact, this function
+!! can be used to return the number of nodes after a given node.
 !!
   function list_count(self) result(counter)
      implicit none
 
-! external arguments
-! pointer to the list
+!! external arguments
+     ! pointer to the list
      type (list_t), pointer :: self
 
-! function value
+     ! function value
      integer :: counter
 
-! local variables
-! pointer to current node
+!! local variables
+     ! pointer to current node
      type (list_t), pointer :: curr
+
+!! [body
 
      if ( associated(self) ) then
          counter = 1
@@ -278,6 +288,8 @@
      else
          counter = 0
      endif ! back if ( associated(self) ) block
+
+!! body]
 
      return
   end function list_count
