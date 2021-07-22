@@ -108,7 +108,7 @@
 !!
 !! @sub s_write_exception
 !!
-!! write normal runtime exceptional information, and continue
+!! write normal runtime exceptional information, and continue.
 !!
   subroutine s_write_exception(sub, msg, file_unit)
      implicit none
@@ -139,20 +139,24 @@
 !!
 !! @sub s_print_message
 !!
-!! print normal runtime message to the console
+!! print normal runtime message to the console.
 !!
   subroutine s_print_message(sub, msg)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! runtime message
+     ! runtime message
      character(len=*), intent(in) :: msg
 
-! print error information
+!! [body
+
+     ! print error information
      write(*,'(2X,4a)') 'instant message from ', sub, ': ', msg
+
+!! body]
 
      return
   end subroutine s_print_message
@@ -160,23 +164,27 @@
 !!
 !! @sub s_write_message
 !!
-!! write normal runtime message to the console
+!! write normal runtime message to the console.
 !!
   subroutine s_write_message(sub, msg, file_unit)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! runtime message
+     ! runtime message
      character(len=*), intent(in) :: msg
 
-! file handler
+     ! file handler
      integer, intent(in)          :: file_unit
 
-! print error information
+!! [body
+
+     ! print error information
      write(file_unit,'(2X,4a)') 'instant message from ', sub, ': ', msg
+
+!! body]
 
      return
   end subroutine s_write_message
