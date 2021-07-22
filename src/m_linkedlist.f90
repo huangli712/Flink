@@ -89,38 +89,45 @@
 !!
 !! @sub list_free
 !!
-!! free the entire list and all data, beginning at node [self]
+!! free the entire list and all data, beginning at node [self].
 !!
   subroutine list_free(self)
      implicit none
 
-! external arguments
-! pointer to the list to be destroyed
+!! external arguments
+     ! pointer to the list to be destroyed
      type (list_t), pointer :: self
 
-! local variables
-! pointer to the current node
+!! local variables
+     ! pointer to the current node
      type (list_t), pointer :: curr
 
-! pointer to the next node
+     ! pointer to the next node
      type (list_t), pointer :: next
 
-! go through the whole linked list
+!! [body
+
+     ! go through the whole linked list
      curr => self
      do while ( associated(curr) )
-! get next node
+         ! get next node
          next => curr%next
-! release memory for the internal data
+         !
+         ! release memory for the internal data
          if ( associated(curr%data) ) then
              deallocate(curr%data)
              nullify(curr%data)
          endif ! back if ( associated(curr%data) ) block
-! release memory for the node itself
+         !
+         ! release memory for the node itself
          deallocate(curr)
          nullify(curr)
-! point to next node
+         !
+         ! point to next node
          curr => next
      enddo ! over do while loop
+
+!! body]
 
      return
   end subroutine list_free
@@ -128,26 +135,29 @@
 !!
 !! @sub list_insert
 !!
-!! insert a node containing data (optional) after node [self]
+!! insert a node containing data (optional) after node [self].
 !!
   subroutine list_insert(self, data)
      implicit none
 
-! external arguments
-! element in the linked list after which the new element should be inserted
+!! external arguments
+     ! element in the linked list after which the new element should
+     ! be inserted
      type (list_t), pointer :: self
 
-! the data for the new element
+     ! the data for the new element
      integer, intent(in), optional :: data(:)
 
-! local variables
-! pointer to new node
+!! local variables
+     ! pointer to new node
      type (list_t), pointer :: next
 
-! allocate memory for new node
+!! [body
+
+     ! allocate memory for new node
      allocate(next)
 
-! whether we should build an empty node
+     ! whether we should build an empty node
      if ( present(data) ) then
          allocate( next%data( size(data) ) )
          next%data = data
@@ -155,9 +165,11 @@
          nullify(next%data)
      endif ! back if ( present(data) ) block
 
-! update the linked list
+     ! update the linked list
      next%next => self%next
      self%next => next
+
+!! body]
 
      return
   end subroutine list_insert
