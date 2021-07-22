@@ -17,57 +17,12 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           07/23/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful facilities
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
 !!! comment :
 !!!-----------------------------------------------------------------------
-
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! 1. assertion
-!! ------------
-!!
-!! subroutine s_assert(...)
-!! subroutine s_assert2(...)
-!!
-!! 2. sort algorithm
-!! -----------------
-!!
-!! subroutine s_sorter(...)
-!! subroutine s_sorter2(...)
-!! subroutine s_qsorter(...)
-!! subroutine s_qscorer(...)
-!!
-!! note: the s_sorter() and s_sorter2() subroutines implement the bubble
-!! algorithm, and the s_qsorter() subroutine implements the quick sort
-!! algorithm. The s_qscorer() subroutine is called by the s_qsorter()
-!! internally. DO NOT call it directly!
-!!
-!! 3. combination
-!! --------------
-!!
-!! subroutine s_combination(...)
-!!
-!! 4. string manipulation
-!! ----------------------
-!!
-!! subroutine s_str_upcase(...)
-!! subroutine s_str_lowcase(...)
-!! subroutine s_str_count(...)
-!! subroutine s_str_compress(...)
-!!
-!! 5. date time manipulation
-!! -------------------------
-!!
-!! subroutine s_time_builder(...)
-!! subroutine s_time_analyzer(...)
-!!
-!!
 
 !!========================================================================
 !!>>> assertion checker                                                <<<
@@ -76,19 +31,23 @@
 !!
 !! @sub s_assert
 !!
-!! fortran version of assert
+!! fortran version of assert.
 !!
   subroutine s_assert(condition)
      implicit none
 
-! external arguments
-! the logical condition that we have to assert
+!! external arguments
+     ! the logical condition that we have to assert
      logical, intent(in) :: condition
 
-! if condition == .false., it aborts the program.
+!! [body
+
+     ! if condition == .false., it aborts the program.
      if ( .not. condition ) then
          call s_print_error('s_assert','assert failed.')
      endif ! back if ( .not. condition ) block
+
+!! body]
 
      return
   end subroutine s_assert
