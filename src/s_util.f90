@@ -446,25 +446,27 @@
 !!
 !! @sub s_str_count
 !!
-!! return the number of times a substring occurs
+!! return the number of times a substring occurs.
 !!
   subroutine s_str_count(string, substr, count)
      implicit none
 
-! external arguments
-! string to be examined
+!! external arguments
+     ! string to be examined
      character(len=*), intent(in) :: string
 
-! substring in question
+     ! substring in question
      character(len=*), intent(in) :: substr
 
-! return value, number of occurrences
+     ! return value, number of occurrences
      integer, intent(out) :: count
 
-! local variables
-! position to start the match
+!! local variables
+     ! position to start the match
      integer :: start
      integer :: offset
+
+!! [body
 
      count = 0
      start = 0
@@ -475,6 +477,8 @@
          count = count + 1
      enddo ! over do loop
 
+!! body]
+
      return
   end subroutine s_str_count
 
@@ -482,33 +486,35 @@
 !! @sub s_str_compress
 !!
 !! return a copy of an input string with all whitespace (spaces and tabs)
-!! is removed
+!! is removed.
 !!
   subroutine s_str_compress(string)
      implicit none
 
-! external arguments
-! character string to be compressed.
+!! external arguments
+     ! character string to be compressed.
      character(len=*), intent(inout) :: string
 
-! local parameters
-! ASCII number for tab space ' ' and tab
+!! local parameters
+     ! ASCII number for tab space ' ' and tab
      integer, parameter :: SPACE = 32
      integer, parameter :: TAB   = 9
      integer, parameter :: NUL   = 0
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
 
-! ASCII number for current character
+     ! ASCII number for current character
      integer :: curr_char
 
-! return values
-! input string with all whitespace removed before the first non-whitespace
-! character, and from in-between non-whitespace characters.
+     ! return values. input string with all whitespace removed before
+     ! the first non-whitespace character, and from in-between non-
+     ! whitespace characters.
      character( len( string ) ) :: output
+
+!! [body
 
 !
 ! definitions of a space and a tab character are made for the ASCII collating
@@ -522,25 +528,29 @@
 ! instrinsic.
 !
 
-! Initialise output string
+     ! initialise output string
      output = ' '
 
-! initialise output string "useful" length counter
+     ! initialise output string "useful" length counter
      j = 0
 
-! loop over string elements
+     ! loop over string elements
      do i=1,len(string)
-! convert the current character to its position in the ASCII collating sequence
+         ! convert the current character to its position in the ASCII
+         ! collating sequence.
          curr_char = iachar( string(i:i) )
-! if the character is NOT a space ' ' or a tab '->|', copy it to the output string.
+         ! if the character is NOT a space ' ' or a tab '->|', copy
+         ! it to the output string.
          if ( curr_char /= SPACE .and. curr_char /= TAB .and. curr_char /= NUL ) then
              j = j + 1
              output(j:j) = string(i:i)
          endif ! back if block
      enddo ! over i={1,len(input_string)} loop
 
-! copy output string to input string
+     ! copy output string to input string
      string = output
+
+!! body]
 
      return
   end subroutine s_str_compress
