@@ -10,7 +10,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/15/2009 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           07/22/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to display the (error/exception/
 !!!           normal) messages in the console, and then STOP or CONTINUE
 !!!           the code according to the error level.
@@ -19,48 +19,29 @@
 !!!-----------------------------------------------------------------------
 
 !!
-!!
-!! Introduction
-!! ============
-!!
-!! 1. display the error, exception, or message on the terminal
-!! -----------------------------------------------------------
-!!
-!! subroutine s_print_error(...)
-!! subroutine s_print_exception(...)
-!! subroutine s_print_message(...)
-!!
-!! 2. write the error, exception, or message to external file
-!! ----------------------------------------------------------
-!!
-!! subroutine s_write_error(...)
-!! subroutine s_write_exception(...)
-!! subroutine s_write_message(...)
-!!
-!!
-
-!!
 !! @sub s_print_error
 !!
-!! print the error information and STOP the program
+!! print the error information and STOP the program.
 !!
   subroutine s_print_error(sub, msg)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! error message
+     ! error message
      character(len=*), intent(in) :: msg
 
-! print error information
+!! [body
+
+     ! print error information
      write(*,'(2X,4a)') 'fatal error occurred in ', sub, ': ', msg
 
-! TERMINATE THE PROGRAM
-!-------------------------------------------------------------------------
+     ! TERMINATE THE PROGRAM
      STOP
-!-------------------------------------------------------------------------
+
+!! body]
 
      return
   end subroutine s_print_error
@@ -68,28 +49,30 @@
 !!
 !! @sub s_write_error
 !!
-!! write the error information and STOP the program
+!! write the error information and STOP the program.
 !!
   subroutine s_write_error(sub, msg, file_unit)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! error message
+     ! error message
      character(len=*), intent(in) :: msg
 
-! file handler
+     ! file handler
      integer, intent(in)          :: file_unit
 
-! print error information
+!! [body
+
+     ! print error information
      write(file_unit,'(2X,4a)') 'fatal error occurred in ', sub, ': ', msg
 
-! TERMINATE THE PROGRAM
-!-------------------------------------------------------------------------
+     ! TERMINATE THE PROGRAM
      STOP
-!-------------------------------------------------------------------------
+
+!! body]
 
      return
   end subroutine s_write_error
