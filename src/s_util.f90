@@ -516,17 +516,21 @@
 
 !! [body
 
-!
-! definitions of a space and a tab character are made for the ASCII collating
-! sequence. Each single character of the input string is checked against
-! these definitions using the IACHAR() intrinsic. If the input string
-! character DOES NOT correspond to a space or tab, it is not copied to
-! the output string.
-!
-! Note that for input that ONLY has spaces or tabs BEFORE the first useful
-! character, the output of this function is the same as the ADJUSTL()
-! instrinsic.
-!
+     !
+     ! remarks 1:
+     !
+     ! definitions of a space and a tab character are made for the ASCII
+     ! collating sequence. each single character of the input string is
+     ! checked against these definitions using the IACHAR() intrinsic. if
+     ! the input string character DOES NOT correspond to a space or tab,
+     ! it is not copied to the output string.
+     !
+     ! remarks 2:
+     !
+     ! note that for input that ONLY has spaces or tabs BEFORE the first
+     ! useful character, the output of this function is the same as the
+     ! ADJUSTL() instrinsic.
+     !
 
      ! initialise output string
      output = ' '
