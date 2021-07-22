@@ -411,30 +411,34 @@
 !!
 !! @sub s_str_lowcase
 !!
-!! returns string 's' in lowercase
+!! returns string 's' in lowercase.
 !!
   subroutine s_str_lowcase(s)
      implicit none
 
-! external arguments
-! input/output string
+!! external arguments
+     ! input/output string
      character(len=*), intent(inout) :: s
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! difference between 'A' and 'a'
+     ! difference between 'A' and 'a'
      integer :: diff
+
+!! [body
 
      diff = ichar('A') - ichar('a')
 
-! if uppercase, make lowercase
+     ! if uppercase, make lowercase
      do i=1,len(s)
          if ( ichar(s(i:i)) >= ichar('A') .and. ichar(s(i:i)) <= ichar('Z') ) then
              s(i:i) = char(ichar(s(i:i)) - diff)
          endif ! back if block
      enddo ! over i={1,len(s)} loop
+
+!! body]
 
      return
   end subroutine s_str_lowcase
