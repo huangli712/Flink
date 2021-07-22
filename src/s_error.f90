@@ -80,25 +80,27 @@
 !!
 !! @sub s_print_exception
 !!
-!! print normal runtime exceptional information, and continue
+!! print normal runtime exceptional information, and continue.
 !!
   subroutine s_print_exception(sub, msg)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! exception message
+     ! exception message
      character(len=*), intent(in) :: msg
 
-! print error information
+!! [body
+
+     ! print error information
      write(*,'(2X,4a)') 'runtime exception occurred in ', sub, ': ', msg
 
-! CONTINUE/PAUSE THE PROGRAM
-!-------------------------------------------------------------------------
+     ! CONTINUE/PAUSE THE PROGRAM
      CONTINUE ! OR PAUSE
-!-------------------------------------------------------------------------
+
+!! body]
 
      return
   end subroutine s_print_exception
@@ -111,23 +113,25 @@
   subroutine s_write_exception(sub, msg, file_unit)
      implicit none
 
-! external arguments
-! subroutine name
+!! external arguments
+     ! subroutine name
      character(len=*), intent(in) :: sub
 
-! exception message
+     ! exception message
      character(len=*), intent(in) :: msg
 
-! file handler
+     ! file handler
      integer, intent(in)          :: file_unit
 
-! print error information
+!! [body
+
+     ! print error information
      write(file_unit,'(2X,4a)') 'runtime exception occurred in ', sub, ': ', msg
 
-! CONTINUE/PAUSE THE PROGRAM
-!-------------------------------------------------------------------------
+     ! CONTINUE/PAUSE THE PROGRAM
      CONTINUE ! OR PAUSE
-!-------------------------------------------------------------------------
+
+!! body]
 
      return
   end subroutine s_write_exception
