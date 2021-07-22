@@ -55,23 +55,27 @@
 !!
 !! @sub s_assert2
 !!
-!! fortran version of assert, additional message will be presented for
-!! further analysis
+!! fortran version of assert. additional message will be presented
+!! for further analysis.
 !!
   subroutine s_assert2(condition, message)
      implicit none
 
-! external arguments
-! the logical condition that we have to assert
+!! external arguments
+     ! the logical condition that we have to assert
      logical, intent(in) :: condition
 
-! the additional message
+     ! the additional message
      character(len=*)    :: message
 
-! if condition == .false., it aborts the program.
+!! [body
+
+     ! if condition == .false., it aborts the program.
      if ( .not. condition ) then
          call s_print_error('s_assert2','assert failed -> '//message)
      endif ! back if ( .not. condition ) block
+
+!! body]
 
      return
   end subroutine s_assert2
@@ -83,35 +87,40 @@
 !!
 !! @sub s_sorter
 !!
-!! using bubble algorithm to sort a real dataset, it is the slowest
+!! using bubble algorithm to sort a real dataset. it is the slowest.
 !!
   subroutine s_sorter(nsize, list)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! grab the number of values from the calling code
+!! external arguments
+     ! grab the number of values from the calling code
      integer, intent(in)     :: nsize
 
-! dataset to be sorted
+     ! dataset to be sorted
      real(dp), intent(inout) :: list(nsize)
 
-! local variables
-! dataset index
+!! local variables
+     ! dataset index
      integer  :: i = 0
      integer  :: j = 0
 
-! dummy variables
+     ! dummy variables
      real(dp) :: swap
 
-! basically we just loop through every element to compare it against
-! every other element
-! this loop increments i which is our starting point for the comparison
+!! [body
+
+     ! basically we just loop through every element to compare it
+     ! against every other element.
+     !
+     ! this loop increments i which is our starting point for the
+     ! comparison
      sort_loop1: do i=nsize,1,-1
-! this loop increments j which is the ending point for the comparison
+         ! this loop increments j which is the ending point for
+         ! the comparison
          sort_loop2: do j=1,i-1
-! swap the two elements here
+             ! swap the two elements here
              exchange: if ( list(j) > list(j+1) ) then
                  swap = list(j)
                  list(j) = list(j+1)
@@ -120,6 +129,8 @@
          enddo sort_loop2 ! over j={1,i-1} loop
      enddo sort_loop1 ! over i={nsize,1,-1} loop
 
+!! body]
+
      return
   end subroutine s_sorter
 
@@ -127,34 +138,36 @@
 !! @sub s_sorter2
 !!
 !! using bubble algorithm to sort a real list and its index according to
-!! the descending order of the list
+!! the descending order of the list.
 !!
   subroutine s_sorter2(nsize, list, indx)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! size of the list
+!! external arguments
+     ! size of the list
      integer, intent(in)     :: nsize
 
-! in: index of original list
-! out: original index of the sorted list
+     ! in: index of original list
+     ! out: original index of the sorted list
      integer, intent(inout)  :: indx(nsize)
 
-! the list to be sorted
+     ! the list to be sorted
      real(dp), intent(inout) :: list(nsize)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
      integer  :: j
 
-! used to exchange index
+     ! used to exchange index
      integer  :: int_tmp
 
-! used to exchange list element
+     ! used to exchange list element
      real(dp) :: real_tmp
+
+!! [body
 
      do i=1,nsize-1
          do j=1,nsize-i
@@ -169,28 +182,34 @@
          enddo ! over j={1,nsize-i} loop
      enddo ! over i={1,nsize-1} loop
 
+!! body]
+
      return
   end subroutine s_sorter2
 
 !!
 !! @sub s_qsorter
 !!
-!! sets up for the quick sort recursive method
+!! sets up for the quick sort recursive method.
 !!
   subroutine s_qsorter(nsize, list)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! grab the number of values from the calling code
+!! external arguments
+     ! grab the number of values from the calling code
      integer, intent(in)     :: nsize
 
-! dataset to be sorted
+     ! dataset to be sorted
      real(dp), intent(inout) :: list(nsize)
 
-! kicks off the recursive process
+!! [body
+
+     ! kicks off the recursive process
      call s_qscorer(1, nsize, nsize, list)
+
+!! body]
 
      return
   end subroutine s_qsorter
@@ -198,8 +217,8 @@
 !!
 !! @sub s_qscorer
 !!
-!! this is the actually recursive portion of the quicksort algorithm,
-!! do not call it directly, please use s_qsorter() insteadly
+!! this is the actually recursive portion of the quicksort algorithm.
+!! do not call it directly, please use s_qsorter() insteadly.
 !!
   recursive &
   subroutine s_qscorer(pstart, pend, nsize, list)
