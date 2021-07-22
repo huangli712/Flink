@@ -226,42 +226,44 @@
 
      implicit none
 
-! external arguments
-! start point
+!! external arguments
+     ! start point
      integer, intent(in)     :: pstart
 
-! end point
+     ! end point
      integer, intent(in)     :: pend
 
-! size of array
+     ! size of array
      integer, intent(in)     :: nsize
 
-! dataset to be sorted
+     ! dataset to be sorted
      real(dp), intent(inout) :: list(nsize)
 
-! local variables
-! used to find out list(left) > kaux and list(right) < kaux
+!! local variables
+     ! used to find out list(left) > kaux and list(right) < kaux
      integer  :: left, right
 
-! used to record list(pstart)
+     ! used to record list(pstart)
      real(dp) :: kaux
 
-! used to swap data
+     ! used to swap data
      real(dp) :: taux
 
-! setup left and right
+!! [body
+
+     ! setup left and right
      left = pstart
      right = pend + 1
 
-! only in right > left, the data is to be sorted
+     ! only in right > left, the data is to be sorted
      if ( right > left ) then
 
-! record list(pstart) at first
+         ! record list(pstart) at first
          kaux = list(pstart)
 
          do while ( .true. )
 
-! find out where list(left) > kaux
+             ! find out where list(left) > kaux
              do while ( .true. )
                  left = left + 1
                  if ( left > nsize       ) EXIT
@@ -269,7 +271,7 @@
                  if ( list(left) > kaux  ) EXIT
              enddo ! over do while loop
 
-! find out where list(right) < kaux
+             ! find out where list(right) < kaux
              do while ( .true. )
                  right = right - 1
                  if ( right < 0          ) EXIT
@@ -277,27 +279,29 @@
                  if ( list(right) < kaux ) EXIT
              enddo ! over do while loop
 
-! we should ensure right is larger than left
+             ! we should ensure right is larger than left
              if ( right <= left ) EXIT
 
-! exchange data between list(left) and list(right)
+             ! exchange data between list(left) and list(right)
              taux = list(left)
              list(left) = list(right)
              list(right) = taux
 
          enddo ! over do while loop
 
-! exchange data between list(pstart) and list(right)
+        ! exchange data between list(pstart) and list(right)
         list(pstart) = list(right)
         list(right) = kaux
 
-! sort data from pstart to right-1
+        ! sort data from pstart to right-1
         call s_qscorer(pstart, right-1, nsize, list)
 
-! sort data from right+1 to pend
+        ! sort data from right+1 to pend
         call s_qscorer(right+1, pend, nsize, list)
 
      endif ! back if ( right > left ) block
+
+!! body]
 
      return
   end subroutine s_qscorer
@@ -309,7 +313,7 @@
 !!
 !! @sub s_combination
 !!
-!! calculate combination algebra
+!! calculate combination algebra.
 !!
   subroutine s_combination(ntiny, nlarg, value)
      use constants, only : dp
@@ -317,46 +321,50 @@
 
      implicit none
 
-! external variables
-! the small number
+!! external variables
+     ! the small number
      integer, intent(in)  :: ntiny
 
-! the large number
+     ! the large number
      integer, intent(in)  :: nlarg
 
-! result value of the combination algebra
+     ! result value of the combination algebra
      integer, intent(out) :: value
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
 
-! auxiliary integer variable
+     ! auxiliary integer variable
      integer  :: nlow
 
-! numberator of the combination algebra
+     ! numberator of the combination algebra
      real(dp) :: numer
 
-! denominator of the combination algebra
+     ! denominator of the combination algebra
      real(dp) :: denom
 
-! find the minimum number
+!! [body
+
+     ! find the minimum number
      nlow = min(ntiny, nlarg-ntiny)
 
-! numerator in combination algebra
+     ! numerator in combination algebra
      numer = one
      do i=nlarg-nlow+1,nlarg
         numer = numer * dble(i)
      enddo ! over i={nlarg-nlow+1,nlarg} loop
 
-! denominator in combination algebra
+     ! denominator in combination algebra
      denom = one
      do i=1,nlow
         denom = denom * dble(i)
      enddo ! over i={1,nlow} loop
 
-! result value
+     ! result value
      value = nint(numer / denom)
+
+!! body]
 
      return
   end subroutine s_combination
