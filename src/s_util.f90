@@ -566,43 +566,47 @@
 !!
 !! @sub s_time_builder
 !!
-!! returns a string containing date and time in human readable format
+!! returns a string containing date and time in human readable format.
 !!
   subroutine s_time_builder(date_time_string)
      implicit none
 
-! external arguments
-! output date and time
+!! external arguments
+     ! output date and time
      character(len=20), intent(out) :: date_time_string
 
-! local variables
-! used to extract data from a standard fortran call: date_and_time()
+!! local variables
+     ! used to extract data from a standard fortran call: date_and_time()
      integer :: date_time(8)
 
-! string for current date
+     ! string for current date
      character(len=12) :: cdate
 
-! string for current time
+     ! string for current time
      character(len=08) :: ctime
 
-! month array
+     ! month array
      character(len=03) :: months(12)
 
-! init the month array
+!! [body
+
+     ! init the month array
      months( 1) = 'Jan'; months( 2) = 'Feb'; months( 3) = 'Mar'
      months( 4) = 'Apr'; months( 5) = 'May'; months( 6) = 'Jun'
      months( 7) = 'Jul'; months( 8) = 'Aug'; months( 9) = 'Sep'
      months(10) = 'Oct'; months(11) = 'Nov'; months(12) = 'Dec'
 
-! obtain current date and time
+     ! obtain current date and time
      call date_and_time(values = date_time)
 
-! convert date and time from integer to string
+     ! convert date and time from integer to string
      write(cdate,'(1X,a3,1X,i2,1X,i4)') months(date_time(2)), date_time(3), date_time(1)
      write(ctime,'(i2,":",i2,":",i2)') date_time(5), date_time(6), date_time(7)
 
-! build final output string by concating them
+     ! build final output string by concating them
      date_time_string = ctime // cdate
+
+!! body]
 
      return
   end subroutine s_time_builder
@@ -611,7 +615,7 @@
 !! @sub s_time_analyzer
 !!
 !! used to print the iteration timing information about continuous time
-!! quantum Monte Carlo quantum impurity solver
+!! quantum Monte Carlo quantum impurity solver.
 !!
   subroutine s_time_analyzer(time_iter, time_niter)
      use constants, only : dp
@@ -619,27 +623,29 @@
 
      implicit none
 
-! external arguments
-! time used in this iteration
+!! external arguments
+     ! time used in this iteration
      real(dp), intent(in) :: time_iter
 
-! time used in total iteration
+     ! time used in total iteration
      real(dp), intent(in) :: time_niter
 
-! local variables
-! number of days
+!! local variables
+     ! number of days
      integer  :: mday, nday
 
-! number of hours
+     ! number of hours
      integer  :: mhou, nhou
 
-! number of minutes
+     ! number of minutes
      integer  :: mmin, nmin
 
-! number of seconds
+     ! number of seconds
      real(dp) :: msec, nsec
 
-! run time for current iteration
+!! [body
+
+     ! run time for current iteration
      mday = int( time_iter / 86400 )
      msec = time_iter - 86400 * mday
      mhou = int( msec / 3600 )
@@ -665,7 +671,7 @@
      endif ! back if ( msec > 0 ) block
      write(mystd,'("in current iteration")')
 
-! run time for total iteration
+     ! run time for total iteration
      nday = int( time_niter / 86400 )
      nsec = time_niter - 86400 * nday
      nhou = int( nsec / 3600 )
@@ -690,6 +696,8 @@
          write(mystd,'(f5.2, " s ")', advance = 'no') nsec
      endif ! back if ( nsec > 0 ) block
      write(mystd,'("in total iteration")')
+
+!! body]
 
      return
   end subroutine s_time_analyzer
