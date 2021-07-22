@@ -376,30 +376,34 @@
 !!
 !! @sub s_str_upcase
 !!
-!! returns string 's' in uppercase
+!! returns string 's' in uppercase.
 !!
   subroutine s_str_upcase(s)
      implicit none
 
-! external arguments
-! input/output string
+!! external arguments
+     ! input/output string
      character(len=*), intent(inout) :: s
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! difference between 'A' and 'a'
+     ! difference between 'A' and 'a'
      integer :: diff
+
+!! [body
 
      diff = ichar('A') - ichar('a')
 
-! if lowercase, make uppercase
+     ! if lowercase, make uppercase
      do i=1,len(s)
          if ( ichar(s(i:i)) >= ichar('a') .and. ichar(s(i:i)) <= ichar('z') ) then
              s(i:i) = char(ichar(s(i:i)) + diff)
          endif ! back if block
      enddo ! over i={1,len(s)} loop
+
+!! body]
 
      return
   end subroutine s_str_upcase
