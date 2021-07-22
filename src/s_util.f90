@@ -111,9 +111,13 @@
 
 !! [body
 
+     !
+     ! remarks:
+     !
      ! basically we just loop through every element to compare it
      ! against every other element.
      !
+
      ! this loop increments i which is our starting point for the
      ! comparison
      sort_loop1: do i=nsize,1,-1
