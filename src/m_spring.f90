@@ -352,21 +352,25 @@
 !!
 !! @fun spring_sfmt_stream
 !!
-!! generates a pseudo random number on (0,1)
+!! generates a pseudo random number on (0,1).
 !!
   function spring_sfmt_stream() result(r)
      implicit none
 
-! local parameters
-! pre-calculated to avoid division below
+!! local parameters
+     ! pre-calculated to avoid division below
      real(dpr), parameter :: factor = 1.0_dpr / 4294967296.0_dpr
 
-! local variables
-! return type
+!! local variables
+     ! return type
      real(dpr) :: r
 
-! compute it
+!! [body
+
+     ! compute it
      r = (real(spring_sfmt_source(),dpr) + 0.5_dpr) * factor
+
+!! body]
 
      return
   end function spring_sfmt_stream
