@@ -965,53 +965,60 @@
 !!
 !! @sub s_inv_z
 !!
-!! invert complex(dp) matrix using lapack subroutines
+!! invert complex(dp) matrix using lapack subroutines.
 !!
   subroutine s_inv_z(ndim, zmat)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! dimension of zmat matrix
+!! external arguments
+     ! dimension of zmat matrix
      integer, intent(in)        :: ndim
 
-! object matrix, on entry, it contains the original matrix, on exit,
-! it is destroyed and replaced with the inversed matrix
+     ! object matrix, on entry, it contains the original matrix,
+     ! on exit, it is destroyed and replaced with the inversed matrix.
      complex(dp), intent(inout) :: zmat(ndim,ndim)
 
-! local variables
-! error flag
+!! local variables
+     ! error flag
      integer     :: ierror
 
-! working arrays for lapack subroutines
+     ! working arrays for lapack subroutines
      integer, allocatable     :: ipiv(:)
      complex(dp), allocatable :: work(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(ndim), stat=ierror)
      allocate(work(ndim), stat=ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-! computes the LU factorization of a general m-by-n matrix, need lapack
-! package, zgetrf subroutine
+     ! computes the LU factorization of a general m-by-n matrix,
+     ! need lapack package, zgetrf subroutine.
      call ZGETRF(ndim, ndim, zmat, ndim, ipiv, ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','error in lapack subroutine zgetrf')
      endif ! back if ( ierror /= 0 ) block
 
-! computes the inverse of an LU-factored general matrix, need lapack
-! package, zgetri subroutine
+     ! computes the inverse of an LU-factored general matrix,
+     ! need lapack package, zgetri subroutine.
      call ZGETRI(ndim, zmat, ndim, ipiv, work, ndim, ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','error in lapack subroutine zgetri')
      endif ! back if ( ierror /= 0 ) block
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
      if ( allocated(work) ) deallocate(work)
+
+!! body]
 
      return
   end subroutine s_inv_z
