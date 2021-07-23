@@ -738,7 +738,7 @@
      ! working arrays for lapack subroutines: dgetrf
      integer, allocatable  :: ipiv(:)
 
-    ! working arrays for lapack subroutines: dgeev
+     ! working arrays for lapack subroutines: dgeev
      real(dp), allocatable :: work(:)
 
      ! real and imaginary parts of the computed eigenvalues
