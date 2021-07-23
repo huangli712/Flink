@@ -299,7 +299,7 @@
      call s_str_lowcase(str_key)
 
      ! visit the linked list and try to find out the required key-value
-     ! pair whose key is the same with str_key
+     ! pair whose key is the same with str_key.
      found = .false.
      curr => list_ptr
      do p=1,list_count(list_ptr)-1
@@ -307,7 +307,7 @@
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
          ! the required key-value pair is found, extract the value
-         ! to str_value
+         ! to str_value.
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
              found = .true.
              str_value = data_ptr%str_value
@@ -322,7 +322,11 @@
      if ( found .eqv. .false. ) return
 
      ! convert str_value to out_value, here we only support the following
-     ! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
+     ! four cases:
+     !     1. integer;
+     !     2. logical;
+     !     3. real(dp);
+     !     4. character(len=*).
      select type (out_value)
          ! for integer
          type is (integer)
@@ -400,7 +404,7 @@
      call s_str_lowcase(str_key)
 
      ! visit the linked list and try to find out the required
-     ! key-value pair whose key is the same with str_key
+     ! key-value pair whose key is the same with str_key.
      found = .false.
      curr => list_ptr
      do p=1,list_count(list_ptr)-1
@@ -408,7 +412,7 @@
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
          ! the required key-value pair is found, extract the value
-         ! to str_value
+         ! to str_value.
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
              found = .true.
              str_value = data_ptr%str_value
@@ -419,7 +423,7 @@
      enddo ! over do loop
      curr => null()
 
-     ! we can not find matched key, so return directly
+     ! we can not find matched key, so return directly.
      if ( found .eqv. .false. ) return
 
      !
@@ -434,7 +438,11 @@
      !
 
      ! convert str_value to out_value, here we only support the following
-     ! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
+     ! four cases:
+     !     1. integer;
+     !     2. logical;
+     !     3. real(dp);
+     !     4. character(len=*).
      select type (out_value)
          ! for integer
          type is (integer)
