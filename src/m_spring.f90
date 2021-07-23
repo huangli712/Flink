@@ -252,11 +252,12 @@
          r = ior(iand(mt(N-1),UPPER_MASK),iand(mt(0),LOWER_MASK))
          mt(N-1) = ieor(ieor(mt(M-1),ishft(r,-1)),MAGIC(iand(r,1_i64)))
 
-! start using the array from first element
+         ! start using the array from first element
          mti = 0
      endif ! back if ( mti >= N ) block
 
-! here is where we calculate the number with a series of transformations
+     ! here is where we calculate the number with a series
+     ! of transformations.
      r = mt(mti)
      mti = mti + 1
 
@@ -264,6 +265,8 @@
      r = iand(4294967295_i64,ieor(r,iand(ishft(r, 7),TEMPERING_B)))
      r = iand(4294967295_i64,ieor(r,iand(ishft(r,15),TEMPERING_C)))
      r = ieor(r,ishft(r,-18))
+
+!! body]
 
      return
   end function spring_mt_source
