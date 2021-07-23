@@ -70,23 +70,25 @@
 !!>>> declare common variables for MT19937 generator                   <<<
 !!========================================================================
 
-! states pointer, if mti == -1, itialization is necessary
+!! module variables
+     ! states pointer, if mti == -1, itialization is necessary
      integer(i32), private, save :: mti = -1
 
-! states array for twist generator
+     ! states array for twist generator
      integer(i64), private, save :: mt(0:N-1)
 
 !!========================================================================
 !!>>> declare common variables for SFMT generator                      <<<
 !!========================================================================
 
-! index counter to the 32-bit internal state array
+!! module variables
+     ! index counter to the 32-bit internal state array
      integer(i32), private, save :: idx = -1
 
-! the 32-bit integer pointer to the 128-bit internal state array
+     ! the 32-bit integer pointer to the 128-bit internal state array
      integer(i32), private, save :: pt32(0:N32-1)
 
-! the 64-bit integer pointer to the 128-bit internal state array
+     ! the 64-bit integer pointer to the 128-bit internal state array
      integer(i64), private, save :: pt64(0:N64-1)
 
 !!========================================================================
