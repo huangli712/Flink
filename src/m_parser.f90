@@ -263,48 +263,51 @@
 !! @sub p_get
 !!
 !! retrieve the key-value pair from the linked list data structure here
-!! value is a single object
+!! value is a single object.
 !!
   subroutine p_get(in_key, out_value)
      implicit none
 
-! external arguments
-! string representation for the key of key-value pair
+!! external arguments
+     ! string representation for the key of key-value pair
      character(len=*), intent(in) :: in_key
 
-! polymorphic object for the value of key-value pair
+     ! polymorphic object for the value of key-value pair
      class(*), intent(inout)      :: out_value
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: p
 
-! flag for the search results
+     ! flag for the search results
      logical :: found
 
-! string representation for the key
+     ! string representation for the key
      character(len=32) :: str_key
 
-! string representation for the value
+     ! string representation for the value
      character(len=32) :: str_value
 
-! pointer for the linked list data structure
+     ! pointer for the linked list data structure
      type(list_t), pointer :: curr => null()
 
-! copy in_key to str_key and then postprocess it
+!! [body
+
+     ! copy in_key to str_key and then postprocess it
      str_key = in_key
      call s_str_compress(str_key)
      call s_str_lowcase(str_key)
 
-! visit the linked list and try to find out the required key-value pair
-! whose key is the same with str_key
+     ! visit the linked list and try to find out the required key-value
+     ! pair whose key is the same with str_key
      found = .false.
      curr => list_ptr
      do p=1,list_count(list_ptr)-1
-! note that we skip the first element since it is invalid
+         ! note that we skip the first element since it is invalid
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
-! the required key-value pair is found, extract the value to str_value
+         ! the required key-value pair is found, extract the value
+         ! to str_value
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
              found = .true.
              str_value = data_ptr%str_value
@@ -315,11 +318,11 @@
      enddo ! over do loop
      curr => null()
 
-! we can not find matched key, so return directly
+     ! we can not find matched key, so return directly
      if ( found .eqv. .false. ) return
 
-! convert str_value to out_value, here we only support the following
-! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
+     ! convert str_value to out_value, here we only support the following
+     ! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
      select type (out_value)
          type is (integer)          ! for integer
              read (str_value,*) out_value
@@ -337,6 +340,8 @@
              write(mystd,'(a)') 'parser: p_get, unrecognize data type'
              STOP
      end select
+
+!! body]
 
      return
   end subroutine p_get
