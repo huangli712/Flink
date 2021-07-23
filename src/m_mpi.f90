@@ -921,7 +921,7 @@
      subroutine mp_cart_coords(myid, cx, cy)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: myid
          integer, intent(out) :: cx
          integer, intent(out) :: cy
@@ -932,14 +932,15 @@
          ! invoke related mpi subroutines
          call MPI_CART_COORDS(mpi_comm_cart, myid, ndims, coords, ierror)
 
-! copy coordinates to cx and cy, in principle, the dimension of coords
-! is ndims (now ndims is equal to 2)
+         ! copy coordinates to cx and cy. in principle, the dimension
+         ! of coords is ndims (now ndims is equal to 2).
          cx = coords(1)
          cy = coords(2)
 
          ! handler for return code
          call mp_error('mp_cart_coords', ierror)
 
+!! body]
          return
      end subroutine mp_cart_coords
 
@@ -955,35 +956,37 @@
          integer :: color
          integer :: key
 
-! invoke related mpi subroutines
-! note: mpi_comm_row should be overwritten in output
+         ! invoke related mpi subroutines
+         ! note: mpi_comm_row should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
 
          ! handler for return code
          call mp_error('mp_comm_split_row', ierror)
 
+!! body]
          return
      end subroutine mp_comm_split_row
 
 !!
 !! @sub mp_comm_split_col
 !!
-!! creates new communicators based on colors and keys
+!! creates new communicators based on colors and keys.
 !!
      subroutine mp_comm_split_col(color, key)
          implicit none
 
-! external arguments
+!! external arguments
          integer :: color
          integer :: key
 
-! invoke related mpi subroutines
-! note: mpi_comm_col should be overwritten in output
+         ! invoke related mpi subroutines
+         ! note: mpi_comm_col should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_comm_split_col', ierror)
 
+!! body]
          return
      end subroutine mp_comm_split_col
 
@@ -1015,6 +1018,7 @@
          ! handler for return code
          call mp_error('mp_barrier', ierror)
 
+!! body]
          return
      end subroutine mp_barrier
 
@@ -1036,6 +1040,7 @@
          ! invoke related mpi subroutines
          time = MPI_WTIME()
 
+!! body]
          return
      end subroutine mp_wtime
 
@@ -1053,6 +1058,7 @@
          ! invoke related mpi subroutines
          tick = MPI_WTICK()
 
+!! body]
          return
      end subroutine mp_wtick
 
@@ -1087,8 +1093,10 @@
          ! invoke realted MPI subroutines
          call MPI_BCAST(data, 1, m_log, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_log0', ierror)
+
+!! body]
 
          return
      end subroutine mp_bcast_log0
@@ -1096,7 +1104,7 @@
 !!
 !! @sub mp_bcast_log1
 !!
-!! broadcasts bool(:) from the process with rank "root"
+!! broadcasts bool(:) from the process with rank "root".
 !!
      subroutine mp_bcast_log1(data, root, gid)
          implicit none
@@ -1126,6 +1134,7 @@
          ! handler for return code
          call mp_error('mp_bcast_log1', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_log1
 
@@ -1162,19 +1171,57 @@
          ! handler for return code
          call mp_error('mp_bcast_log2', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_log2
 
 !!
 !! @sub mp_bcast_log3
 !!
-!! broadcasts bool3 from the process with rank "root"
+!! broadcasts bool3 from the process with rank "root".
 !!
      subroutine mp_bcast_log3(data, root, gid)
          implicit none
 
 !! external arguments
          logical, intent(in) :: data(:,:,:)
+         !
+         integer, intent(in) :: root
+         integer, optional, intent(in) :: gid
+
+         ! set current communicator
+         if ( present(gid) .eqv. .true. ) then
+             group = gid
+         else
+             group = MPI_COMM_WORLD
+         endif ! back if ( present(gid) .eqv. .true. )` block
+
+         ! barrier until all processes reach here
+         call mp_barrier(group)
+
+         ! setup element count
+         isize = size(data)
+
+         ! invoke realted MPI subroutines
+         call MPI_BCAST(data, isize, m_log, root, group, ierror)
+
+         ! handler for return code
+         call mp_error('mp_bcast_log3', ierror)
+
+!! body]
+         return
+     end subroutine mp_bcast_log3
+
+!!
+!! @sub mp_bcast_log4
+!!
+!! broadcasts bool4 from the process with rank "root".
+!!
+     subroutine mp_bcast_log4(data, root, gid)
+         implicit none
+
+!! external arguments
+         logical, intent(in) :: data(:,:,:,:)
          !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
@@ -1196,43 +1243,9 @@
          call MPI_BCAST(data, isize, m_log, root, group, ierror)
 
          ! handler for return code
-         call mp_error('mp_bcast_log3', ierror)
-
-         return
-     end subroutine mp_bcast_log3
-
-!!
-!! @sub mp_bcast_log4
-!!
-!! broadcasts bool4 from the process with rank "root".
-!!
-     subroutine mp_bcast_log4(data, root, gid)
-         implicit none
-
-! external arguments
-         logical, intent(in) :: data(:,:,:,:)
-         integer, intent(in) :: root
-         integer, optional, intent(in) :: gid
-
-! set current communicator
-         if ( present(gid) .eqv. .true. ) then
-             group = gid
-         else
-             group = MPI_COMM_WORLD
-         endif ! back if ( present(gid) .eqv. .true. ) block
-
-! barrier until all processes reach here
-         call mp_barrier(group)
-
-! setup element count
-         isize = size(data)
-
-! invoke realted MPI subroutines
-         call MPI_BCAST(data, isize, m_log, root, group, ierror)
-
-! handler for return code
          call mp_error('mp_bcast_log4', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_log4
 
@@ -1246,6 +1259,7 @@
 
 !! external arguments
          logical, intent(in) :: data(:,:,:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1268,6 +1282,7 @@
          ! handler for return code
          call mp_error('mp_bcast_log5', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_log5
 
@@ -1301,6 +1316,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int0', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int0
 
