@@ -436,13 +436,13 @@
 !!
 !! @sub spring_sfmt_kernel
 !!
-!! this fills the internal state array with pseudo random integers
+!! this fills the internal state array with pseudo random integers.
 !!
   subroutine spring_sfmt_kernel()
      implicit none
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
      integer(i64) :: r1Top
@@ -450,6 +450,8 @@
 
      integer(i64) :: r2Top
      integer(i64) :: r2Btm
+
+!! [body
 
      r1Btm = pt64(N64 - 4)
      r1Top = pt64(N64 - 3)
@@ -479,6 +481,8 @@
          r2Btm = pt64(i*2)
          r2Top = pt64(i*2 + 1)
      enddo ! over i={NS-122,NS-1} loop
+
+!! body]
 
      return
   end subroutine spring_sfmt_kernel
