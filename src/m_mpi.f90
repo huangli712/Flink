@@ -4510,37 +4510,39 @@
      subroutine mp_reduce_int5(source, data, root, mop, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: source(:,:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:,:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
-! set current operator
+!! [body
+
+         ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
          else
              opera = MPI_SUM
          endif ! back if ( present(mop) .eqv. .true. ) block
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(source)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_reduce_int5', ierror)
 
          return
@@ -4554,34 +4556,36 @@
      subroutine mp_reduce_rdp0(source, data, root, mop, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: source
          real(dp), intent(inout) :: data
          integer, intent(in) :: root
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
-! set current operator
+!! [body
+
+         ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
          else
              opera = MPI_SUM
          endif ! back if ( present(mop) .eqv. .true. ) block
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_REDUCE(source, data, 1, m_rdp, opera, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_reduce_rdp0', ierror)
 
          return
@@ -4595,14 +4599,14 @@
      subroutine mp_reduce_rdp1(source, data, root, mop, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: source(:)
          real(dp), intent(inout) :: data(:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
-! set current operator
+         ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
          else
