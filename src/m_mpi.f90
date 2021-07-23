@@ -1962,35 +1962,35 @@
 !!
 !! @sub mp_gather_int1
 !!
-!! gather integer data from every processes to rank 0
+!! gather integer data from every processes to rank 0.
 !!
      subroutine mp_gather_int1(send, data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gather_int1', ierror)
 
          return
@@ -1999,26 +1999,26 @@
 !!
 !! @sub mp_gather_int2
 !!
-!! gather integer data from every processes to rank 0
+!! gather integer data from every processes to rank 0.
 !!
      subroutine mp_gather_int2(send, data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:,:)
          integer, intent(inout) :: data(:,:)
 
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
 ! setup element count
@@ -2152,30 +2152,30 @@
      subroutine mp_gather_rdp1(send, data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: send(:)
          real(dp), intent(inout) :: data(:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gather_rdp1', ierror)
 
          return
@@ -2184,29 +2184,29 @@
 !!
 !! @sub mp_gather_rdp2
 !!
-!! gather real(dp) data from every processes to rank 0
+!! gather real(dp) data from every processes to rank 0.
 !!
      subroutine mp_gather_rdp2(send, data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
 
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
 ! invoke related mpi subroutines
