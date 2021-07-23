@@ -118,29 +118,33 @@
 !!
 !! @sub spring_mt_init
 !!
-!! initializes the MT19937 generator with "seed"
+!! initializes the MT19937 generator with "seed".
 !!
   subroutine spring_mt_init(seed)
      implicit none
 
-! external arguments
-! seed for random number generator
+!! external arguments
+     ! seed for random number generator
      integer(i32), intent(in) :: seed
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! save seed
+!! [body
+
+     ! save seed
      mt(0) = seed
 
-! set the seed using values suggested by Matsumoto & Nishimura, using
-! a generator by Knuth. See original source for details
+     ! set the seed using values suggested by Matsumoto & Nishimura,
+     ! using a generator by Knuth. See original C source for details.
      do i=1,N-1
          mt(i) = iand(4294967295_i64,1812433253_i64*ieor(mt(i-1),ishft(mt(i-1),-30_i64))+i)
      enddo ! over i={1,N-1} loop
 
      mti = N
+
+!! body]
 
      return
   end subroutine spring_mt_init
@@ -149,21 +153,25 @@
 !! @fun spring_mt_stream
 !!
 !! obtain a psuedo random real number in the range (0,1), i.e., a number
-!! greater than 0 and less than 1
+!! greater than 0 and less than 1.
 !!
   function spring_mt_stream() result(r)
      implicit none
 
-! local parameters
-! pre-calculated to avoid division below
+!! local parameters
+     ! pre-calculated to avoid division below
      real(dpr), parameter :: factor = 1.0_dpr / 4294967296.0_dpr
 
-! local variables
-! return type
+!! local variables
+     ! return type
      real(dpr) :: r
 
-! compute it
+!! [body
+
+     ! compute it
      r = (real(spring_mt_source(),dpr) + 0.5_dpr) * factor
+
+!! body]
 
      return
   end function spring_mt_stream
@@ -172,21 +180,25 @@
 !! @fun spring_mt_string
 !!
 !! obtain a psuedo random real number in the range [0,1], i.e., a number
-!! greater than or equal to 0 and less than or equal to 1
+!! greater than or equal to 0 and less than or equal to 1.
 !!
   function spring_mt_string() result(r)
      implicit none
 
-! local parameters
-! pre-calculated to avoid division below
+!! local parameters
+     ! pre-calculated to avoid division below
      real(dpr), parameter :: factor = 1.0_dpr / 4294967295.0_dpr
 
-! local variables
-! return type
+!! local variables
+     ! return type
      real(dpr) :: r
 
-! compute it
+!! [body
+
+     ! compute it
      r = real(spring_mt_source(),dpr) * factor
+
+!! body]
 
      return
   end function spring_mt_string
@@ -194,35 +206,39 @@
 !!
 !! @fun spring_mt_source
 !!
-!! obtain the next 64-bit integer in the psuedo random sequence
+!! obtain the next 64-bit integer in the psuedo random sequence.
 !!
   function spring_mt_source() result(r)
      implicit none
 
-! local parameters
+!! local parameters
+     ! a magic number
      integer(i64), parameter :: MAGIC(0:1) = (/ 0_i64, -1727483681_i64 /)
 
-! period parameters
+     ! period parameters
      integer(i64), parameter :: UPPER_MASK =  2147483648_i64
      integer(i64), parameter :: LOWER_MASK =  2147483647_i64
 
-! tempering parameters
+     ! tempering parameters
      integer(i64), parameter :: TEMPERING_B = -1658038656_i64
      integer(i64), parameter :: TEMPERING_C =  -272236544_i64
 
-! local variables
-! return type
+!! local variables
+     ! return type
      integer(i64) :: r
 
-! loop index
+     ! loop index
      integer(i32) :: k
 
-! generate N words at a time
+!! [body
+
+     ! generate N words at a time
      if ( mti >= N ) then
-! the value -1 acts as a flag saying that the seed has not been set.
+         ! the value -1 acts as a flag saying that the seed has
+         ! not been set.
          if ( mti == -1 ) call spring_mt_init(4357_i32)
 
-! fill the mt array
+         ! fill the mt array
          do k=0,N-M-1
              r = ior(iand(mt(k),UPPER_MASK),iand(mt(k+1),LOWER_MASK))
              mt(k) = ieor(ieor(mt(k + M),ishft(r,-1_i64)),MAGIC(iand(r,1_i64)))
