@@ -1314,6 +1314,7 @@
 
 !! external arguments
          integer, intent(in) :: data(:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1336,6 +1337,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int1', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int1
 
@@ -1372,6 +1374,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int2', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int2
 
@@ -1385,6 +1388,7 @@
 
 !! external arguments
          integer, intent(in) :: data(:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1407,6 +1411,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int3', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int3
 
@@ -1420,6 +1425,7 @@
 
 ! external arguments
          integer, intent(in) :: data(:,:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1442,6 +1448,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int4', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int4
 
@@ -1455,6 +1462,7 @@
 
 !! external arguments
          integer, intent(in) :: data(:,:,:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1477,6 +1485,7 @@
          ! handler for return code
          call mp_error('mp_bcast_int5', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_int5
 
@@ -1510,6 +1519,7 @@
          ! handler for return code
          call mp_error('mp_bcast_chr0', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_chr0
 
@@ -1545,6 +1555,7 @@
          ! handler for return code
          call mp_error('mp_bcast_chr1', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_chr1
 
@@ -1578,6 +1589,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp0', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp0
 
@@ -1614,6 +1626,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp1
 
@@ -1652,6 +1665,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp2
 
@@ -1690,6 +1704,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp3
 
@@ -1727,6 +1742,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp4
 
@@ -1764,6 +1780,7 @@
          ! handler for return code
          call mp_error('mp_bcast_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_rdp5
 
@@ -1777,6 +1794,7 @@
 
 !! external arguments
          complex(dp), intent(in) :: data
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1797,6 +1815,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp0', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp0
 
@@ -1834,6 +1853,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp1
 
@@ -1871,6 +1891,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp2
 
