@@ -3736,17 +3736,19 @@
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
          ! setup element count
@@ -3777,29 +3779,30 @@
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
-
+         !
          integer, intent(in) :: recv(:)
          integer, intent(in) :: disp(:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgatherv_int1', ierror)
 
          return
