@@ -1063,27 +1063,28 @@
 !!
 !! @sub mp_bcast_log0
 !!
-!! broadcasts bool from the process with rank "root"
+!! broadcasts bool from the process with rank "root".
 !!
      subroutine mp_bcast_log0(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          logical, intent(in) :: data
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, 1, m_log, root, group, ierror)
 
 ! handler for return code
@@ -1102,6 +1103,7 @@
 
 !! external arguments
          logical, intent(in) :: data(:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1171,28 +1173,29 @@
      subroutine mp_bcast_log3(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          logical, intent(in) :: data(:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, isize, m_log, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_log3', ierror)
 
          return
@@ -1201,7 +1204,7 @@
 !!
 !! @sub mp_bcast_log4
 !!
-!! broadcasts bool4 from the process with rank "root"
+!! broadcasts bool4 from the process with rank "root".
 !!
      subroutine mp_bcast_log4(data, root, gid)
          implicit none
@@ -1236,33 +1239,33 @@
 !!
 !! @sub mp_bcast_log5
 !!
-!! broadcasts bool5 from the process with rank "root"
+!! broadcasts bool5 from the process with rank "root".
 !!
      subroutine mp_bcast_log5(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          logical, intent(in) :: data(:,:,:,:,:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, isize, m_log, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_log5', ierror)
 
          return
@@ -1271,30 +1274,31 @@
 !!
 !! @sub mp_bcast_int0
 !!
-!! broadcasts int from the process with rank "root"
+!! broadcasts int from the process with rank "root".
 !!
      subroutine mp_bcast_int0(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: data
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, 1, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_int0', ierror)
 
          return
@@ -1303,33 +1307,33 @@
 !!
 !! @sub mp_bcast_int1
 !!
-!! broadcasts int(:) from the process with rank "root"
+!! broadcasts int(:) from the process with rank "root".
 !!
      subroutine mp_bcast_int1(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: data(:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, isize, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_int1', ierror)
 
          return
