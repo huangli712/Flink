@@ -734,6 +734,8 @@
      subroutine mp_info()
          implicit none
 
+!! [body
+
 # if defined (OMPI)
 
 # define STR_MPI 'Good news, your compiler is mpi-compatible (openmpi).'
@@ -763,6 +765,7 @@
      subroutine mp_init()
          implicit none
 
+!! [body
          ! invoke related mpi subroutines
          call MPI_INIT(ierror)
 
@@ -781,6 +784,7 @@
      subroutine mp_finalize()
          implicit none
 
+!! [body
          ! invoke related mpi subroutines
          call MPI_FINALIZE(ierror)
 
@@ -807,6 +811,7 @@
          integer, intent(out) :: myid
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -836,6 +841,7 @@
          integer, intent(out) :: nprocs
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -864,6 +870,7 @@
 !! external arguments
          character(len=MPI_MAX_PROCESSOR_NAME), intent(out) :: workstation
 
+!! [body
          ! invoke related mpi subroutines
          call MPI_GET_PROCESSOR_NAME(workstation, istat, ierror)
 
@@ -890,6 +897,7 @@
          integer, intent(in) :: nprocs
          integer, intent(inout) :: dims(ndims)
 
+!! [body
          ! invoke related mpi subroutines
          call MPI_DIMS_CREATE(nprocs, ndims, dims, ierror)
 
@@ -910,6 +918,7 @@
 !! external arguments
          integer, intent(in) :: dims(ndims)
 
+!! [body
          ! invoke related mpi subroutines
          ! note: mpi_comm_cart should be overwriten in output
          call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
@@ -937,6 +946,7 @@
 !! local variables
          integer :: coords(ndims)
 
+!! [body
          ! invoke related mpi subroutines
          call MPI_CART_COORDS(mpi_comm_cart, myid, ndims, coords, ierror)
 
@@ -964,6 +974,7 @@
          integer :: color
          integer :: key
 
+!! [body
          ! invoke related mpi subroutines
          ! note: mpi_comm_row should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
@@ -987,6 +998,7 @@
          integer :: color
          integer :: key
 
+!! [body
          ! invoke related mpi subroutines
          ! note: mpi_comm_col should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
@@ -1013,6 +1025,7 @@
 !! external arguments
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1045,6 +1058,7 @@
 !! external arguments
          real(dp), intent(out) :: time
 
+!! [body
          ! invoke related mpi subroutines
          time = MPI_WTIME()
 
@@ -1063,6 +1077,7 @@
 !! external arguments
          real(dp), intent(out) :: tick
 
+!! [body
          ! invoke related mpi subroutines
          tick = MPI_WTICK()
 
@@ -1088,6 +1103,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1123,6 +1139,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1160,6 +1177,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1197,6 +1215,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1234,6 +1253,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1271,6 +1291,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1308,6 +1329,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1342,6 +1364,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1379,6 +1402,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1416,6 +1440,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1453,6 +1478,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1490,6 +1516,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1527,6 +1554,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1560,6 +1588,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1597,6 +1626,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1631,6 +1661,7 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
