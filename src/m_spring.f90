@@ -279,31 +279,33 @@
 !! @sub spring_sfmt_init
 !!
 !! this function initializes the internal state array with a 32-bit
-!! integer seed
+!! integer seed.
 !!
   subroutine spring_sfmt_init(seed)
      implicit none
 
-! external arguments
-! seed for random number generator
+!! external arguments
+     ! seed for random number generator
      integer(i32), intent(in) :: seed
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
 
-! status flag
+     ! status flag
      integer :: inner = 0
 
-! dummy variables
+     ! dummy variables
      integer(i32) :: work
      integer(i64) :: temp
 
-! setup idx
+!! [body
+
+     ! setup idx
      idx = N32
 
-! setup pt32 array
+     ! setup pt32 array
      pt32(0) = seed
      do i=1,N32-1
          temp = ieor( pt32(i-1), ishft( pt32(i-1), -30 ) )
@@ -311,7 +313,7 @@
          pt32(i) = int( ibits( temp, 0, 32 ), kind = i32 )
      enddo ! over i={1,N32-1} loop
 
-! check period of random number generator
+     ! check period of random number generator
      do i=0,3
          work = iand(pt32(i), parity(i))
          do j=0,31
@@ -320,7 +322,7 @@
          enddo ! over j={0,31} loop
      enddo ! over i={0,3} loop
 
-! the period is OK? re-adjust pt32 array
+     ! the period is OK? re-adjust pt32 array
      if ( inner /= 1 ) then
          adjust_period_loop: do i=0,3
              work = 1
@@ -334,13 +336,15 @@
          enddo adjust_period_loop ! over i={0,3} loop
      endif ! back if ( inner /= 1 ) block
 
-! setup pt64 array
+     ! setup pt64 array
      do i=0,N64-1
          pt64(i) = pt32(i*2 + 1)
          temp = pt32(i*2)
          temp = iand(temp, 4294967295_i64)
          pt64(i) = ior(ishft(pt64(i), 32), temp)
      enddo ! over i={0,N64-1} loop
+
+!! body]
 
      return
   end subroutine spring_sfmt_init
