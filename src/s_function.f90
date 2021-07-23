@@ -667,7 +667,7 @@
      implicit none
 
 !! external arguments
-     ! imaginary time point, it is alreay scaled to [-1,1]
+     ! imaginary time point. it is alreay scaled to [-1,1].
      real(dp), intent(in) :: tau
 
      ! real frequency point
