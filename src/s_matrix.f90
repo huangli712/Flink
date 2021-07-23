@@ -1702,54 +1702,60 @@
 !!
 !! @sub s_solve_dg
 !!
-!! solve linear system AX = B, real(dp) general version
+!! solve linear system AX = B, real(dp) general version.
 !!
   subroutine s_solve_dg(n, nrhs, A, B)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! the number of linear equations
+!! external arguments
+     ! the number of linear equations
      integer, intent(in)     :: n
 
-! the number of right-hand sides
+     ! the number of right-hand sides
      integer, intent(in)     :: nrhs
 
-! on entry, it is a n-by-n coefficient matrix A; on exit, it is overwritten
-! by the factors L and U from the factorization of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
+     ! is overwritten by the factors L and U from the factorization
+     ! of A = PLU.
      real(dp), intent(inout) :: A(n,n)
 
-! on entry, it is a n-by-nrhs matrix of right hand side matrix B; on exit,
-! it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
+     ! B; on exit, it is overwritten by the solution matrix X.
      real(dp), intent(inout) :: B(n,nrhs)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine dgesv
+     ! return information from subroutine dgesv
      integer :: info
 
-! workspace array, its dimension is at least max(1,n)
+     ! workspace array, its dimension is at least max(1,n)
      integer, allocatable :: ipiv(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_dg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: dgesv
+     ! call the computational subroutine: dgesv
      call DGESV(n, nrhs, A, n, ipiv, B, n, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_solve_dg','error in lapack subroutine dgesv')
      endif ! back if ( info /= 0 ) block
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
+
+!! body]
 
      return
   end subroutine s_solve_dg
@@ -1757,54 +1763,60 @@
 !!
 !! @sub s_solve_zg
 !!
-!! solve linear system AX = B, complex(dp) general version
+!! solve linear system AX = B, complex(dp) general version.
 !!
   subroutine s_solve_zg(n, nrhs, A, B)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! the number of linear equations
+!! external arguments
+     ! the number of linear equations
      integer, intent(in)        :: n
 
-! the number of right-hand sides
+     ! the number of right-hand sides
      integer, intent(in)        :: nrhs
 
-! on entry, it is a n-by-n coefficient matrix A; on exit, it is overwritten
-! by the factors L and U from the factorization of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
+     ! is overwritten by the factors L and U from the factorization
+     ! of A = PLU.
      complex(dp), intent(inout) :: A(n,n)
 
-! on entry, it is a n-by-nrhs matrix of right hand side matrix B; on exit,
-! it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
+     ! B; on exit, it is overwritten by the solution matrix X.
      complex(dp), intent(inout) :: B(n,nrhs)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine zgesv
+     ! return information from subroutine zgesv
      integer :: info
 
-! workspace array, its dimension is at least max(1,n)
+     ! workspace array, its dimension is at least max(1,n)
      integer, allocatable :: ipiv(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_zg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: zgesv
+     ! call the computational subroutine: zgesv
      call ZGESV(n, nrhs, A, n, ipiv, B, n, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_solve_zg','error in lapack subroutine zgesv')
      endif ! back if ( info /= 0 ) block
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
+
+!! body]
 
      return
   end subroutine s_solve_zg
