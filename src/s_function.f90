@@ -90,7 +90,8 @@
 !!
 !! @sub s_che_basis
 !!
-!! build the second kind chebyshev orthogonal polynomial in [-1,1] interval
+!! build the second kind chebyshev orthogonal polynomial in
+!! [-1,1] interval.
 !!
   subroutine s_che_basis(chmax, chgrd, cmesh, rep_c)
      use constants, only : dp
@@ -98,34 +99,42 @@
 
      implicit none
 
-! external arguments
-! maximum order for chebyshev orthogonal polynomial
+!! external arguments
+     ! maximum order for chebyshev orthogonal polynomial
      integer, intent(in)   :: chmax
 
-! number of mesh points for chebyshev orthogonal polynomial
+     ! number of mesh points for chebyshev orthogonal polynomial
      integer, intent(in)   :: chgrd
 
-! mesh for chebyshev orthogonal polynomial in [-1,1]
+     ! mesh for chebyshev orthogonal polynomial in [-1,1]
      real(dp), intent(in)  :: cmesh(chgrd)
 
-! chebyshev orthogonal polynomial defined on [-1,1]
+     ! chebyshev orthogonal polynomial defined on [-1,1]
      real(dp), intent(out) :: rep_c(chgrd,chmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
 
-! check chmax
+!! [body
+
+     ! check chmax
      if ( chmax <= 2 ) then
          call s_print_error('s_che_basis','chmax must be larger than 2')
      endif ! back if ( chmax <= 2 ) block
 
-! the chebyshev orthogonal polynomials of the second kind can be defined
-! by the following recurrence relation
-!     $U_0(x) = 1$
-!     $U_1(x) = 2x$
-!     $U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)$
+     !
+     ! remarks:
+     !
+     ! the chebyshev orthogonal polynomials of the second kind can be
+     ! defined by the following recurrence relation:
+     !
+     !     $U_0(x) = 1$
+     !     $U_1(x) = 2x$
+     !     $U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)$
+     !
+
      do i=1,chgrd
          rep_c(i,1) = one
          rep_c(i,2) = two * cmesh(i)
@@ -133,6 +142,8 @@
              rep_c(i,j) = two * cmesh(i) * rep_c(i,j-1) - rep_c(i,j-2)
          enddo ! over j={3,chmax} loop
      enddo ! over i={1,chgrd} loop
+
+!! body]
 
      return
   end subroutine s_che_basis
