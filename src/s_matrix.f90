@@ -1824,59 +1824,66 @@
 !!
 !! @sub s_solve_sy
 !!
-!! solve linear system AX = B, real(dp) symmetric version
+!! solve linear system AX = B, real(dp) symmetric version.
 !!
   subroutine s_solve_sy(n, nrhs, A, B)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! the number of linear equations
+!! external arguments
+     ! the number of linear equations
      integer, intent(in)     :: n
 
-! the number of right-hand sides
+     ! the number of right-hand sides
      integer, intent(in)     :: nrhs
 
-! on entry, it is a n-by-n coefficient matrix A; on exit, it is overwritten
-! by the factors L and U from the factorization of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
+     ! is overwritten by the factors L and U from the factorization
+     ! of A = PLU.
      real(dp), intent(inout) :: A(n,n)
 
-! on entry, it is a n-by-nrhs matrix of right hand side matrix B; on exit,
-! it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
+     ! B; on exit, it is overwritten by the solution matrix X.
      real(dp), intent(inout) :: B(n,nrhs)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine dsysv
+     ! return information from subroutine dsysv
      integer :: info
 
-! workspace array, its dimension is at least max(1,n)
+     ! workspace array, its dimension is at least max(1,n)
      integer, allocatable  :: ipiv(:)
 
-! workspace array, its dimension is at least max(1, lwork) and lwork >= 1
+     ! workspace array, its dimension is at least max(1, lwork)
+     ! and lwork >= 1
      real(dp), allocatable :: work(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(n), stat=istat)
      allocate(work(n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_sy','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: dsysv
+     ! call the computational subroutine: dsysv
      call DSYSV('U', n, nrhs, A, n, ipiv, B, n, work, n, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_solve_sy','error in lapack subroutine dsysv')
      endif ! back if ( info /= 0 ) block
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
      if ( allocated(work) ) deallocate(work)
+
+!! body]
 
      return
   end subroutine s_solve_sy
