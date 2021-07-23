@@ -490,12 +490,12 @@
 !!
 !! @sub spring_sfmt_core
 !!
-!! this represents the recursion formula
+!! this represents the recursion formula.
 !!
   subroutine spring_sfmt_core(rTop, rBtm, aTop, aBtm, bTop, bBtm, cTop, cBtm, dTop, dBtm)
      implicit none
 
-! external arguments
+!! external arguments
      integer(i64), intent(in) :: aTop
      integer(i64), intent(in) :: aBtm
 
@@ -511,12 +511,14 @@
      integer(i64), intent(out) :: rTop
      integer(i64), intent(out) :: rBtm
 
-! local variables
+!! local variables
      integer(i64) :: xTop
      integer(i64) :: xBtm
 
      integer(i64) :: yTop
      integer(i64) :: yBtm
+
+!! [body
 
      xTop = ior(ishft(aTop, 8), ishft(aBtm, -56))
      xBtm = ishft(aBtm, 8)
@@ -535,6 +537,8 @@
 
      rBtm = ieor(rBtm, ishft(iand(dBtm, 70364449226751_i64), 18))
      rTop = ieor(rTop, ishft(iand(dTop, 70364449226751_i64), 18))
+
+!! body]
 
      return
   end subroutine spring_sfmt_core
