@@ -776,9 +776,11 @@
 !-------------------------------------------------------------------------
 ! method A: preferred method
 !-------------------------------------------------------------------------
+
      ! computes the LU factorization of a general m-by-n matrix, need
      ! lapack package, dgetrf subroutine.
      call DGETRF(ndim, ndim, dmat, ndim, ipiv, ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_exception('s_det_d','error in lapack subroutine dgetrf')
      endif ! back if ( ierror /= 0 ) block
@@ -799,8 +801,10 @@
 !-------------------------------------------------------------------------
 ! method B: as a backup
 !-------------------------------------------------------------------------
+
      ! diagonalize amat to obtain its eigenvalues: wr and wi.
      call DGEEV('N', 'N', ndim, amat, ndim, wr, wi, vl, ndim, vr, ndim, work, lwork, ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_det_d','error in lapack subroutine dgeev')
      endif ! back if ( ierror /= 0 ) block
@@ -829,7 +833,7 @@
 !!
 !! @sub s_det_z
 !!
-!! calculate the determinant of a complex(dp) matrix
+!! calculate the determinant of a complex(dp) matrix.
 !!
   subroutine s_det_z(ndim, zmat, zdet)
      use constants, only : dp
@@ -837,41 +841,45 @@
 
      implicit none
 
-! external arguments
-! dimension of zmat matrix
+!! external arguments
+     ! dimension of zmat matrix
      integer, intent(in)        :: ndim
 
-! determinant of zmat matrix
+     ! determinant of zmat matrix
      complex(dp), intent(out)   :: zdet
 
-! object matrix, on entry, it contains the original matrix, on exit,
-! it is destroyed and replaced with the L and U matrix
+     ! object matrix, on entry, it contains the original matrix, on
+     ! exit, it is destroyed and replaced with the L and U matrix.
      complex(dp), intent(inout) :: zmat(ndim,ndim)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! error flag
+     ! error flag
      integer :: ierror
 
-! working arrays for lapack subroutines
+     ! working arrays for lapack subroutines
      integer, allocatable :: ipiv(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(ndim), stat=ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_det_z','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-! computes the LU factorization of a general m-by-n matrix, need lapack
-! package, zgetrf subroutine
+     ! computes the LU factorization of a general m-by-n matrix,
+     ! need lapack package, zgetrf subroutine
      call ZGETRF(ndim, ndim, zmat, ndim, ipiv, ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_det_z','error in lapack subroutine zgetrf')
      endif ! back if ( ierror /= 0 ) block
 
-! calculate determinant
+     ! calculate determinant
      zdet = cone
      do i=1,ndim
          if ( ipiv(i) == i ) then
@@ -881,8 +889,10 @@
          endif ! back if ( ipiv(i) == i ) block
      enddo ! over i={1,ndim} loop
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
+
+!! body]
 
      return
   end subroutine s_det_z
