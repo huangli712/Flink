@@ -1031,7 +1031,7 @@
 !! @sub s_eig_dg
 !!
 !! diagonalize a general real(dp) matrix and return its eigenvalues and
-!! eigenvectors
+!! eigenvectors.
 !!
   subroutine s_eig_dg(ldim, ndim, amat, eval, evec)
      use constants, only : dp
@@ -1039,78 +1039,84 @@
 
      implicit none
 
-! external arguments
-! leading dimension of matrix amat
+!! external arguments
+     ! leading dimension of matrix amat
      integer, intent(in)   :: ldim
 
-! the order of the matrix amat
+     ! the order of the matrix amat
      integer, intent(in)   :: ndim
 
-! original general real(dp) matrix to compute eigenvals and eigenvectors
+     ! original general real(dp) matrix to compute eigenvals
+     ! and eigenvectors
      real(dp), intent(in)  :: amat(ldim,ndim)
 
-! if info = 0, the eigenvalues in ascending order
+     ! if info = 0, the eigenvalues in ascending order
      real(dp), intent(out) :: eval(ndim)
 
-! if info = 0, orthonormal eigenvectors of the matrix
+     ! if info = 0, orthonormal eigenvectors of the matrix
      real(dp), intent(out) :: evec(ldim,ndim)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine dgeev
+     ! return information from subroutine dgeev
      integer :: info
 
-! the length of the array work, lwork >= max(1,4*ndim)
+     ! the length of the array work, lwork >= max(1,4*ndim)
      integer :: lwork
 
-! workspace array
+     ! workspace array
      real(dp), allocatable :: work(:)
 
-! auxiliary real(dp) matrix: real and imaginary parts of eigenvalues
+     ! auxiliary real(dp) matrix: real and imaginary parts of eigenvalues
      real(dp), allocatable :: wr(:)
      real(dp), allocatable :: wi(:)
 
-! auxiliary real(dp) matrix: left and right eigenvectors
+     ! auxiliary real(dp) matrix: left and right eigenvectors
      real(dp), allocatable :: vr(:,:)
      real(dp), allocatable :: vl(:,:)
 
-! initialize lwork
+!! [body
+
+     ! initialize lwork
      lwork = 4 * ndim
 
-! allocate memory
+     ! allocate memory
      allocate(work(lwork),   stat=istat)
      allocate(wr(ndim),      stat=istat)
      allocate(wi(ndim),      stat=istat)
      allocate(vr(ndim,ndim), stat=istat)
      allocate(vl(ndim,ndim), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_eig_dg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! initialize output arrays
+     ! initialize output arrays
      eval = zero
      evec = amat
 
-! call the computational subroutine: dgeev
+     ! call the computational subroutine: dgeev
      call DGEEV('N', 'V', ndim, evec, ldim, wr, wi, vl, ndim, vr, ndim, work, lwork, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_eig_dg','error in lapack subroutine dgeev')
      endif ! back if ( info /= 0 ) block
 
-! copy eigenvalues and eigenvectors
+     ! copy eigenvalues and eigenvectors
      eval(1:ndim) = wr(1:ndim)
      evec(1:ndim,1:ndim) = vr(1:ndim,1:ndim)
 
-! dealloate memory for workspace array
+     ! dealloate memory for workspace array
      if ( allocated(work) ) deallocate(work)
      if ( allocated(wr  ) ) deallocate(wr  )
      if ( allocated(wi  ) ) deallocate(wi  )
      if ( allocated(vr  ) ) deallocate(vr  )
      if ( allocated(vl  ) ) deallocate(vl  )
+
+!! body]
 
      return
   end subroutine s_eig_dg
