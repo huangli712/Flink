@@ -1891,59 +1891,66 @@
 !!
 !! @sub s_solve_he
 !!
-!! solve linear system AX = B, complex(dp) Hermitian version
+!! solve linear system AX = B, complex(dp) Hermitian version.
 !!
   subroutine s_solve_he(n, nrhs, A, B)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! the number of linear equations
+!! external arguments
+     ! the number of linear equations
      integer, intent(in)        :: n
 
-! the number of right-hand sides
+     ! the number of right-hand sides
      integer, intent(in)        :: nrhs
 
-! on entry, it is a n-by-n coefficient matrix A; on exit, it is overwritten
-! by the factors L and U from the factorization of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
+     ! is overwritten by the factors L and U from the factorization
+     ! of A = PLU.
      complex(dp), intent(inout) :: A(n,n)
 
-! on entry, it is a n-by-nrhs matrix of right hand side matrix B; on exit,
-! it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
+     ! B; on exit, it is overwritten by the solution matrix X.
      complex(dp), intent(inout) :: B(n,nrhs)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine zhesv
+     ! return information from subroutine zhesv
      integer :: info
 
-! workspace array, its dimension is at least max(1,n)
+     ! workspace array, its dimension is at least max(1,n)
      integer, allocatable     :: ipiv(:)
 
-! workspace array, its dimension is at least max(1, lwork) and lwork >= 1
+     ! workspace array, its dimension is at least max(1, lwork)
+     ! and lwork >= 1
      complex(dp), allocatable :: work(:)
 
-! allocate memory
+!! [body
+
+     ! allocate memory
      allocate(ipiv(n), stat=istat)
      allocate(work(n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_he','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: zhesv
+     ! call the computational subroutine: zhesv
      call ZHESV('U', n, nrhs, A, n, ipiv, B, n, work, n, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_solve_he','error in lapack subroutine zhesv')
      endif ! back if ( info /= 0 ) block
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
      if ( allocated(work) ) deallocate(work)
+
+!! body]
 
      return
   end subroutine s_solve_he
@@ -1957,67 +1964,73 @@
 !!
 !! perform the singular values decomposition for a general real(dp) m-by-n
 !! matrix A, where A = U * SIGMA * transpose(V), return its left vectors,
-!! right vectors, and singular values
+!! right vectors, and singular values.
 !!
   subroutine s_svd_dg(m, n, min_mn, amat, umat, svec, vmat)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! number of rows of A matrix
+!! external arguments
+     ! number of rows of A matrix
      integer, intent(in)     :: m
 
-! number of columns of A matrix
+     ! number of columns of A matrix
      integer, intent(in)     :: n
 
-! minimal value of m and n
+     ! minimal value of m and n
      integer, intent(in)     :: min_mn
 
-! A matrix
+     ! A matrix
      real(dp), intent(inout) :: amat(m,n)
 
-! left vectors of svd, U
+     ! left vectors of svd, U
      real(dp), intent(out)   :: umat(m,min_mn)
 
-! singular values of svd, SIGMA
+     ! singular values of svd, SIGMA
      real(dp), intent(out)   :: svec(min_mn)
 
-! right vectors of svd, transpose(V)
+     ! right vectors of svd, transpose(V)
      real(dp), intent(out)   :: vmat(min_mn,n)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from dgesvd
+     ! return information from dgesvd
      integer :: info
 
-! length of work array, lwork >= max(1, 3 * min_mn + max(m,n), 5 * min_mn)
+     ! length of work array,
+     ! lwork >= max(1, 3 * min_mn + max(m,n), 5 * min_mn)
      integer :: lwork
 
-! workspace array
+     ! workspace array
      real(dp), allocatable :: work(:)
 
-! initialize lwrok
+!! [body
+
+     ! initialize lwrok
      lwork = max(1, 3 * min_mn + max(m,n), 5 * min_mn)
 
-! allocate memory
+     ! allocate memory
      allocate(work(lwork), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_svd_dg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: dgesvd
+     ! call the computational subroutine: dgesvd
      call DGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, min_mn, work, lwork, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_svd_dg','error in lapack subroutine dgesvd')
      endif ! back if ( info /= 0 ) block
 
-! deallocate the memory for workspace array
+     ! deallocate the memory for workspace array
      if ( allocated(work) ) deallocate(work)
+
+!! body]
 
      return
   end subroutine s_svd_dg
@@ -2027,70 +2040,75 @@
 !!
 !! perform the singular values decomposition for a general complex(dp)
 !! m-by-n matrix A, where A = U * SIGMA * conjugate-transpose(V), return
-!! its left vectors, right vectors, and singular values
+!! its left vectors, right vectors, and singular values.
 !!
   subroutine s_svd_zg(m, n, min_mn, amat, umat, svec, vmat)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! number of rows of A matrix
+!! external arguments
+     ! number of rows of A matrix
      integer, intent(in)        :: m
 
-! number of columns of A matrix
+     ! number of columns of A matrix
      integer, intent(in)        :: n
 
-! minimal value of m and n
+     ! minimal value of m and n
      integer, intent(in)        :: min_mn
 
-! A matrix
+     ! A matrix
      complex(dp), intent(inout) :: amat(m,n)
 
-! left vectors of svd, U
+     ! left vectors of svd, U
      complex(dp), intent(out)   :: umat(m,min_mn)
 
-! singular values of svd, SIGMA
+     ! singular values of svd, SIGMA
      real(dp), intent(out)      :: svec(min_mn)
 
-! right vectors of svd, conjugate-transpose(V)
+     ! right vectors of svd, conjugate-transpose(V)
      complex(dp), intent(out)   :: vmat(min_mn,n)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from zgesvd
+     ! return information from zgesvd
      integer :: info
 
-! length of work array, lwork >= max(1, 2 * min_mn + max(m,n))
+     ! length of work array, lwork >= max(1, 2 * min_mn + max(m,n))
      integer :: lwork
 
-! workspace arrays
-     complex(dp), allocatable :: work(:)
+     ! workspace arrays
      real(dp), allocatable :: rwork(:)
+     complex(dp), allocatable :: work(:)
 
-! initialize lwrok
+!! [body
+
+     ! initialize lwrok
      lwork = max(1, 2 * min_mn + max(m,n))
 
-! allocate memory
+     ! allocate memory
      allocate(work(lwork),     stat=istat)
      allocate(rwork(5*min_mn), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_svd_zg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! call the computational subroutine: zgesvd
+     ! call the computational subroutine: zgesvd
      call ZGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, min_mn, work, lwork, rwork, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_svd_zg','error in lapack subroutine zgesvd')
      endif ! back if ( info /= 0 ) block
 
-! deallocate the memory for workspace array
+     ! deallocate the memory for workspace array
      if ( allocated(work ) ) deallocate(work )
      if ( allocated(rwork) ) deallocate(rwork)
+
+!! body]
 
      return
   end subroutine s_svd_zg
