@@ -158,7 +158,7 @@
 !!
 !! @sub s_ones_d
 !!
-!! build a real(dp) matrix with all elements are one
+!! build a real(dp) matrix with all elements are one.
 !!
   subroutine s_ones_d(n, A)
      use constants, only : dp
@@ -166,14 +166,18 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! input/output matrix
+     ! input/output matrix
      real(dp), intent(out) :: A(n,n)
 
+!! [body
+
      A = one
+
+!! body]
 
      return
   end subroutine s_ones_d
@@ -181,7 +185,7 @@
 !!
 !! @sub s_ones_z
 !!
-!! build a complex(dp) matrix with all elements are one
+!! build a complex(dp) matrix with all elements are one.
 !!
   subroutine s_ones_z(n, A)
      use constants, only : dp
@@ -189,14 +193,18 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! input/output matrix
+     ! input/output matrix
      complex(dp), intent(out) :: A(n,n)
 
+!! [body
+
      A = cone
+
+!! body]
 
      return
   end subroutine s_ones_z
@@ -209,17 +217,21 @@
   subroutine s_any_i(n, i, A)
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)  :: n
 
-! value of matrix element
+     ! value of matrix element
      integer, intent(in)  :: i
 
-! input/output matrix
+     ! input/output matrix
      integer, intent(out) :: A(n,n)
 
+!! [body
+
      A = i
+
+!! body]
 
      return
   end subroutine s_any_i
