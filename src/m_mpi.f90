@@ -1620,15 +1620,18 @@
 !!
 !! @sub mp_bcast_rdp2
 !!
-!! broadcasts real2 from the process with rank "root"
+!! broadcasts real2 from the process with rank "root".
 !!
      subroutine mp_bcast_rdp2(data, root, gid)
          implicit none
 
 !! external arguments
          real(dp), intent(in) :: data(:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
+
+!! [body
 
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
@@ -1655,33 +1658,36 @@
 !!
 !! @sub mp_bcast_rdp3
 !!
-!! broadcasts real3 from the process with rank "root"
+!! broadcasts real3 from the process with rank "root".
 !!
      subroutine mp_bcast_rdp3(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: data(:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_BCAST(data, isize, m_rdp, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_rdp3', ierror)
 
          return
@@ -1690,7 +1696,7 @@
 !!
 !! @sub mp_bcast_rdp4
 !!
-!! broadcasts real4 from the process with rank "root"
+!! broadcasts real4 from the process with rank "root".
 !!
      subroutine mp_bcast_rdp4(data, root, gid)
          implicit none
