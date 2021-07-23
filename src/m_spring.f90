@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/03/2008 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           07/23/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define several modern, fast
 !!!           highly reliable, ease-to-use, and state-of-the-art pseudo-
 !!!           random number generators, which are essential in massively
@@ -14,49 +14,6 @@
 !!! comment :
 !!!-----------------------------------------------------------------------
 
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! the following two random number generators (generates a random number
-!! between 0 and 1, real double precision) are supported by now.
-!!
-!! (A) MT19937
-!! Mersenne Twister pseudorandom number generator
-!! by Makoto Matsumoto and Takuji Nishimura
-!! << Mersenne Twister: A 623-dimensionally equidistributed uniform pseudorandom number generator >>
-!! ACM Trans. on Modeling and Computer Simulation Vol. 8, No. 1, January pp.3-30 (1998)
-!!
-!! (B) SFMT
-!! SIMD-oriented Fast Mersenne Twister
-!! by Mutsuo Saito and Makoto Matsumoto
-!! << SIMD-oriented Fast Mersenne Twister: a 128-bit Pseudorandom Number Generator >>
-!! Monte Carlo and Quasi-Monte Carlo Methods 2006, Springer, 2008, pp. 607-622
-!!
-!! Usage
-!! =====
-!!
-!! 1. use MT19937
-!! --------------
-!!
-!! use spring
-!! call spring_mt_init(seed)
-!! r = spring_mt_stream()
-!! r = spring_mt_string()
-!!
-!! 2. use SFMT
-!! -----------
-!!
-!! use spring
-!! call spring_sfmt_init(seed)
-!! r = spring_sfmt_stream()
-!! r = spring_sfmt_string()
-!!
-!! note: since SFMT has a better performance, it is preferable
-!!
-!!
-
   module spring
      implicit none
 
@@ -64,42 +21,49 @@
 !!>>> declare global parameters                                        <<<
 !!========================================================================
 
-! kind types for 32-bit signed integers
+!! module parameters
+     ! kind types for 32-bit signed integers
      integer, private, parameter :: i32 = selected_int_kind( 9)
 
-! kind types for 64-bit signed integers
+     ! kind types for 64-bit signed integers
      integer, private, parameter :: i64 = selected_int_kind(18)
 
-! kind types for ieee 754/IEC 60559 double precision reals
+     ! kind types for ieee 754/IEC 60559 double precision reals
      integer, private, parameter :: dpr = selected_real_kind(15, 307)
 
 !!========================================================================
 !!>>> declare common parameters for MT19937 generator                  <<<
 !!========================================================================
 
-! period parameters
+!! module parameters
+     ! period parameters
      integer(i32), private, parameter :: N = 624_i32
 
-! period parameters
+     ! period parameters
      integer(i32), private, parameter :: M = 397_i32
 
 !!========================================================================
 !!>>> declare common parameters for SFMT generator                     <<<
 !!========================================================================
 
-! Mersenne Exponent. the period of the sequence is a multiple of 2^{ME}-1
+!! module parameters
+     ! Mersenne Exponent. the period of the sequence is a
+     ! multiple of 2^{ME} - 1.
      integer(i32), private, parameter :: ME  = 19937
 
-! SFMT has an internal state array of 128-bit integers, and NS is its size.
+     ! SFMT has an internal state array of 128-bit integers,
+     ! and NS is its size.
      integer(i32), private, parameter :: NS  = ME / 128 + 1
 
-! N32 is the size of internal state array when regarded as an array of 32-bit integers
+     ! N32 is the size of internal state array when regarded
+     ! as an array of 32-bit integers.
      integer(i32), private, parameter :: N32 = NS * 4
 
-! N64 is the size of internal state array when regarded as an array of 64-bit integers
+     ! N64 is the size of internal state array when regarded
+     ! as an array of 64-bit integers.
      integer(i32), private, parameter :: N64 = NS * 2
 
-! a parity check vector which certificate the period of 2^{ME}
+     ! a parity check vector which certificate the period of 2^{ME}
      integer(i32), private, parameter :: parity(0:3) = (/1, 0, 0, 331998852/)
 
 !!========================================================================
