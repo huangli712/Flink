@@ -4850,6 +4850,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp3
 
@@ -4897,6 +4898,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp4
 
@@ -4943,6 +4945,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp5
 
@@ -4986,6 +4989,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp0', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp0
 
@@ -5033,6 +5037,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp1
 
@@ -5079,6 +5084,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp2
 
@@ -5126,6 +5132,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp3
 
@@ -5173,6 +5180,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp4
 
@@ -5220,6 +5228,7 @@
          ! handler for return code
          call mp_error('mp_reduce_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_cdp5
 
@@ -5267,6 +5276,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_int0', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int0
 
@@ -5312,6 +5322,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_int1', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int1
 
@@ -5357,13 +5368,14 @@
          ! handler for return code
          call mp_error('mp_allreduce_int2', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int2
 
 !!
 !! @sub mp_allreduce_int3
 !!
-!! reduce integer matrix from all processes
+!! reduce integer matrix from all processes.
 !!
      subroutine mp_allreduce_int3(source, data, mop, gid)
          implicit none
@@ -5402,6 +5414,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_int3', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int3
 
@@ -5448,6 +5461,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_int4', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int4
 
@@ -5493,6 +5507,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_int5', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_int5
 
@@ -5536,6 +5551,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp0', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp0
 
@@ -5582,6 +5598,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp1
 
@@ -5628,6 +5645,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp2
 
@@ -5673,6 +5691,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp3
 
@@ -5718,6 +5737,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp4
 
@@ -5764,6 +5784,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_rdp5
 
@@ -5806,6 +5827,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp0', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp0
 
@@ -5852,6 +5874,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp1
 
@@ -5897,6 +5920,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp2
 
@@ -5942,6 +5966,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp3
 
@@ -5987,6 +6012,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp4
 
@@ -6033,6 +6059,7 @@
          ! handler for return code
          call mp_error('mp_allreduce_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allreduce_cdp5
 
@@ -6147,6 +6174,7 @@
 
          end select
 
+!! body]
          return
      end subroutine mp_error
 
@@ -6223,6 +6251,7 @@
 !! [body
          write(mystd,'(a)') 'Bad news, your compiler is mpi-incompatible.'
 
+!! body]
          return
      end subroutine mp_info
 
@@ -6239,6 +6268,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_init
 
@@ -6251,6 +6281,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_finalize
 
@@ -6267,6 +6298,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_comm_rank
 
@@ -6279,6 +6311,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_comm_size
 
@@ -6295,6 +6328,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_barrier
 
@@ -6311,6 +6345,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_bcast
 
@@ -6327,6 +6362,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_gather
 
@@ -6343,6 +6379,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_gatherv
 
@@ -6359,6 +6396,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_allgather
 
@@ -6375,6 +6413,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_allgatherv
 
@@ -6391,6 +6430,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_reduce
 
@@ -6407,6 +6447,7 @@
          implicit none
 
 !! [body
+!! body]
          return
      end subroutine mp_allreduce
 
