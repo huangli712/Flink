@@ -1884,6 +1884,7 @@
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1907,6 +1908,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp3
 
@@ -1945,6 +1947,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp4
 
@@ -1958,6 +1961,7 @@
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:,:,:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -1981,6 +1985,7 @@
          ! handler for return code
          call mp_error('mp_bcast_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_bcast_cdp5
 
@@ -2023,6 +2028,7 @@
          ! handler for return code
          call mp_error('mp_gather_int1', ierror)
 
+!! body]
          return
      end subroutine mp_gather_int1
 
@@ -2037,7 +2043,7 @@
 !! external arguments
          integer, intent(in) :: send(:,:)
          integer, intent(inout) :: data(:,:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -2061,6 +2067,7 @@
          ! handler for return code
          call mp_error('mp_gather_int2', ierror)
 
+!! body]
          return
      end subroutine mp_gather_int2
 
@@ -2099,6 +2106,7 @@
          ! handler for return code
          call mp_error('mp_gather_int3', ierror)
 
+!! body]
          return
      end subroutine mp_gather_int3
 
@@ -2137,6 +2145,7 @@
          ! handler for return code
          call mp_error('mp_gather_int4', ierror)
 
+!! body]
          return
      end subroutine mp_gather_int4
 
@@ -2175,6 +2184,7 @@
          ! handler for return code
          call mp_error('mp_gather_int5', ierror)
 
+!! body]
          return
      end subroutine mp_gather_int5
 
@@ -2213,6 +2223,7 @@
          ! handler for return code
          call mp_error('mp_gather_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_gather_rdp1
 
@@ -2251,6 +2262,7 @@
          ! handler for return code
          call mp_error('mp_gather_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_gather_rdp2
 
@@ -2289,6 +2301,7 @@
          ! handler for return code
          call mp_error('mp_gather_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_gather_rdp3
 
@@ -2327,6 +2340,7 @@
          ! handler for return code
          call mp_error('mp_gather_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_gather_rdp4
 
@@ -2365,6 +2379,7 @@
          ! handler for return code
          call mp_error('mp_gather_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_gather_rdp5
 
@@ -2379,7 +2394,7 @@
 !! external arguments
          complex(dp), intent(in) :: send(:)
          complex(dp), intent(inout) :: data(:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -2403,6 +2418,7 @@
          ! handler for return code
          call mp_error('mp_gather_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_gather_cdp1
 
@@ -2441,6 +2457,7 @@
          ! handler for return code
          call mp_error('mp_gather_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_gather_cdp2
 
@@ -2479,6 +2496,7 @@
          ! handler for return code
          call mp_error('mp_gather_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_gather_cdp3
 
@@ -2517,6 +2535,7 @@
          ! handler for return code
          call mp_error('mp_gather_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_gather_cdp4
 
@@ -2531,7 +2550,7 @@
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:,:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -2555,6 +2574,7 @@
          ! handler for return code
          call mp_error('mp_gather_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_gather_cdp5
 
@@ -2600,6 +2620,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_int1', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_int1
 
@@ -2641,6 +2662,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_int2', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_int2
 
@@ -2682,6 +2704,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_int3', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_int3
 
@@ -2723,6 +2746,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_int4', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_int4
 
@@ -2765,6 +2789,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_int5', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_int5
 
@@ -2806,6 +2831,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_rdp1
 
@@ -2848,6 +2874,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_rdp2
 
@@ -2889,6 +2916,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_rdp3
 
@@ -2930,6 +2958,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_rdp4
 
@@ -2971,6 +3000,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_rdp5
 
@@ -3012,6 +3042,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_cdp1
 
@@ -3053,6 +3084,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_cdp2
 
@@ -3094,6 +3126,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_cdp3
 
@@ -3108,10 +3141,10 @@
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
-
+         !
          integer, intent(in) :: recv(:)
          integer, intent(in) :: disp(:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
@@ -3135,6 +3168,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_cdp4
 
@@ -3176,6 +3210,7 @@
          ! handler for return code
          call mp_error('mp_gatherv_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_gatherv_cdp5
 
@@ -3219,6 +3254,7 @@
          ! handler for return code
          call mp_error('mp_allgather_int1', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_int1
 
@@ -3257,6 +3293,7 @@
          ! handler for return code
          call mp_error('mp_allgather_int2', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_int2
 
@@ -3295,6 +3332,7 @@
          ! handler for return code
          call mp_error('mp_allgather_int3', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_int3
 
@@ -3333,6 +3371,7 @@
          ! handler for return code
          call mp_error('mp_allgather_int4', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_int4
 
@@ -3371,6 +3410,7 @@
          ! handler for return code
          call mp_error('mp_allgather_int5', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_int5
 
@@ -3410,6 +3450,7 @@
          ! handler for return code
          call mp_error('mp_allgather_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_rdp1
 
@@ -3449,6 +3490,7 @@
          ! handler for return code
          call mp_error('mp_allgather_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_rdp2
 
@@ -3488,6 +3530,7 @@
          ! handler for return code
          call mp_error('mp_allgather_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_rdp3
 
@@ -3527,6 +3570,7 @@
          ! handler for return code
          call mp_error('mp_allgather_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_rdp4
 
@@ -3566,6 +3610,7 @@
          ! handler for return code
          call mp_error('mp_allgather_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_rdp5
 
@@ -3605,6 +3650,7 @@
          ! handler for return code
          call mp_error('mp_allgather_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_cdp1
 
@@ -3643,6 +3689,7 @@
          ! handler for return code
          call mp_error('mp_allgather_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_cdp2
 
@@ -3682,6 +3729,7 @@
          ! handler for return code
          call mp_error('mp_allgather_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_cdp3
 
@@ -3721,6 +3769,7 @@
          ! handler for return code
          call mp_error('mp_allgather_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_cdp4
 
@@ -3760,6 +3809,7 @@
          ! handler for return code
          call mp_error('mp_allgather_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allgather_cdp5
 
@@ -3805,6 +3855,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_int1', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_int1
 
@@ -3846,6 +3897,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_int2', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_int2
 
@@ -3887,6 +3939,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_int3', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_int3
 
@@ -3929,6 +3982,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_int4', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_int4
 
@@ -3970,6 +4024,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_int5', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_int5
 
@@ -4011,6 +4066,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_rdp1
 
@@ -4052,6 +4108,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_rdp2
 
@@ -4094,6 +4151,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_rdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_rdp3
 
@@ -4135,6 +4193,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_rdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_rdp4
 
@@ -4176,6 +4235,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_rdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_rdp5
 
@@ -4217,6 +4277,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_cdp1', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_cdp1
 
@@ -4259,6 +4320,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_cdp2', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_cdp2
 
@@ -4300,6 +4362,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_cdp3', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_cdp3
 
@@ -4342,6 +4405,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_cdp4', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_cdp4
 
@@ -4384,6 +4448,7 @@
          ! handler for return code
          call mp_error('mp_allgatherv_cdp5', ierror)
 
+!! body]
          return
      end subroutine mp_allgatherv_cdp5
 
@@ -4432,6 +4497,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int0', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int0
 
@@ -4478,6 +4544,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int1', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int1
 
@@ -4525,6 +4592,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int2', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int2
 
@@ -4572,6 +4640,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int3', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int3
 
@@ -4619,6 +4688,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int4', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int4
 
@@ -4666,6 +4736,7 @@
          ! handler for return code
          call mp_error('mp_reduce_int5', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_int5
 
@@ -4710,6 +4781,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp0', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp0
 
@@ -4756,6 +4828,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp1', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp1
 
@@ -4803,6 +4876,7 @@
          ! handler for return code
          call mp_error('mp_reduce_rdp2', ierror)
 
+!! body]
          return
      end subroutine mp_reduce_rdp2
 
