@@ -658,7 +658,7 @@
 !!
 !! @fun s_f_kernel
 !!
-!! used to calculate fermionic kernel function
+!! used to calculate fermionic kernel function.
 !!
   function s_f_kernel(tau, omega, beta) result(val)
      use constants, only : dp
@@ -666,26 +666,28 @@
 
      implicit none
 
-! external arguments
-! imaginary time point, it is alreay scaled to [-1,1]
+!! external arguments
+     ! imaginary time point, it is alreay scaled to [-1,1]
      real(dp), intent(in) :: tau
 
-! real frequency point
+     ! real frequency point
      real(dp), intent(in) :: omega
 
-! inversion of temperature
+     ! inversion of temperature
      real(dp), intent(in) :: beta
 
-! external arguments
-! a safe exp call
+!! external functions
+     ! a safe exp call
      procedure( real(dp) ) :: s_safe_exp
 
-! local variables
-! return value
+!! local variables
+     ! return value
      real(dp) :: val
 
-! dimensionless variables
+     ! dimensionless variables
      real(dp) :: x, y
+
+!! [body
 
      x = tau
      y = beta * omega / two
@@ -698,38 +700,42 @@
          val = s_safe_exp( -x * y ) / ( two * cosh(y) )
      endif ! back if ( y > 200.0_dp ) block
 
+!! body]
+
      return
   end function s_f_kernel
 
 !!
 !! @fun s_b_kernel
 !!
-!! used to calculate bosonic kernel function
+!! used to calculate bosonic kernel function.
 !!
   function s_b_kernel(tau, omega, beta) result(val)
      use constants, only : dp
      use constants, only : one, two
 
-! external arguments
-! imaginary time point, it is alreay scaled to [-1,1]
+!! external arguments
+     ! imaginary time point, it is alreay scaled to [-1,1]
      real(dp), intent(in) :: tau
 
-! real frequency point
+     ! real frequency point
      real(dp), intent(in) :: omega
 
-! inversion of temperature
+     ! inversion of temperature
      real(dp), intent(in) :: beta
 
-! external arguments
-! a safe exp call
+!! external functions
+     ! a safe exp call
      procedure( real(dp) ) :: s_safe_exp
 
-! local variables
-! return value
+!! local variables
+     ! return value
      real(dp) :: val
 
-! dimensionless variables
+     ! dimensionless variables
      real(dp) :: x, y
+
+!! [body
 
      x = tau
      y = beta * omega / two
@@ -743,6 +749,8 @@
      else
          val = y * s_safe_exp( -x * y ) / sinh(y)
      endif ! back if ( abs(y) < 1E-10 ) block
+
+!! body]
 
      return
   end function s_b_kernel
