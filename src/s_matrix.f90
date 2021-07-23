@@ -134,19 +134,23 @@
 !!
 !! @sub s_ones_i
 !!
-!! build an integer matrix with all elements are one
+!! build an integer matrix with all elements are one.
 !!
   subroutine s_ones_i(n, A)
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)  :: n
 
-! input/output matrix
+     ! input/output matrix
      integer, intent(out) :: A(n,n)
 
+!! [body
+
      A = 1
+
+!! body]
 
      return
   end subroutine s_ones_i
