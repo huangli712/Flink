@@ -151,7 +151,7 @@
 !!
 !! @sub s_svd_basis
 !!
-!! build the svd orthogonal polynomial in [-1,1] interval
+!! build the svd orthogonal polynomial in [-1,1] interval.
 !!
   subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
      use constants, only : dp
@@ -160,83 +160,85 @@
 
      implicit none
 
-! external arguments
-! maximum order for svd orthogonal polynomial
+!! external arguments
+     ! maximum order for svd orthogonal polynomial
      integer, intent(in)   :: svmax
 
-! number of mesh points for svd orthogonal polynomial
+     ! number of mesh points for svd orthogonal polynomial
      integer, intent(in)   :: svgrd
 
-! using fermionic or bosonic kernel function
+     ! using fermionic or bosonic kernel function
      logical, intent(in)   :: bose
 
-! inversion of temperature
+     ! inversion of temperature
      real(dp), intent(in)  :: beta
 
-! mesh for svd orthogonal polynomial in [-1,1]
+     ! mesh for svd orthogonal polynomial in [-1,1]
      real(dp), intent(in)  :: smesh(svgrd)
 
-! svd orthogonal polynomial defined on [-1,1]
+     ! svd orthogonal polynomial defined on [-1,1]
      real(dp), intent(out) :: rep_s(svgrd,svmax)
 
-! external arguments
-! used to calculate the fermionic kernel function
+!! external functions
+     ! used to calculate the fermionic kernel function
      procedure ( real(dp) ) :: s_f_kernel
 
-! used to calculate the bosonic kernel function
+     ! used to calculate the bosonic kernel function
      procedure ( real(dp) ) :: s_b_kernel
 
-! local parameters
-! number of mesh points for real frequency
+!! local parameters
+     ! number of mesh points for real frequency
      integer, parameter  :: wsize = 513
 
-! left boundary for real frequency mesh, \omega_{min}
+     ! left boundary for real frequency mesh, \omega_{min}
      real(dp), parameter :: w_min = -10.0_dp
 
-! right boundary for real frequency mesh, \omega_{max}
+     ! right boundary for real frequency mesh, \omega_{max}
      real(dp), parameter :: w_max = +10.0_dp
 
-! boundary for linear imaginary time mesh
-! it must be the same with the one defined in the s_svd_point
+     ! boundary for linear imaginary time mesh
+     ! it must be the same with the one defined in the s_svd_point.
      real(dp), parameter :: limit = +3.00_dp
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
      integer  :: j
 
-! status flag
+     ! status flag
      integer  :: istat
 
-! dummy real(dp) variable
+     ! dummy real(dp) variable
      real(dp) :: t
 
-! non-uniform imaginary time mesh
+     ! non-uniform imaginary time mesh
      real(dp), allocatable :: tmesh(:)
      real(dp), allocatable :: wmesh(:) ! integration weight
 
-! real axis mesh
+     ! real axis mesh
      real(dp), allocatable :: fmesh(:)
 
-! fermionic or bosonic kernel function
+     ! fermionic or bosonic kernel function
      real(dp), allocatable :: fker(:,:)
 
-! U, \Sigma, and V matrices for singular values decomposition
+     ! U, \Sigma, and V matrices for singular values decomposition
      real(dp), allocatable :: umat(:,:)
      real(dp), allocatable :: svec(:)
      real(dp), allocatable :: vmat(:,:)
 
-! make sure wsize is less than svgrd
+!! [body
+
+     ! make sure wsize is less than svgrd
      if ( svgrd <= wsize ) then
          call s_print_error('s_svd_basis','please make sure svgrd > wsize')
      endif ! back if ( svgrd <= wsize ) block
 
-! make sure wsize is larger than svmax
+     ! make sure wsize is larger than svmax
      if ( svmax >= wsize ) then
          call s_print_error('s_svd_basis','please make sure svmax < wsize')
      endif ! back if ( svmax >= wsize ) block
 
-! allocate memory
+     ! allocate memory
      allocate(tmesh(svgrd),      stat=istat)
      allocate(wmesh(svgrd),      stat=istat)
      allocate(fmesh(wsize),      stat=istat)
@@ -244,22 +246,22 @@
      allocate(umat(svgrd,wsize), stat=istat)
      allocate(svec(wsize),       stat=istat)
      allocate(vmat(wsize,wsize), stat=istat)
-
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_svd_basis','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! build non-uniform imaginary time mesh
+     ! build non-uniform imaginary time mesh
      do i=1,svgrd
          t = limit * smesh(i) ! map the original mesh from [-1,1] to [-3,3]
          tmesh(i) = tanh( pi / two * sinh (t) )
          wmesh(i) = sqrt( pi / two * cosh (t) ) / cosh( pi / two * sinh(t) )
      enddo ! over i={1,svgrd} loop
 
-! build real frequency mesh
+     ! build real frequency mesh
      call s_linspace_d(w_min, w_max, wsize, fmesh)
 
-! build the fermionic or bosonic kernel function
+     ! build the fermionic or bosonic kernel function
      do i=1,wsize
          do j=1,svgrd
              if ( bose .eqv. .true. ) then
@@ -270,25 +272,25 @@
          enddo ! over j={1,svgrd} loop
      enddo ! over i={1,wsize} loop
 
-! make singular values decomposition
+     ! make singular values decomposition
      call s_svd_dg(svgrd, wsize, wsize, fker, umat, svec, vmat)
 
-! check svec
+     ! check svec
      if ( abs( svec(svmax) / svec(1) ) > epss ) then
          call s_print_error('s_svd_basis','please increase svmax')
      endif ! back if ( abs( svec(svmax) / svec(1) ) > epss ) block
 
-! normalize umat to make sure the orthogonality
+     ! normalize umat to make sure the orthogonality
      do i=1,svgrd
          umat(i,:) = umat(i,:) / wmesh(i)
      enddo ! over i={1,svgrd} loop
-
+     !
      do i=1,svmax
          t = ( two * limit / float(svgrd) ) * sum( ( umat(:,i) * wmesh(:) )**2 )
          umat(:,i) = umat(:,i) / sqrt(t)
      enddo ! over i={1,svmax} loop
 
-! copy umat to rep_s
+     ! copy umat to rep_s
      do i=1,svmax
          if ( umat(svgrd,i) < zero ) then
              rep_s(:,i) = -one * umat(:,i)
@@ -297,7 +299,7 @@
          endif ! back if ( umat(svgrd,i) < zero ) block
      enddo ! over i={1,svmax} loop
 
-! deallocate memory
+     ! deallocate memory
      deallocate(tmesh)
      deallocate(wmesh)
      deallocate(fmesh)
@@ -306,13 +308,15 @@
      deallocate(svec )
      deallocate(vmat )
 
+!! body]
+
      return
   end subroutine s_svd_basis
 
 !!
 !! @sub s_svd_point
 !!
-!! for a given point val, return its index in the non-uniform mesh
+!! for a given point val, return its index in the non-uniform mesh.
 !!
   subroutine s_svd_point(val, stp, pnt)
      use constants, only : dp
@@ -320,36 +324,46 @@
 
      implicit none
 
-! external arguments
-! point's value, it lies in a non-uniform mesh [-1,1]
+!! external arguments
+     ! point's value, it lies in a non-uniform mesh [-1,1]
      real(dp), intent(in) :: val
 
-! step for an uniform mesh [-1,1]
+     ! step for an uniform mesh [-1,1]
      real(dp), intent(in) :: stp
 
-! index in the non-uniform mesh [-1,1]
+     ! index in the non-uniform mesh [-1,1]
      integer, intent(out) :: pnt
 
-! local parameters
-! boundary for linear imaginary time mesh
-! it must be the same with the one defined in the s_svd_basis
+!! local parameters
+     ! boundary for linear imaginary time mesh.
+     ! it must be the same with the one defined in the s_svd_basis().
      real(dp), parameter :: limit = 3.0_dp
 
-! local variables
-! dummy real(dp) variable
+!! local variables
+     ! dummy real(dp) variable
      real(dp) :: dt
 
-!
-! note:
-!
-! 1. we have tau in [0,\beta]. the mesh is uniform (size is ntime)
-! 2. then tau is mapped into val in [-1,1]. the mesh is non-uniform (size is svgrd)
-! 3. then val is mapped into dt in [0,6]. here the mesh is uniform (size is svgrd)
-! 4. we calculate the index for dt in the uniform mesh [0,6] (size is svgrd)
-! 5. clearly, the obtained index is the same with the one in the non-uniform mesh
-!
+!! [body
 
-! val \in [-1,1], convert it to dt \in [-3,3]
+     !
+     ! remarks:
+     !
+     ! 1. we have tau in [0,\beta]. the mesh is uniform (size is ntime).
+     !
+     ! 2. then tau is mapped into val in [-1,1]. the mesh is non-
+     !    uniform (its size is svgrd).
+     !
+     ! 3. then val is mapped into dt in [0,6]. here the mesh is
+     !    uniform (its size is svgrd).
+     !
+     ! 4. we calculate the index for dt in the uniform mesh
+     !    [0,6] (its size is svgrd).
+     !
+     ! 5. clearly, the obtained index is the same with the one in the
+     !    non-uniform mesh.
+     !
+
+     ! val \in [-1,1], convert it to dt \in [-3,3]
      if ( -one < val .and. val < one ) then
          dt = asinh( two / pi * atanh(val) )
      else
@@ -360,11 +374,13 @@
          endif ! back if ( val > zero ) block
      endif ! back if ( -one < val .and. val < one ) block
 
-! shift dt from [-3,3] to [0,6]
+     ! shift dt from [-3,3] to [0,6]
      dt = dt + limit
 
-! get the index for dt in linear mesh [0,6]
+     ! get the index for dt in linear mesh [0,6]
      pnt = nint( dt * stp / limit ) + 1
+
+!! body]
 
      return
   end subroutine s_svd_point
@@ -377,7 +393,7 @@
 !! @sub s_sph_jl
 !!
 !! computes the spherical Bessel functions of the first kind, j_l(x), for
-!! argument x and l=0, 1, \ldots, l_{max}
+!! argument x and l=0, 1, \ldots, l_{max}.
 !!
   subroutine s_sph_jl(lmax, x, jl)
      use constants, only : dp
@@ -386,42 +402,50 @@
 
      implicit none
 
-! external arguments
-! maximum order of spherical Bessel function
+!! external arguments
+     ! maximum order of spherical Bessel function
      integer, intent(in)   :: lmax
 
-! real argument
+     ! real argument
      real(dp), intent(in)  :: x
 
-! array of returned values
+     ! array of returned values
      real(dp), intent(out) :: jl(0:lmax)
 
-! local parameters
-! staring value for l above lmax (suitable for lmax < 50)
+!! local parameters
+     ! staring value for l above lmax (suitable for lmax < 50)
      integer, parameter  :: lst  = 25
 
-! rescale limit
+     ! rescale limit
      real(dp), parameter :: rsc  = 1.0D100
      real(dp), parameter :: rsci = one / rsc
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: l
 
-! real(dp) dummy variables
+     ! real(dp) dummy variables
      real(dp) :: xi, jt
      real(dp) :: j0, j1
      real(dp) :: t1, t2
 
-!
-! important note: the recursion relation
-!     j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
-! is used either downwards for x < l or upwards for x >= l. for x << 1,
-! the asymtotic form is used:
-!     j_l(x) \approx \frac{x^l}{(2l+1)!!}
-! this procedure is numerically stable and accurate to near this machine
-! precision for l <= 50
-!
+!! [body
+
+     !
+     ! remarks:
+     !
+     ! the following recursion relation
+     !
+     !     j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
+     !
+     ! is used either downwards for x < l or upwards for x >= l.
+     ! for x << 1, the following asymtotic form is used:
+     !
+     !     j_l(x) \approx \frac{x^l}{(2l+1)!!}
+     !
+     ! this procedure is numerically stable and accurate to near
+     ! this machine precision for l <= 50
+     !
 
 ! check the range of input variables
      if ( lmax < 0 .or. lmax > 50 ) then
