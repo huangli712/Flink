@@ -13,44 +13,13 @@
 !!! type    : subroutines & functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           07/23/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to generate some auxiliary
 !!!           functions, such as the Legendre orthogonal polynomial and
 !!!           Chebyshev orthogonal polynomial, Bessel function, etc.
 !!! status  : unstable
 !!! comment :
 !!!-----------------------------------------------------------------------
-
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! 1. orthogonal polynomial basis
-!! ------------------------------
-!!
-!! subroutine s_leg_basis(...)
-!! subroutine s_che_basis(...)
-!! subroutine s_svd_basis(...)
-!! subroutine s_svd_point(...)
-!!
-!! 2. spheric Bessel function
-!! --------------------------
-!!
-!! subroutine s_sph_jl(...)
-!!
-!! 3. bernstein polynomial
-!! -----------------------
-!!
-!! subroutine s_bezier(...)
-!!
-!! 4. some helper functions for s_svd_basis
-!! ----------------------------------------
-!!
-!! function s_safe_exp(...)
-!! function s_f_kernel(...)
-!! function s_b_kernel(...)
-!!
 
 !!========================================================================
 !!>>> orthogonal polynomial basis                                      <<<
@@ -59,7 +28,7 @@
 !!
 !! @sub s_leg_basis
 !!
-!! build legendre orthogonal polynomial in [-1,1] interval
+!! build legendre orthogonal polynomial in [-1,1] interval.
 !!
   subroutine s_leg_basis(lemax, legrd, lmesh, rep_l)
      use constants, only : dp
@@ -67,35 +36,43 @@
 
      implicit none
 
-! external arguments
-! maximum order for legendre orthogonal polynomial
+!! external arguments
+     ! maximum order for legendre orthogonal polynomial
      integer, intent(in)   :: lemax
 
-! number of mesh points for legendre orthogonal polynomial
+     ! number of mesh points for legendre orthogonal polynomial
      integer, intent(in)   :: legrd
 
-! mesh for legendre orthogonal polynomial in [-1,1]
+     ! mesh for legendre orthogonal polynomial in [-1,1]
      real(dp), intent(in)  :: lmesh(legrd)
 
-! legendre orthogonal polynomial defined on [-1,1]
+     ! legendre orthogonal polynomial defined on [-1,1]
      real(dp), intent(out) :: rep_l(legrd,lemax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
      integer :: k
 
-! check lemax
+!! [body
+
+     ! check lemax
      if ( lemax <= 2 ) then
          call s_print_error('s_leg_basis','lemax must be larger than 2')
      endif ! back if ( lemax <= 2 ) block
 
-! the legendre orthogonal polynomials obey the three term recurrence
-! relation known as Bonnet’s recursion formula:
-!     $P_0(x) = 1$
-!     $P_1(x) = x$
-!     $(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x)$
+     !
+     ! remarks:
+     !
+     ! the legendre orthogonal polynomials obey the three term recurrence
+     ! relation, known as Bonnet’s recursion formula:
+     !
+     !     $P_0(x) = 1$
+     !     $P_1(x) = x$
+     !     $(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x)$
+     !
+
      do i=1,legrd
          rep_l(i,1) = one
          rep_l(i,2) = lmesh(i)
@@ -104,6 +81,8 @@
              rep_l(i,j) = ( real(2*k-1) * lmesh(i) * rep_l(i,j-1) - real(k-1) * rep_l(i,j-2) ) / real(k)
          enddo ! over j={3,lemax} loop
      enddo ! over i={1,legrd} loop
+
+!! body]
 
      return
   end subroutine s_leg_basis
