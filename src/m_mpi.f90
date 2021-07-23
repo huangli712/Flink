@@ -3226,34 +3226,35 @@
 !! @sub mp_allgather_int2
 !!
 !! gather integer data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_int2(send, data, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:,:)
          integer, intent(inout) :: data(:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgather_int2', ierror)
 
          return
@@ -3263,17 +3264,18 @@
 !! @sub mp_allgather_int3
 !!
 !! gather integer data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_int3(send, data, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3311,6 +3313,7 @@
 
          integer, optional, intent(in) :: gid
 
+!! [body
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3321,13 +3324,13 @@
          ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgather_int4', ierror)
 
          return
@@ -3337,34 +3340,35 @@
 !! @sub mp_allgather_int5
 !!
 !! gather integer data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_int5(send, data, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgather_int5', ierror)
 
          return
@@ -3382,8 +3386,10 @@
 !! external arguments
          real(dp), intent(in) :: send(:)
          real(dp), intent(inout) :: data(:)
-
+         !
          integer, optional, intent(in) :: gid
+
+!! [body
 
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
@@ -3411,7 +3417,7 @@
 !! @sub mp_allgather_rdp2
 !!
 !! gather real(dp) data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_rdp2(send, data, gid)
          implicit none
@@ -3419,6 +3425,7 @@
 !! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
+         !
          integer, optional, intent(in) :: gid
 
 !! [body
@@ -3449,7 +3456,7 @@
 !! @sub mp_allgather_rdp3
 !!
 !! gather real(dp) data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_rdp3(send, data, gid)
          implicit none
@@ -3488,7 +3495,7 @@
 !! @sub mp_allgather_rdp4
 !!
 !! gather real(dp) data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_rdp4(send, data, gid)
          implicit none
@@ -3496,7 +3503,7 @@
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
 !! [body
@@ -3535,8 +3542,10 @@
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
+
+!! [body
 
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
@@ -3575,6 +3584,8 @@
          !
          integer, optional, intent(in) :: gid
 
+!! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3609,26 +3620,27 @@
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
          complex(dp), intent(inout) :: data(:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgather_cdp2', ierror)
 
          return
@@ -3638,34 +3650,36 @@
 !! @sub mp_allgather_cdp3
 !!
 !! gather complex(dp) data from all processes and then redistribute it to
-!! all processes
+!! all processes.
 !!
      subroutine mp_allgather_cdp3(send, data, gid)
          implicit none
 
-! external arguments
+!! external arguments
          complex(dp), intent(in) :: send(:,:,:)
          complex(dp), intent(inout) :: data(:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
-! set current communicator
+!! [body
+
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_allgather_cdp3', ierror)
 
          return
@@ -3683,8 +3697,10 @@
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
+
+!! [body
 
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
