@@ -2307,23 +2307,23 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gather_rdp5', ierror)
 
          return
@@ -2332,7 +2332,7 @@
 !!
 !! @sub mp_gather_cdp1
 !!
-!! gather complex(dp) data from every processes to rank 0
+!! gather complex(dp) data from every processes to rank 0.
 !!
      subroutine mp_gather_cdp1(send, data, root, gid)
          implicit none
@@ -2443,35 +2443,35 @@
 !!
 !! @sub mp_gather_cdp4
 !!
-!! gather complex(dp) data from every processes to rank 0
+!! gather complex(dp) data from every processes to rank 0.
 !!
      subroutine mp_gather_cdp4(send, data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
 
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gather_cdp4', ierror)
 
          return
@@ -2606,7 +2606,7 @@
      subroutine mp_gatherv_int3(send, data, recv, disp, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
 
@@ -2616,23 +2616,23 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gatherv_int3', ierror)
 
          return
@@ -2743,16 +2743,16 @@
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(send)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_gatherv_rdp1', ierror)
 
          return
@@ -2761,12 +2761,12 @@
 !!
 !! @sub mp_gatherv_rdp2
 !!
-!! gather real(dp) data from every processes to rank 0
+!! gather real(dp) data from every processes to rank 0.
 !!
      subroutine mp_gatherv_rdp2(send, data, recv, disp, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
 
