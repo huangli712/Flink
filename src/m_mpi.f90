@@ -729,7 +729,7 @@
 !!
 !! @sub mp_info
 !!
-!! return the current information about mpi environment
+!! return the current information about mpi environment.
 !!
      subroutine mp_info()
          implicit none
@@ -746,6 +746,8 @@
 
 # endif  /* OMPI */
 
+!! body]
+
          return
      end subroutine mp_info
 
@@ -756,17 +758,18 @@
 !!
 !! @sub mp_init
 !!
-!! initialize mpi environment
+!! initialize mpi environment.
 !!
      subroutine mp_init()
          implicit none
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_INIT(ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_init', ierror)
 
+!! body]
          return
      end subroutine mp_init
 
@@ -778,12 +781,13 @@
      subroutine mp_finalize()
          implicit none
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_FINALIZE(ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_finalize', ierror)
 
+!! body]
          return
      end subroutine mp_finalize
 
@@ -816,6 +820,7 @@
          ! handler for return code
          call mp_error('mp_comm_rank', ierror)
 
+!! body]
          return
      end subroutine mp_comm_rank
 
@@ -844,6 +849,7 @@
          ! handler for return code
          call mp_error('mp_comm_size', ierror)
 
+!! body]
          return
      end subroutine mp_comm_size
 
@@ -864,6 +870,7 @@
          ! handler for return code
          call mp_error('mp_processor', ierror)
 
+!! body]
          return
      end subroutine mp_processor
 
@@ -874,19 +881,19 @@
 !!
 !! @sub mp_dims_create
 !!
-!! creates a division of processors in a cartesian grid
+!! creates a division of processors in a cartesian grid.
 !!
      subroutine mp_dims_create(nprocs, dims)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: nprocs
          integer, intent(inout) :: dims(ndims)
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_DIMS_CREATE(nprocs, ndims, dims, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_dims_create', ierror)
 
          return
@@ -895,28 +902,29 @@
 !!
 !! @sub mp_cart_create
 !!
-!! makes a new communicator to which topology is cartesian
+!! makes a new communicator to which topology is cartesian.
 !!
      subroutine mp_cart_create(dims)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: dims(ndims)
 
-! invoke related mpi subroutines
-! note: mpi_comm_cart should be overwriten in output
+         ! invoke related mpi subroutines
+         ! note: mpi_comm_cart should be overwriten in output
          call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_cart_create', ierror)
 
+!! body]
          return
      end subroutine mp_cart_create
 
 !!
 !! @sub mp_cart_coords
 !!
-!! determines process coords in cartesian topology
+!! determines process coords in cartesian topology.
 !!
      subroutine mp_cart_coords(myid, cx, cy)
          implicit none
