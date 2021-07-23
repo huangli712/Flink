@@ -239,24 +239,28 @@
 !!
 !! @sub s_any_d
 !!
-!! build a real(dp) matrix with all elements are given by d
+!! build a real(dp) matrix with all elements are given by d.
 !!
   subroutine s_any_d(n, d, A)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! value of matrix element
+     ! value of matrix element
      real(dp), intent(in)  :: d
 
-! input/output matrix
+     ! input/output matrix
      real(dp), intent(out) :: A(n,n)
 
+!! [body
+
      A = d
+
+!! body]
 
      return
   end subroutine s_any_d
@@ -264,24 +268,28 @@
 !!
 !! @sub s_any_z
 !!
-!! build a complex(dp) matrix with all elements are given by z
+!! build a complex(dp) matrix with all elements are given by z.
 !!
   subroutine s_any_z(n, z, A)
      use constants, only : dp
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! value of matrix element
+     ! value of matrix element
      complex(dp), intent(in)  :: z
 
-! input/output matrix
+     ! input/output matrix
      complex(dp), intent(out) :: A(n,n)
 
+!! [body
+
      A = z
+
+!! body]
 
      return
   end subroutine s_any_z
@@ -293,25 +301,28 @@
 !!
 !! @sub s_eye_i
 !!
-!! build integer matrix with ones on the diagonal and zeros elsewhere
+!! build integer matrix with ones on the diagonal and zeros elsewhere.
 !!
   subroutine s_eye_i(n, k, A)
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)  :: n
 
-! index of the diagonal: 0 refers to the main diagonal, a positive value
-! refers to an upper diagonal, and a negative value to a lower diagonal.
+     ! index of the diagonal: 0 refers to the main diagonal, a positive
+     ! value refers to an upper diagonal, and a negative value to a
+     ! lower diagonal.
      integer, intent(in)  :: k
 
-! input/output matrix
+     ! input/output matrix
      integer, intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = 0
      do i=1,n
@@ -319,13 +330,15 @@
          A(i,i-k) = 1
      enddo ! over i={1,n} loop
 
+!! body]
+
      return
   end subroutine s_eye_i
 
 !!
 !! @sub s_eye_d
 !!
-!! build real(dp) matrix with ones on the diagonal and zeros elsewhere
+!! build real(dp) matrix with ones on the diagonal and zeros elsewhere.
 !!
   subroutine s_eye_d(n, k, A)
      use constants, only : dp
@@ -333,20 +346,23 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! index of the diagonal: 0 refers to the main diagonal, a positive value
-! refers to an upper diagonal, and a negative value to a lower diagonal.
+     ! index of the diagonal: 0 refers to the main diagonal, a positive
+     ! value refers to an upper diagonal, and a negative value to a
+     ! lower diagonal.
      integer, intent(in)   :: k
 
-! input/output matrix
+     ! input/output matrix
      real(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = zero
      do i=1,n
@@ -354,13 +370,15 @@
          A(i,i-k) = one
      enddo ! over i={1,n} loop
 
+!! body]
+
      return
   end subroutine s_eye_d
 
 !!
 !! @sub s_eye_z
 !!
-!! build complex(dp) matrix with ones on the diagonal and zeros elsewhere
+!! build complex(dp) matrix with ones on the diagonal and zeros elsewhere.
 !!
   subroutine s_eye_z(n, k, A)
      use constants, only : dp
@@ -368,20 +386,23 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! index of the diagonal: 0 refers to the main diagonal, a positive value
-! refers to an upper diagonal, and a negative value to a lower diagonal.
+     ! index of the diagonal: 0 refers to the main diagonal, a positive
+     ! value refers to an upper diagonal, and a negative value to a
+     ! lower diagonal.
      integer, intent(in)      :: k
 
-! input/output matrix
+     ! input/output matrix
      complex(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = czero
      do i=1,n
@@ -389,32 +410,38 @@
          A(i,i-k) = cone
      enddo ! over i={1,n} loop
 
+!! body]
+
      return
   end subroutine s_eye_z
 
 !!
 !! @sub s_identity_i
 !!
-!! build integer identity matrix
+!! build integer identity matrix.
 !!
   subroutine s_identity_i(n, A)
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)  :: n
 
-! input/output matrix
+     ! input/output matrix
      integer, intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = 0
      do i=1,n
          A(i,i) = 1
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_identity_i
@@ -422,7 +449,7 @@
 !!
 !! @sub s_identity_d
 !!
-!! build real(dp) identity matrix
+!! build real(dp) identity matrix.
 !!
   subroutine s_identity_d(n, A)
      use constants, only : dp
@@ -430,21 +457,25 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! input/output matrix
+     ! input/output matrix
      real(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = zero
      do i=1,n
          A(i,i) = one
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_identity_d
@@ -452,7 +483,7 @@
 !!
 !! @sub s_identity_z
 !!
-!! build complex(dp) identity matrix
+!! build complex(dp) identity matrix.
 !!
   subroutine s_identity_z(n, A)
      use constants, only : dp
@@ -460,21 +491,25 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! input/output matrix
+     ! input/output matrix
      complex(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = czero
      do i=1,n
          A(i,i) = cone
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_identity_z
@@ -482,29 +517,33 @@
 !!
 !! @sub s_diag_i
 !!
-!! build integer diagonal matrix from a vector
+!! build integer diagonal matrix from a vector.
 !!
   subroutine s_diag_i(n, v, A)
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)  :: n
 
-! input integer vector
+     ! input integer vector
      integer, intent(in)  :: v(n)
 
-! output integer diagonal matrix
+     ! output integer diagonal matrix
      integer, intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = 0
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_diag_i
@@ -512,7 +551,7 @@
 !!
 !! @sub s_diag_d
 !!
-!! build real(dp) diagonal matrix from a vector
+!! build real(dp) diagonal matrix from a vector.
 !!
   subroutine s_diag_d(n, v, A)
      use constants, only : dp
@@ -520,24 +559,28 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! input real(dp) vector
+     ! input real(dp) vector
      real(dp), intent(in)  :: v(n)
 
-! output real(dp) diagonal matrix
+     ! output real(dp) diagonal matrix
      real(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = zero
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_diag_d
@@ -545,7 +588,7 @@
 !!
 !! @sub s_diag_z
 !!
-!! build complex(dp) diagonal matrix from a vector
+!! build complex(dp) diagonal matrix from a vector.
 !!
   subroutine s_diag_z(n, v, A)
      use constants, only : dp
@@ -553,24 +596,28 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! input complex(dp) vector
+     ! input complex(dp) vector
      complex(dp), intent(in)  :: v(n)
 
-! output complex(dp) diagonal matrix
+     ! output complex(dp) diagonal matrix
      complex(dp), intent(out) :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      A = czero
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_diag_z
@@ -582,7 +629,7 @@
 !!
 !! @sub s_trace_d
 !!
-!! return trace for a real(dp) array
+!! return trace for a real(dp) array.
 !!
   subroutine s_trace_d(n, A, tr)
      use constants, only : dp
@@ -590,24 +637,28 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)   :: n
 
-! output matrix's trace
+     ! output matrix's trace
      real(dp), intent(out) :: tr
 
-! input real(dp) matrix
+     ! input real(dp) matrix
      real(dp), intent(in)  :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      tr = zero
      do i=1,n
          tr = tr + A(i,i)
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_trace_d
@@ -615,7 +666,7 @@
 !!
 !! @sub s_trace_z
 !!
-!! return trace for a complex(dp) array
+!! return trace for a complex(dp) array.
 !!
   subroutine s_trace_z(n, A, tr)
      use constants, only : dp
@@ -623,24 +674,28 @@
 
      implicit none
 
-! external arguments
-! size of matrix
+!! external arguments
+     ! size of matrix
      integer, intent(in)      :: n
 
-! output matrix's trace
+     ! output matrix's trace
      complex(dp), intent(out) :: tr
 
-! input complex(dp) matrix
+     ! input complex(dp) matrix
      complex(dp), intent(in)  :: A(n,n)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      tr = czero
      do i=1,n
          tr = tr + A(i,i)
      enddo ! over i={1,n} loop
+
+!! body]
 
      return
   end subroutine s_trace_z
@@ -648,7 +703,7 @@
 !!
 !! @sub s_det_d
 !!
-!! calculate the determinant of a real(dp) matrix
+!! calculate the determinant of a real(dp) matrix.
 !!
   subroutine s_det_d(ndim, dmat, ddet)
      use constants, only : dp
@@ -656,51 +711,53 @@
 
      implicit none
 
-! external arguments
-! dimension of dmat matrix
+!! external arguments
+     ! dimension of dmat matrix
      integer, intent(in)     :: ndim
 
-! determinant of dmat matrix
+     ! determinant of dmat matrix
      real(dp), intent(out)   :: ddet
 
-! object matrix, on entry, it contains the original matrix, on exit,
-! it is destroyed and replaced with the L and U matrix
+     ! object matrix, on entry, it contains the original matrix, on
+     ! exit, it is destroyed and replaced with the L and U matrix.
      real(dp), intent(inout) :: dmat(ndim,ndim)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
 
-! error flag
+     ! error flag
      integer  :: ierror
 
-! size of working array work
+     ! size of working array work
      integer  :: lwork
 
-! used to calculate determinant
+     ! used to calculate determinant
      complex(dp) :: cres
 
-! working arrays for lapack subroutines: dgetrf
+     ! working arrays for lapack subroutines: dgetrf
      integer, allocatable  :: ipiv(:)
 
-! working arrays for lapack subroutines: dgeev
+    ! working arrays for lapack subroutines: dgeev
      real(dp), allocatable :: work(:)
 
-! real and imaginary parts of the computed eigenvalues
+     ! real and imaginary parts of the computed eigenvalues
      real(dp), allocatable :: wi(:)
      real(dp), allocatable :: wr(:)
 
-! left and right eigenvectors
+     ! left and right eigenvectors
      real(dp), allocatable :: vl(:,:)
      real(dp), allocatable :: vr(:,:)
 
-! dummy arrays, used to save dmat
+     ! dummy arrays, used to save dmat
      real(dp), allocatable :: amat(:,:)
 
-! setup lwork
+!! [body
+
+     ! setup lwork
      lwork = 4 * ndim
 
-! allocate memory
+     ! allocate memory
      allocate(ipiv(ndim),      stat=ierror)
      allocate(work(lwork),     stat=ierror)
      allocate(wi(ndim),        stat=ierror)
@@ -708,24 +765,25 @@
      allocate(vl(ndim,ndim),   stat=ierror)
      allocate(vr(ndim,ndim),   stat=ierror)
      allocate(amat(ndim,ndim), stat=ierror)
+     !
      if ( ierror /= 0 ) then
          call s_print_error('s_det_d','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-! copy dmat to amat at first
+     ! copy dmat to amat at first
      amat = dmat
 
 !-------------------------------------------------------------------------
 ! method A: preferred method
 !-------------------------------------------------------------------------
-! computes the LU factorization of a general m-by-n matrix, need lapack
-! package, dgetrf subroutine
+     ! computes the LU factorization of a general m-by-n matrix, need
+     ! lapack package, dgetrf subroutine.
      call DGETRF(ndim, ndim, dmat, ndim, ipiv, ierror)
      if ( ierror /= 0 ) then
          call s_print_exception('s_det_d','error in lapack subroutine dgetrf')
      endif ! back if ( ierror /= 0 ) block
 
-! calculate determinant
+     ! calculate determinant
      ddet = one
      do i=1,ndim
          if ( ipiv(i) == i ) then
@@ -735,26 +793,26 @@
          endif ! back if ( ipiv(i) == i ) block
      enddo ! over i={1,ndim} loop
 
-! everything is ok!
+     ! everything is ok!
      if ( ierror == 0 ) RETURN
 
 !-------------------------------------------------------------------------
 ! method B: as a backup
 !-------------------------------------------------------------------------
-! diagonalize amat to obtain its eigenvalues: wr and wi
+     ! diagonalize amat to obtain its eigenvalues: wr and wi.
      call DGEEV('N', 'N', ndim, amat, ndim, wr, wi, vl, ndim, vr, ndim, work, lwork, ierror)
      if ( ierror /= 0 ) then
          call s_print_error('s_det_d','error in lapack subroutine dgeev')
      endif ! back if ( ierror /= 0 ) block
 
-! evaluate the final determinant
+     ! evaluate the final determinant
      cres = cone
      do i=1,ndim
          cres = cres * dcmplx( wr(i), wi(i) )
      enddo ! over i={1,ndim} loop
      ddet = real(cres)
 
-! deallocate memory
+     ! deallocate memory
      if ( allocated(ipiv) ) deallocate(ipiv)
      if ( allocated(work) ) deallocate(work)
      if ( allocated(wi  ) ) deallocate(wi  )
@@ -762,6 +820,8 @@
      if ( allocated(vl  ) ) deallocate(vl  )
      if ( allocated(vr  ) ) deallocate(vr  )
      if ( allocated(amat) ) deallocate(amat)
+
+!! body]
 
      return
   end subroutine s_det_d
