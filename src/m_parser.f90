@@ -324,16 +324,20 @@
      ! convert str_value to out_value, here we only support the following
      ! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
      select type (out_value)
-         type is (integer)          ! for integer
+         ! for integer
+         type is (integer)
              read (str_value,*) out_value
 
-         type is (logical)          ! for logical
+         ! for logical
+         type is (logical)
              read (str_value,*) out_value
 
-         type is (real(dp))         ! for double precision number
+         ! for double precision number
+         type is (real(dp))
              read (str_value,*) out_value
 
-         type is (character(len=*)) ! for character
+         ! for character
+         type is (character(len=*))
              out_value = str_value
 
          class default
@@ -350,58 +354,61 @@
 !! @sub p_get_vec
 !!
 !! retrieve the key-value pair from the linked list data structure here
-!! value is a array instead of single object
+!! value is a array instead of single object.
 !!
   subroutine p_get_vec(in_key, out_value, nsize)
      implicit none
 
-! external arguments
-! size of out_value
+!! external arguments
+     ! size of out_value
      integer, intent(in)          :: nsize
 
-! string representation for the key of key-value pair
+     ! string representation for the key of key-value pair
      character(len=*), intent(in) :: in_key
 
-! polymorphic object for the value of key-value pair
+     ! polymorphic object for the value of key-value pair
      class(*), intent(inout)      :: out_value(nsize)
 
-! local variables
-! loop index, and used to tokenize the string
+!! local variables
+     ! loop index, and used to tokenize the string
      integer  :: p
      integer  :: q
      integer  :: offset
 
-! auxiliary variables used in the converting process
+     ! auxiliary variables used in the converting process
      integer  :: int_aux
      logical  :: bool_aux
      real(dp) :: real_aux
 
-! flag for the search results
+     ! flag for the search results
      logical  :: found
 
-! string representation for the key
+     ! string representation for the key
      character(len=32) :: str_key
 
-! string representation for the value
+     ! string representation for the value
      character(len=32) :: str_value
 
-! pointer for the linked list data structure
+     ! pointer for the linked list data structure
      type(list_t), pointer :: curr => null()
 
-! copy in_key to str_key and then postprocess it
+!! [body
+
+     ! copy in_key to str_key and then postprocess it
      str_key = in_key
      call s_str_compress(str_key)
      call s_str_lowcase(str_key)
 
-! visit the linked list and try to find out the required key-value pair
-! whose key is the same with str_key
+     ! visit the linked list and try to find out the required
+     ! key-value pair whose key is the same with str_key
      found = .false.
      curr => list_ptr
      do p=1,list_count(list_ptr)-1
-! note that we skip the first element since it is invalid
+         ! note that we skip the first element since it is invalid
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
-! the required key-value pair is found, extract the value to str_value
+         ! the required key-value pair is found, extract the value
+         ! to str_value
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
              found = .true.
              str_value = data_ptr%str_value
@@ -412,18 +419,25 @@
      enddo ! over do loop
      curr => null()
 
-! we can not find matched key, so return directly
+     ! we can not find matched key, so return directly
      if ( found .eqv. .false. ) return
 
-! convert str_value to out_value, here we only support the following
-! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
-!
-! note: the delimiter must be ','
-!
-! note: it is very strange that we can not use read command to make
-! an assignment for out_value directly.
+     !
+     ! remarks 1:
+     !
+     ! the delimiter must be ','.
+     !
+     ! remarks 2:
+     !
+     ! it is very strange that we can not use read command to make
+     ! an assignment for out_value directly.
+     !
+
+     ! convert str_value to out_value, here we only support the following
+     ! four cases: 1. integer; 2. logical; 3. real(dp); 4. character(len=*)
      select type (out_value)
-         type is (integer)          ! for integer
+         ! for integer
+         type is (integer)
              q = 0
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
@@ -438,7 +452,8 @@
              read(str_value(q+1:),'(I10)') int_aux
              out_value(nsize) = int_aux
 
-         type is (logical)          ! for logical
+         ! for logical
+         type is (logical)
              q = 0
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
@@ -453,7 +468,8 @@
              read(str_value(q+1:),'(L4)') bool_aux
              out_value(nsize) = bool_aux
 
-         type is (real(dp))         ! for double precision number
+         ! for double precision number
+         type is (real(dp))
              q = 0
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
@@ -468,7 +484,8 @@
              read(str_value(q+1:),'(F16.8)') real_aux
              out_value(nsize) = real_aux
 
-         type is (character(len=*)) ! for character
+         ! for character
+         type is (character(len=*))
              q = 0
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
@@ -485,6 +502,8 @@
              write(mystd,'(a)') 'parser: p_get_vec, unrecognize data type'
              STOP
      end select
+
+!! body]
 
      return
   end subroutine p_get_vec
