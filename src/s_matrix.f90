@@ -1307,7 +1307,7 @@
 !!
 !! @sub s_eigvals_zg
 !!
-!! diagonalize a general complex(dp) matrix and return its eigenvalues only
+!! diagonalize a general complex(dp) matrix and return its eigenvalues only.
 !!
   subroutine s_eigvals_zg(ldim, ndim, zmat, zeig)
      use constants, only : dp
@@ -1315,68 +1315,71 @@
 
      implicit none
 
-! external arguments
-! leading dimension of matrix amat
+!! external arguments
+     ! leading dimension of matrix amat
      integer, intent(in)      :: ldim
 
-! the order of the matrix amat
+     ! the order of the matrix amat
      integer, intent(in)      :: ndim
 
-! original general complex(dp) matrix to compute eigenvals
+     ! original general complex(dp) matrix to compute eigenvals
      complex(dp), intent(in)  :: zmat(ldim,ndim)
 
-! if info = 0, the eigenvalues in ascending order
+     ! if info = 0, the eigenvalues in ascending order
      complex(dp), intent(out) :: zeig(ndim)
 
-! local variables
-! status flag
+!! local variables
+     ! status flag
      integer :: istat
 
-! return information from subroutine zgeev
+     ! return information from subroutine zgeev
      integer :: info
 
-! the length of the array work, lwork >= max(1,2*ndim)
+     ! the length of the array work, lwork >= max(1,2*ndim)
      integer :: lwork
 
-! workspace array, used to store amat
+     ! workspace array, used to store amat
      complex(dp), allocatable :: zvec(:,:)
 
-! workspace array
+     ! workspace array
      complex(dp), allocatable :: work(:)
 
-! auxiliary real(dp) matrix
+     ! auxiliary real(dp) matrix
      complex(dp), allocatable :: rwork(:)
 
-! auxiliary complex(dp) matrix: left and right eigenvectors
+     ! auxiliary complex(dp) matrix: left and right eigenvectors
      complex(dp), allocatable :: vr(:,:)
      complex(dp), allocatable :: vl(:,:)
 
-! initialize lwork
+!! [body
+
+     ! initialize lwork
      lwork = 2 * ndim
 
-! allocate memory
+     ! allocate memory
      allocate(zvec(ldim,ndim), stat=istat)
      allocate(work(lwork),     stat=istat)
      allocate(rwork(lwork),    stat=istat)
      allocate(vr(ndim,ndim),   stat=istat)
      allocate(vl(ndim,ndim),   stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_eigvals_zg','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
-! initialize output arrays
+     ! initialize output arrays
      zeig = czero
      zvec = zmat
 
-! call the computational subroutine: zgeev
+     ! call the computational subroutine: zgeev
      call ZGEEV('N', 'N', ndim, zvec, ldim, zeig, vl, ndim, vr, ndim, work, lwork, rwork, info)
 
-! check the status
+     ! check the status
      if ( info /= 0 ) then
          call s_print_error('s_eigvals_zg','error in lapack subroutine zgeev')
      endif ! back if ( info /= 0 ) block
 
-! dealloate memory for workspace array
+     ! dealloate memory for workspace array
      if ( allocated(zvec ) )  deallocate(zvec )
      if ( allocated(work ) )  deallocate(work )
      if ( allocated(rwork) )  deallocate(rwork)
