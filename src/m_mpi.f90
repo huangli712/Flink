@@ -5,11 +5,11 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 08/09/2006 by li huang (created)
-!!!           04/06/2021 by li huang (last modified)
+!!!           07/23/2021 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
-!!!           most important and useful (not all) mpi subroutines (in our
+!!!           most important and useful (not all) mpi subroutines (in my
 !!!           opinion) in this module to facilite the usage of mpi.
 !!! status  : unstable
 !!! comment : this module has been tested under the following environment:
@@ -20,87 +20,6 @@
 !!!               openmpi   1.6.4, 1.7.1, 1.8.3
 !!!               intel mpi 3.2.0
 !!!-----------------------------------------------------------------------
-
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! This module wraps the most useful mpi calls by using generic programming
-!! techniques. It supports most of the collective operations (such as BCAST,
-!! GATHER, REDUCE, etc.). These subroutines are
-!!     MPI_INIT(),
-!!     MPI_FINALIZE(),
-!!     MPI_WTIME(),
-!!     MPI_WTICK(),
-!!     MPI_BARRIER(),
-!!     MPI_DIMS_CREATE(),
-!!     MPI_CART_CREATE(),
-!!     MPI_CART_COORDS(),
-!!     MPI_COMM_SPLIT(),
-!!     MPI_COMM_RANK(),
-!!     MPI_COMM_SIZE(),
-!!     MPI_GET_PROCESSOR_NAME(),
-!!     MPI_BCAST(),
-!!     MPI_GATHER(),
-!!     MPI_GATHERV(),
-!!     MPI_ALLGATHER(),
-!!     MPI_ALLGATHERV(),
-!!     MPI_REDUCE(),
-!!     MPI_ALLREDUCE(),
-!! etc. However, none of the point-to-point operations is supported. in the
-!! module, we also try to implement a light-weight error handler. enjoy it!
-!!
-!! Usage
-!! =====
-!!
-!! 1. include mpi support
-!! ----------------------
-!!
-!! use mmpi
-!!
-!! pay attention to the module name. it is mmpi, instead of mpi.
-!!
-!! 2. init mpi environment
-!! -----------------------
-!!
-!! call mp_init() ! init mpi environment
-!! call mp_comm_rank(myid) ! get current process it
-!! call mp_comm_size(nprocs) ! get number of processes
-!!
-!! 3. broadcast data
-!! -----------------
-!!
-!! real(dp), allocatable :: real_data(:,:,:)
-!! integer, allocatable :: int_data(:)
-!! complex(dp), allocatable :: cmplx_data(:,:,:,:)
-!!
-!! call mp_bcast(real_data, master)
-!! call mp_bcast(int_data, master)
-!! call mp_bcast(cmplx_data, master)
-!!
-!! here master == 0 which means the master node/root process.
-!!
-!! 4. all-reduce data
-!! ------------------
-!!
-!! real(dp), allocatable :: real_data(:)
-!! real(dp), allocatable :: real_data_mpi(:)
-!!
-!! call mp_allreduce(real_data, real_data_mpi) ! all-readuce data
-!! real_data = real_data_mpi / number_of_processes ! calculate the average
-!!
-!! 5. setup barrier
-!! ----------------
-!!
-!! call mp_barrier()
-!!
-!! 6. finialize mpi environment
-!! ----------------------------
-!!
-!! call mp_finalize()
-!!
-!!
 
 !!>>> whether the compiler support mpi environment, i.e, mpif90
 # if defined (MPI)
@@ -875,26 +794,26 @@
 !!
 !! @sub mp_comm_rank
 !!
-!! determine the rank of the current process
+!! determine the rank of the current process.
 !!
      subroutine mp_comm_rank(myid, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(out) :: myid
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_COMM_RANK(group, myid, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_comm_rank', ierror)
 
          return
@@ -903,26 +822,26 @@
 !!
 !! @sub mp_comm_size
 !!
-!! evaluate the number of processes in current communicator
+!! evaluate the number of processes in current communicator.
 !!
      subroutine mp_comm_size(nprocs, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(out) :: nprocs
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_COMM_SIZE(group, nprocs, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_comm_size', ierror)
 
          return
@@ -931,18 +850,18 @@
 !!
 !! @sub mp_processor
 !!
-!! determine the current workstation's name
+!! determine the current workstation's name.
 !!
      subroutine mp_processor(workstation)
          implicit none
 
-! external arguments
+!! external arguments
          character(len=MPI_MAX_PROCESSOR_NAME), intent(out) :: workstation
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_GET_PROCESSOR_NAME(workstation, istat, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_processor', ierror)
 
          return
@@ -1080,20 +999,20 @@
      subroutine mp_barrier(gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! invoke related mpi subroutines
+         ! invoke related mpi subroutines
          call MPI_BARRIER(group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_barrier', ierror)
 
          return
@@ -1458,28 +1377,28 @@
      subroutine mp_bcast_int3(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: data(:,:,:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, isize, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_int3', ierror)
 
          return
@@ -1498,23 +1417,23 @@
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
-! setup element count
+         ! setup element count
          isize = size(data)
 
-! invoke realted MPI subroutines
+         ! invoke realted MPI subroutines
          call MPI_BCAST(data, isize, m_int, root, group, ierror)
 
-! handler for return code
+         ! handler for return code
          call mp_error('mp_bcast_int4', ierror)
 
          return
@@ -1697,19 +1616,19 @@
      subroutine mp_bcast_rdp2(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          real(dp), intent(in) :: data(:,:)
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
-! set current communicator
+         ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
          else
              group = MPI_COMM_WORLD
          endif ! back if ( present(gid) .eqv. .true. ) block
 
-! barrier until all processes reach here
+         ! barrier until all processes reach here
          call mp_barrier(group)
 
 ! setup element count
