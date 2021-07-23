@@ -404,14 +404,16 @@
 !!
 !! @fun spring_sfmt_source
 !!
-!! this function generates and returns 32-bit pseudo random number
+!! this function generates and returns 32-bit pseudo random number.
 !!
   function spring_sfmt_source() result(r)
      implicit none
 
-! local variables
-! return type
+!! local variables
+     ! return type
      integer(i64) :: r
+
+!! [body
 
      if ( idx >= N32 ) then
          call spring_sfmt_kernel()
@@ -425,6 +427,8 @@
      endif ! back if ( btest(idx, 0) ) block
 
      idx = idx + 1
+
+!! body]
 
      return
   end function spring_sfmt_source
