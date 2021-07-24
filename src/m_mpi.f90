@@ -1091,10 +1091,12 @@
          real(dp), intent(out) :: time
 
 !! [body
+
          ! invoke related mpi subroutines
          time = MPI_WTIME()
 
 !! body]
+
          return
      end subroutine mp_wtime
 
@@ -1110,10 +1112,12 @@
          real(dp), intent(out) :: tick
 
 !! [body
+
          ! invoke related mpi subroutines
          tick = MPI_WTICK()
 
 !! body]
+
          return
      end subroutine mp_wtick
 
@@ -1136,6 +1140,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1172,6 +1177,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1192,6 +1198,7 @@
          call mp_error('mp_bcast_log1', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_log1
 
@@ -1210,6 +1217,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1230,6 +1238,7 @@
          call mp_error('mp_bcast_log2', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_log2
 
@@ -1248,6 +1257,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1268,6 +1278,7 @@
          call mp_error('mp_bcast_log3', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_log3
 
@@ -1286,6 +1297,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1306,6 +1318,7 @@
          call mp_error('mp_bcast_log4', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_log4
 
@@ -1324,6 +1337,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1344,6 +1358,7 @@
          call mp_error('mp_bcast_log5', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_log5
 
@@ -1362,6 +1377,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1379,6 +1395,7 @@
          call mp_error('mp_bcast_int0', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int0
 
@@ -1397,6 +1414,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1417,6 +1435,7 @@
          call mp_error('mp_bcast_int1', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int1
 
@@ -1435,6 +1454,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1455,6 +1475,7 @@
          call mp_error('mp_bcast_int2', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int2
 
@@ -1473,6 +1494,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1493,6 +1515,7 @@
          call mp_error('mp_bcast_int3', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int3
 
@@ -1511,6 +1534,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1531,6 +1555,7 @@
          call mp_error('mp_bcast_int4', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int4
 
@@ -1549,6 +1574,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1569,6 +1595,7 @@
          call mp_error('mp_bcast_int5', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_int5
 
@@ -1587,6 +1614,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1604,6 +1632,7 @@
          call mp_error('mp_bcast_chr0', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_chr0
 
@@ -1617,10 +1646,12 @@
 
 !! external arguments
          character(len = *), intent(in) :: data(:)
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1641,6 +1672,7 @@
          call mp_error('mp_bcast_chr1', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_chr1
 
@@ -1659,6 +1691,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1676,6 +1709,7 @@
          call mp_error('mp_bcast_rdp0', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp0
 
@@ -1694,6 +1728,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1714,6 +1749,7 @@
          call mp_error('mp_bcast_rdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp1
 
@@ -1753,6 +1789,7 @@
          call mp_error('mp_bcast_rdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp2
 
@@ -1792,6 +1829,7 @@
          call mp_error('mp_bcast_rdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp3
 
@@ -1810,6 +1848,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1830,6 +1869,7 @@
          call mp_error('mp_bcast_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp4
 
@@ -1848,6 +1888,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1868,6 +1909,7 @@
          call mp_error('mp_bcast_rdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_rdp5
 
@@ -1886,6 +1928,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1903,6 +1946,7 @@
          call mp_error('mp_bcast_cdp0', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp0
 
@@ -1921,6 +1965,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1941,6 +1986,7 @@
          call mp_error('mp_bcast_cdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp1
 
@@ -1959,6 +2005,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1979,6 +2026,7 @@
          call mp_error('mp_bcast_cdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp2
 
@@ -1997,6 +2045,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2017,6 +2066,7 @@
          call mp_error('mp_bcast_cdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp3
 
@@ -2056,6 +2106,7 @@
          call mp_error('mp_bcast_cdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp4
 
@@ -2074,6 +2125,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2094,6 +2146,7 @@
          call mp_error('mp_bcast_cdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_bcast_cdp5
 
