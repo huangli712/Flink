@@ -4228,6 +4228,7 @@
          call mp_error('mp_allgatherv_int4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_int4
 
@@ -4250,6 +4251,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4270,6 +4272,7 @@
          call mp_error('mp_allgatherv_int5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_int5
 
@@ -4292,6 +4295,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4312,6 +4316,7 @@
          call mp_error('mp_allgatherv_rdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_rdp1
 
@@ -4334,6 +4339,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4354,6 +4360,7 @@
          call mp_error('mp_allgatherv_rdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_rdp2
 
@@ -4397,6 +4404,7 @@
          call mp_error('mp_allgatherv_rdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_rdp3
 
@@ -4419,6 +4427,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4439,6 +4448,7 @@
          call mp_error('mp_allgatherv_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_rdp4
 
@@ -4461,6 +4471,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4481,6 +4492,7 @@
          call mp_error('mp_allgatherv_rdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_rdp5
 
@@ -4503,6 +4515,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4523,6 +4536,7 @@
          call mp_error('mp_allgatherv_cdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_cdp1
 
@@ -4566,6 +4580,7 @@
          call mp_error('mp_allgatherv_cdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_cdp2
 
@@ -4588,6 +4603,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -4608,6 +4624,7 @@
          call mp_error('mp_allgatherv_cdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_cdp3
 
@@ -4651,6 +4668,7 @@
          call mp_error('mp_allgatherv_cdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_cdp4
 
@@ -4694,6 +4712,7 @@
          call mp_error('mp_allgatherv_cdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgatherv_cdp5
 
@@ -4743,6 +4762,7 @@
          call mp_error('mp_reduce_int0', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int0
 
@@ -4763,6 +4783,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -4790,6 +4811,7 @@
          call mp_error('mp_reduce_int1', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int1
 
@@ -4838,6 +4860,7 @@
          call mp_error('mp_reduce_int2', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int2
 
@@ -4886,6 +4909,7 @@
          call mp_error('mp_reduce_int3', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int3
 
