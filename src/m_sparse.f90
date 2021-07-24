@@ -186,40 +186,42 @@
 !!
 !! @sub sp_format_csrdns_z
 !!
-!! converts a row-stored sparse matrix into a densely stored one
+!! converts a row-stored sparse matrix into a densely stored one.
 !!
   subroutine sp_format_csrdns_z(nrow, ncol, nmax, sa, ja, ia, dns)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)      :: nrow
 
-! column dimension of dense matrix
+     ! column dimension of dense matrix
      integer, intent(in)      :: ncol
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays sa and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays sa and ja.
      integer, intent(in)      :: nmax
 
-! sa, ja, ia, input matrix in compressed sparse row format
+     ! sa, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrow+1)
      integer, intent(in)      :: ja(nmax)
      complex(dp), intent(in)  :: sa(nmax)
 
-! array where to store dense matrix
+     ! array where to store dense matrix
      complex(dp), intent(out) :: dns(nrow,ncol)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
      integer :: k
 
-! init dns matrix
+!! [body
+
+     ! init dns matrix
      dns = dcmplx(0.0_dp, 0.0_dp)
 
-! convert sparse matrix to dense matrix
+     ! convert sparse matrix to dense matrix
      do i=1,nrow
          do k=ia(i),ia(i+1)-1
              j = ja(k)
@@ -230,6 +232,8 @@
              dns(i,j) = sa(k)
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrow} loop
+
+!! body]
 
      return
   end subroutine sp_format_csrdns_z
