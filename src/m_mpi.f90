@@ -587,6 +587,10 @@
 
          module procedure mp_bcast_chr0
          module procedure mp_bcast_chr1
+         module procedure mp_bcast_chr2
+         module procedure mp_bcast_chr3
+         module procedure mp_bcast_chr4
+         module procedure mp_bcast_chr5
 
          module procedure mp_bcast_rdp0
          module procedure mp_bcast_rdp1
