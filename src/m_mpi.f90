@@ -941,6 +941,7 @@
          integer, intent(in) :: dims(ndims)
 
 !! [body
+
          ! invoke related mpi subroutines
          ! note: mpi_comm_cart should be overwriten in output
          call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
@@ -949,6 +950,7 @@
          call mp_error('mp_cart_create', ierror)
 
 !! body]
+
          return
      end subroutine mp_cart_create
 
@@ -969,6 +971,7 @@
          integer :: coords(ndims)
 
 !! [body
+
          ! invoke related mpi subroutines
          call MPI_CART_COORDS(mpi_comm_cart, myid, ndims, coords, ierror)
 
@@ -981,6 +984,7 @@
          call mp_error('mp_cart_coords', ierror)
 
 !! body]
+
          return
      end subroutine mp_cart_coords
 
@@ -997,6 +1001,7 @@
          integer :: key
 
 !! [body
+
          ! invoke related mpi subroutines
          ! note: mpi_comm_row should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
@@ -1005,6 +1010,7 @@
          call mp_error('mp_comm_split_row', ierror)
 
 !! body]
+
          return
      end subroutine mp_comm_split_row
 
@@ -1021,6 +1027,7 @@
          integer :: key
 
 !! [body
+
          ! invoke related mpi subroutines
          ! note: mpi_comm_col should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
@@ -1029,6 +1036,7 @@
          call mp_error('mp_comm_split_col', ierror)
 
 !! body]
+
          return
      end subroutine mp_comm_split_col
 
@@ -1048,6 +1056,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -1062,6 +1071,7 @@
          call mp_error('mp_barrier', ierror)
 
 !! body]
+
          return
      end subroutine mp_barrier
 
