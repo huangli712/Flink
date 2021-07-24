@@ -825,6 +825,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -839,6 +840,7 @@
          call mp_error('mp_comm_rank', ierror)
 
 !! body]
+
          return
      end subroutine mp_comm_rank
 
@@ -855,6 +857,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -869,6 +872,7 @@
          call mp_error('mp_comm_size', ierror)
 
 !! body]
+
          return
      end subroutine mp_comm_size
 
@@ -884,6 +888,7 @@
          character(len=MPI_MAX_PROCESSOR_NAME), intent(out) :: workstation
 
 !! [body
+
          ! invoke related mpi subroutines
          call MPI_GET_PROCESSOR_NAME(workstation, istat, ierror)
 
@@ -891,6 +896,7 @@
          call mp_error('mp_processor', ierror)
 
 !! body]
+
          return
      end subroutine mp_processor
 
@@ -911,11 +917,14 @@
          integer, intent(inout) :: dims(ndims)
 
 !! [body
+
          ! invoke related mpi subroutines
          call MPI_DIMS_CREATE(nprocs, ndims, dims, ierror)
 
          ! handler for return code
          call mp_error('mp_dims_create', ierror)
+
+!! body]
 
          return
      end subroutine mp_dims_create
