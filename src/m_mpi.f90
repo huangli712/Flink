@@ -3904,6 +3904,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3924,6 +3925,7 @@
          call mp_error('mp_allgather_cdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_cdp2
 
@@ -3964,6 +3966,7 @@
          call mp_error('mp_allgather_cdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_cdp3
 
