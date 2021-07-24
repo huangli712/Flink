@@ -806,7 +806,7 @@
 !!
 !! @sub mp_finalize
 !!
-!! finalize mpi environment
+!! finalize mpi environment.
 !!
      subroutine mp_finalize()
          implicit none
@@ -959,7 +959,7 @@
 !! [body
 
          ! invoke related mpi subroutines
-         ! note: mpi_comm_cart should be overwriten in output
+         ! mpi_comm_cart should be overwriten in output.
          call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
 
          ! handler for return code
@@ -1019,7 +1019,7 @@
 !! [body
 
          ! invoke related mpi subroutines
-         ! note: mpi_comm_row should be overwritten in output
+         ! mpi_comm_row should be overwritten in output
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
 
          ! handler for return code
