@@ -3576,6 +3576,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3596,6 +3597,7 @@
          call mp_error('mp_allgather_int4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_int4
 
@@ -3615,6 +3617,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -3635,6 +3638,7 @@
          call mp_error('mp_allgather_int5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_int5
 
@@ -3675,6 +3679,7 @@
          call mp_error('mp_allgather_rdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_rdp1
 
@@ -3715,6 +3720,7 @@
          call mp_error('mp_allgather_rdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_rdp2
 
@@ -3730,7 +3736,7 @@
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
          real(dp), intent(inout) :: data(:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
 !! [body
@@ -3755,6 +3761,7 @@
          call mp_error('mp_allgather_rdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_rdp3
 
@@ -3795,6 +3802,7 @@
          call mp_error('mp_allgather_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_rdp4
 
@@ -3835,6 +3843,7 @@
          call mp_error('mp_allgather_rdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_rdp5
 
@@ -3875,6 +3884,7 @@
          call mp_error('mp_allgather_cdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_allgather_cdp1
 
