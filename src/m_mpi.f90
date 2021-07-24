@@ -6087,6 +6087,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -6114,6 +6115,7 @@
          call mp_error('mp_allreduce_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_rdp4
 
@@ -6161,6 +6163,7 @@
          call mp_error('mp_allreduce_rdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_rdp5
 
@@ -6180,6 +6183,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -6204,6 +6208,7 @@
          call mp_error('mp_allreduce_cdp0', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp0
 
@@ -6251,6 +6256,7 @@
          call mp_error('mp_allreduce_cdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp1
 
@@ -6270,6 +6276,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -6297,6 +6304,7 @@
          call mp_error('mp_allreduce_cdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp2
 
@@ -6316,6 +6324,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -6343,6 +6352,7 @@
          call mp_error('mp_allreduce_cdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp3
 
@@ -6362,6 +6372,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -6389,6 +6400,7 @@
          call mp_error('mp_allreduce_cdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp4
 
@@ -6436,6 +6448,7 @@
          call mp_error('mp_allreduce_cdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_allreduce_cdp5
 
@@ -6625,9 +6638,11 @@
          implicit none
 
 !! [body
+
          write(mystd,'(a)') 'Bad news, your compiler is mpi-incompatible.'
 
 !! body]
+
          return
      end subroutine mp_info
 
@@ -6644,7 +6659,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_init
 
@@ -6657,7 +6674,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_finalize
 
@@ -6674,7 +6693,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_comm_rank
 
@@ -6688,6 +6709,7 @@
 
 !! [body
 !! body]
+
          return
      end subroutine mp_comm_size
 
@@ -6704,7 +6726,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_barrier
 
@@ -6721,7 +6745,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_bcast
 
@@ -6738,7 +6764,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_gather
 
@@ -6755,7 +6783,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_gatherv
 
@@ -6772,7 +6802,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_allgather
 
@@ -6789,7 +6821,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_allgatherv
 
@@ -6806,7 +6840,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_reduce
 
@@ -6823,7 +6859,9 @@
          implicit none
 
 !! [body
+
 !! body]
+
          return
      end subroutine mp_allreduce
 
