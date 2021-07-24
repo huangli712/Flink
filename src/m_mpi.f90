@@ -578,19 +578,19 @@
          module procedure mp_bcast_log4
          module procedure mp_bcast_log5
 
-         module procedure mp_bcast_int0
-         module procedure mp_bcast_int1
-         module procedure mp_bcast_int2
-         module procedure mp_bcast_int3
-         module procedure mp_bcast_int4
-         module procedure mp_bcast_int5
-
          module procedure mp_bcast_chr0
          module procedure mp_bcast_chr1
          module procedure mp_bcast_chr2
          module procedure mp_bcast_chr3
          module procedure mp_bcast_chr4
          module procedure mp_bcast_chr5
+
+         module procedure mp_bcast_int0
+         module procedure mp_bcast_int1
+         module procedure mp_bcast_int2
+         module procedure mp_bcast_int3
+         module procedure mp_bcast_int4
+         module procedure mp_bcast_int5
 
          module procedure mp_bcast_rdp0
          module procedure mp_bcast_rdp1
