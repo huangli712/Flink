@@ -180,24 +180,6 @@
      ! broadcasting bool(:,:,:,:,:)
      private :: mp_bcast_log5
 
-     ! broadcasting int
-     private :: mp_bcast_int0
-
-     ! broadcasting int(:)
-     private :: mp_bcast_int1
-
-     ! broadcasting int(:,:)
-     private :: mp_bcast_int2
-
-     ! broadcasting int(:,:,:)
-     private :: mp_bcast_int3
-
-     ! broadcasting int(:,:,:,:)
-     private :: mp_bcast_int4
-
-     ! broadcasting int(:,:,:,:,:)
-     private :: mp_bcast_int5
-
      ! broadcasting character
      private :: mp_bcast_chr0
 
@@ -215,6 +197,24 @@
 
      ! broadcasting character(:,:,:,:,:)
      private :: mp_bcast_chr5
+
+     ! broadcasting int
+     private :: mp_bcast_int0
+
+     ! broadcasting int(:)
+     private :: mp_bcast_int1
+
+     ! broadcasting int(:,:)
+     private :: mp_bcast_int2
+
+     ! broadcasting int(:,:,:)
+     private :: mp_bcast_int3
+
+     ! broadcasting int(:,:,:,:)
+     private :: mp_bcast_int4
+
+     ! broadcasting int(:,:,:,:,:)
+     private :: mp_bcast_int5
 
      ! broadcasting real
      private :: mp_bcast_rdp0
@@ -1538,7 +1538,7 @@
 !!
 !! @sub mp_bcast_int4
 !!
-!! broadcasts int4 from the process with rank "root"
+!! broadcasts int4 from the process with rank "root".
 !!
      subroutine mp_bcast_int4(data, root, gid)
          implicit none
