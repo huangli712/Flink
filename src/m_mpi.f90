@@ -186,18 +186,6 @@
      ! broadcasting character(:)
      private :: mp_bcast_chr1
 
-     ! broadcasting character(:,:)
-     private :: mp_bcast_chr2
-
-     ! broadcasting character(:,:,:)
-     private :: mp_bcast_chr3
-
-     ! broadcasting character(:,:,:,:)
-     private :: mp_bcast_chr4
-
-     ! broadcasting character(:,:,:,:,:)
-     private :: mp_bcast_chr5
-
      ! broadcasting int
      private :: mp_bcast_int0
 
@@ -580,10 +568,6 @@
 
          module procedure mp_bcast_chr0
          module procedure mp_bcast_chr1
-         module procedure mp_bcast_chr2
-         module procedure mp_bcast_chr3
-         module procedure mp_bcast_chr4
-         module procedure mp_bcast_chr5
 
          module procedure mp_bcast_int0
          module procedure mp_bcast_int1
@@ -1969,7 +1953,7 @@
 !!
 !! @sub mp_bcast_cdp1
 !!
-!! broadcasts complex(:) from the process with rank "root"
+!! broadcasts complex(:) from the process with rank "root".
 !!
      subroutine mp_bcast_cdp1(data, root, gid)
          implicit none
@@ -6475,7 +6459,7 @@
 !!
 !! @sub mp_error
 !!
-!! deal with the return code of MPI subroutine
+!! deal with the return code of MPI subroutine.
 !!
 # define STR_ERR_COMM      'invalid communicator in mpi call.'
 # define STR_ERR_COUNT     'invalid count in mpi call.'
@@ -6580,6 +6564,7 @@
          end select
 
 !! body]
+
          return
      end subroutine mp_error
 
