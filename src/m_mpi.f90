@@ -204,6 +204,18 @@
      ! broadcasting character(:)
      private :: mp_bcast_chr1
 
+     ! broadcasting character(:,:)
+     private :: mp_bcast_chr2
+
+     ! broadcasting character(:,:,:)
+     private :: mp_bcast_chr3
+
+     ! broadcasting character(:,:,:,:)
+     private :: mp_bcast_chr4
+
+     ! broadcasting character(:,:,:,:,:)
+     private :: mp_bcast_chr5
+
      ! broadcasting real
      private :: mp_bcast_rdp0
 
