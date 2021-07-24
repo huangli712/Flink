@@ -242,37 +242,39 @@
 !! @sub sp_format_dnscsr
 !!
 !! converts a densely stored matrix into a row orientied compactly
-!! sparse matrix
+!! sparse matrix.
 !!
   subroutine sp_format_dnscsr(nrow, ncol, nmax, dns, a, ja, ia)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! column dimension of dense matrix
+     ! column dimension of dense matrix
      integer, intent(in)   :: ncol
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nmax
 
-! input densely stored matrix
+     ! input densely stored matrix
      real(dp), intent(in)  :: dns(nrow,ncol)
 
-! a, ja, ia, output matrix in compressed sparse row format
+     ! a, ja, ia, output matrix in compressed sparse row format
      integer, intent(out)  :: ia(nrow+1)
      integer, intent(out)  :: ja(nmax)
      real(dp), intent(out) :: a(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
      integer :: k
 
-! init sparse matrix
+!! [body
+
+     ! init sparse matrix
      a = 0.0_dp
      ia = 0
      ja = 0
@@ -292,6 +294,8 @@
          enddo ! over j={1,ncol} loop
          ia(i+1) = k
      enddo ! over i={1,nrow} loop
+
+!! body]
 
      return
   end subroutine sp_format_dnscsr
