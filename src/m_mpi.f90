@@ -4958,6 +4958,7 @@
          call mp_error('mp_reduce_int4', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int4
 
@@ -5006,6 +5007,7 @@
          call mp_error('mp_reduce_int5', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_int5
 
@@ -5051,6 +5053,7 @@
          call mp_error('mp_reduce_rdp0', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp0
 
@@ -5071,6 +5074,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -5098,6 +5102,7 @@
          call mp_error('mp_reduce_rdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp1
 
@@ -5146,6 +5151,7 @@
          call mp_error('mp_reduce_rdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp2
 
@@ -5194,6 +5200,7 @@
          call mp_error('mp_reduce_rdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp3
 
@@ -5242,6 +5249,7 @@
          call mp_error('mp_reduce_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp4
 
@@ -5262,6 +5270,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current operator
          if ( present(mop) .eqv. .true. ) then
              opera = mop
@@ -5289,6 +5298,7 @@
          call mp_error('mp_reduce_rdp5', ierror)
 
 !! body]
+
          return
      end subroutine mp_reduce_rdp5
 
