@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 08/09/2006 by li huang (created)
-!!!           07/23/2021 by li huang (last modified)
+!!!           07/24/2021 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
@@ -33,72 +33,77 @@
 !!>>> declare global constants                                         <<<
 !!========================================================================
 
-! dp: number precision, double precision for reals
+!! module parameters
+     ! dp: number precision, double precision for reals
      integer, private, parameter :: dp    = kind(1.0d0)
 
-! mystd: device descriptor, console output
+     ! mystd: device descriptor, console output
      integer, private, parameter :: mystd = 6
 
 !!========================================================================
 !!>>> declare mpi constants (datatypes)                                <<<
 !!========================================================================
 
-! m_log: datatype, boolean
+!! module parameters
+     ! m_log: datatype, boolean
      integer, private, parameter :: m_log = MPI_LOGICAL
 
-! m_int: datatype, integer
+     ! m_int: datatype, integer
      integer, private, parameter :: m_int = MPI_INTEGER
 
-! m_chr: datatype, character
+     ! m_chr: datatype, character
      integer, private, parameter :: m_chr = MPI_CHARACTER
 
-! m_rdp: datatype, double precision float
+     ! m_rdp: datatype, double precision float
      integer, private, parameter :: m_rdp = MPI_DOUBLE_PRECISION
 
-! m_cdp: datatype, double precision complex
+     ! m_cdp: datatype, double precision complex
      integer, private, parameter :: m_cdp = MPI_DOUBLE_COMPLEX
 
 !!========================================================================
 !!>>> declare common constants                                         <<<
 !!========================================================================
 
-! ndims: number of cartesian dimensions, and we need a 2D grid
+!! module parameters
+     ! ndims: number of cartesian dimensions, and we need a 2D grid
      integer, private, parameter :: ndims = 2
 
-! reorder: ranking may be reordered (true) or not (false) in a new grid
+     ! reorder: ranking may be reordered (true) or not (false) in a new grid
      logical, private, parameter :: reorder = .false.
 
-! periods: specifying whether the grid is periodic or not in each dimens
+     ! periods: specifying whether the grid is periodic or not in each dimens
      logical, private, parameter :: periods(ndims) = .false.
 
 !!========================================================================
 !!>>> declare common variables                                         <<<
 !!========================================================================
 
-! ierror: error code for mpi subroutines
+!! module variables
+     ! ierror: error code for mpi subroutines
      integer, private :: ierror
 
-! istat: status code for mpi subroutines
+     ! istat: status code for mpi subroutines
      integer, private :: istat
 
-! opera: default operator
+     ! opera: default operator
      integer, private :: opera
 
-! group: default communicator
+     ! group: default communicator
      integer, private :: group
 
-! isize: size of elements
+     ! isize: size of elements
      integer, private :: isize
 
 !-------------------------------------------------------------------------
 
-! mpi_comm_cart: communicator for cartesian topology
+!! module variables
+     ! mpi_comm_cart: communicator for cartesian topology
      integer, public, save :: mpi_comm_cart
 
-! mpi_comm_row: rowwise-striped communicator for cartesian topology
+     ! mpi_comm_row: rowwise-striped communicator for cartesian topology
      integer, public, save :: mpi_comm_row
 
-! mpi_comm_col: columnwise-striped communicator for cartesian topology
+     ! mpi_comm_col: columnwise-striped communicator for cartesian topology
      integer, public, save :: mpi_comm_col
 
 !!========================================================================
@@ -110,442 +115,446 @@
 
 !!>>> mpi environment operation
 
-! initialize mpi environment
+     ! initialize mpi environment
      public :: mp_init
 
-! finalize mpi environment
+     ! finalize mpi environment
      public :: mp_finalize
 
-! obtain id of current process
+     ! obtain id of current process
      public :: mp_comm_rank
 
-! obtain the size of process group
+     ! obtain the size of process group
      public :: mp_comm_size
 
-! query machine name
+     ! query machine name
      public :: mp_processor
 
 !!>>> mpi cartesian topology operation
 
-! creates a division of processors in a cartesian grid
+     ! creates a division of processors in a cartesian grid
      public :: mp_dims_create
 
-! makes a new communicator to which topology is cartesian
+     ! makes a new communicator to which topology is cartesian
      public :: mp_cart_create
 
-! determines process coords in cartesian topology given rank in group
+     ! determines process coords in cartesian topology given rank in group
      public :: mp_cart_coords
 
-! creates new communicators based on colors and keys for rowwise grid
+     ! creates new communicators based on colors and keys for rowwise grid
      public :: mp_comm_split_row
 
-! creates new communicators based on colors and keys for columnwise grid
+     ! creates new communicators based on colors and keys for columnwise grid
      public :: mp_comm_split_col
 
 !!>>> synchronics operations
 
-! manually block until all processes reach
+     ! manually block until all processes reach
      public :: mp_barrier
 
 !!>>> time handler
 
-! obtain time consuming by parallelized program
+     ! obtain time consuming by parallelized program
      public :: mp_wtime
 
-! obtain time precision of mp_wtime
+     ! obtain time precision of mp_wtime
      public :: mp_wtick
 
 !!>>> broadcasting operations
 
-! broadcasting bool
+     ! broadcasting bool
      private :: mp_bcast_log0
 
-! broadcasting bool(:)
+     ! broadcasting bool(:)
      private :: mp_bcast_log1
 
-! broadcasting bool(:,:)
+     ! broadcasting bool(:,:)
      private :: mp_bcast_log2
 
-! broadcasting bool(:,:,:)
+     ! broadcasting bool(:,:,:)
      private :: mp_bcast_log3
 
-! broadcasting bool(:,:,:,:)
+     ! broadcasting bool(:,:,:,:)
      private :: mp_bcast_log4
 
-! broadcasting bool(:,:,:,:,:)
+     ! broadcasting bool(:,:,:,:,:)
      private :: mp_bcast_log5
 
-! broadcasting int
+     ! broadcasting int
      private :: mp_bcast_int0
 
-! broadcasting int(:)
+     ! broadcasting int(:)
      private :: mp_bcast_int1
 
-! broadcasting int(:,:)
+     ! broadcasting int(:,:)
      private :: mp_bcast_int2
 
-! broadcasting int(:,:,:)
+     ! broadcasting int(:,:,:)
      private :: mp_bcast_int3
 
-! broadcasting int(:,:,:,:)
+     ! broadcasting int(:,:,:,:)
      private :: mp_bcast_int4
 
-! broadcasting int(:,:,:,:,:)
+     ! broadcasting int(:,:,:,:,:)
      private :: mp_bcast_int5
 
-! broadcasting character
+     ! broadcasting character
      private :: mp_bcast_chr0
 
-! broadcasting character(:)
+     ! broadcasting character(:)
      private :: mp_bcast_chr1
 
-! broadcasting real
+     ! broadcasting real
      private :: mp_bcast_rdp0
 
-! broadcasting real(:)
+     ! broadcasting real(:)
      private :: mp_bcast_rdp1
 
-! broadcasting real(:,:)
+     ! broadcasting real(:,:)
      private :: mp_bcast_rdp2
 
-! broadcasting real(:,:,:)
+     ! broadcasting real(:,:,:)
      private :: mp_bcast_rdp3
 
-! broadcasting real(:,:,:,:)
+     ! broadcasting real(:,:,:,:)
      private :: mp_bcast_rdp4
 
-! broadcasting real(:,:,:,:,:)
+     ! broadcasting real(:,:,:,:,:)
      private :: mp_bcast_rdp5
 
-! broadcasting complex
+     ! broadcasting complex
      private :: mp_bcast_cdp0
 
-! broadcasting complex(:)
+     ! broadcasting complex(:)
      private :: mp_bcast_cdp1
 
-! broadcasting complex(:,:)
+     ! broadcasting complex(:,:)
      private :: mp_bcast_cdp2
 
-! broadcasting complex(:,:,:)
+     ! broadcasting complex(:,:,:)
      private :: mp_bcast_cdp3
 
-! broadcasting complex(:,:,:,:)
+     ! broadcasting complex(:,:,:,:)
      private :: mp_bcast_cdp4
 
-! broadcasting complex(:,:,:,:,:)
+     ! broadcasting complex(:,:,:,:,:)
      private :: mp_bcast_cdp5
 
 !!>>> gathering operations
 
-! gathering int(:)
+     ! gathering int(:)
      private :: mp_gather_int1
 
-! gathering int(:,:)
+     ! gathering int(:,:)
      private :: mp_gather_int2
 
-! gathering int(:,:,:)
+     ! gathering int(:,:,:)
      private :: mp_gather_int3
 
-! gathering int(:,:,:,:)
+     ! gathering int(:,:,:,:)
      private :: mp_gather_int4
 
-! gathering int(:,:,:,:,:)
+     ! gathering int(:,:,:,:,:)
      private :: mp_gather_int5
 
-! gathering real(:)
+     ! gathering real(:)
      private :: mp_gather_rdp1
 
-! gathering real(:,:)
+     ! gathering real(:,:)
      private :: mp_gather_rdp2
 
-! gathering real(:,:,:)
+     ! gathering real(:,:,:)
      private :: mp_gather_rdp3
 
-! gathering real(:,:,:,:)
+     ! gathering real(:,:,:,:)
      private :: mp_gather_rdp4
 
-! gathering real(:,:,:,:,:)
+     ! gathering real(:,:,:,:,:)
      private :: mp_gather_rdp5
 
-! gathering complex(:)
+     ! gathering complex(:)
      private :: mp_gather_cdp1
 
-! gathering complex(:,:)
+     ! gathering complex(:,:)
      private :: mp_gather_cdp2
 
-! gathering complex(:,:,:)
+     ! gathering complex(:,:,:)
      private :: mp_gather_cdp3
 
-! gathering complex(:,:,:,:)
+     ! gathering complex(:,:,:,:)
      private :: mp_gather_cdp4
 
-! gathering complex(:,:,:,:,:)
+     ! gathering complex(:,:,:,:,:)
      private :: mp_gather_cdp5
 
 !!>>> gatherving operations
 
-! gatherving int(:)
+     ! gatherving int(:)
      private :: mp_gatherv_int1
 
-! gatherving int(:,:)
+     ! gatherving int(:,:)
      private :: mp_gatherv_int2
 
-! gatherving int(:,:,:)
+     ! gatherving int(:,:,:)
      private :: mp_gatherv_int3
 
-! gatherving int(:,:,:,:)
+     ! gatherving int(:,:,:,:)
      private :: mp_gatherv_int4
 
-! gatherving int(:,:,:,:,:)
+     ! gatherving int(:,:,:,:,:)
      private :: mp_gatherv_int5
 
-! gatherving real(:)
+     ! gatherving real(:)
      private :: mp_gatherv_rdp1
 
-! gatherving real(:,:)
+     ! gatherving real(:,:)
      private :: mp_gatherv_rdp2
 
-! gatherving real(:,:,:)
+     ! gatherving real(:,:,:)
      private :: mp_gatherv_rdp3
 
-! gatherving real(:,:,:,:)
+     ! gatherving real(:,:,:,:)
      private :: mp_gatherv_rdp4
 
-! gatherving real(:,:,:,:,:)
+     ! gatherving real(:,:,:,:,:)
      private :: mp_gatherv_rdp5
 
-! gatherving complex(:)
+     ! gatherving complex(:)
      private :: mp_gatherv_cdp1
 
-! gatherving complex(:,:)
+     ! gatherving complex(:,:)
      private :: mp_gatherv_cdp2
 
-! gatherving complex(:,:,:)
+     ! gatherving complex(:,:,:)
      private :: mp_gatherv_cdp3
 
-! gatherving complex(:,:,:,:)
+     ! gatherving complex(:,:,:,:)
      private :: mp_gatherv_cdp4
 
-! gatherving complex(:,:,:,:,:)
+     ! gatherving complex(:,:,:,:,:)
      private :: mp_gatherv_cdp5
 
 !!>>> allgathering operations
 
-! allgathering int(:)
+     ! allgathering int(:)
      private :: mp_allgather_int1
 
-! allgathering int(:,:)
+     ! allgathering int(:,:)
      private :: mp_allgather_int2
 
-! allgathering int(:,:,:)
+     ! allgathering int(:,:,:)
      private :: mp_allgather_int3
 
-! allgathering int(:,:,:,:)
+     ! allgathering int(:,:,:,:)
      private :: mp_allgather_int4
 
-! allgathering int(:,:,:,:,:)
+     ! allgathering int(:,:,:,:,:)
      private :: mp_allgather_int5
 
-! allgathering real(:)
+     ! allgathering real(:)
      private :: mp_allgather_rdp1
 
-! allgathering real(:,:)
+     ! allgathering real(:,:)
      private :: mp_allgather_rdp2
 
-! allgathering real(:,:,:)
+     ! allgathering real(:,:,:)
      private :: mp_allgather_rdp3
 
-! allgathering real(:,:,:,:)
+     ! allgathering real(:,:,:,:)
      private :: mp_allgather_rdp4
 
-! allgathering real(:,:,:,:,:)
+     ! allgathering real(:,:,:,:,:)
      private :: mp_allgather_rdp5
 
-! allgathering complex(:)
+     ! allgathering complex(:)
      private :: mp_allgather_cdp1
 
-! allgathering complex(:,:)
+     ! allgathering complex(:,:)
      private :: mp_allgather_cdp2
 
-! allgathering complex(:,:,:)
+     ! allgathering complex(:,:,:)
      private :: mp_allgather_cdp3
 
-! allgathering complex(:,:,:,:)
+     ! allgathering complex(:,:,:,:)
      private :: mp_allgather_cdp4
 
-! allgathering complex(:,:,:,:,:)
+     ! allgathering complex(:,:,:,:,:)
      private :: mp_allgather_cdp5
 
 !!>>> allgatherving operations
 
-! allgatherving int(:)
+     ! allgatherving int(:)
      private :: mp_allgatherv_int1
 
-! allgatherving int(:,:)
+     ! allgatherving int(:,:)
      private :: mp_allgatherv_int2
 
-! allgatherving int(:,:,:)
+     ! allgatherving int(:,:,:)
      private :: mp_allgatherv_int3
 
-! allgatherving int(:,:,:,:)
+     ! allgatherving int(:,:,:,:)
      private :: mp_allgatherv_int4
 
-! allgatherving int(:,:,:,:,:)
+     ! allgatherving int(:,:,:,:,:)
      private :: mp_allgatherv_int5
 
-! allgatherving real(:)
+     ! allgatherving real(:)
      private :: mp_allgatherv_rdp1
 
-! allgatherving real(:,:)
+     ! allgatherving real(:,:)
      private :: mp_allgatherv_rdp2
 
-! allgatherving real(:,:,:)
+     ! allgatherving real(:,:,:)
      private :: mp_allgatherv_rdp3
 
-! allgatherving real(:,:,:,:)
+     ! allgatherving real(:,:,:,:)
      private :: mp_allgatherv_rdp4
 
-! allgatherving real(:,:,:,:,:)
+     ! allgatherving real(:,:,:,:,:)
      private :: mp_allgatherv_rdp5
 
-! allgatherving complex(:)
+     ! allgatherving complex(:)
      private :: mp_allgatherv_cdp1
 
-! allgatherving complex(:,:)
+     ! allgatherving complex(:,:)
      private :: mp_allgatherv_cdp2
 
-! allgatherving complex(:,:,:)
+     ! allgatherving complex(:,:,:)
      private :: mp_allgatherv_cdp3
 
-! allgatherving complex(:,:,:,:)
+     ! allgatherving complex(:,:,:,:)
      private :: mp_allgatherv_cdp4
 
-! allgatherving complex(:,:,:,:,:)
+     ! allgatherving complex(:,:,:,:,:)
      private :: mp_allgatherv_cdp5
 
 !!>>> reducing operations
 
-! readucing int
+     ! readucing int
      private :: mp_reduce_int0
 
-! reducing int(:)
+     ! reducing int(:)
      private :: mp_reduce_int1
 
-! reducing int(:,:)
+     ! reducing int(:,:)
      private :: mp_reduce_int2
 
-! reducing int(:,:,:)
+     ! reducing int(:,:,:)
      private :: mp_reduce_int3
 
-! reducing int(:,:,:,:)
+     ! reducing int(:,:,:,:)
      private :: mp_reduce_int4
 
-! reducing int(:,:,:,:,:)
+     ! reducing int(:,:,:,:,:)
      private :: mp_reduce_int5
 
-! reducing real
+     ! reducing real
      private :: mp_reduce_rdp0
 
-! reducing real(:)
+     ! reducing real(:)
      private :: mp_reduce_rdp1
 
-! reducing real(:,:)
+     ! reducing real(:,:)
      private :: mp_reduce_rdp2
 
-! reducing real(:,:,:)
+     ! reducing real(:,:,:)
      private :: mp_reduce_rdp3
 
-! reducing real(:,:,:,:)
+     ! reducing real(:,:,:,:)
      private :: mp_reduce_rdp4
 
-! reducing real(:,:,:,:,:)
+     ! reducing real(:,:,:,:,:)
      private :: mp_reduce_rdp5
 
-! reducing complex
+     ! reducing complex
      private :: mp_reduce_cdp0
 
-! reducing complex(:)
+     ! reducing complex(:)
      private :: mp_reduce_cdp1
 
-! reducing complex(:,:)
+     ! reducing complex(:,:)
      private :: mp_reduce_cdp2
 
-! reducing complex(:,:,:)
+     ! reducing complex(:,:,:)
      private :: mp_reduce_cdp3
 
-! reducing complex(:,:,:,:)
+     ! reducing complex(:,:,:,:)
      private :: mp_reduce_cdp4
 
-! reducing complex(:,:,:,:,:)
+     ! reducing complex(:,:,:,:,:)
      private :: mp_reduce_cdp5
 
 !!>>> allreducing operations
 
-! allreducing int
+     ! allreducing int
      private :: mp_allreduce_int0
 
-! allreducing int(:)
+     ! allreducing int(:)
      private :: mp_allreduce_int1
 
-! allreducing int(:,:)
+     ! allreducing int(:,:)
      private :: mp_allreduce_int2
 
-! allreducing int(:,:,:)
+     ! allreducing int(:,:,:)
      private :: mp_allreduce_int3
 
-! allreducing int(:,:,:,:)
+     ! allreducing int(:,:,:,:)
      private :: mp_allreduce_int4
 
-! allreducing int(:,:,:,:,:)
+     ! allreducing int(:,:,:,:,:)
      private :: mp_allreduce_int5
 
-! allreducing real
+     ! allreducing real
      private :: mp_allreduce_rdp0
 
-! allreducing real(:)
+     ! allreducing real(:)
      private :: mp_allreduce_rdp1
 
-! allreducing real(:,:)
+     ! allreducing real(:,:)
      private :: mp_allreduce_rdp2
 
-! allreducing real(:,:,:)
+     ! allreducing real(:,:,:)
      private :: mp_allreduce_rdp3
 
-! allreducing real(:,:,:,:)
+     ! allreducing real(:,:,:,:)
      private :: mp_allreduce_rdp4
 
-! allreducing real(:,:,:,:,:)
+     ! allreducing real(:,:,:,:,:)
      private :: mp_allreduce_rdp5
 
-! allreducing complex
+     ! allreducing complex
      private :: mp_allreduce_cdp0
 
-! allreducing complex(:)
+     ! allreducing complex(:)
      private :: mp_allreduce_cdp1
 
-! allreducing complex(:,:)
+     ! allreducing complex(:,:)
      private :: mp_allreduce_cdp2
 
-! allreducing complex(:,:,:)
+     ! allreducing complex(:,:,:)
      private :: mp_allreduce_cdp3
 
-! allreducing complex(:,:,:,:)
+     ! allreducing complex(:,:,:,:)
      private :: mp_allreduce_cdp4
 
-! allreducing complex(:,:,:,:,:)
+     ! allreducing complex(:,:,:,:,:)
      private :: mp_allreduce_cdp5
 
 !!>>> error handler
 
-! echo the error information
+     ! echo the error information
      private :: mp_error
 
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
 
-! we define these interfaces to implement the so called "generic" software
-! engineering technique
+     !
+     ! remarks:
+     !
+     ! we define these interfaces to implement the so called "generic"
+     ! software engineering technique.
+     !
 
 !!>>> mpi_bcast subroutines
      public :: mp_bcast
