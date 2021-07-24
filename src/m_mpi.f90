@@ -1019,7 +1019,7 @@
 !! [body
 
          ! invoke related mpi subroutines
-         ! mpi_comm_row should be overwritten in output
+         ! mpi_comm_row should be overwritten in output.
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
 
          ! handler for return code
@@ -1045,7 +1045,7 @@
 !! [body
 
          ! invoke related mpi subroutines
-         ! note: mpi_comm_col should be overwritten in output
+         ! mpi_comm_col should be overwritten in output.
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
 
          ! handler for return code
@@ -1063,7 +1063,7 @@
 !!
 !! @sub mp_barrier
 !!
-!! blocks until all process have reached this routine
+!! blocks until all process have reached this routine.
 !!
      subroutine mp_barrier(gid)
          implicit none
