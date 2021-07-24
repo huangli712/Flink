@@ -21,10 +21,11 @@
 !!>>> declare global parameters                                        <<<
 !!========================================================================
 
-! dp: number precision, double precision for real and complex number
+!! module parameters
+     ! dp: number precision, double precision for real and complex number
      integer, private, parameter :: dp    = kind(1.0d0)
 
-! mystd: device descriptor, console output
+     ! mystd: device descriptor, console output
      integer, private, parameter :: mystd = 6
 
 !!========================================================================
@@ -130,40 +131,42 @@
 !!
 !! @sub sp_format_csrdns
 !!
-!! converts a row-stored sparse matrix into a densely stored one
+!! converts a row-stored sparse matrix into a densely stored one.
 !!
   subroutine sp_format_csrdns(nrow, ncol, nmax, a, ja, ia, dns)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! column dimension of dense matrix
+     ! column dimension of dense matrix
      integer, intent(in)   :: ncol
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nmax
 
-! a, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrow+1)
      integer, intent(in)   :: ja(nmax)
      real(dp), intent(in)  :: a(nmax)
 
-! array where to store dense matrix
+     ! array where to store dense matrix
      real(dp), intent(out) :: dns(nrow,ncol)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
      integer :: k
 
-! init dns matrix
+!! [body
+
+     ! init dns matrix
      dns = 0.0_dp
 
-! convert sparse matrix to dense matrix
+     ! convert sparse matrix to dense matrix
      do i=1,nrow
          do k=ia(i),ia(i+1)-1
              j = ja(k)
@@ -174,6 +177,8 @@
              dns(i,j) = a(k)
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrow} loop
+
+!! body]
 
      return
   end subroutine sp_format_csrdns
