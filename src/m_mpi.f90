@@ -775,6 +775,7 @@
          implicit none
 
 !! [body
+
          ! invoke related mpi subroutines
          call MPI_INIT(ierror)
 
@@ -782,6 +783,7 @@
          call mp_error('mp_init', ierror)
 
 !! body]
+
          return
      end subroutine mp_init
 
@@ -794,6 +796,7 @@
          implicit none
 
 !! [body
+
          ! invoke related mpi subroutines
          call MPI_FINALIZE(ierror)
 
@@ -801,6 +804,7 @@
          call mp_error('mp_finalize', ierror)
 
 !! body]
+
          return
      end subroutine mp_finalize
 
