@@ -2170,6 +2170,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2190,6 +2191,7 @@
          call mp_error('mp_gather_int1', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_int1
 
@@ -2209,6 +2211,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2229,6 +2232,7 @@
          call mp_error('mp_gather_int2', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_int2
 
@@ -2243,11 +2247,12 @@
 !! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2268,6 +2273,7 @@
          call mp_error('mp_gather_int3', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_int3
 
@@ -2282,11 +2288,12 @@
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:)
-
+         !
          integer, intent(in) :: root
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2307,6 +2314,7 @@
          call mp_error('mp_gather_int4', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_int4
 
@@ -2326,6 +2334,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2346,6 +2355,7 @@
          call mp_error('mp_gather_int5', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_int5
 
@@ -2365,6 +2375,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2385,6 +2396,7 @@
          call mp_error('mp_gather_rdp1', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_rdp1
 
@@ -2404,6 +2416,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2424,6 +2437,7 @@
          call mp_error('mp_gather_rdp2', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_rdp2
 
@@ -2443,6 +2457,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2463,6 +2478,7 @@
          call mp_error('mp_gather_rdp3', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_rdp3
 
@@ -2482,6 +2498,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
@@ -2502,6 +2519,7 @@
          call mp_error('mp_gather_rdp4', ierror)
 
 !! body]
+
          return
      end subroutine mp_gather_rdp4
 
@@ -2521,6 +2539,7 @@
          integer, optional, intent(in) :: gid
 
 !! [body
+
          ! set current communicator
          if ( present(gid) .eqv. .true. ) then
              group = gid
