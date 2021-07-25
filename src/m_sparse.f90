@@ -933,19 +933,22 @@
      ! dummy integer variables
      integer :: p, q
 
-! integer work array of length equal to the number of columns in matrix B,
-! which is an array that has nonzero value if the column index already
-! exist, in which case the value is the index of that column
+     ! integer work array of length equal to the number of columns in
+     ! matrix B, which is an array that has nonzero value if the column
+     ! index already exist, in which case the value is the index of
+     ! that column.
      integer :: iw(ncol)
 
-! dummy complex(dp) variables, used to improve the ratio of floating point
-! operations to memory accesses
+     ! dummy complex(dp) variables, used to improve the ratio of
+     ! floating point operations to memory accesses.
      complex(dp) :: atmp, btmp
 
-! init work array
+!! [body
+
+     ! init work array
      iw = 0
 
-! init C sparse matrix
+     ! init C sparse matrix
      ic(1) = 1
 
      q = 0
@@ -969,18 +972,20 @@
              enddo ! over kb={ib(j),ib(j+1)-1} loop
          enddo ! over ka={ia(i),ia(i+1)-1} loop
 
-! done this row i, so set work array to zero again
+         ! done this row i, so set work array to zero again
          do k=ic(i),q
              iw( jc( k ) ) = 0
          enddo ! over k={ic(i),q} loop
          ic(i+1) = q + 1
      enddo ! over i={1,nrow} loop
 
-! check the number of nonzero elements
+     ! check the number of nonzero elements
      if ( q > nmax ) then
          write(mystd,'(a)') 'sparse: error in sp_format_amumat_z'
          STOP
      endif ! back if ( q > nmax ) block
+
+!! body]
 
      return
   end subroutine sp_matmul_amumat_z
