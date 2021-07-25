@@ -586,18 +586,20 @@
      integer, intent(in)  :: ja(nmax)
      real(dp), intent(in) :: a(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: k
 
-! memory address of a(i,j)
+     ! memory address of a(i,j)
      integer :: addr
 
-! initialization
+!! [body
+
+     ! initialization
      addr = 0
      elm = 0.0_dp
 
-! scan the row - exit as soon as a(i,j) is found
+     ! scan the row - exit as soon as a(i,j) is found
      do k=ia(i),ia(i+1)-1
          if ( ja(k) == j ) then
              addr = k
@@ -605,10 +607,12 @@
          endif ! back if ( ja(k) == j ) block
      enddo ! over k={ia(i),ia(i+1)-1} loop
 
-! the required element is contained in sparse matrix
+     ! the required element is contained in sparse matrix
      if ( addr /= 0 ) then
          elm = a(addr)
      endif ! back if ( addr /= 0 ) block
+
+!! body]
 
      return
   end function sp_matrix_getter
