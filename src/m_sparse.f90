@@ -888,49 +888,49 @@
 !!
 !! @sub sp_matmul_amumat_z
 !!
-!! performs the matrix by matrix product C = A * B
+!! performs the matrix by matrix product C = A * B.
 !!
   subroutine sp_matmul_amumat_z(nrow, ndim, ncol, nmax, sa, ja, ia, sb, jb, ib, sc, jc, ic)
      implicit none
 
-! external arguments
-! the row dimension of matrix A = row dimension of matrix C
+!! external arguments
+     ! the row dimension of matrix A = row dimension of matrix C
      integer, intent(in)      :: nrow
 
-! the column dimension of matrix A = row dimension of matrix B
+     ! the column dimension of matrix A = row dimension of matrix B
      integer, intent(in)      :: ndim
 
-! the column dimension of matrix B = column dimension of matrix C
+     ! the column dimension of matrix B = column dimension of matrix C
      integer, intent(in)      :: ncol
 
-! the length of the arrays sc and jc
-! sp_matmul_amumat_z() will stop if the result matrix C has a number of
-! elements that exceeds nmax
+     ! the length of the arrays sc and jc.
+     ! sp_matmul_amumat_z() will stop if the result matrix C has a number of
+     ! elements that exceeds nmax.
      integer, intent(in)      :: nmax
 
-! sa, ja, ia, matrix A in compressed sparse row format
+     ! sa, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)      :: ia(nrow+1)
      integer, intent(in)      :: ja(nmax)
      complex(dp), intent(in)  :: sa(nmax)
 
-! sb, jb, ib, matrix B in compressed sparse row format
+     ! sb, jb, ib, matrix B in compressed sparse row format
      integer, intent(in)      :: ib(ndim+1)
      integer, intent(in)      :: jb(nmax)
      complex(dp), intent(in)  :: sb(nmax)
 
-! sc, jc, ic, resulting matrix C in compressed sparse row format
+     ! sc, jc, ic, resulting matrix C in compressed sparse row format
      integer, intent(out)     :: ic(nrow+1)
      integer, intent(out)     :: jc(nmax)
      complex(dp), intent(out) :: sc(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i, j, k
 
-! loop index
+     ! loop index
      integer :: ka, kb
 
-! dummy integer variables
+     ! dummy integer variables
      integer :: p, q
 
 ! integer work array of length equal to the number of columns in matrix B,
