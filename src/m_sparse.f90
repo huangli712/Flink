@@ -620,43 +620,45 @@
 !!
 !! @fun sp_matrix_getter_z
 !!
-!! this function returns the element sa(i,j) of matrix sa
+!! this function returns the element sa(i,j) of matrix sa.
 !!
   complex(dp) &
   function sp_matrix_getter_z(i, j, nrow, nmax, sa, ja, ia) result(elm)
      implicit none
 
-! external arguments
-! the row index of the element sought
+!! external arguments
+     ! the row index of the element sought
      integer, intent(in)     :: i
 
-! the column index of the element sought
+     ! the column index of the element sought
      integer, intent(in)     :: j
 
-! row dimension of dense matrix
+     ! row dimension of dense matrix
      integer, intent(in)     :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays sa and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays sa and ja.
      integer, intent(in)     :: nmax
 
-! sa, ja, ia, input matrix in compressed sparse row format
+     ! sa, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)     :: ia(nrow+1)
      integer, intent(in)     :: ja(nmax)
      complex(dp), intent(in) :: sa(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: k
 
-! memory address of sa(i,j)
+     ! memory address of sa(i,j)
      integer :: addr
 
-! initialization
+!! [body
+
+     ! initialization
      addr = 0
      elm = dcmplx(0.0_dp, 0.0_dp)
 
-! scan the row - exit as soon as sa(i,j) is found
+     ! scan the row - exit as soon as sa(i,j) is found
      do k=ia(i),ia(i+1)-1
          if ( ja(k) == j ) then
              addr = k
@@ -664,10 +666,12 @@
          endif ! back if ( ja(k) == j ) block
      enddo ! over k={ia(i),ia(i+1)-1} loop
 
-! the required element is contained in sparse matrix
+     ! the required element is contained in sparse matrix
      if ( addr /= 0 ) then
          elm = sa(addr)
      endif ! back if ( addr /= 0 ) block
+
+!! body]
 
      return
   end function sp_matrix_getter_z
