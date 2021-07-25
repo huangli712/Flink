@@ -463,32 +463,34 @@
 !!
 !! @sub sp_matrix_copyer
 !!
-!! copy data between two row orientied compactly sparse matrices
+!! copy data between two row orientied compactly sparse matrices.
 !!
   subroutine sp_matrix_copyer(nrow, nmax, a, ja, ia, b, jb, ib)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nmax
 
-! a, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrow+1)
      integer, intent(in)   :: ja(nmax)
      real(dp), intent(in)  :: a(nmax)
 
-! b, jb, ib, output matrix in compressed sparse row format
+     ! b, jb, ib, output matrix in compressed sparse row format
      integer, intent(out)  :: ib(nrow+1)
      integer, intent(out)  :: jb(nmax)
      real(dp), intent(out) :: b(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      do i=1,nrow+1
          ib(i) = ia(i)
@@ -501,6 +503,8 @@
      do i=ia(1),ia(nrow+1)-1
          b(i) = a(i)
      enddo ! over i={ia(1),ia(nrow+1)-1} loop
+
+!! body]
 
      return
   end subroutine sp_matrix_copyer
