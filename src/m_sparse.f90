@@ -1127,47 +1127,49 @@
 !!
 !! @sub sp_matmul_diamua
 !!
-!! performs the matrix by matrix product B = Diag * A
+!! performs the matrix by matrix product B = Diag * A.
 !!
   subroutine sp_matmul_diamua(nrow, nmax, diag, a, ja, ia, b, jb, ib)
      implicit none
 
-! external arguments
-! the row dimension of dense matrix
+!! external arguments
+     ! the row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays b and jb
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)   :: nmax
 
-! diagonal matrix stored as a vector diag
+     ! diagonal matrix stored as a vector diag
      real(dp), intent(in)  :: diag(nrow)
 
-! a, ja, ia, matrix A in compressed sparse row format
+     ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)   :: ia(nrow+1)
      integer, intent(in)   :: ja(nmax)
      real(dp), intent(in)  :: a(nmax)
 
-! b, jb, ib, resulting matrix B in compressed sparse row format
+     ! b, jb, ib, resulting matrix B in compressed sparse row format
      integer, intent(out)  :: ib(nrow+1)
      integer, intent(out)  :: jb(nmax)
      real(dp), intent(out) :: b(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: k
 
-! loop index
+     ! loop index
      integer :: k1
      integer :: k2
 
-! init B sparse matrix
+!! [body
+
+     ! init B sparse matrix
      b = 0.0_dp
      ib = 0
      jb = 0
 
-! normalize each row
+     ! normalize each row
      do i=1,nrow
          k1 = ia(i)
          k2 = ia(i+1) - 1
@@ -1183,6 +1185,8 @@
      do k=ia(1),ia(nrow+1)-1
          jb(k) = ja(k)
      enddo ! over k={ia(1),ia(nrow+1)-1} loop
+
+!! body]
 
      return
   end subroutine sp_matmul_diamua
