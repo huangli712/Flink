@@ -731,47 +731,51 @@
 !!
 !! @sub sp_matmul_amuvec_z
 !!
-!! multiplies a matrix by a vector using the dot product form
+!! multiplies a matrix by a vector using the dot product form.
 !!
   subroutine sp_matmul_amuvec_z(nrow, ncol, nmax, sa, ja, ia, sx, sy)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)      :: nrow
 
-! column dimension of dense matrix
+     ! column dimension of dense matrix
      integer, intent(in)      :: ncol
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays sa and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays sa and ja.
      integer, intent(in)      :: nmax
 
-! sa, ja, ia, input matrix in compressed sparse row format
+     ! sa, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrow+1)
      integer, intent(in)      :: ja(nmax)
      complex(dp), intent(in)  :: sa(nmax)
 
-! vector, length equal to the column dimension of the dense matrix
+     ! vector, length equal to the column dimension of the dense matrix
      complex(dp), intent(in)  :: sx(ncol)
 
-! vector, complex(dp) array of length nrow, containing the product y = A . x
+     ! vector, complex(dp) array of length nrow, containing the product y = A . x
      complex(dp), intent(out) :: sy(nrow)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: k
 
-! zero out output vector
+!! [body
+
+     ! zero out output vector
      sy = dcmplx(0.0_dp, 0.0_dp)
 
-! compute the inner product of row i with vector sx
+     ! compute the inner product of row i with vector sx
      do i=1,nrow
          do k=ia(i),ia(i+1)-1
              sy(i) = sy(i) + sa(k) * sx( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrow} loop
+
+!! body]
 
      return
   end subroutine sp_matmul_amuvec_z
