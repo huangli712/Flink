@@ -366,27 +366,29 @@
 !! @sub sp_format_unicsr
 !!
 !! converts a densely stored identity matrix into a row orientied
-!! compactly sparse matrix
+!! compactly sparse matrix.
 !!
   subroutine sp_format_unicsr(nrow, nmax, a, ja, ia)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nmax
 
-! a, ja, ia, output matrix in compressed sparse row format
+     ! a, ja, ia, output matrix in compressed sparse row format
      integer, intent(out)  :: ia(nrow+1)
      integer, intent(out)  :: ja(nmax)
      real(dp), intent(out) :: a(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      if ( nrow > nmax ) then
          write(mystd,'(a)') 'sparse: error in sp_format_unicsr'
@@ -402,6 +404,8 @@
      ia(nrow+1) = nrow + 1
      ja(nrow+1:nmax) = 0
      a(nrow+1:nmax) = 0.0_dp
+
+!! body]
 
      return
   end subroutine sp_format_unicsr
