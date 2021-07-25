@@ -512,32 +512,34 @@
 !!
 !! @sub sp_matrix_copyer_z
 !!
-!! copy data between two row orientied compactly sparse matrices
+!! copy data between two row orientied compactly sparse matrices.
 !!
   subroutine sp_matrix_copyer_z(nrow, nmax, sa, ja, ia, sb, jb, ib)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)      :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays sa and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays sa and ja.
      integer, intent(in)      :: nmax
 
-! sa, ja, ia, input matrix in compressed sparse row format
+     ! sa, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrow+1)
      integer, intent(in)      :: ja(nmax)
      complex(dp), intent(in)  :: sa(nmax)
 
-! sb, jb, ib, output matrix in compressed sparse row format
+     ! sb, jb, ib, output matrix in compressed sparse row format
      integer, intent(out)     :: ib(nrow+1)
      integer, intent(out)     :: jb(nmax)
      complex(dp), intent(out) :: sb(nmax)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      do i=1,nrow+1
          ib(i) = ia(i)
@@ -551,33 +553,35 @@
          sb(i) = sa(i)
      enddo ! over i={ia(1),ia(nrow+1)-1} loop
 
+!! body]
+
      return
   end subroutine sp_matrix_copyer_z
 
 !!
 !! @fun sp_matrix_getter
 !!
-!! this function returns the element a(i,j) of matrix a
+!! this function returns the element a(i,j) of matrix a.
 !!
   real(dp) &
   function sp_matrix_getter(i, j, nrow, nmax, a, ja, ia) result(elm)
      implicit none
 
-! external arguments
-! the row index of the element sought
+!! external arguments
+     ! the row index of the element sought
      integer, intent(in)  :: i
 
-! the column index of the element sought
+     ! the column index of the element sought
      integer, intent(in)  :: j
 
-! row dimension of dense matrix
+     ! row dimension of dense matrix
      integer, intent(in)  :: nrow
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)  :: nmax
 
-! a, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)  :: ia(nrow+1)
      integer, intent(in)  :: ja(nmax)
      real(dp), intent(in) :: a(nmax)
