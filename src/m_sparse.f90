@@ -679,47 +679,51 @@
 !!
 !! @sub sp_matmul_amuvec
 !!
-!! multiplies a matrix by a vector using the dot product form
+!! multiplies a matrix by a vector using the dot product form.
 !!
   subroutine sp_matmul_amuvec(nrow, ncol, nmax, a, ja, ia, x, y)
      implicit none
 
-! external arguments
-! row dimension of dense matrix
+!! external arguments
+     ! row dimension of dense matrix
      integer, intent(in)   :: nrow
 
-! column dimension of dense matrix
+     ! column dimension of dense matrix
      integer, intent(in)   :: ncol
 
-! maximum number of nonzero elements allowed
-! this should be set to be the lengths of the arrays a and ja
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nmax
 
-! a, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrow+1)
      integer, intent(in)   :: ja(nmax)
      real(dp), intent(in)  :: a(nmax)
 
-! vector, length equal to the column dimension of the dense matrix
+     ! vector, length equal to the column dimension of the dense matrix
      real(dp), intent(in)  :: x(ncol)
 
-! vector, real array of length nrow, containing the product y = A . x
+     ! vector, real array of length nrow, containing the product y = A . x
      real(dp), intent(out) :: y(nrow)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: k
 
-! zero out output vector
+!! [body
+
+     ! zero out output vector
      y = 0.0_dp
 
-! compute the inner product of row i with vector x
+     ! compute the inner product of row i with vector x
      do i=1,nrow
          do k=ia(i),ia(i+1)-1
              y(i) = y(i) + a(k) * x( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrow} loop
+
+!! body]
 
      return
   end subroutine sp_matmul_amuvec
