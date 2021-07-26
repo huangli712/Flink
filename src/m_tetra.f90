@@ -500,58 +500,61 @@
 !!
 !! @sub tetra_p_ek34
 !!
-!! Blochl algorithm, case 4, for partially occupied tetrahedron
+!! Blochl algorithm, case 4, for partially occupied tetrahedron.
 !!
   subroutine tetra_p_ek34(z, e)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in) :: z
 
-! one-particle energies at the corners of the tetrahedron
+     ! one-particle energies at the corners of the tetrahedron
      real(dp), intent(in) :: e(4)
 
-! local variables
-! intermediated variables
+!! local variables
+     ! intermediated variables
      real(dp) :: c, dc
 
-! ze_{i} = e - e_{i}
+     ! ze_{i} = e - e_{i}
      real(dp) :: ze4
 
-! e_{ij} = e_{i} - e_{j}
+     ! e_{ij} = e_{i} - e_{j}
      real(dp) :: e41, e42, e43
 
-! setup common variables
+!! [body
+
+     ! setup common variables
      ze4 = z - e(4)
+     !
      e41 = e(4) - e(1)
      e42 = e(4) - e(2)
      e43 = e(4) - e(3)
 
-! intermediate variables, apply equation (B18)
+     ! intermediate variables, apply equation (B18)
      c = - ze4 * ze4 * ze4 / ( 4.0_dp * e41 * e42 * e43 )
      dc = - 3.0_dp * ze4 * ze4 / ( 4.0_dp * e41 * e42 * e43 )
 
-! integration weights
-! apply equation (B14)
+     ! integration weights
+     ! apply equation (B14)
      tweight(1) = 0.25_dp + c * ze4 / e41
 
-! apply equation (B15)
+     ! apply equation (B15)
      tweight(2) = 0.25_dp + c * ze4 / e42
 
-! apply equation (B16)
+     ! apply equation (B16)
      tweight(3) = 0.25_dp + c * ze4 / e43
 
-! apply equation (B17)
+     ! apply equation (B17)
      tweight(4) = 0.25_dp - c * ( 4.0_dp + ( 1.0_dp / e41 + 1.0_dp / e42 + 1.0_dp / e43 ) * ze4 )
 
-! density of states weights
+     ! density of states weights
      dweight(1) = ( dc * ze4 + c ) / e41
      dweight(2) = ( dc * ze4 + c ) / e42
      dweight(3) = ( dc * ze4 + c ) / e43
      dweight(4) = - 4.0_dp * dc - ( 1.0_dp / e41 + 1.0_dp / e42 + 1.0_dp / e43) * ( dc * ze4 + c )
 
-! corrections for dweight
+     ! corrections for dweight
      cweight = 6.0_dp * ze4 / ( e41 * e42 * e43 )
 
      return
