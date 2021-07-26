@@ -857,11 +857,15 @@
   function istack_getrest(s) result (r)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
+!! [body
+
      r = s%nsize - s%top
+
+!! body]
 
      return
   end function istack_getrest
@@ -869,17 +873,21 @@
 !!
 !! @fun gstack_getrest
 !!
-!! return the number of empty sites of the stack
+!! return the number of empty sites of the stack.
 !!
   integer &
   function gstack_getrest(s) result (r)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
+!! [body
+
      r = s%nsize - s%top
+
+!! body]
 
      return
   end function gstack_getrest
@@ -887,17 +895,21 @@
 !!
 !! @fun istack_getsize
 !!
-!! return the actual capacity of the stack
+!! return the actual capacity of the stack.
 !!
   integer &
   function istack_getsize(s) result (n)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
+!! [body
+
      n = s%nsize
+
+!! body]
 
      return
   end function istack_getsize
@@ -905,17 +917,21 @@
 !!
 !! @fun gstack_getsize
 !!
-!! return the actual capacity of the stack
+!! return the actual capacity of the stack.
 !!
   integer &
   function gstack_getsize(s) result (n)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
+!! [body
+
      n = s%nsize
+
+!! body]
 
      return
   end function gstack_getsize
@@ -923,17 +939,21 @@
 !!
 !! @fun istack_isfull
 !!
-!! check whether the stack is full of items
+!! check whether the stack is full of items.
 !!
   logical &
   function istack_isfull(s) result (b)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
+!! [body
+
      b = ( s%top == s%nsize )
+
+!! body]
 
      return
   end function istack_isfull
@@ -941,17 +961,21 @@
 !!
 !! @fun gstack_isfull
 !!
-!! check whether the stack is full of items
+!! check whether the stack is full of items.
 !!
   logical &
   function gstack_isfull(s) result (b)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
+!! [body
+
      b = ( s%top == s%nsize )
+
+!! body]
 
      return
   end function gstack_isfull
@@ -959,17 +983,21 @@
 !!
 !! @fun istack_isempty
 !!
-!! check whether the stack is empty
+!! check whether the stack is empty.
 !!
   logical &
   function istack_isempty(s) result (b)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
+!! [body
+
      b = ( s%top == 0 )
+
+!! body]
 
      return
   end function istack_isempty
