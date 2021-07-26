@@ -219,17 +219,21 @@
 !!
 !! @sub gstack_clean
 !!
-!! reset the generic type stack, clean all its elements
+!! reset the generic type stack, clean all its elements.
 !!
   subroutine gstack_clean(s)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(inout) :: s
 
-! reset top position
+!! [body
+
+     ! reset top position
      s%top = 0
+
+!! body]
 
      return
   end subroutine gstack_clean
