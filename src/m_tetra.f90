@@ -601,65 +601,69 @@
   subroutine tetra_lambin_weight(z, e, weights)
      implicit none
 
-! external arguments
-! current complex frequency
+!! external arguments
+     ! current complex frequency
      complex(dp), intent(in)  :: z
 
-! energy eigenvalues for four corners at given tetrahedron
+     ! energy eigenvalues for four corners at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integration weights
+     ! integration weights
      complex(dp), intent(out) :: weights(4)
 
-! local variables
-! corner degeneracy index
+!! local variables
+     ! corner degeneracy index
      integer :: flag
 
-! corner reordering index
+     ! corner reordering index
      integer :: isrt(4)
 
-! local copy of energy values
+     ! local copy of energy values
      complex(dp) :: ecp(4)
 
-! linear weight factors
+     ! linear weight factors
      complex(dp) :: res(4)
 
-! make local copy of corner energies
+!! [body
+
+     ! make local copy of corner energies
      ecp = e
 
-! reorder the corner energies
+     ! reorder the corner energies
      call tetra_lv_creorder(ecp, isrt, flag)
 
-! select the appropriate routine to compute the integral
+     ! select the appropriate routine to compute the integral
      select case (flag)
 
-! arbitrary eigenvalues
+         ! arbitrary eigenvalues
          case (1)
              call tetra_lv_ekarb  (z, ecp, res)
 
-! two eigenvalues are identical, e1 = e2
+         ! two eigenvalues are identical, e1 = e2
          case (2)
              call tetra_lv_ek2idn (z, ecp, res)
 
-! two pairs of energy are identical, e1 = e2 and e3 = e4
+         ! two pairs of energy are identical, e1 = e2 and e3 = e4
          case (3)
              call tetra_lv_ek22idn(z, ecp, res)
 
-! three eigenvalues are identical, e1 = e2 = e3
+         ! three eigenvalues are identical, e1 = e2 = e3
          case (4)
              call tetra_lv_ek3idn (z, ecp, res)
 
-! four (all) eigenvalues are identical
+         ! four (all) eigenvalues are identical
          case (5)
              call tetra_lv_ek4idn (z, ecp, res)
 
      end select
 
-! put integration weights in correct order
+     ! put integration weights in correct order
      weights( isrt(1) ) = res(1)
      weights( isrt(2) ) = res(2)
      weights( isrt(3) ) = res(3)
      weights( isrt(4) ) = res(4)
+
+!! body]
 
      return
   end subroutine tetra_lambin_weight
@@ -682,18 +686,20 @@
   function tetra_lv(x, y) result(lv)
      implicit none
 
-! function type
-     complex(dp) :: lv
 
-! external arguments
+
+!! external arguments
      complex(dp), intent(in) :: x
      complex(dp), intent(in) :: y
 
-! local variables
+!! local variables
      complex(dp) :: z
      complex(dp) :: w
 
-! local parameters
+     ! function type
+     complex(dp) :: lv
+
+!! local parameters
      complex(dp), parameter :: i2 = dcmplx(1.0_dp/2.0_dp)
      complex(dp), parameter :: i3 = dcmplx(1.0_dp/3.0_dp)
      complex(dp), parameter :: i4 = dcmplx(1.0_dp/4.0_dp)
@@ -701,6 +707,8 @@
      complex(dp), parameter :: i6 = dcmplx(1.0_dp/6.0_dp)
      complex(dp), parameter :: i7 = dcmplx(1.0_dp/7.0_dp)
      complex(dp), parameter :: i8 = dcmplx(1.0_dp/8.0_dp)
+
+!! [body
 
      if ( abs(y) > abs(x) ) then
          z = x / y
@@ -714,6 +722,8 @@
          endif ! back if ( abs(w) > 0.1_dp ) block
      endif ! back if ( abs(y) > abs(x) ) block
 
+!! body]
+
      return
   end function tetra_lv
 
@@ -721,44 +731,46 @@
 !! @sub tetra_lv_ekarb
 !!
 !! evaluate integrated weights when eigenvalues at each corner
-!! are explicit
+!! are explicit.
 !!
   subroutine tetra_lv_ekarb(z, e, res)
      implicit none
 
-! external arguments
-! current complex energy
+!! external arguments
+     ! current complex energy
      complex(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integrated weights
+     ! integrated weights
      complex(dp), intent(out) :: res(4)
 
-! local variables
-! ze_i = z - e_i
+!! local variables
+     ! ze_i = z - e_i
      complex(dp) :: ze1, ze2, ze3, ze4
 
-! e_ij = e_i - e_j
+     ! e_ij = e_i - e_j
      complex(dp) :: e12, e13, e14
      complex(dp) :: e21, e23, e24
      complex(dp) :: e31, e32, e34
      complex(dp) :: e41, e42, e43
 
-! p_ij = ze_i * tetra_lv(ze_i, e_ij)
+     ! p_ij = ze_i * tetra_lv(ze_i, e_ij)
      complex(dp) :: p12, p13, p14
      complex(dp) :: p21, p23, p24
      complex(dp) :: p31, p32, p34
      complex(dp) :: p41, p42, p43
 
-! build intermediate variables ze_{i}
+!! [body
+
+     ! build intermediate variables ze_{i}
      ze1 = z - e(1)
      ze2 = z - e(2)
      ze3 = z - e(3)
      ze4 = z - e(4)
 
-! build intermediate variables e_{ij}
+     ! build intermediate variables e_{ij}
      e12 = e(1) - e(2)
      e13 = e(1) - e(3)
      e14 = e(1) - e(4)
@@ -775,7 +787,7 @@
      e42 = e(4) - e(2)
      e43 = e(4) - e(3)
 
-! build intermediate variables p_{ij}
+     ! build intermediate variables p_{ij}
      p12 = ze1 * tetra_lv( ze1, e12 )
      p13 = ze1 * tetra_lv( ze1, e13 )
      p14 = ze1 * tetra_lv( ze1, e14 )
@@ -792,17 +804,19 @@
      p42 = ze4 * tetra_lv( ze4, e42 )
      p43 = ze4 * tetra_lv( ze4, e43 )
 
-! build res(1)
+     ! build res(1)
      res(1) = p21 / ( e32 * e42 ) + p31 / ( e23 * e43 ) + p41 / ( e24 * e34 )
 
-! build res(2)
+     ! build res(2)
      res(2) = p12 / ( e31 * e41 ) + p32 / ( e13 * e43 ) + p42 / ( e14 * e34 )
 
-! build res(3)
+     ! build res(3)
      res(3) = p13 / ( e21 * e41 ) + p23 / ( e12 * e42 ) + p43 / ( e14 * e24 )
 
-! build res(4)
+     ! build res(4)
      res(4) = p14 / ( e21 * e31 ) + p24 / ( e12 * e32 ) + p34 / ( e13 * e23 )
+
+!! body]
 
      return
   end subroutine tetra_lv_ekarb
@@ -810,26 +824,26 @@
 !!
 !! @sub tetra_lv_ek2idn
 !!
-!! evaluate integrated weights when two corner energies are identical
+!! evaluate integrated weights when two corner energies are identical.
 !!
   subroutine tetra_lv_ek2idn(z, e, res)
      implicit none
 
-! external arguments
-! current complex energy
+!! external arguments
+     ! current complex energy
      complex(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integrated weights
+     ! integrated weights
      complex(dp), intent(out) :: res(4)
 
-! local variables
-! ze_i = z - e_i
+!! local variables
+     ! ze_i = z - e_i
      complex(dp) :: ze2, ze3, ze4
 
-! e_ij = e_i - e_j
+     ! e_ij = e_i - e_j
      complex(dp) :: e23, e24
      complex(dp) :: e32, e34
      complex(dp) :: e42, e43
@@ -838,12 +852,14 @@
      complex(dp) :: v2
      complex(dp) :: v31, v32, v41, v42
 
-! build intermediate variables ze_{i}
+!! [body
+
+     ! build intermediate variables ze_{i}
      ze2 = z - e(2)
      ze3 = z - e(3)
      ze4 = z - e(4)
 
-! build intermediate variables e_{ij}
+     ! build intermediate variables e_{ij}
      e23 = e(2) - e(3)
      e24 = e(2) - e(4)
 
@@ -853,29 +869,31 @@
      e42 = e(4) - e(2)
      e43 = e(4) - e(3)
 
-! build intermediate variables p_{i}
+     ! build intermediate variables p_{i}
      p2 = ze2 / ( e32 * e42 )
      p3 = ze3 / ( e23 * e43 )
      p4 = ze4 / ( e24 * e34 )
 
-! build intermediate variables v_{ij}
+     ! build intermediate variables v_{ij}
      v2  = ze2 / ( e23 * e24 )
      v31 = ze3 / ( e23 * e23 )
      v32 = ze3 / ( e23 * e24 )
      v41 = ze4 / ( e24 * e24 )
      v42 = ze4 / ( e23 * e24 )
 
-! build res(2)
+     ! build res(2)
      res(2) = 0.5_dp * p2 + p3 * tetra_lv( ze3, e32 ) + p4 * tetra_lv( ze4, e42 )
 
-! build res(3)
+     ! build res(3)
      res(3) = v2 - ( 2.0_dp * v32 + v41 ) * tetra_lv( ze2, e23 ) + v41 * tetra_lv( ze4, e43 )
 
-! build res(4)
+     ! build res(4)
      res(4) = v2 - ( 2.0_dp * v42 + v31 ) * tetra_lv( ze2, e24 ) + v31 * tetra_lv( ze3, e34 )
 
-! build res(1)
+     ! build res(1)
      res(1) = res(2)
+
+!! body]
 
      return
   end subroutine tetra_lv_ek2idn
@@ -883,55 +901,57 @@
 !!
 !! @sub tetra_lv_ek22idn
 !!
-!! evaluate integrated weights when e1 = e2 and e3 = e4
+!! evaluate integrated weights when e1 = e2 and e3 = e4.
 !!
   subroutine tetra_lv_ek22idn(z, e, res)
      implicit none
 
-! external arguments
-! current complex energy
+!! external arguments
+     ! current complex energy
      complex(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integrated weights
+     ! integrated weights
      complex(dp), intent(out) :: res(4)
 
-! local variables
-! ze_i = z - e_i
+!! local variables
+     ! ze_i = z - e_i
      complex(dp) :: ze2, ze3
 
-! e_ij = e_i - e_j
+     ! e_ij = e_i - e_j
      complex(dp) :: e23, e32
 
      complex(dp) :: p21, p22, p31, p32
 
-! build intermediate variables ze_{i}
+     ! build intermediate variables ze_{i}
      ze2 = z - e(2)
      ze3 = z - e(3)
 
-! build intermediate variables e_{ij}
+     ! build intermediate variables e_{ij}
      e23 = e(2) - e(3)
      e32 = e(3) - e(2)
 
-! build intermediate variables p_{ij}
+     ! build intermediate variables p_{ij}
      p21 = ze2 / ( e23 * e23 )
      p22 = ze2 / ( e32 * e32 )
      p31 = ze3 / ( e23 * e23 )
      p32 = ze3 / ( e32 * e32 )
 
-! build res(2)
+     ! build res(2)
      res(2) = p32 + 0.5_dp * p22 - 3.0_dp * p22 * tetra_lv( ze3, e32 )
 
-! build res(3)
+     ! build res(3)
      res(3) = p21 + 0.5_dp * p31 - 3.0_dp * p31 * tetra_lv( ze2, e23 )
 
-! build res(1)
+     ! build res(1)
      res(1) = res(2)
 
-! build res(4)
+     ! build res(4)
      res(4) = res(3)
+
+!! body]
 
      return
   end subroutine tetra_lv_ek22idn
@@ -939,61 +959,65 @@
 !!
 !! @sub tetra_lv_ek3idn
 !!
-!! evaluate integrated weights when e1 = e2 = e3
+!! evaluate integrated weights when e1 = e2 = e3.
 !!
   subroutine tetra_lv_ek3idn(z, e, res)
      implicit none
 
-! external arguments
-! current complex energy
+!! external arguments
+     ! current complex energy
      complex(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integrated weights
+     ! integrated weights
      complex(dp), intent(out) :: res(4)
 
-! local variables
+!! local variables
      complex(dp) :: c1, c2
 
-! ze_i = z - e_i
+     ! ze_i = z - e_i
      complex(dp) :: ze3, ze4
 
-! e_ij = e_i - e_j
+     ! e_ij = e_i - e_j
      complex(dp) :: e34, e43
 
      complex(dp) :: p31, p32, p41, p42
 
-! build intermediate variables c1 and c2
+!! [body
+
+     ! build intermediate variables c1 and c2
      c1 = dcmplx(2.0_dp/6.0_dp)
      c2 = dcmplx(5.0_dp/6.0_dp)
 
-! build intermediate variables ze_{i}
+     ! build intermediate variables ze_{i}
      ze3 = z - e(3)
      ze4 = z - e(4)
 
-! build intermediate variables e_{ij}
+     ! build intermediate variables e_{ij}
      e34 = e(3) - e(4)
      e43 = e(4) - e(3)
 
-! build intermediate variables p_{ij}
+     ! build intermediate variables p_{ij}
      p31 = ze3 / ( e34 * e34 )
      p32 = ze3 / ( e43 * e43 )
      p41 = ze4 / ( e34 * e34 )
      p42 = ze4 / ( e43 * e43 )
 
-! build res(3)
+     ! build res(3)
      res(3) = c1 * p31 - c2 * p41 + p41 * tetra_lv( ze4, e43 )
 
-! build res(4)
+     ! build res(4)
      res(4) = p42 + 0.5_dp * p32 - 3.0_dp * p32 * tetra_lv( ze4, e43 )
 
-! build res(1)
+     ! build res(1)
      res(1) = res(3)
 
-! build res(2)
+     ! build res(2)
      res(2) = res(3)
+
+!! body]
 
      return
   end subroutine tetra_lv_ek3idn
@@ -1002,28 +1026,32 @@
 !! @sub tetra_lv_ek4idn
 !!
 !! evaluate integrated weights when eigenvalues at four corners are
-!! the same
+!! the same.
 !!
   subroutine tetra_lv_ek4idn(z,e,res)
      implicit none
 
-! external arguments
-! current complex energy
+!! external arguments
+     ! current complex energy
      complex(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      complex(dp), intent(in)  :: e(4)
 
-! integrated weights
+     ! integrated weights
      complex(dp), intent(out) :: res(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
+
+!! [body
 
      do i=1,4
          res(i) = 0.25_dp / ( z - e(i) )
      enddo ! over i={1,4} loop
+
+!! body]
 
      return
   end subroutine tetra_lv_ek4idn
@@ -1048,40 +1076,42 @@
   subroutine tetra_lv_creorder(e, isrt, flg)
      implicit none
 
-! external arguments
-! flg == 1 if all energies different
-! flg == 2 if two energies are identical
-! flg == 3 if two pairs of energies are identical
-! flg == 4 if three energies are identical
-! flg == 5 if all energies are identical
-! flg ==-1 if no order is found
+!! external arguments
+     ! flg == 1 if all energies different;
+     ! flg == 2 if two energies are identical;
+     ! flg == 3 if two pairs of energies are identical;
+     ! flg == 4 if three energies are identical;
+     ! flg == 5 if all energies are identical;
+     ! flg ==-1 if no order is found.
      integer, intent(out) :: flg
 
-! pointer array
+     ! pointer array
      integer, intent(out) :: isrt(4)
 
-! energy points (should be overwritten)
+     ! energy points (should be overwritten)
      complex(dp), intent(inout) :: e(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: p
      integer :: q
 
-! index pointer
+     ! index pointer
      integer :: idx
 
-! real and imaginary part of z
+     ! real and imaginary part of z
      real(dp) :: rez
      real(dp) :: imz
 
-! z = e_p - e_q
+     ! z = e_p - e_q
      complex(dp) :: z
 
-! dummy arrays for e
+     ! dummy arrays for e
      complex(dp) :: enew(4)
 
-! set up prime number matrix
+!! [body
+
+     ! set up prime number matrix
      idx = 1
      do p=1,3
          do q=p+1,4
@@ -1094,14 +1124,14 @@
          enddo ! over q={p+1,4} loop
      enddo ! over p={1,3} loop
 
-! find flg
+     ! find flg
      flg = 1
      if ( idx > 1    ) flg = flg + 1
      if ( idx > 13   ) flg = flg + 1
      if ( idx > 35   ) flg = flg + 1
      if ( idx > 1001 ) flg = flg + 1
 
-! find new ordering
+     ! find new ordering
      if ( idx == 1 .or. idx == 2 .or. idx == 42 .or. idx == 30030 ) then
          call tetra_lv_setmap( isrt, 1, 2, 3, 4 )
 
@@ -1135,15 +1165,17 @@
 
      endif
 
-! reorder energies
+     ! reorder energies
      do p=1,4
          enew(p) = e( isrt(p) )
      enddo ! over p={1,4} loop
 
-! overwrite original energies
+     ! overwrite original energies
      do p=1,4
          e(p) = enew(p)
      enddo ! over p={1,4} loop
+
+!! body]
 
      return
   end subroutine tetra_lv_creorder
