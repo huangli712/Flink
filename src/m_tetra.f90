@@ -686,8 +686,6 @@
   function tetra_lv(x, y) result(lv)
      implicit none
 
-
-
 !! external arguments
      complex(dp), intent(in) :: x
      complex(dp), intent(in) :: y
@@ -695,7 +693,7 @@
 !! local variables
      complex(dp) :: z
      complex(dp) :: w
-
+     !
      ! function type
      complex(dp) :: lv
 
@@ -1257,31 +1255,35 @@
 !! @sub smearing_gauss_weight1
 !!
 !! standard Gaussian broadening algorithm for (integrated) density
-!! of states
+!! of states.
 !!
   subroutine smearing_gauss_weight1(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! energies at given k-point and band
+     ! energies at given k-point and band
      real(dp), intent(in)  :: e
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! dummy variables
+!! local variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      dummy = ( z - e ) / gamm
      tos = 0.125_dp * ( 1.0_dp - erf(-dummy) )
      dos = 0.25_dp * exp(-dummy**2.0) / ( sqrt(pi) * gamm )
+
+!! body]
 
      return
   end subroutine smearing_gauss_weight1
@@ -1290,30 +1292,32 @@
 !! @sub smearing_gauss_weight2
 !!
 !! standard Gaussian broadening algorithm for (integrated) density
-!! of states
+!! of states.
 !!
   subroutine smearing_gauss_weight2(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1321,11 +1325,13 @@
          dweight(i) = 0.25_dp * exp(-dummy**2.0) / ( sqrt(pi) * gamm )
      enddo ! over i={1,4} loop
 
-! sum up weights to calculate the density of states
+     ! sum up weights to calculate the density of states
      dos = sum( dweight )
 
-! sum up the weights to calculate the integrated density of states
+     ! sum up the weights to calculate the integrated density of states
      tos = sum( tweight )
+
+!! body]
 
      return
   end subroutine smearing_gauss_weight2
