@@ -450,46 +450,49 @@
      ze2 = z - e(2)
      ze3 = z - e(3)
      ze4 = z - e(4)
+     !
      e21 = e(2) - e(1)
      e31 = e(3) - e(1)
      e32 = e(3) - e(2)
      e41 = e(4) - e(1)
      e42 = e(4) - e(2)
 
-! intermediate variables
-! apply equation (B11)
+     ! intermediate variables
+     ! apply equation (B11)
      c1  = ze1 * ze1 / ( 4.0_dp * e41 * e31 )
      dc1 = ze1 / ( 2.0_dp * e41 * e31 )
 
-! apply equation (B12)
+     ! apply equation (B12)
      c2  = - ze1 * ze2 * ze3 / ( 4.0_dp * e41 * e32 * e31 )
      dc2 = ( - ze2 * ze3 - ze1 * ze3 - ze1 * ze2 ) / ( 4.0_dp * e41 * e32 * e31 )
 
-! apply equation (B13)
+     ! apply equation (B13)
      c3  = - ze2 * ze2 * ze4 / ( 4.0_dp * e42 * e32 * e41 )
      dc3 = ( - 2.0_dp * ze2 * ze4 - ze2 * ze2 ) / ( 4.0_dp * e42 * e32 * e41 )
 
-! integration weights
-! apply equation (B7)
+     ! integration weights
+     ! apply equation (B7)
      tweight(1) = c1 - ( c1 + c2 ) * ze3 / e31 - ( c1 + c2 + c3 ) * ze4 / e41
 
-! apply equation (B8)
+     ! apply equation (B8)
      tweight(2) = c1 + c2 + c3 - ( c2 + c3 ) * ze3 / e32 - c3 * ze4 / e42
 
-! apply equation (B9)
+     ! apply equation (B9)
      tweight(3) = ( c1 + c2 ) * ze1 / e31 + ( c2 + c3 ) * ze2 / e32
 
-! apply equation (B10)
+     ! apply equation (B10)
      tweight(4) = ( c1 + c2 + c3 ) * ze1 / e41 + c3 * ze2 / e42
 
-! density of states weights
+     ! density of states weights
      dweight(1) = dc1 - ( ( dc1 + dc2 ) * ze3 + c1 + c2 ) / e31 - ( ( dc1 + dc2 + dc3 ) * ze4 + c1 + c2 + c3 ) / e41
      dweight(2) = dc1 + dc2 + dc3 - ( ( dc2 + dc3 ) * ze3 + c2 + c3 ) / e32 - ( dc3 * ze4 + c3 ) / e42
      dweight(3) = ( ( dc1 + dc2 ) * ze1 + c1 + c2 ) / e31 + ( ( dc2 + dc3 ) * ze2 + c2 + c3 ) / e32
      dweight(4) = ( ( dc1 + dc2 + dc3 ) * ze1 + c1 + c2 + c3 ) / e41 + ( dc3 * ze2 + c3 ) / e42
 
-! corrections for dweight
+     ! corrections for dweight
      cweight = 6.0_dp * ( 1.0_dp - ( e31 + e42 ) * ze2 / ( e32 * e42 ) ) / ( e31 * e41 )
+
+!! body]
 
      return
   end subroutine tetra_p_ek23
