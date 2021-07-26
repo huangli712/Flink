@@ -266,20 +266,24 @@
 !!
 !! @sub gstack_destroy
 !!
-!! destroy and finalize a generic type stack
+!! destroy and finalize a generic type stack.
 !!
   subroutine gstack_destroy(s)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(inout) :: s
 
-! deallocate memory
+!! [body
+
+     ! deallocate memory
      if ( allocated(s%item) ) deallocate(s%item)
 
-! reset top position
+     ! reset top position
      s%top = 0
+
+!! body]
 
      return
   end subroutine gstack_destroy
