@@ -1005,17 +1005,21 @@
 !!
 !! @fun gstack_isempty
 !!
-!! check whether the stack is empty
+!! check whether the stack is empty.
 !!
   logical &
   function gstack_isempty(s) result (b)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
+!! [body
+
      b = ( s%top == 0 )
+
+!! body]
 
      return
   end function gstack_isempty
