@@ -752,17 +752,19 @@
 !!
 !! @sub gstack_display
 !!
-!! display the top item in the stack without pop it off
+!! display the top item in the stack without pop it off.
 !!
   subroutine gstack_display(s, item)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
-! the top item in the stack
+     ! the top item in the stack
      class(*), intent(out)     :: item
+
+!! [body
 
      if ( s%top == 0 ) then
          write(mystd,'(a)') 'gstack: the stack is empty, can not return the top item of it'
@@ -795,6 +797,8 @@
          end select
      endif ! back if ( s%top == 0 ) block
 
+!! body]
+
      return
   end subroutine gstack_display
 
@@ -802,17 +806,21 @@
 !! @fun istack_gettop
 !!
 !! return the top position of the stack, i.e, the number of items stored
-!! in the stack currently
+!! in the stack currently.
 !!
   integer &
   function istack_gettop(s) result (t)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
+!! [body
+
      t = s%top
+
+!! body]
 
      return
   end function istack_gettop
