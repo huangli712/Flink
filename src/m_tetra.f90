@@ -1190,19 +1190,21 @@
 !!    (1,4) = 5,
 !!    (2,3) = 7,
 !!    (2,4) = 11,
-!!    (3,4) = 13
+!!    (3,4) = 13.
 !!
   function tetra_lv_prime(p, q) result(prime)
      implicit none
 
-! function type
-! prime number
-     integer :: prime
-
-! external arguments
-! pair of integers
+!! external arguments
+     ! pair of integers
      integer, intent(in) :: p
      integer, intent(in) :: q
+
+!! local variables
+     ! function type, it means prime number
+     integer :: prime
+
+!! [body
 
      prime = p * q
 
@@ -1211,6 +1213,8 @@
      else if ( prime == 8 ) then
          prime = prime + 3
      endif
+
+!! body]
 
      return
   end function tetra_lv_prime
@@ -1225,18 +1229,22 @@
   subroutine tetra_lv_setmap(v, a, b, c, d)
      implicit none
 
-! external arguments
+!! external arguments
      integer, intent(in) :: a
      integer, intent(in) :: b
      integer, intent(in) :: c
      integer, intent(in) :: d
-
+     !
      integer, intent(out) :: v(4)
+
+!! [body
 
      v(1) = a
      v(2) = b
      v(3) = c
      v(4) = d
+
+!! body]
 
      return
   end subroutine tetra_lv_setmap
