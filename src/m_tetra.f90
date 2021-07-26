@@ -412,6 +412,8 @@
      ! corrections for dweight
      cweight = 6.0_dp * ze1 / ( e21 * e31 * e41 )
 
+!! body]
+
      return
   end subroutine tetra_p_ek12
 
@@ -423,25 +425,27 @@
   subroutine tetra_p_ek23(z, e)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in) :: z
 
-! one-particle energies at the corners of the tetrahedron
+     ! one-particle energies at the corners of the tetrahedron
      real(dp), intent(in) :: e(4)
 
-! local variables
-! intermediated variables
+!! local variables
+     ! intermediated variables
      real(dp) ::  c1,  c2,  c3
      real(dp) :: dc1, dc2, dc3
 
-! ze_{i} = e - e_{i}
+     ! ze_{i} = e - e_{i}
      real(dp) :: ze1, ze2, ze3, ze4
 
-! e_{ij} = e_{i} - e_{j}
+     ! e_{ij} = e_{i} - e_{j}
      real(dp) :: e21, e31, e32, e41, e42
 
-! setup common variables
+!! [body
+
+     ! setup common variables
      ze1 = z - e(1)
      ze2 = z - e(2)
      ze3 = z - e(3)
