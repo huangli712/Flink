@@ -43,22 +43,22 @@
          ! size of allocatable array
          integer :: nsize
 
-         ! allocatable array, which is used to store elements in stack
+         ! allocatable array, which is used to store elements in stack.
          integer, allocatable :: item(:)
 
      end type istack
 
-! define generic type stack
+     ! define generic type stack
      type gstack
 
-! top position of stack
+         ! top position of stack
          integer :: top
 
-! size of allocatable array
+         ! size of allocatable array
          integer :: nsize
 
-! allocatable array, which is used to store elements in stack
-! note: it is an unlimited polymorphic object
+         ! allocatable array, which is used to store elements in stack.
+         ! note: it is an unlimited polymorphic object.
          class(*), allocatable :: item(:)
 
      end type gstack
