@@ -112,30 +112,34 @@
 !!
 !! @sub istack_create
 !!
-!! create and initialize an integer type stack
+!! create and initialize an integer type stack.
 !!
   subroutine istack_create(s, n)
      implicit none
 
-! external arguments
-! size of stack
+!! external arguments
+     ! size of stack
      integer, optional, intent(in) :: n
 
-! integer type stack
+     ! integer type stack
      type (istack), intent(out)    :: s
 
-! determine the capacity of stack
+!! [body
+
+     ! determine the capacity of stack
      if ( present (n) ) then
          s%nsize = n
      else
          s%nsize = limit
      endif ! back if ( present (n) ) block
 
-! setup the top position
+     ! setup the top position
      s%top = 0
 
-! allocate memory for item array
+     ! allocate memory for item array
      allocate(s%item(s%nsize))
+
+!! body]
 
      return
   end subroutine istack_create
