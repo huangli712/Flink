@@ -334,18 +334,20 @@
 !!
 !! @sub tetra_p_ek1
 !!
-!! Blochl algorithm, case 1, for fully unoccupied tetrahedron
+!! Blochl algorithm, case 1, for fully unoccupied tetrahedron.
 !!
   subroutine tetra_p_ek1()
      implicit none
 
-! integration weights, apply equation (B1)
+!! [body
+
+     ! integration weights, apply equation (B1)
      tweight = zero
 
-! density of states weights
+     ! density of states weights
      dweight = zero
 
-! corrections for dweight
+     ! corrections for dweight
      cweight = zero
 
      return
@@ -354,29 +356,31 @@
 !!
 !! @sub tetra_p_ek12
 !!
-!! Blochl algorithm, case 2, for partially occupied tetrahedron
+!! Blochl algorithm, case 2, for partially occupied tetrahedron.
 !!
   subroutine tetra_p_ek12(z, e)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in) :: z
 
-! one-particle energies at the corners of the tetrahedron
+     ! one-particle energies at the corners of the tetrahedron
      real(dp), intent(in) :: e(4)
 
-! local variables
-! intermediated variables
+!! local variables
+     ! intermediated variables
      real(dp) :: c, dc
 
-! ze_{i} = e - e_{i}
+     ! ze_{i} = e - e_{i}
      real(dp) :: ze1
 
-! e_{ij} = e_{i} - e_{j}
+     ! e_{ij} = e_{i} - e_{j}
      real(dp) :: e21, e31, e41
 
-! setup common variables
+!! [body
+
+     ! setup common variables
      ze1 = z - e(1)
      e21 = e(2) - e(1)
      e31 = e(3) - e(1)
