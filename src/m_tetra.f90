@@ -159,7 +159,7 @@
          endif
      enddo ! over i={1,4} loop
 
-     ! find the case, to update dweight, tweight, and cweight
+     ! find the case, to update dweight, tweight, and cweight.
      ! case 1, fully unoccupied tetrahedron
      if      ( z < e(1) ) then
          call tetra_p_ek1 (    )
@@ -215,52 +215,54 @@
 !! Peter E. Blochl algorithm for (integrated) density of states and
 !! relevant integration weights. Blochl corrections are taken into
 !! considersions as well, implemented by myself following the equations
-!! of Phys. Rev. B, 49, 16223, 1994
+!! of Phys. Rev. B, 49, 16223, 1994.
 !!
 !! note: s_qsorter() is implemented in s_util.f90.
 !!
   subroutine tetra_blochl_weight2(z, e, ddd, ttt)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)    :: z
 
-! integration weight for density of states
+     ! integration weight for density of states
      real(dp), intent(out)   :: ddd(4)
 
-! integration weight for integrated density of states
+     ! integration weight for integrated density of states
      real(dp), intent(out)   :: ttt(4)
 
-! one-particle energies at the corners of the tetrahedron
+     ! one-particle energies at the corners of the tetrahedron
      real(dp), intent(inout) :: e(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
 
-! density of states
+     ! density of states
      real(dp) :: dos
 
-! integrated density of states
+     ! integrated density of states
      real(dp) :: tos
 
-! initialize tos and dos
+!! [body
+
+     ! initialize tos and dos
      dos = zero
      tos = zero
 
-! initialize dweight and tweight
+     ! initialize dweight and tweight
      dweight = zero
      tweight = zero
 
-! initialize cweight
+     ! initialize cweight
      cweight = zero
 
-! sort the corner energy according to increasing values
+     ! sort the corner energy according to increasing values
      call s_qsorter(4, e)
 
-! remove degenerate
+     ! remove degenerate
      do i=1,3
          if ( abs( e(i) - e(i+1) ) < eps8 ) then
              e(i) = e(i) + eps8 / real(i)
@@ -273,50 +275,54 @@
          endif
      enddo ! over i={1,4} loop
 
-! find the case, to update dweight, tweight, and cweight
-! case 1, fully unoccupied tetrahedron
+     ! find the case, to update dweight, tweight, and cweight.
+     ! case 1, fully unoccupied tetrahedron
      if      ( z < e(1) ) then
          call tetra_p_ek1 (    )
 
-! case 2, partially occupied tetrahedron
+     ! case 2, partially occupied tetrahedron
      else if ( z < e(2) .and. z > e(1) ) then
          call tetra_p_ek12(z, e)
 
-! case 3, partially occupied tetrahedron
+     ! case 3, partially occupied tetrahedron
      else if ( z < e(3) .and. z > e(2) ) then
          call tetra_p_ek23(z, e)
 
-! case 4, partially occupied tetrahedron
+     ! case 4, partially occupied tetrahedron
      else if ( z < e(4) .and. z > e(3) ) then
          call tetra_p_ek34(z, e)
 
-! case 5, fully occupied tetrahedron
+     ! case 5, fully occupied tetrahedron
      else if ( z > e(4) ) then
          call tetra_p_ek4 (    )
 
      endif ! back if ( z < e(1) ) block
 
-! add up Blochl corrections for density of states weights, apply equation (22)
+     ! add up Blochl corrections for density of states weights,
+     ! apply equation (22).
      do i=1,4
          do j=1,4
              dweight(i) = dweight(i) + ( e(j) - e(i) ) * cweight * 0.025_dp
          enddo ! over j={1,4} loop
      enddo ! over i={1,4} loop
 
-! compute density of states
+     ! compute density of states
      dos = sum( dweight )
      ddd = dweight
 
-! add up Blochl corrections for integration weights, apply equation (22)
+     ! add up Blochl corrections for integration weights,
+     ! apply equation (22).
      do i=1,4
          do j=1,4
              tweight(i) = tweight(i) + ( e(j) - e(i) ) * dos * 0.025_dp
          enddo ! over j={1,4} loop
      enddo ! over i={1,4} loop
 
-! compute integrated density of states
+     ! compute integrated density of states
      tos = sum( tweight )
      ttt = tweight
+
+!! body]
 
      return
   end subroutine tetra_blochl_weight2
