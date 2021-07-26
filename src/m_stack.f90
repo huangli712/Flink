@@ -241,20 +241,24 @@
 !!
 !! @sub istack_destroy
 !!
-!! destroy and finalize an integer type stack
+!! destroy and finalize an integer type stack.
 !!
   subroutine istack_destroy(s)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(inout) :: s
 
-! deallocate memory
+!! [body
+
+     ! deallocate memory
      if ( allocated(s%item) ) deallocate(s%item)
 
-! reset top position
+     ! reset top position
      s%top = 0
+
+!! body]
 
      return
   end subroutine istack_destroy
