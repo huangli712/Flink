@@ -147,32 +147,34 @@
 !!
 !! @sub gstack_create
 !!
-!! create and initialize a generic type stack
+!! create and initialize a generic type stack.
 !!
   subroutine gstack_create(s, t, n)
      implicit none
 
-! external arguments
-! size of stack
+!! external arguments
+     ! size of stack
      integer, optional, intent(in) :: n
 
-! mold for the elements in the stack
+     ! mold for the elements in the stack
      class(*), intent(in)          :: t
 
-! generic type stack
+     ! generic type stack
      type (gstack), intent(out)    :: s
 
-! determine the capacity of stack
+!! [body
+
+     ! determine the capacity of stack
      if ( present (n) ) then
          s%nsize = n
      else
          s%nsize = limit
      endif ! back if ( present (n) ) block
 
-! setup the top position
+     ! setup the top position
      s%top = 0
 
-! allocate memory for item array
+     ! allocate memory for item array
      select type (t)
          type is (integer)
              allocate(s%item(s%nsize), source = 0)
@@ -186,6 +188,8 @@
          type is (complex(dp))
              allocate(s%item(s%nsize), source = (0.0_dp, 0.0_dp))
      end select
+
+!! body]
 
      return
   end subroutine gstack_create
