@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 06/07/2006 by li huang (created)
-!!!           02/27/2021 by li huang (last modified)
+!!!           07/27/2021 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -19,32 +19,34 @@
 !!>>> declare global parameters                                        <<<
 !!========================================================================
 
-! kind for double precision
+!! module parameters
+     ! kind for double precision
      integer, private, parameter  :: dp   = kind(1.0d0)
 
-! well-known $\pi$
+     ! well-known $\pi$
      real(dp), private, parameter :: pi   = 3.141592653589793238462643383279_dp
 
-! 0.0 in double precision form
+     ! 0.0 in double precision form
      real(dp), private, parameter :: zero = 0.00_dp
 
-! $\epsilon$ in double precision form
+     ! $\epsilon$ in double precision form
      real(dp), private, parameter :: eps8 = 1.00E-8
 
-! broadening parameter for smearing algorithm
+     ! broadening parameter for smearing algorithm
      real(dp), private, parameter :: gamm = 0.15_dp
 
 !!========================================================================
 !!>>> declare common variables                                         <<<
 !!========================================================================
 
-! blochl corrections for dweight
+!! module variables
+     ! blochl corrections for dweight
      real(dp), save, private :: cweight
 
-! density of states weights at the four corners of a given tetrahedron
+     ! density of states weights at the four corners of a given tetrahedron
      real(dp), save, private :: dweight(4)
 
-! integration weights at the four corners of a given tetrahedron
+     ! integration weights at the four corners of a given tetrahedron
      real(dp), save, private :: tweight(4)
 
 !!========================================================================
