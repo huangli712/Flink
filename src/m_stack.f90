@@ -851,7 +851,7 @@
 !!
 !! @fun istack_getrest
 !!
-!! return the number of empty sites of the stack
+!! return the number of empty sites of the stack.
 !!
   integer &
   function istack_getrest(s) result (r)
