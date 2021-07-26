@@ -639,17 +639,19 @@
 !!
 !! @sub istack_pop
 !!
-!! pop off item from the top of stack
+!! pop off item from the top of stack.
 !!
   subroutine istack_pop(s, item)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(inout) :: s
 
-! the top item in the stack
+     ! the top item in the stack
      integer, intent(out)         :: item
+
+!! [body
 
      if ( s%top == 0 ) then
          write(mystd,'(a)') 'istack: the stack is empty, can not pop off any item from it'
@@ -658,6 +660,8 @@
          item = s%item(s%top)
          s%top = s%top - 1
      endif ! back if ( s%top == 0 ) block
+
+!! body]
 
      return
   end subroutine istack_pop
