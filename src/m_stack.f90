@@ -723,17 +723,19 @@
 !!
 !! @sub istack_display
 !!
-!! display the top item in the stack without pop it off
+!! display the top item in the stack without pop it off.
 !!
   subroutine istack_display(s, item)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
-! the top item in the stack
+     ! the top item in the stack
      integer, intent(out)      :: item
+
+!! [body
 
      if ( s%top == 0 ) then
          write(mystd,'(a)') 'istack: the stack is empty, can not return the top item of it'
@@ -741,6 +743,8 @@
      else
          item = s%item(s%top)
      endif ! back if ( s%top == 0 ) block
+
+!! body]
 
      return
   end subroutine istack_display
