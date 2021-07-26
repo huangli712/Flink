@@ -669,17 +669,19 @@
 !!
 !! @sub gstack_pop
 !!
-!! pop off item from the top of stack
+!! pop off item from the top of stack.
 !!
   subroutine gstack_pop(s, item)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(inout) :: s
 
-! the top item in the stack
+     ! the top item in the stack
      class(*), intent(out)        :: item
+
+!! [body
 
      if ( s%top == 0 ) then
          write(mystd,'(a)') 'gstack: the stack is empty, can not pop off any item from it'
@@ -712,6 +714,8 @@
          end select
          s%top = s%top - 1
      endif ! back if ( s%top == 0 ) block
+
+!! body]
 
      return
   end subroutine gstack_pop
