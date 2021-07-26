@@ -105,30 +105,32 @@
 !! Peter E. Blochl algorithm for (integrated) density of states and
 !! relevant integration weights. Blochl corrections are taken into
 !! considersions as well, implemented by myself following the equations
-!! of Phys. Rev. B, 49, 16223, 1994
+!! of Phys. Rev. B, 49, 16223, 1994.
 !!
 !! note: s_qsorter() is implemented in s_util.f90.
 !!
   subroutine tetra_blochl_weight1(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)    :: z
 
-! density of states
+     ! density of states
      real(dp), intent(out)   :: dos
 
-! integrated density of states
+     ! integrated density of states
      real(dp), intent(out)   :: tos
 
-! one-particle energies at the corners of the tetrahedron
+     ! one-particle energies at the corners of the tetrahedron
      real(dp), intent(inout) :: e(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
      integer :: j
+
+!! [body
 
 ! initialize tos and dos
      dos = zero
