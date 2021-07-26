@@ -197,17 +197,21 @@
 !!
 !! @sub istack_clean
 !!
-!! reset the integer type stack, clean all its elements
+!! reset the integer type stack, clean all its elements.
 !!
   subroutine istack_clean(s)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(inout) :: s
 
-! reset top position
+!! [body
+
+     ! reset top position
      s%top = 0
+
+!! body]
 
      return
   end subroutine istack_clean
