@@ -1220,7 +1220,7 @@
 !!
 !! @sub tetra_lv_setmap
 !!
-! this subroutine takes in one vector, v, of integers and four numbers
+!! this subroutine takes in one vector, v, of integers and four numbers
 !! a, b, c, d and assigns them the elements of the vector v, which is
 !! of length four.
 !!
@@ -1360,7 +1360,7 @@
 
 !! local variables
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! dummy variables
      real(dp) :: dummy
@@ -1391,31 +1391,35 @@
 !!
 !! @sub smearing_fermi_weight1
 !!
-!! Fermi-Dirac broadening algorithm for (integrated) density of states
+!! Fermi-Dirac broadening algorithm for (integrated) density of states.
 !!
   subroutine smearing_fermi_weight1(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! energies at given k-point and band
+     ! energies at given k-point and band
      real(dp), intent(in)  :: e
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! dummy variables
+!! local variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      dummy = ( z - e ) / gamm
      tos = 1.0_dp / (1.0_dp +  exp(-dummy) )
      dos = 0.5_dp / (1.0_dp + cosh( dummy) )
+
+!! body]
 
      return
   end subroutine smearing_fermi_weight1
@@ -1423,30 +1427,32 @@
 !!
 !! @sub smearing_fermi_weight2
 !!
-!! Fermi-Dirac broadening algorithm for (integrated) density of states
+!! Fermi-Dirac broadening algorithm for (integrated) density of states.
 !!
   subroutine smearing_fermi_weight2(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1454,11 +1460,13 @@
          dweight(i) = 0.5_dp / ( 1.0_dp + cosh( dummy) )
      enddo ! over i={1,4} loop
 
-! sum up weights to calculate the density of states
+     ! sum up weights to calculate the density of states
      dos = sum( dweight )
 
-! sum up the weights to calculate the integrated density of states
+     ! sum up the weights to calculate the integrated density of states
      tos = sum( tweight )
+
+!! body]
 
      return
   end subroutine smearing_fermi_weight2
@@ -1466,30 +1474,32 @@
 !!
 !! @sub smearing_fermi_weight3
 !!
-!! Fermi-Dirac broadening algorithm for (integrated) density of states
+!! Fermi-Dirac broadening algorithm for (integrated) density of states.
 !!
   subroutine smearing_fermi_weight3(z, e, dd, tt)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! integration weight for density of states
+     ! integration weight for density of states
      real(dp), intent(out) :: dd(4)
 
-! integration weight for number of states
+     ! integration weight for number of states
      real(dp), intent(out) :: tt(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1497,11 +1507,13 @@
          dweight(i) = 0.5_dp / (1.0_dp + cosh( dummy) )
      enddo ! over i={1,4} loop
 
-! set up weights to calculate the density of states
+     ! set up weights to calculate the density of states
      dd = dweight
 
-! set up the weights to calculate the integrated density of states
+     ! set up the weights to calculate the integrated density of states
      tt = tweight
+
+!! body]
 
      return
   end subroutine smearing_fermi_weight3
@@ -1514,33 +1526,37 @@
 !! @sub smearing_marzari_weight1
 !!
 !! cold smearing algorithm, by Marzari and Vanderbilt, for (integrated)
-!! density of states
+!! density of states.
 !!
   subroutine smearing_marzari_weight1(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! energies at given k-point and band
+     ! energies at given k-point and band
      real(dp), intent(in)  :: e
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! dummy variables
+!! local variables
+     ! dummy variables
      real(dp) :: xp
      real(dp) :: dummy
+
+!! [body
 
      dummy = ( z - e ) / gamm
      xp = dummy - 1.0_dp / sqrt(2.0_dp)
      tos = 0.5_dp * erf(xp) + 1.0_dp / sqrt(2.0_dp * pi) * exp(-xp**2.0) + 0.5_dp
      dos = 2.0_dp / sqrt(pi) * exp(-xp**2.0) * ( 2.0_dp - sqrt(2.0_dp) * dummy )
+
+!! body]
 
      return
   end subroutine smearing_marzari_weight1
@@ -1549,31 +1565,33 @@
 !! @sub smearing_marzari_weight2
 !!
 !! cold smearing algorithm, by Marzari and Vanderbilt, for (integrated)
-!! density of states
+!! density of states.
 !!
   subroutine smearing_marzari_weight2(z, e, dos, tos)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! density of states
+     ! density of states
      real(dp), intent(out) :: dos
 
-! number of states
+     ! number of states
      real(dp), intent(out) :: tos
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: xp
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1582,11 +1600,13 @@
          dweight(i) = 2.0_dp / sqrt(pi) * exp(-xp**2.0) * ( 2.0_dp - sqrt(2.0_dp) * dummy )
      enddo ! over i={1,4} loop
 
-! sum up weights to calculate the density of states
+     ! sum up weights to calculate the density of states
      dos = sum( dweight )
 
-! sum up the weights to calculate the integrated density of states
+     ! sum up the weights to calculate the integrated density of states
      tos = sum( tweight )
+
+!! body]
 
      return
   end subroutine smearing_marzari_weight2
@@ -1595,31 +1615,33 @@
 !! @sub smearing_marzari_weight3
 !!
 !! cold smearing algorithm, by Marzari and Vanderbilt, for (integrated)
-!! density of states
+!! density of states.
 !!
   subroutine smearing_marzari_weight3(z, e, dd, tt)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! integration weight for density of states
+     ! integration weight for density of states
      real(dp), intent(out) :: dd(4)
 
-! integration weight for number of states
+     ! integration weight for number of states
      real(dp), intent(out) :: tt(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: xp
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1628,11 +1650,13 @@
          dweight(i) = 2.0_dp / sqrt(pi) * exp(-xp**2.0) * ( 2.0_dp - sqrt(2.0_dp) * dummy )
      enddo ! over i={1,4} loop
 
-! set up weights to calculate the density of states
+     ! set up weights to calculate the density of states
      dd = dweight
 
-! set up the weights to calculate the integrated density of states
+     ! set up the weights to calculate the integrated density of states
      tt = tweight
+
+!! body]
 
      return
   end subroutine smearing_marzari_weight3
