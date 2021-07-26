@@ -53,36 +53,36 @@
 !!>>> declare accessibility for module routines                        <<<
 !!========================================================================
 
-! Blochl algorithm for (integrated) density of states
+     ! Blochl algorithm for (integrated) density of states
      public  :: tetra_blochl_weight1
      public  :: tetra_blochl_weight2
 
-! Labmbin-Vigneron algorithm for crystal Green's function
+     ! Labmbin-Vigneron algorithm for crystal Green's function
      public  :: tetra_lambin_weight
 
-! Gaussian broadening algorithm for (integrated) density of states
+     ! Gaussian broadening algorithm for (integrated) density of states
      public  :: smearing_gauss_weight1
      public  :: smearing_gauss_weight2
      public  :: smearing_gauss_weight3
 
-! Fermi-Dirac broadening algorithm for (integrated) density of states
+     ! Fermi-Dirac broadening algorithm for (integrated) density of states
      public  :: smearing_fermi_weight1
      public  :: smearing_fermi_weight2
      public  :: smearing_fermi_weight3
 
-! Marzari-Vanderbilt broadening algorithm for (integrated) density of states
+     ! Marzari-Vanderbilt broadening algorithm for (integrated) density of states
      public  :: smearing_marzari_weight1
      public  :: smearing_marzari_weight2
      public  :: smearing_marzari_weight3
 
-! private procedures invoked by tetra_blochl_weightX() subroutine
+     ! private procedures invoked by tetra_blochl_weightX() subroutine
      private :: tetra_p_ek1
      private :: tetra_p_ek12
      private :: tetra_p_ek23
      private :: tetra_p_ek34
      private :: tetra_p_ek4
 
-! private procedures invoked by tetra_lambin_weightX() subroutine
+     ! private procedures invoked by tetra_lambin_weightX() subroutine
      private :: tetra_lv
      private :: tetra_lv_ekarb
      private :: tetra_lv_ek2idn
