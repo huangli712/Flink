@@ -1340,30 +1340,32 @@
 !! @sub smearing_gauss_weight3
 !!
 !! standard Gaussian broadening algorithm for (integrated) density
-!! of states
+!! of states.
 !!
   subroutine smearing_gauss_weight3(z, e, dd, tt)
      implicit none
 
-! external arguments
-! current energy
+!! external arguments
+     ! current energy
      real(dp), intent(in)  :: z
 
-! corner energies at given tetrahedron
+     ! corner energies at given tetrahedron
      real(dp), intent(in)  :: e(4)
 
-! integration weight for density of states
+     ! integration weight for density of states
      real(dp), intent(out) :: dd(4)
 
-! integration weight for number of states
+     ! integration weight for number of states
      real(dp), intent(out) :: tt(4)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer :: i
 
-! dummy variables
+     ! dummy variables
      real(dp) :: dummy
+
+!! [body
 
      do i=1,4
          dummy = ( z - e(i) ) / gamm
@@ -1371,11 +1373,13 @@
          dweight(i) = 0.25_dp * exp(-dummy**2.0) / ( sqrt(pi) * gamm )
      enddo ! over i={1,4} loop
 
-! set up weights to calculate the density of states
+     ! set up weights to calculate the density of states
      dd = dweight
 
-! set up the weights to calculate the integrated density of states
+     ! set up the weights to calculate the integrated density of states
      tt = tweight
+
+!! body]
 
      return
   end subroutine smearing_gauss_weight3
