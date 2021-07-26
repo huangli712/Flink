@@ -585,17 +585,19 @@
 !!
 !! @sub gstack_push
 !!
-!! push item on top of stack
+!! push item on top of stack.
 !!
   subroutine gstack_push(s, item)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(inout) :: s
 
-! elements to be pushed in the stack
+     ! elements to be pushed in the stack
      class(*), intent(in)         :: item
+
+!! [body
 
      if ( s%top == s%nsize ) then
          write(mystd,'(a)') 'gstack: the stack is full, can not push any item on it'
@@ -628,6 +630,8 @@
                  end select
          end select
      endif ! back if ( s%top == s%nsize ) block
+
+!! body]
 
      return
   end subroutine gstack_push
