@@ -291,27 +291,31 @@
 !!
 !! @sub istack_copyer
 !!
-!! copy an istack object to another
+!! copy an istack object to another.
 !!
   subroutine istack_copyer(sa, sb)
      implicit none
 
-! external arguments
-! integer type stack, input
+!! external arguments
+     ! integer type stack, input
      type (istack), intent(in)    :: sa
 
-! integer type stack, output
+     ! integer type stack, output
      type (istack), intent(inout) :: sb
 
-! check nsize at first
+!! [body
+
+     ! check nsize at first
      if ( sa%nsize /= sb%nsize ) then
          write(mystd,'(a)') 'istack: the sizes of two stacks are not equal'
          STOP
      endif ! back if ( sa%nsize /= sb%nsize ) block
 
-! sync the data
+     ! sync the data
      sb%top = sa%top
      sb%item = sa%item
+
+!! body]
 
      return
   end subroutine istack_copyer
@@ -319,25 +323,27 @@
 !!
 !! @sub gstack_copyer
 !!
-!! copy an gstack object to another
+!! copy an gstack object to another.
 !!
   subroutine gstack_copyer(sa, sb)
      implicit none
 
-! external arguments
-! generic type stack, input
+!! external arguments
+     ! generic type stack, input
      type (gstack), intent(in)    :: sa
 
-! generic type stack, output
+     ! generic type stack, output
      type (gstack), intent(inout) :: sb
 
-! check nsize at first
+!! [body
+
+     ! check nsize at first
      if ( sa%nsize /= sb%nsize ) then
          write(mystd,'(a)') 'gstack: the sizes of two stacks are not equal'
          STOP
      endif ! back if ( sa%nsize /= sb%nsize ) block
 
-! sync the data
+     ! sync the data
      sb%top = sa%top
      select type (v => sb%item)
          type is (integer)
@@ -365,26 +371,30 @@
              end select
      end select
 
+!! body]
+
      return
   end subroutine gstack_copyer
 
 !!
 !! @sub istack_setter
 !!
-!! update the item's value of stack at specified position
+!! update the item's value of stack at specified position.
 !!
   subroutine istack_setter(s, pos, item)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(inout) :: s
 
-! position of the element to be updated
+     ! position of the element to be updated
      integer, intent(in)          :: pos
 
-! elements to be setted
+     ! elements to be setted
      integer, intent(in)          :: item
+
+!! [body
 
      if ( pos < 1 .or. pos > s%nsize ) then
          write(mystd,'(a)') 'istack: the position is not correct'
@@ -393,26 +403,30 @@
          s%item(pos) = item
      endif ! back if ( pos < 1 .or. pos > s%nsize ) block
 
+!! body]
+
      return
   end subroutine istack_setter
 
 !!
 !! @sub gstack_setter
 !!
-!! update the item's value of stack at specified position
+!! update the item's value of stack at specified position.
 !!
   subroutine gstack_setter(s, pos, item)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(inout) :: s
 
-! position of the element to be updated
+     ! position of the element to be updated
      integer, intent(in)          :: pos
 
-! elements to be setted
+     ! elements to be setted
      class(*), intent(in)         :: item
+
+!! [body
 
      if ( pos < 1 .or. pos > s%nsize ) then
          write(mystd,'(a)') 'gstack: the position is not correct'
@@ -445,26 +459,30 @@
          end select
      endif ! back if ( pos < 1 .or. pos > s%nsize ) block
 
+!! body]
+
      return
   end subroutine gstack_setter
 
 !!
 !! @sub istack_getter
 !!
-!! return the item's value of stack at specified position
+!! return the item's value of stack at specified position.
 !!
   subroutine istack_getter(s, pos, item)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(in) :: s
 
-! position of the item
+     ! position of the item
      integer, intent(in)       :: pos
 
-! the item's value
+     ! the item's value
      integer, intent(out)      :: item
+
+!! [body
 
      if ( pos < 1 .or. pos > s%nsize ) then
          write(mystd,'(a)') 'istack: the position is not correct'
@@ -473,26 +491,30 @@
          item = s%item(pos)
      endif ! back if ( pos < 1 .or. pos > s%nsize ) block
 
+!! body]
+
      return
   end subroutine istack_getter
 
 !!
 !! @sub gstack_getter
 !!
-!! return the item's value of stack at specified position
+!! return the item's value of stack at specified position.
 !!
   subroutine gstack_getter(s, pos, item)
      implicit none
 
-! external arguments
-! generic type stack
+!! external arguments
+     ! generic type stack
      type (gstack), intent(in) :: s
 
-! position of the item
+     ! position of the item
      integer, intent(in)       :: pos
 
-! the item's value
+     ! the item's value
      class(*), intent(out)     :: item
+
+!! [body
 
      if ( pos < 1 .or. pos > s%nsize ) then
          write(mystd,'(a)') 'gstack: the position is not correct'
@@ -525,23 +547,27 @@
          end select
      endif ! back if ( pos < 1 .or. pos > s%nsize ) block
 
+!! body]
+
      return
   end subroutine gstack_getter
 
 !!
 !! @sub istack_push
 !!
-!! push item on top of stack
+!! push item on top of stack.
 !!
   subroutine istack_push(s, item)
      implicit none
 
-! external arguments
-! integer type stack
+!! external arguments
+     ! integer type stack
      type (istack), intent(inout) :: s
 
-! elements to be pushed in the stack
+     ! elements to be pushed in the stack
      integer, intent(in)          :: item
+
+!! [body
 
      if ( s%top == s%nsize ) then
          write(mystd,'(a)') 'istack: the stack is full, can not push any item on it'
@@ -550,6 +576,8 @@
          s%top = s%top + 1
          s%item(s%top) = item
      endif ! back if ( s%top == s%nsize ) block
+
+!! body]
 
      return
   end subroutine istack_push
