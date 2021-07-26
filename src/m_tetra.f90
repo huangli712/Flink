@@ -386,30 +386,30 @@
      e31 = e(3) - e(1)
      e41 = e(4) - e(1)
 
-! intermediate variable, apply equation (B6)
+     ! intermediate variable, apply equation (B6)
      c = ze1 * ze1 * ze1 / ( 4.0_dp * e21 * e31 * e41 )
      dc = 3.0_dp * ze1 * ze1 / ( 4.0_dp * e21 * e31 * e41 )
 
-! integration weights
-! apply equation (B2)
+     ! integration weights
+     ! apply equation (B2)
      tweight(1) = c * ( 4.0_dp - ze1 * ( 1.0_dp / e21 + 1.0_dp / e31 + 1.0_dp / e41 ) )
 
-! apply equation (B3)
+     ! apply equation (B3)
      tweight(2) = c * ze1 / e21
 
-! apply equation (B4)
+     ! apply equation (B4)
      tweight(3) = c * ze1 / e31
 
-! apply equation (B5)
+     ! apply equation (B5)
      tweight(4) = c * ze1 / e41
 
-! density of states weights
+     ! density of states weights
      dweight(1) = 4.0_dp * dc - ( dc * ze1 + c ) * ( 1.0_dp / e21 + 1.0_dp / e31 + 1.0_dp / e41 )
      dweight(2) = dc * ze1 / e21 + c / e21
      dweight(3) = dc * ze1 / e31 + c / e31
      dweight(4) = dc * ze1 / e41 + c / e41
 
-! corrections for dweight
+     ! corrections for dweight
      cweight = 6.0_dp * ze1 / ( e21 * e31 * e41 )
 
      return
@@ -418,7 +418,7 @@
 !!
 !! @sub tetra_p_ek23
 !!
-!! Blochl algorithm, case 3, for partially occupied tetrahedron
+!! Blochl algorithm, case 3, for partially occupied tetrahedron.
 !!
   subroutine tetra_p_ek23(z, e)
      implicit none
