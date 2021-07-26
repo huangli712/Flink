@@ -557,25 +557,31 @@
      ! corrections for dweight
      cweight = 6.0_dp * ze4 / ( e41 * e42 * e43 )
 
+!! body]
+
      return
   end subroutine tetra_p_ek34
 
 !!
 !! @sub tetra_p_ek4
 !!
-!! Blochl algorithm, case 5, for fully occupied tetrahedron
+!! Blochl algorithm, case 5, for fully occupied tetrahedron.
 !!
   subroutine tetra_p_ek4()
      implicit none
 
-! integration weights, apply equation (B19)
+!! [body
+
+     ! integration weights, apply equation (B19)
      tweight = 0.25_dp
 
-! density of states weights
+     ! density of states weights
      dweight = zero
 
-! corrections for dweight
+     ! corrections for dweight
      cweight = zero
+
+!! body]
 
      return
   end subroutine tetra_p_ek4
