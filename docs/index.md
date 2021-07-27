@@ -12,3 +12,4 @@ Contents
 * [How to install](install.md)
 * [Usage](usage.md)
 * Reference maunal
+  * [make.sys](guide/make.md)
