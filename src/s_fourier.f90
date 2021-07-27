@@ -3,11 +3,12 @@
 !!! program : s_fft_tails
 !!!           s_fft_forward
 !!!           s_fft_backward
+!!!           s_fft_density
 !!! source  : s_fourier.f90
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           04/10/2019 by li huang (last modified)
+!!!           07/27/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to do fast fourier transformation
 !!!           for green's or hybridization functions.
 !!! status  : unstable
@@ -15,30 +16,9 @@
 !!!-----------------------------------------------------------------------
 
 !!
-!!
-!! Introduction
-!! ============
-!!
-!! 1. forward FFT, from \tau -> i\omega
-!! ------------------------------------
-!!
-!! subroutine s_fft_forward(...)
-!!
-!! 2. backward FFT, from i\omega -> \tau
-!! -------------------------------------
-!!
-!! subroutine s_fft_backward(...)
-!! subroutine s_fft_tails(...)
-!!
-!! note: the s_fft_tails() subroutine is called by the s_fft_backward()
-!! subroutine internally. DO NOT call it directly!
-!!
-!!
-
-!!
 !! @sub s_fft_tails
 !!
-!! calculate high frequency tails using K. Haule's trick
+!! calculate high frequency tails using K. Haule's trick.
 !!
   subroutine s_fft_tails(rtail, mfreq, rmesh, green)
      use constants, only : dp
@@ -46,30 +26,33 @@
 
      implicit none
 
-! external arguments
-! number of matsubara frequency points
+!! external arguments
+     ! number of matsubara frequency points
      integer, intent(in)     :: mfreq
 
-! the desired high frequency tail
+     ! the desired high frequency tail
      real(dp), intent(out)   :: rtail
 
-! matsubara frequency grid
+     ! matsubara frequency grid
      real(dp), intent(in)    :: rmesh(mfreq)
 
-! function on matsubara frequency space
+     ! function on matsubara frequency space
      complex(dp), intent(in) :: green(mfreq)
 
-! local parameters
-! number of matsubara frequency points used to calculate high frequency tail
+!! local parameters
+     ! number of matsubara frequency points used to calculate high
+     ! frequency tail.
      integer, parameter :: ntail = 128
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: j
 
-! dummy variables
+     ! dummy variables
      real(dp) :: Sn, Sx, Sy
      real(dp) :: Sxx, Sxy
+
+!! [body
 
      Sn = zero
      Sx = zero
@@ -88,6 +71,8 @@
 
      rtail = (Sx * Sxy - Sxx * Sy) / (Sn * Sxx - Sx * Sx)
 
+!! body]
+
      return
   end subroutine s_fft_tails
 
@@ -95,7 +80,7 @@
 !! @sub s_fft_forward
 !!
 !! fourier from imaginary time space forward to matsubara frequency space
-!! using linear fourier algorithm
+!! using linear fourier algorithm.
 !!
   subroutine s_fft_forward(ntime, tmesh, ftau, mfreq, rmesh, fmat)
      use constants, only : dp
@@ -103,36 +88,38 @@
 
      implicit none
 
-! external arguments
-! number of imaginary time points
+!! external arguments
+     ! number of imaginary time points
      integer, intent(in)  :: ntime
 
-! number of matsubara frequency points
+     ! number of matsubara frequency points
      integer, intent(in)  :: mfreq
 
-! imaginary time mesh
+     ! imaginary time mesh
      real(dp), intent(in) :: tmesh(ntime)
 
-! matsubara frequency mesh
+     ! matsubara frequency mesh
      real(dp), intent(in) :: rmesh(mfreq)
 
-! function on imaginary time axis
+     ! function on imaginary time axis
      real(dp), intent(in) :: ftau(ntime)
 
-! function on matsubara frequency axis
+     ! function on matsubara frequency axis
      complex(dp), intent(out) :: fmat(mfreq)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
      integer  :: j
 
-! dummy variables
+     ! dummy variables
      real(dp) :: sre, sim
 
      real(dp) :: c0, c1
      real(dp) :: s0, s1
      real(dp) :: g0, g1, dg
+
+!! [body
 
      do i=1,mfreq
          sre = zero
@@ -152,6 +139,8 @@
 
          fmat(i) = dcmplx(sre, sim)
      enddo ! over i={1,mfreq} loop
+
+!! body]
 
      return
   end subroutine s_fft_forward
