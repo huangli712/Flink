@@ -148,7 +148,7 @@
 !!
 !! @sub s_fft_backward
 !!
-!! fourier from matsubara frequency space backward to imaginary time space
+!! fourier from matsubara frequency space backward to imaginary time space.
 !!
   subroutine s_fft_backward(mfreq, rmesh, fmat, ntime, tmesh, ftau, beta)
      use constants, only : dp
@@ -156,41 +156,43 @@
 
      implicit none
 
-! external arguments
-! number of matsubara frequency points
+!! external arguments
+     ! number of matsubara frequency points
      integer, intent(in)   :: mfreq
 
-! number of imaginary time points
+     ! number of imaginary time points
      integer, intent(in)   :: ntime
 
-! inverse temperature
+     ! inverse temperature
      real(dp), intent(in)  :: beta
 
-! matsubara frequency mesh
+     ! matsubara frequency mesh
      real(dp), intent(in)  :: rmesh(mfreq)
 
-! imaginary time mesh
+     ! imaginary time mesh
      real(dp), intent(in)  :: tmesh(ntime)
 
-! function on imaginary time axis
+     ! function on imaginary time axis
      real(dp), intent(out) :: ftau(ntime)
 
-! function on matsubara frequency axis
+     ! function on matsubara frequency axis
      complex(dp), intent(in) :: fmat(mfreq)
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: i
      integer  :: j
 
-! real(dp) dummy variables
+     ! real(dp) dummy variables
      real(dp) :: raux
      real(dp) :: tail
 
-! calculate high frequency tails need to be subtracted
+!! [body
+
+     ! calculate high frequency tails need to be subtracted
      call s_fft_tails(tail, mfreq, rmesh, fmat)
 
-! perform infourier transformation
+     ! perform infourier transformation
      do i=1,ntime
          raux = zero
          do j=1,mfreq
@@ -200,14 +202,16 @@
          ftau(i) = two * raux / beta - half * tail
      enddo ! over i={1,ntime} loop
 
-! corrections for the boundary point
+     ! corrections for the boundary point
      raux = real( fmat(mfreq) ) * rmesh(mfreq) / pi
      ftau(1) = ftau(1) + raux
      ftau(ntime) = ftau(ntime) - raux
 
-! additional corrections, may be useful for lda + dmft calculations
+     ! additional corrections, may be useful for lda + dmft calculations
      ftau(1) = 3.0_dp * ftau(2) - 3.0_dp * ftau(3) + ftau(4)
      ftau(ntime) = 3.0_dp * ftau(ntime-1) - 3.0_dp * ftau(ntime-2) + ftau(ntime-3)
+
+!! body]
 
      return
   end subroutine s_fft_backward
