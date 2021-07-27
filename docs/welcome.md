@@ -20,3 +20,10 @@
     * Spline interpolation (**s\_spline.f90**)
     * Some auxiliary subroutines, such as sorting algorithm (**s\_util.f90**)
     * Vector computation (**s\_vector.90**)
+## Contact
+
+```sh
+Li Huang
+Institute of Materials, China Academy of Engineering Physics, Sichuan Jiangyou, PRC
+email: lihuang.dmft at gmail.com
+```
