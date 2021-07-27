@@ -240,7 +240,7 @@
      ! function on matsubara frequency axis
      complex(dp), intent(in)  :: fmat(mfreq)
 
-     ! function on imaginary time axis
+     ! complex occupation number
      complex(dp), intent(out) :: density
 
 !! local variables
