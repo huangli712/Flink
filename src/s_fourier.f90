@@ -216,49 +216,58 @@
      return
   end subroutine s_fft_backward
 
+!!
+!! @sub s_fft_density
+!!
+!! try to evaluate the occupation number via fourier transformation.
+!!
   subroutine s_fft_density(mfreq, rmesh, fmat, density, beta)
      use constants, only : dp
      use constants, only : pi, zero, two, half
 
      implicit none
 
-! external arguments
-! number of matsubara frequency points
+!! external arguments
+     ! number of matsubara frequency points
      integer, intent(in)   :: mfreq
 
-! inverse temperature
+     ! inverse temperature
      real(dp), intent(in)  :: beta
 
-! matsubara frequency mesh
+     ! matsubara frequency mesh
      real(dp), intent(in)  :: rmesh(mfreq)
 
-! function on matsubara frequency axis
+     ! function on matsubara frequency axis
      complex(dp), intent(in)  :: fmat(mfreq)
 
-! function on imaginary time axis
+     ! function on imaginary time axis
      complex(dp), intent(out) :: density
 
-! local variables
-! loop index
+!! local variables
+     ! loop index
      integer  :: j
 
-! real(dp) dummy variables
+     ! real(dp) dummy variables
      real(dp) :: raux
      real(dp) :: tail
 
-! calculate high frequency tails need to be subtracted
+!! [body
+
+     ! calculate high frequency tails need to be subtracted
      call s_fft_tails(tail, mfreq, rmesh, fmat)
 
-! perform infourier transformation
+     ! perform infourier transformation
      raux = zero
      do j=1,mfreq
          raux = raux + real( fmat(j) )
      enddo ! over j={1,mfreq} loop
      density = two * raux / beta - half * tail
 
-! corrections for the boundary point
+     ! corrections for the boundary point
      raux = real( fmat(mfreq) ) * rmesh(mfreq) / pi
      density = density + raux
+
+!! body]
 
      return
   end subroutine s_fft_density
