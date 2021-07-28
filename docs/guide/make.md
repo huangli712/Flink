@@ -23,10 +23,7 @@ The make.sys file is the key component of the building system. You have to modif
 ### OpenMP environment
 * (Optional)
 
-### Python environment
-* (Optional) numpy, scipy, matplotlib
-
-Though it is not mandatory, we still strongly recommend to update the above software components on your systems to the latest versions. The OpenMP and Python environments are optional.
+Though it is not mandatory, we still strongly recommend to update the above software components on your systems to the latest versions. The OpenMP environment is optional.
 
 ## Explanations
 
@@ -77,7 +74,7 @@ If you are using old version Intel fortran compiler, this option may be '-openmp
 
 ### FPP
 
-Specify whether the fortran preprocessor (FPP) is used. It has to be enabled or else the FLINK can not be compiled correctly.
+Specify whether the fortran preprocessor (FPP) is used. It has to be enabled or else the source codes can not be compiled correctly.
 
 **Possible options**:
 
@@ -85,7 +82,7 @@ Specify whether the fortran preprocessor (FPP) is used. It has to be enabled or 
 
 ### CPP
 
-Collection of preprocessor directives. Do not modify it unless you are an expert of FLINK.
+Collection of preprocessor directives. Do not modify it unless you are an expert.
 
 **Possible options**:
 
@@ -144,7 +141,7 @@ The '-Wl,-no_pie' option is useful when you are using the macOS system and want 
 
 ### LIBS
 
-Specify the external libraries. Now the FLINK software package depends on LAPACK and BLAS heavily. To achieve good performance, the highly optimized LAPACK and BLAS implementations are essential.
+Specify the external libraries. Now the this software package depends on LAPACK and BLAS heavily. To achieve good performance, the highly optimized LAPACK and BLAS implementations are essential.
 
 **Possible options**:
 
@@ -152,4 +149,4 @@ Specify the external libraries. Now the FLINK software package depends on LAPACK
 * -L/home/lihuang/lapack -llapack -lblas
 * -L/opt/intel/mkl/lib -lmkl_core -lmkl_sequential -lmkl_rt
 
-Here we provide three typical choices. (1) In the macOS system, we can use the Apple Accelerate framework. (2) We use the home-built BLAS and LAPACK libraries. Please pay attention to the path. You have to modify it to meet your software environment. (3) We link the FLINK code with the Intel MKL. Please pay attention to the path and the library's name. You have to modify them to meet your software environment. Please see the documentation about Intel MKL for more details.
+Here we provide three typical choices. (1) In the macOS system, we can use the Apple Accelerate framework. (2) We use the home-built BLAS and LAPACK libraries. Please pay attention to the path. You have to modify it to meet your software environment. (3) We link our codes with the Intel MKL. Please pay attention to the path and the library's name. You have to modify them to meet your software environment. Please see the documentation about Intel MKL for more details.
