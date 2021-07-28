@@ -1,4 +1,4 @@
-# Reference Manual of FLINK
+# Reference Manual of Flink
 
 Contents
 
