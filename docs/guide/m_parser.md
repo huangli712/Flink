@@ -56,30 +56,31 @@ Example:
    4                    ! it is not valid
 ```
 
-6. in the value part, now only integer, real(dp), logical, and character
-   data type are support.
+6. In the value part, now only `integer`, `real(dp)`, `logical`, and `character` data type are support.
 
-   example:
+Example:
 
+```text
    nband = 4        ! integer type
    mune  = 4.0      ! real(dp) type
    isscf = .true.   ! logical type, you can also use .false., T, F
    model = anderson ! character type, do not use "" or '' characters to quote it
+```
 
-7. in the value part, a vector is also support. the items in the vector
-   should be separated by "," character.
+7. In the value part, a vector is also support. the items in the vector should be separated by "," character.
 
-   example:
+Example:
 
+```text
    nband = 1, 2, 3, 4                   ! 4 items
    mune = 0.0, -1.0, 2.0                ! 3 items
    isscf = .true., .true., F, T, .true. ! 5 items
    model = anderson, hubbard            ! 2 items
+```
 
-8. an empty input file is acceptable.
+8. An empty input file is acceptable.
 
-9. if one key occurs in the input file for more than 1 times, only the
-   last occurrence is recognized.
+9. If one key occurs in the input file for more than 1 times, only the last occurrence is recognized.
 
 Usage
 =====
