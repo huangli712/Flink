@@ -1,5 +1,4 @@
-Introduction
-============
+## Introduction
 
 In this module, we implement two types of stack, `istack` and `gstack`. The istack type was designed to deal with integer numbers only. However, gstack is a generic type stack. More specifically, it supports the following four data types:
 
@@ -79,7 +78,7 @@ call gstack_clean(gs)
 
 Note: This operation will reset the top position of the stack, instead of releasing the memory of it. So you can still use the stack after that.
 
-8. Destroy the stack
+8. Destroy the stack.
 
 ```fortran
 call istack_destroy(is)
