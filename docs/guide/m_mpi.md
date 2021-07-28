@@ -24,26 +24,27 @@ This module wraps the most useful mpi calls by using generic programming techniq
 
 etc. However, none of the point-to-point operations is supported. In the module, we also try to implement a light-weight error handler. Enjoy it!
 
-Usage
-=====
+## Usage
 
-1. include mpi support
-----------------------
+1. Include mpi support.
 
+```fortran
 use mmpi
+```
 
-pay attention to the module name. it is mmpi, instead of mpi.
+Please pay attention to the module name. It is `mmpi`, instead of `mpi`.
 
-2. init mpi environment
------------------------
+2. Init mpi environment.
 
-call mp_init() ! init mpi environment
-call mp_comm_rank(myid) ! get current process it
+```fortran
+call mp_init()            ! init mpi environment
+call mp_comm_rank(myid)   ! get current process it
 call mp_comm_size(nprocs) ! get number of processes
+```
 
-3. broadcast data
------------------
+3. Broadcast data.
 
+```fortran
 real(dp), allocatable :: real_data(:,:,:)
 integer, allocatable :: int_data(:)
 complex(dp), allocatable :: cmplx_data(:,:,:,:)
@@ -51,26 +52,28 @@ complex(dp), allocatable :: cmplx_data(:,:,:,:)
 call mp_bcast(real_data, master)
 call mp_bcast(int_data, master)
 call mp_bcast(cmplx_data, master)
+```
 
-here master == 0 which means the master node/root process.
+Here master == 0 which means the master node/root process.
 
-4. all-reduce data
-------------------
+4. All-reduce data.
 
+```fortran
 real(dp), allocatable :: real_data(:)
 real(dp), allocatable :: real_data_mpi(:)
 
-call mp_allreduce(real_data, real_data_mpi) ! all-readuce data
+call mp_allreduce(real_data, real_data_mpi)     ! all-readuce data
 real_data = real_data_mpi / number_of_processes ! calculate the average
+```
 
-5. setup barrier
-----------------
+5. Setup barrier.
 
+```fortran
 call mp_barrier()
+```
 
-6. finialize mpi environment
-----------------------------
+6. Finialize mpi environment.
 
+```fortran
 call mp_finalize()
-
-
+```
