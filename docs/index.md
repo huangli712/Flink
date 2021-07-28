@@ -1,17 +1,11 @@
-# The User's  Guide of FLINK
-
-
-
-This is the user's guide for FLINK.
-
-
+# Reference Manual of FLINK
 
 Contents
 
 * [Introduction](welcome.md)
 * [How to install](install.md)
 * [Usage](usage.md)
-* Reference maunal
+* User's guide
   * [make.sys](guide/make.md)
   * [Constants](guide/m_constants.md)
   * [Linked list](guide/m_linkedlist.md)
@@ -29,4 +23,4 @@ Contents
   * [Spline interpolation](guide/s_spline.md)
   * [Utility](guide/s_util.md)
   * [Vector](guide/s_vector.md)
-
+* FAQ
