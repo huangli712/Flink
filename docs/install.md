@@ -14,4 +14,4 @@ $ editor make.sys
 $ make
 ```
 
-Once the compilation is finished, we can see `libflink.a` and a lot of `*.mod` files under the `flink/src` directory.
+Once the compilation is finished, we can see `libflink.a` and a lot of `*.mod` files under the `flink/src` directory. In order to compile *Flink*, you have to ensure a MPI-enabled fortran compiler (support fortran 2003 standard), and a numerical library which implements the BLAS and LAPACK interfaces (such as Intel MKL), are installed and configured correctly in your system. You can setup your compiling environment via the `build/make.sys` file
