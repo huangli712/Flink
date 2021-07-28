@@ -4,7 +4,7 @@ Contents
 
 * [Introduction](welcome.md)
 * [How to install](install.md)
-* [Usage](usage.md)
+* [How to use it](usage.md)
 * User's guide
   * [make.sys](guide/make.md)
   * [Constants](guide/m_constants.md)
