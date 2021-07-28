@@ -27,7 +27,7 @@
     * Some auxiliary subroutines, such as sorting algorithm (**src/s\_util.f90**)
     * Vector computation (**src/s\_vector.90**)
 
-## Contact
+## Author
 
 ```text
 Li Huang
