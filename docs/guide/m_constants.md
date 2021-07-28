@@ -6,7 +6,7 @@ As for how many constants are defined, please consult the source code (`src/m_co
 
 ## Usage
 
-1. import module completely
+1. Import module completely.
 
 ```fortran
 program test
@@ -19,7 +19,7 @@ program test
 end program
 ```
 
-2. import module partially
+2. Import module partially.
 
 ```fortran
 program test
