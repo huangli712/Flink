@@ -1,30 +1,32 @@
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! 1. orthogonal polynomial basis
-!! ------------------------------
-!!
-!! subroutine s_leg_basis(...)
-!! subroutine s_che_basis(...)
-!! subroutine s_svd_basis(...)
-!! subroutine s_svd_point(...)
-!!
-!! 2. spheric Bessel function
-!! --------------------------
-!!
-!! subroutine s_sph_jl(...)
-!!
-!! 3. bernstein polynomial
-!! -----------------------
-!!
-!! subroutine s_bezier(...)
-!!
-!! 4. some helper functions for s_svd_basis
-!! ----------------------------------------
-!!
-!! function s_safe_exp(...)
-!! function s_f_kernel(...)
-!! function s_b_kernel(...)
-!!
+## Introduction
+
+Provide some subroutines to calculate the special functions.
+
+1. Orthogonal polynomial basis.
+
+```fortran
+subroutine s_leg_basis(...)
+subroutine s_che_basis(...)
+subroutine s_svd_basis(...)
+subroutine s_svd_point(...)
+```
+
+2. Spheric Bessel function.
+
+```fortran
+subroutine s_sph_jl(...)
+```
+
+3. Bernstein polynomial.
+
+```fortran
+subroutine s_bezier(...)
+```
+
+4. Some helper functions for s_svd_basis().
+
+```fortran
+function s_safe_exp(...)
+function s_f_kernel(...)
+function s_b_kernel(...)
+```
