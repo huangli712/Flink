@@ -82,30 +82,31 @@ Example:
 
 9. If one key occurs in the input file for more than 1 times, only the last occurrence is recognized.
 
-Usage
-=====
+## Usage
 
-1. import parser support
-------------------------
+1. Import parser module support.
 
+```fortran
 use parser
+```
 
-2. create instance for parser
------------------------------
+2. Create instance for parser.
 
+```fortran
 call p_create()
+```
 
-3. parse the input file
------------------------
+3. Parse the input file.
 
+```fortran
 call p_parse(file_name)
+```
 
-note: in the mpi environment, only the master node can execute this
-command. you should broadcast the data manually.
+Note: In the mpi environment, only the master node can execute this command. You should broadcast the data manually.
 
-4. extract parameters
----------------------
+4. Extract parameters.
 
+```fortran
 integer :: nband = 2            ! default value
 real(dp) :: mune = 10.0_dp      ! default value
 logical :: symm(2)              ! default value
@@ -114,27 +115,20 @@ symm(2) = .false.
 call p_get('nband', nband)      ! get single value
 call p_get('mune', mune)        ! get single value
 call p_get_vec('symm', symm, 2) ! get array
+```
 
-note: that if the desired parameter is not contained in the config file,
-then the default value will not be changed.
+Note 1: That if the desired parameter is not contained in the config file, then the default value will not be changed.
 
-note: in the mpi environment, only the master node can execute these
-commands.
+Note 2: In the mpi environment, only the master node can execute these commands.
 
-note: the parser DO NOT check the correctness (including number of
-values, key's name, and datatype of value) of the input file. So, please
-always monitor the output of ctqmc code which use this parser to parse
-the input file.
+Note 3: The parser **DO NOT** check the correctness (including number of values, key's name, and datatype of value) of the input file. So, please always monitor the output of ctqmc code which use this parser to parse the input file.
 
-5. destroy parser
------------------
+5. Destroy parser.
 
+```fortran
 call p_destroy()
+```
 
-6. broadcast the parameters read from input file
-------------------------------------------------
+6. Broadcast the parameters read from input file.
 
-do not forget to broadcast all of the parameters from master node to
-children nodes. please see the comments in m_mpi.f90
-
-
+Do not forget to broadcast all of the parameters from master node to children nodes. Please see the comments in `src/m_mpi.f90`.
