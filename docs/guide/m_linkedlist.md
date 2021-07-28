@@ -1,37 +1,32 @@
-!!
-!!
-!! Introduction
-!! ============
-!!
-!! This implementation of generic linked list in fortran 90 was taken from
-!! Jason R. Blevins's code
-!!     journal: ACM Fortran Forum 28(3), 2-7, 2009;
-!!     website: http://jblevins.org/research/generic-list.
-!! Of course, we have adapted the original code to fulfill our requirement.
-!! This linked list is capable of storing data of an any type by using the
-!! generic programming techniques. To access the data stored in the nodes,
-!! we have to use the intrinsic transfer() subroutine.
-!!
-!! Usage
-!! =====
-!!
-!! 1. include linked list support
-!! ------------------------------
-!!
-!! use linkedlist
-!!
-!! 2. define user own data type
-!! ----------------------------
-!!
-!! type data_t
-!!     ! place your definition here
-!! end type data_t
-!!
-!! 3. define pointer to data
-!! -------------------------
-!!
-!! type (data_t), pointer  :: data_ptr => null()
-!!
+## Introduction
+
+This implementation of generic linked list in fortran 90 was taken from
+
+> Jason R. Blevins's code<br/>
+> journal: ACM Fortran Forum 28(3), 2-7, 2009.<br/>
+> website: http://jblevins.org/research/generic-list.
+
+Of course, we have adapted the original code to fulfill our requirement. This linked list is capable of storing data of an any type by using the generic programming techniques. To access the data stored in the nodes, we have to use the intrinsic `transfer()` subroutine.
+
+## Usage
+
+1. include linked list support
+```fortran
+use linkedlist
+```
+
+2. define user own data type
+```fortran
+type data_t
+     ! place your definition here
+end type data_t
+```
+
+3. define pointer to data
+```fortran
+type (data_t), pointer  :: data_ptr => null()
+```
+
 !! 4. define pointer to list
 !! -------------------------
 !!
