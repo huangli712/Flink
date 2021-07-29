@@ -732,8 +732,9 @@
      ! determinant of dmat matrix
      real(dp), intent(out)   :: ddet
 
-     ! object matrix, on entry, it contains the original matrix, on
-     ! exit, it is destroyed and replaced with the L and U matrix.
+     ! object matrix.
+     ! on entry, it contains the original matrix;
+     ! on exit, it is destroyed and replaced with the L and U matrix.
      real(dp), intent(inout) :: dmat(ndim,ndim)
 
 !! local variables
@@ -864,8 +865,9 @@
      ! determinant of zmat matrix
      complex(dp), intent(out)   :: zdet
 
-     ! object matrix, on entry, it contains the original matrix, on
-     ! exit, it is destroyed and replaced with the L and U matrix.
+     ! object matrix.
+     ! on entry, it contains the original matrix;
+     ! on exit, it is destroyed and replaced with the L and U matrix.
      complex(dp), intent(inout) :: zmat(ndim,ndim)
 
 !! local variables
@@ -932,8 +934,9 @@
      ! dimension of dmat matrix
      integer, intent(in)     :: ndim
 
-     ! object matrix, on entry, it contains the original matrix, on
-     ! exit, it is destroyed and replaced with the inversed matrix.
+     ! object matrix.
+     ! on entry, it contains the original matrix;
+     ! on exit, it is destroyed and replaced with the inversed matrix.
      real(dp), intent(inout) :: dmat(ndim,ndim)
 
 !! local variables
@@ -993,7 +996,8 @@
      ! dimension of zmat matrix
      integer, intent(in)        :: ndim
 
-     ! object matrix, on entry, it contains the original matrix,
+     ! object matrix.
+     ! on entry, it contains the original matrix;
      ! on exit, it is destroyed and replaced with the inversed matrix.
      complex(dp), intent(inout) :: zmat(ndim,ndim)
 
