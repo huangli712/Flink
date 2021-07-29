@@ -10,9 +10,9 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/15/2009 by li huang (created)
-!!!           07/22/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to display the (error/exception/
-!!!           normal) messages in the console, and then STOP or CONTINUE
+!!!           normal) messages in the terminal, and then STOP or CONTINUE
 !!!           the code according to the error level.
 !!! status  : unstable
 !!! comment :
@@ -94,7 +94,7 @@
 
 !! [body
 
-     ! print error information
+     ! print exception information
      write(*,'(2X,4a)') 'runtime exception occurred in ', sub, ': ', msg
 
      ! CONTINUE/PAUSE THE PROGRAM
@@ -125,7 +125,7 @@
 
 !! [body
 
-     ! print error information
+     ! print exception information
      write(file_unit,'(2X,4a)') 'runtime exception occurred in ', sub, ': ', msg
 
      ! CONTINUE/PAUSE THE PROGRAM
@@ -153,7 +153,7 @@
 
 !! [body
 
-     ! print error information
+     ! print normal information
      write(*,'(2X,4a)') 'instant message from ', sub, ': ', msg
 
 !! body]
@@ -181,7 +181,7 @@
 
 !! [body
 
-     ! print error information
+     ! print normal information
      write(file_unit,'(2X,4a)') 'instant message from ', sub, ': ', msg
 
 !! body]

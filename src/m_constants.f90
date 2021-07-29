@@ -5,9 +5,9 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/15/2009 by li huang (created)
-!!!           07/22/2021 by li huang (last modified)
-!!! purpose : this module is to provide the definition of some (selected)
-!!!           numerical and physical constants.
+!!!           07/29/2021 by li huang (last modified)
+!!! purpose : the purpose of this module is to provide the definition of
+!!!           some (selected) numerical and physical constants.
 !!! status  : stable
 !!! comment :
 !!!-----------------------------------------------------------------------
