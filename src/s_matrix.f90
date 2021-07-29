@@ -1047,8 +1047,8 @@
 !!
 !! @sub s_eig_dg
 !!
-!! diagonalize a general real(dp) matrix and return its eigenvalues and
-!! eigenvectors.
+!! try to diagonalize a general real(dp) matrix, return its eigenvalues
+!! and eigenvectors.
 !!
   subroutine s_eig_dg(ldim, ndim, amat, eval, evec)
      use constants, only : dp
@@ -1080,7 +1080,8 @@
      ! return information from subroutine dgeev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,4*ndim)
+     ! the length of the array work.
+     ! lwork >= max(1,4*ndim)
      integer :: lwork
 
      ! workspace array
@@ -1141,8 +1142,8 @@
 !!
 !! @sub s_eig_zg
 !!
-!! diagonalize a general complex(dp) matrix and return its eigenvalues
-!! and eigenvectors.
+!! try to diagonalize a general complex(dp) matrix and return its
+!! eigenvalues and eigenvectors.
 !!
   subroutine s_eig_zg(ldim, ndim, zmat, zeig, zvec)
      use constants, only : dp
@@ -1174,7 +1175,8 @@
      ! return information from subroutine zgeev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,2*ndim)
+     ! the length of the array work.
+     ! lwork >= max(1,2*ndim)
      integer :: lwork
 
      ! workspace array
@@ -1259,7 +1261,8 @@
      ! return information from subroutine dgeev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,4*ndim)
+     ! the length of the array work.
+     ! lwork >= max(1,4*ndim)
      integer :: lwork
 
      ! workspace array, used to store amat
@@ -1352,7 +1355,8 @@
      ! return information from subroutine zgeev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,2*ndim)
+     ! the length of the array work.
+     ! lwork >= max(1,2*ndim)
      integer :: lwork
 
      ! workspace array, used to store amat
@@ -1440,7 +1444,8 @@
      ! return information from subroutine dysev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,3*ndim-1)
+     ! the length of the array work.
+     ! lwork >= max(1,3*ndim-1)
      integer :: lwork
 
      ! workspace array
@@ -1513,7 +1518,7 @@
      ! return information from subroutine zheev
      integer :: info
 
-     ! the length of the array work and rwork
+     ! the length of the array work and rwork.
      ! lwork >= max(1,2*ndim-1), lrwork >= max(1,3*ndim-2)
      integer :: lwork
      integer :: lrwork
@@ -1588,7 +1593,8 @@
      ! return information from subroutine dysev
      integer :: info
 
-     ! the length of the array work, lwork >= max(1,3*ndim-1)
+     ! the length of the array work.
+     ! lwork >= max(1,3*ndim-1)
      integer :: lwork
 
      ! workspace array
@@ -1663,7 +1669,7 @@
      ! return information from subroutine zheev
      integer :: info
 
-     ! the length of the array work and rwork
+     ! the length of the array work and rwork.
      ! lwork >= max(1,2*ndim-1), lrwork >= max(1,3*ndim-2)
      integer :: lwork
      integer :: lrwork
@@ -1733,13 +1739,13 @@
      ! the number of right-hand sides
      integer, intent(in)     :: nrhs
 
-     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
-     ! is overwritten by the factors L and U from the factorization
-     ! of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A;
+     ! on exit, it is overwritten by the factors L and U from the
+     ! factorization of A = PLU.
      real(dp), intent(inout) :: A(n,n)
 
-     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
-     ! B; on exit, it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix B;
+     ! on exit, it is overwritten by the solution matrix X.
      real(dp), intent(inout) :: B(n,nrhs)
 
 !! local variables
@@ -1794,13 +1800,13 @@
      ! the number of right-hand sides
      integer, intent(in)        :: nrhs
 
-     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
-     ! is overwritten by the factors L and U from the factorization
-     ! of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A;
+     ! on exit, it is overwritten by the factors L and U from the
+     ! factorization of A = PLU.
      complex(dp), intent(inout) :: A(n,n)
 
-     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
-     ! B; on exit, it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix B;
+     ! on exit, it is overwritten by the solution matrix X.
      complex(dp), intent(inout) :: B(n,nrhs)
 
 !! local variables
@@ -1855,13 +1861,13 @@
      ! the number of right-hand sides
      integer, intent(in)     :: nrhs
 
-     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
-     ! is overwritten by the factors L and U from the factorization
-     ! of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A;
+     ! on exit, it is overwritten by the factors L and U from the
+     ! factorization of A = PLU.
      real(dp), intent(inout) :: A(n,n)
 
-     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
-     ! B; on exit, it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix B;
+     ! on exit, it is overwritten by the solution matrix X.
      real(dp), intent(inout) :: B(n,nrhs)
 
 !! local variables
@@ -1922,13 +1928,13 @@
      ! the number of right-hand sides
      integer, intent(in)        :: nrhs
 
-     ! on entry, it is a n-by-n coefficient matrix A; on exit, it
-     ! is overwritten by the factors L and U from the factorization
-     ! of A = PLU.
+     ! on entry, it is a n-by-n coefficient matrix A;
+     ! on exit, it is overwritten by the factors L and U from the
+     ! factorization of A = PLU.
      complex(dp), intent(inout) :: A(n,n)
 
-     ! on entry, it is a n-by-nrhs matrix of right hand side matrix
-     ! B; on exit, it is overwritten by the solution matrix X.
+     ! on entry, it is a n-by-nrhs matrix of right hand side matrix B;
+     ! on exit, it is overwritten by the solution matrix X.
      complex(dp), intent(inout) :: B(n,nrhs)
 
 !! local variables
@@ -2017,7 +2023,7 @@
      ! return information from dgesvd
      integer :: info
 
-     ! length of work array,
+     ! length of work array.
      ! lwork >= max(1, 3 * min_mn + max(m,n), 5 * min_mn)
      integer :: lwork
 
@@ -2093,7 +2099,8 @@
      ! return information from zgesvd
      integer :: info
 
-     ! length of work array, lwork >= max(1, 2 * min_mn + max(m,n))
+     ! length of work array.
+     ! lwork >= max(1, 2 * min_mn + max(m,n))
      integer :: lwork
 
      ! workspace arrays
