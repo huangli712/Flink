@@ -698,7 +698,7 @@
 
      x = tau
      y = beta * omega / two
-
+     !
      if ( y > 200.0_dp ) then
          val = s_safe_exp( -y * ( x + one ) )
      else if ( y < -200.0_dp ) then
@@ -722,7 +722,7 @@
      use constants, only : one, two
 
 !! external arguments
-     ! imaginary time point, it is alreay scaled to [-1,1]
+     ! imaginary time point, it is alreay scaled to [-1,1].
      real(dp), intent(in) :: tau
 
      ! real frequency point
@@ -746,7 +746,7 @@
 
      x = tau
      y = beta * omega / two
-
+     !
      if ( abs(y) < 1E-10 ) then
          val = s_safe_exp( -x * y )
      else if ( y > +200.0_dp ) then
