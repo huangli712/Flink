@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 01/03/2008 by li huang (created)
-!!!           07/23/2019 by li huang (last modified)
+!!!           07/30/2019 by li huang (last modified)
 !!! purpose : the purpose of this module is to define several modern, fast
 !!!           highly reliable, ease-to-use, and state-of-the-art pseudo-
 !!!           random number generators, which are essential in massively
@@ -260,7 +260,7 @@
      ! of transformations.
      r = mt(mti)
      mti = mti + 1
-
+     !
      r = ieor(r,ishft(r,-11))
      r = iand(4294967295_i64,ieor(r,iand(ishft(r, 7),TEMPERING_B)))
      r = iand(4294967295_i64,ieor(r,iand(ishft(r,15),TEMPERING_C)))
