@@ -69,7 +69,9 @@
      ! relation, known as Bonnet’s recursion formula:
      !
      !     $P_0(x) = 1$
+     !
      !     $P_1(x) = x$
+     !
      !     $(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x)$
      !
 
@@ -90,8 +92,7 @@
 !!
 !! @sub s_che_basis
 !!
-!! build the second kind chebyshev orthogonal polynomial in
-!! [-1,1] interval.
+!! build second kind chebyshev orthogonal polynomial in [-1,1] interval.
 !!
   subroutine s_che_basis(chmax, chgrd, cmesh, rep_c)
      use constants, only : dp
@@ -131,7 +132,9 @@
      ! defined by the following recurrence relation:
      !
      !     $U_0(x) = 1$
+     !
      !     $U_1(x) = 2x$
+     !
      !     $U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)$
      !
 
@@ -325,7 +328,7 @@
      implicit none
 
 !! external arguments
-     ! point's value, it lies in a non-uniform mesh [-1,1]
+     ! point's value, it lies in a non-uniform mesh [-1,1].
      real(dp), intent(in) :: val
 
      ! step for an uniform mesh [-1,1]
@@ -393,7 +396,7 @@
 !! @sub s_sph_jl
 !!
 !! computes the spherical Bessel functions of the first kind, j_l(x), for
-!! argument x and l=0, 1, \ldots, l_{max}.
+!! argument x and l = 0, 1, \ldots, l_{max}.
 !!
   subroutine s_sph_jl(lmax, x, jl)
      use constants, only : dp
@@ -441,10 +444,10 @@
      ! is used either downwards for x < l or upwards for x >= l.
      ! for x << 1, the following asymtotic form is used:
      !
-     !     j_l(x) \approx \frac{x^l}{(2l+1)!!}
+     !     j_l(x) \approx \frac{x^l}{(2l+1)!!}.
      !
      ! this procedure is numerically stable and accurate to near
-     ! this machine precision for l <= 50
+     ! this machine precision for l <= 50.
      !
 
      ! check the range of input variables
@@ -467,6 +470,7 @@
          enddo ! over l={1,lmax} loop
          RETURN
      endif ! back if ( x < eps8 ) block
+     !
      xi = one / x
 
      ! for x < lmax recurse down
@@ -545,9 +549,9 @@
      implicit none
 
 !! external arguments
-     ! the degree of the bernstein polynomials to be used. for any
-     ! N, there is a set of N+1 bernstein polynomials, each of degree
-     ! N, which form a basis for polynomials on [0,1].
+     ! the degree of the bernstein polynomials to be used.
+     ! for any given N, there is a set of N + 1 bernstein polynomials,
+     ! each of degree N, which form a basis for polynomials on [0,1].
      integer, intent(in)  :: n
 
      ! the evaluation point.
@@ -592,10 +596,13 @@
      ! special values:
      !
      !    B(N,I)(X) has a unique maximum value at X = I/N.
+     !
      !    B(N,I)(X) has an I-fold zero at 0 and and N-I fold zero at 1.
-     !    B(N,I)(1/2) = C(N,K) / 2**N
+     !
+     !    B(N,I)(1/2) = C(N,K) / 2^N
+     !
      !    for a fixed X and N, the polynomials add up to 1:
-     !    sum ( 0 <= I <= N ) B(N,I)(X) = 1
+     !        sum ( 0 <= I <= N ) B(N,I)(X) = 1
      !
 
      if ( n == 0 ) then
