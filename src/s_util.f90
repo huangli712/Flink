@@ -474,6 +474,7 @@
 
      count = 0
      start = 0
+     !
      do
          offset = index( string(start+1:), substr )
          if ( offset == 0 ) EXIT
@@ -547,6 +548,7 @@
          ! convert the current character to its position in the ASCII
          ! collating sequence.
          curr_char = iachar( string(i:i) )
+         !
          ! if the character is NOT a space ' ' or a tab '->|', copy
          ! it to the output string.
          if ( curr_char /= SPACE .and. curr_char /= TAB .and. curr_char /= NUL ) then
@@ -658,21 +660,23 @@
      msec = msec - 60 * mmin
 
      write(mystd,'(4X, ">>> used time: ")', advance = 'no')
+     !
      if ( mday > 0 ) then
          write(mystd,'(i2  , " d ")', advance = 'no') mday
      endif ! back if ( mday > 0 ) block
-
+     !
      if ( mhou > 0 ) then
          write(mystd,'(i2  , " h ")', advance = 'no') mhou
      endif ! back if ( mhou > 0 ) block
-
+     !
      if ( mmin > 0 ) then
          write(mystd,'(i2  , " m ")', advance = 'no') mmin
      endif ! back if ( mmin > 0 ) block
-
+     !
      if ( msec > 0 ) then
          write(mystd,'(f5.2, " s ")', advance = 'no') msec
      endif ! back if ( msec > 0 ) block
+     !
      write(mystd,'("in current iteration")')
 
      ! run time for total iteration
@@ -684,21 +688,23 @@
      nsec = nsec - 60 * nmin
 
      write(mystd,'(4X, ">>> used time: ")', advance = 'no')
+     !
      if ( nday > 0 ) then
          write(mystd,'(i2  , " d ")', advance = 'no') nday
      endif ! back if ( nday > 0 ) block
-
+     !
      if ( nhou > 0 ) then
          write(mystd,'(i2  , " h ")', advance = 'no') nhou
      endif ! back if ( nhou > 0 ) block
-
+     !
      if ( nmin > 0 ) then
          write(mystd,'(i2  , " m ")', advance = 'no') nmin
      endif ! back if ( nmin > 0 ) block
-
+     !
      if ( nsec > 0 ) then
          write(mystd,'(f5.2, " s ")', advance = 'no') nsec
      endif ! back if ( nsec > 0 ) block
+     !
      write(mystd,'("in total iteration")')
 
 !! body]
