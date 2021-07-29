@@ -42,7 +42,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/23/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
@@ -310,9 +310,10 @@
      ! size of matrix
      integer, intent(in)  :: n
 
-     ! index of the diagonal: 0 refers to the main diagonal, a positive
-     ! value refers to an upper diagonal, and a negative value to a
-     ! lower diagonal.
+     ! index of the diagonal.
+     ! 0 refers to the main diagonal;
+     ! a positive value refers to an upper diagonal;
+     ! and a negative value to a lower diagonal.
      integer, intent(in)  :: k
 
      ! input/output matrix
@@ -325,6 +326,7 @@
 !! [body
 
      A = 0
+     !
      do i=1,n
          if ( i - k < 1 .or. i - k > n ) CYCLE
          A(i,i-k) = 1
@@ -350,9 +352,10 @@
      ! size of matrix
      integer, intent(in)   :: n
 
-     ! index of the diagonal: 0 refers to the main diagonal, a positive
-     ! value refers to an upper diagonal, and a negative value to a
-     ! lower diagonal.
+     ! index of the diagonal.
+     ! 0 refers to the main diagonal;
+     ! a positive value refers to an upper diagonal;
+     ! and a negative value to a lower diagonal.
      integer, intent(in)   :: k
 
      ! input/output matrix
@@ -365,6 +368,7 @@
 !! [body
 
      A = zero
+     !
      do i=1,n
          if ( i - k < 1 .or. i - k > n ) CYCLE
          A(i,i-k) = one
@@ -390,9 +394,10 @@
      ! size of matrix
      integer, intent(in)      :: n
 
-     ! index of the diagonal: 0 refers to the main diagonal, a positive
-     ! value refers to an upper diagonal, and a negative value to a
-     ! lower diagonal.
+     ! index of the diagonal.
+     ! 0 refers to the main diagonal;
+     ! a positive value refers to an upper diagonal;
+     ! and a negative value to a lower diagonal.
      integer, intent(in)      :: k
 
      ! input/output matrix
@@ -405,6 +410,7 @@
 !! [body
 
      A = czero
+     !
      do i=1,n
          if ( i - k < 1 .or. i - k > n ) CYCLE
          A(i,i-k) = cone
@@ -437,6 +443,7 @@
 !! [body
 
      A = 0
+     !
      do i=1,n
          A(i,i) = 1
      enddo ! over i={1,n} loop
@@ -471,6 +478,7 @@
 !! [body
 
      A = zero
+     !
      do i=1,n
          A(i,i) = one
      enddo ! over i={1,n} loop
@@ -505,6 +513,7 @@
 !! [body
 
      A = czero
+     !
      do i=1,n
          A(i,i) = cone
      enddo ! over i={1,n} loop
@@ -539,6 +548,7 @@
 !! [body
 
      A = 0
+     !
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
@@ -576,6 +586,7 @@
 !! [body
 
      A = zero
+     !
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
@@ -613,6 +624,7 @@
 !! [body
 
      A = czero
+     !
      do i=1,n
          A(i,i) = v(i)
      enddo ! over i={1,n} loop
