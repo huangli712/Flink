@@ -11,7 +11,7 @@ As for how many constants are defined, please consult the source code (`src/m_co
 ```fortran
 program test
     use constants
- 
+
     implicit none
 
     real(dp) :: A
@@ -25,7 +25,7 @@ end program
 program test
     use constants, only : dp
     use constants, only : one
- 
+
     implicit none
 
     real(dp) :: A
