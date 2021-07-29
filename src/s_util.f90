@@ -17,8 +17,8 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/23/2021 by li huang (last modified)
-!!! purpose : these subroutines are used to provide some useful facilities
+!!!           07/29/2021 by li huang (last modified)
+!!! purpose : these subroutines are used to provide some useful features,
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
 !!! comment :
@@ -55,7 +55,7 @@
 !!
 !! @sub s_assert2
 !!
-!! fortran version of assert. additional message will be presented
+!! fortran version of assert. additional message will be printed
 !! for further analysis.
 !!
   subroutine s_assert2(condition, message)
