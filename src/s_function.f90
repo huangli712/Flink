@@ -13,10 +13,10 @@
 !!! type    : subroutines & functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/23/2021 by li huang (last modified)
-!!! purpose : these subroutines are used to generate some auxiliary
-!!!           functions, such as the Legendre orthogonal polynomial and
-!!!           Chebyshev orthogonal polynomial, Bessel function, etc.
+!!!           07/29/2021 by li huang (last modified)
+!!! purpose : these subroutines / functions are used to generate some
+!!!           special functions, such as the Legendre and Chebyshev
+!!!           orthogonal polynomials, Bessel function, etc.
 !!! status  : unstable
 !!! comment :
 !!!-----------------------------------------------------------------------
