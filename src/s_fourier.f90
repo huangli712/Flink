@@ -8,7 +8,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/27/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to do fast fourier transformation
 !!!           for green's or hybridization functions.
 !!! status  : unstable
@@ -40,8 +40,8 @@
      complex(dp), intent(in) :: green(mfreq)
 
 !! local parameters
-     ! number of matsubara frequency points used to calculate high
-     ! frequency tail.
+     ! number of matsubara frequency points.
+     ! these points are used to calculate high frequency tail.
      integer, parameter :: ntail = 128
 
 !! local variables
@@ -57,10 +57,10 @@
      Sn = zero
      Sx = zero
      Sy = zero
-
+     !
      Sxx = zero
      Sxy = zero
-
+     !
      do j=mfreq - ntail, mfreq
          Sn = Sn + one
          Sx = Sx + one / rmesh(j)**2
@@ -130,9 +130,12 @@
              c1 = cos( tmesh(j+1) * rmesh(i) )
              s0 = sin( tmesh(j)   * rmesh(i) )
              s1 = sin( tmesh(j+1) * rmesh(i) )
+             !
              g0 = ftau(j)
              g1 = ftau(j+1)
+             !
              dg = ( g1 - g0 ) / ( tmesh(j+1) - tmesh(j) )
+             !
              sim = sim + ( c0 * g0 - c1 * g1 + dg * (s1 - s0) / rmesh(i) ) / rmesh(i)
              sre = sre + ( s1 * g1 - s0 * g0 + dg * (c1 - c0) / rmesh(i) ) / rmesh(i)
          enddo ! over j={1,ntime-1} loop
