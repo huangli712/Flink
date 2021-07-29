@@ -7,7 +7,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/22/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to do cubic spline interpolation.
 !!! status  : unstable
 !!! comment :
@@ -51,6 +51,7 @@
      d1y(1) = d1y(2) + ( d1y(3) - d1y(2) ) / &
                      ( xval(3) - xval(2) ) * &
                      ( xval(1) - xval(2) )
+     !
      d1y(ydim) = d1y(ydim-1) + ( d1y(ydim-1) - d1y(ydim-2) ) / &
                              ( xval(ydim-1) - xval(ydim-2) ) * &
                              ( xval(ydim-0) - xval(ydim-1) )
@@ -135,7 +136,7 @@
          qn = half
          un = ( 3.0_dp / p ) * ( startd - ( yval(ydim) - yval(ydim-1) ) / p )
      endif ! back if ( startd > .99E30 ) block
-
+     !
      d2y(ydim) = ( un - qn * u(ydim-1) ) / ( qn * d2y(ydim-1) + one )
 
      do k=ydim-1,1,-1
@@ -204,6 +205,7 @@
      ! we do not need to check khi here, since x can not reach right
      ! boundary and left boundary either all.
      !
+
 !<     if ( khi > xdim ) then
 !<         klo = xdim - 1
 !<         khi = xdim
