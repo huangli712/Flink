@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 06/07/2006 by li huang (created)
-!!!           07/27/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -103,9 +103,7 @@
 !! @sub tetra_blochl_weight1
 !!
 !! Peter E. Blochl algorithm for (integrated) density of states and
-!! relevant integration weights. Blochl corrections are taken into
-!! considersions as well, implemented by myself following the equations
-!! of Phys. Rev. B, 49, 16223, 1994.
+!! relevant integration weights.
 !!
 !! note: s_qsorter() is implemented in s_util.f90.
 !!
@@ -152,7 +150,7 @@
              e(i) = e(i) + eps8 / real(i)
          endif
      enddo ! over i={1,3} loop
-
+     !
      do i=1,4
          if ( abs( e(i) - z ) < eps8 / 10.0_dp ) then
              e(i) = e(i) + eps8 / 10.0_dp / real(i)
@@ -213,9 +211,7 @@
 !! @sub tetra_blochl_weight2
 !!
 !! Peter E. Blochl algorithm for (integrated) density of states and
-!! relevant integration weights. Blochl corrections are taken into
-!! considersions as well, implemented by myself following the equations
-!! of Phys. Rev. B, 49, 16223, 1994.
+!! relevant integration weights.
 !!
 !! note: s_qsorter() is implemented in s_util.f90.
 !!
@@ -268,7 +264,7 @@
              e(i) = e(i) + eps8 / real(i)
          endif
      enddo ! over i={1,3} loop
-
+     !
      do i=1,4
          if ( abs( e(i) - z ) < eps8 / 10.0_dp ) then
              e(i) = e(i) + eps8 / 10.0_dp / real(i)
