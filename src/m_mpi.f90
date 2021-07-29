@@ -6474,11 +6474,6 @@
 !!>>> MPI handler for return code                                      <<<
 !!========================================================================
 
-!!
-!! @sub mp_error
-!!
-!! deal with the return code of MPI subroutine.
-!!
 # define STR_ERR_COMM      'invalid communicator in mpi call.'
 # define STR_ERR_COUNT     'invalid count in mpi call.'
 # define STR_ERR_TYPE      'invalid datatype in mpi call.'
@@ -6499,6 +6494,12 @@
 # define STR_ERR_PENDING   'pending request in mpi call.'
 # define STR_ERR_REQUEST   'illegal mpi_request handle in mpi call.'
 # define STR_ERR_LASTCODE  'last error code in mpi call.'
+
+!!
+!! @sub mp_error
+!!
+!! deal with the return code of MPI subroutine.
+!!
      subroutine mp_error(sub, err)
          implicit none
 
