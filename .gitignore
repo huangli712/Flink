@@ -6,14 +6,9 @@
 *.dat
 *.log
 *.out
-*.pyf
-*.pyc
 *.swp
 *.data
 *.optrpt
 *.dSYM
 .DS_Store
 fort.*
-atom.cix
-test.py
-test.f90
