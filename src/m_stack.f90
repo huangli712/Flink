@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/14/2009 by li huang (created)
-!!!           07/26/2021 by li huang (last modified)
+!!!           07/30/2021 by li huang (last modified)
 !!! purpose : the purpose of this module is to define a stack-type (LIFO)
 !!!           data structure in fortran version.
 !!! status  : unstable
@@ -345,6 +345,7 @@
 
      ! sync the data
      sb%top = sa%top
+     !
      select type (v => sb%item)
          type is (integer)
              select type (u => sa%item)
