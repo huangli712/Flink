@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 02/01/2010 by li huang (created)
-!!!           07/25/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -799,7 +799,8 @@
      integer, intent(in)   :: ncol
 
      ! the length of the arrays c and jc.
-     ! sp_matmul_amumat() will stop if the result matrix C has a number of
+     !
+     ! this subroutine will stop if the result matrix C has a number of
      ! elements that exceeds nmax.
      integer, intent(in)   :: nmax
 
@@ -904,7 +905,8 @@
      integer, intent(in)      :: ncol
 
      ! the length of the arrays sc and jc.
-     ! sp_matmul_amumat_z() will stop if the result matrix C has a number of
+     !
+     ! this subroutine will stop if the result matrix C has a number of
      ! elements that exceeds nmax.
      integer, intent(in)      :: nmax
 
