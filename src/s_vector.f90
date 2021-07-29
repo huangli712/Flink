@@ -22,7 +22,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/22/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
@@ -176,6 +176,7 @@
 !! [body
 
      vsum(1) = v(1)
+     !
      do i=2,n
          vsum(i) = vsum(i-1) + v(i)
      enddo ! over i={2,n} loop
@@ -212,6 +213,7 @@
 !! [body
 
      vsum(1) = v(1)
+     !
      do i=2,n
          vsum(i) = vsum(i-1) + v(i)
      enddo ! over i={2,n} loop
@@ -248,6 +250,7 @@
 !! [body
 
      vsum(1) = v(1)
+     !
      do i=2,n
          vsum(i) = vsum(i-1) + v(i)
      enddo ! over i={2,n} loop
@@ -286,6 +289,7 @@
 !! [body
 
      vprod(1) = v(1)
+     !
      do i=2,n
          vprod(i) = vprod(i-1) * v(i)
      enddo ! over i={2,n} loop
@@ -322,6 +326,7 @@
 !! [body
 
      vprod(1) = v(1)
+     !
      do i=2,n
          vprod(i) = vprod(i-1) * v(i)
      enddo ! over i={2,n} loop
@@ -358,6 +363,7 @@
 !! [body
 
      vprod(1) = v(1)
+     !
      do i=2,n
          vprod(i) = vprod(i-1) * v(i)
      enddo ! over i={2,n} loop
