@@ -5374,6 +5374,7 @@
          complex(dp), intent(inout) :: data(:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5423,6 +5424,7 @@
          complex(dp), intent(inout) :: data(:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5472,6 +5474,7 @@
          complex(dp), intent(inout) :: data(:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5521,6 +5524,7 @@
          complex(dp), intent(inout) :: data(:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5570,6 +5574,7 @@
          complex(dp), intent(inout) :: data(:,:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
