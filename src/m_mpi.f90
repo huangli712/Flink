@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 08/09/2006 by li huang (created)
-!!!           07/24/2021 by li huang (last modified)
+!!!           07/30/2021 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
@@ -942,7 +942,7 @@
 
 !! [body
 
-         ! invoke related mpi subroutines
+         ! invoke related mpi subroutines.
          ! mpi_comm_cart should be overwriten in output.
          call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
 
@@ -1002,7 +1002,7 @@
 
 !! [body
 
-         ! invoke related mpi subroutines
+         ! invoke related mpi subroutines.
          ! mpi_comm_row should be overwritten in output.
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
 
@@ -1028,7 +1028,7 @@
 
 !! [body
 
-         ! invoke related mpi subroutines
+         ! invoke related mpi subroutines.
          ! mpi_comm_col should be overwritten in output.
          call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
 
@@ -3572,7 +3572,7 @@
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:)
-
+         !
          integer, optional, intent(in) :: gid
 
 !! [body
@@ -4733,6 +4733,7 @@
          integer, intent(inout) :: data
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -4779,6 +4780,7 @@
          integer, intent(inout) :: data(:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -4828,6 +4830,7 @@
          integer, intent(inout) :: data(:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -4877,6 +4880,7 @@
          integer, intent(inout) :: data(:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -4926,6 +4930,7 @@
          integer, intent(inout) :: data(:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -4975,6 +4980,7 @@
          integer, intent(inout) :: data(:,:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5024,6 +5030,7 @@
          real(dp), intent(inout) :: data
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5070,6 +5077,7 @@
          real(dp), intent(inout) :: data(:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5119,6 +5127,7 @@
          real(dp), intent(inout) :: data(:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5168,6 +5177,7 @@
          real(dp), intent(inout) :: data(:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5217,6 +5227,7 @@
          real(dp), intent(inout) :: data(:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5266,6 +5277,7 @@
          real(dp), intent(inout) :: data(:,:,:,:,:)
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
@@ -5305,7 +5317,7 @@
 !!
 !! @sub mp_reduce_cdp0
 !!
-!! reduce 1 complex(dp) from all processes
+!! reduce 1 complex(dp) from all processes.
 !!
      subroutine mp_reduce_cdp0(source, data, root, mop, gid)
          implicit none
@@ -5315,6 +5327,7 @@
          complex(dp), intent(inout) :: data
          !
          integer, intent(in) :: root
+         !
          integer, optional, intent(in) :: mop
          integer, optional, intent(in) :: gid
 
