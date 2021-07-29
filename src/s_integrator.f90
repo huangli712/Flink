@@ -6,9 +6,9 @@
 !!! type    : functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 09/20/2014 by li huang (created)
-!!!           07/22/2022 by li huang (last modified)
-!!! purpose : these functions are used to do numerical integration with
-!!!           composite trapezoid or composite simpson algorithms.
+!!!           07/29/2022 by li huang (last modified)
+!!! purpose : the purpose of these functions is to implement the composite
+!!!           trapezoid or composite simpson integration algorithms.
 !!! status  : unstable
 !!! comment :
 !!!-----------------------------------------------------------------------
@@ -28,7 +28,7 @@
      ! number of data points
      integer, intent(in)  :: n
 
-     ! boundries for numerical integration
+     ! left and right boundries for numerical integration
      real(dp), intent(in) :: a
      real(dp), intent(in) :: b
 
@@ -113,6 +113,7 @@
      ! calculate simpson sum
      evenSum = zero
      oddSum = zero
+     !
      do i=1,n-1
          if ( mod(i,2) == 0 ) then
              evenSum = evenSum + f(a+dble(i)*h)
