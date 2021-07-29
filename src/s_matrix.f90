@@ -666,6 +666,7 @@
 !! [body
 
      tr = zero
+     !
      do i=1,n
          tr = tr + A(i,i)
      enddo ! over i={1,n} loop
@@ -703,6 +704,7 @@
 !! [body
 
      tr = czero
+     !
      do i=1,n
          tr = tr + A(i,i)
      enddo ! over i={1,n} loop
@@ -789,8 +791,8 @@
 ! method A: preferred method
 !-------------------------------------------------------------------------
 
-     ! computes the LU factorization of a general m-by-n matrix, need
-     ! lapack package, dgetrf subroutine.
+     ! computes the LU factorization of a general m-by-n matrix.
+     ! need lapack package (dgetrf subroutine).
      call DGETRF(ndim, ndim, dmat, ndim, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
@@ -799,6 +801,7 @@
 
      ! calculate determinant
      ddet = one
+     !
      do i=1,ndim
          if ( ipiv(i) == i ) then
              ddet = ddet * ( +dmat(i,i) )
@@ -823,6 +826,7 @@
 
      ! evaluate the final determinant
      cres = cone
+     !
      do i=1,ndim
          cres = cres * dcmplx( wr(i), wi(i) )
      enddo ! over i={1,ndim} loop
