@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/22/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : this purpose of this module is to implement a typical and
 !!!           useful data structure --- linked list. it is a generic
 !!!           linked list, capable of storing arbitrary data.
@@ -29,6 +29,7 @@
      ! node, and the integer pointer array is used to store data.
      type list_t
          private
+         !
          integer, pointer :: data(:) => null()
          type (list_t), pointer :: next => null()
      end type list_t
@@ -109,6 +110,7 @@
 
      ! go through the whole linked list
      curr => self
+     !
      do while ( associated(curr) )
          ! get next node
          next => curr%next
@@ -141,8 +143,8 @@
      implicit none
 
 !! external arguments
-     ! element in the linked list after which the new element should
-     ! be inserted
+     ! element in the linked list after which
+     ! the new element should be inserted.
      type (list_t), pointer :: self
 
      ! the data for the new element
