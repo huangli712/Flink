@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/23/2021 by li huang (last modified)
+!!!           07/29/2021 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement a generic and
 !!!           flexible config/input file reader and analyzer.
 !!! status  : unstable
@@ -150,7 +150,8 @@
 
          ! try to read one line from the input file until we meet the
          ! end-of-file (EOF) flag, the line content is stored in string.
-         read(mytmp,'(a100)',iostat = istat) string
+         read(mytmp,'(a100)', iostat = istat) string
+         !
          if ( istat == iostat_end ) then
              EXIT FILE_PARSING
          else ! it is not the end
@@ -243,9 +244,11 @@
 
              ! store the key-value pair in the linked list structure
              allocate(data_ptr)
+             !
              data_ptr%is_valid = .true.
              data_ptr%str_key = trim(str_key)
              data_ptr%str_value = trim(str_value)
+             !
              call list_insert(list_ptr, transfer(data_ptr, list_d))
          endif ! back if ( istat == iostat_end ) block
 
@@ -306,6 +309,7 @@
          ! note that we skip the first element since it is invalid
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
+         !
          ! the required key-value pair is found, extract the value
          ! to str_value.
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
@@ -411,6 +415,7 @@
          ! note that we skip the first element since it is invalid
          curr => list_next(curr)
          data_ptr = transfer(list_get(curr), data_ptr)
+         !
          ! the required key-value pair is found, extract the value
          ! to str_value.
          if ( trim(str_key) .eq. trim(data_ptr%str_key) ) then
