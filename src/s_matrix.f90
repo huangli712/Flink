@@ -887,8 +887,8 @@
          call s_print_error('s_det_z','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-     ! computes the LU factorization of a general m-by-n matrix,
-     ! need lapack package, zgetrf subroutine
+     ! computes the LU factorization of a general m-by-n matrix.
+     ! need lapack package (zgetrf subroutine).
      call ZGETRF(ndim, ndim, zmat, ndim, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
@@ -897,6 +897,7 @@
 
      ! calculate determinant
      zdet = cone
+     !
      do i=1,ndim
          if ( ipiv(i) == i ) then
              zdet = zdet * ( +zmat(i,i) )
