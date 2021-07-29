@@ -590,9 +590,7 @@
 !! @sub tetra_lambin_weight
 !!
 !! Lambin-Vigneron algorithm for crystal Green's function. Here we have
-!! implemented the equations presented in G. Palsson's Ph.D thesis. The
-!! following codes are totally rewritten in a simpler, and more readable
-!! form.
+!! implemented the equations presented in G. Palsson's Ph.D thesis.
 !!
   subroutine tetra_lambin_weight(z, e, weights)
      implicit none
@@ -671,7 +669,7 @@
 !!
 !! @sub tetra_lv
 !!
-!! We define the Lambin-Vigneron function as follows
+!! We define the Lambin-Vigneron function as follows:
 !!    lv(x,y) = z ( 1 - z * log[1 + 1/z] )  where z = x / y
 !! or
 !!    lv(x,y) = ( 1 - log[1+w] / w ) / w   where w = y / x.
@@ -689,7 +687,7 @@
 !! local variables
      complex(dp) :: z
      complex(dp) :: w
-     !
+
      ! function type
      complex(dp) :: lv
 
@@ -969,6 +967,7 @@
      complex(dp), intent(out) :: res(4)
 
 !! local variables
+     ! actually they are constants
      complex(dp) :: c1, c2
 
      ! ze_i = z - e_i
@@ -1112,6 +1111,7 @@
              z = e(p) - e(q)
              rez = dabs( dreal(z) )
              imz = dabs( dimag(z) )
+             !
              if ( rez <= eps8 .and. imz <= eps8 ) then
                  idx = idx * tetra_lv_prime( p, q )
              endif
@@ -1120,6 +1120,7 @@
 
      ! find flg
      flg = 1
+     !
      if ( idx > 1    ) flg = flg + 1
      if ( idx > 13   ) flg = flg + 1
      if ( idx > 35   ) flg = flg + 1
@@ -1201,7 +1202,7 @@
 !! [body
 
      prime = p * q
-
+     !
      if ( prime == 4 .or. prime == 6 .or. prime == 12 ) then
          prime = prime + 1
      else if ( prime == 8 ) then
