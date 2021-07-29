@@ -954,8 +954,8 @@
          call s_print_error('s_inv_d','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-     ! computes the LU factorization of a general m-by-n matrix,
-     ! need lapack package, dgetrf subroutine.
+     ! computes the LU factorization of a general m-by-n matrix.
+     ! need lapack package (dgetrf subroutine).
      call DGETRF(ndim, ndim, dmat, ndim, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
@@ -963,7 +963,7 @@
      endif ! back if ( ierror /= 0 ) block
 
      ! computes the inverse of an LU-factored general matrix,
-     ! need lapack package, dgetri subroutine
+     ! need lapack package (dgetri subroutine).
      call DGETRI(ndim, dmat, ndim, ipiv, work, ndim, ierror)
      !
      if ( ierror /= 0 ) then
@@ -1015,16 +1015,16 @@
          call s_print_error('s_inv_z','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-     ! computes the LU factorization of a general m-by-n matrix,
-     ! need lapack package, zgetrf subroutine.
+     ! computes the LU factorization of a general m-by-n matrix.
+     ! need lapack package (zgetrf subroutine).
      call ZGETRF(ndim, ndim, zmat, ndim, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','error in lapack subroutine zgetrf')
      endif ! back if ( ierror /= 0 ) block
 
-     ! computes the inverse of an LU-factored general matrix,
-     ! need lapack package, zgetri subroutine.
+     ! computes the inverse of an LU-factored general matrix.
+     ! need lapack package (zgetri subroutine).
      call ZGETRI(ndim, zmat, ndim, ipiv, work, ndim, ierror)
      !
      if ( ierror /= 0 ) then
