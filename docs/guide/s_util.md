@@ -2,6 +2,8 @@
 
 It provides some utility subroutines and functions.
 
+## Usage
+
 1. C-like assertion.
 
 ```fortran
@@ -41,3 +43,5 @@ subroutine s_str_compress(...)
 subroutine s_time_builder(...)
 subroutine s_time_analyzer(...)
 ```
+
+## Theory

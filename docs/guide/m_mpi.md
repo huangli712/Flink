@@ -56,7 +56,7 @@ call mp_bcast(cmplx_data, master)
 
 Here master == 0 which means the master node/root process.
 
-4. All-reduce data.
+4. Allreduce data.
 
 ```fortran
 real(dp), allocatable :: real_data(:)

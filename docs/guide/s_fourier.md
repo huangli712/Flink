@@ -2,6 +2,8 @@
 
 Support forward and backward fourier transformation. We usually use the following subroutines to perform fourier transformation for the Green's function.
 
+## Usage
+
 1. Forward FFT, from $$G(\tau) \to G(i\omega_n)$$.
 
 ```fortran
@@ -16,3 +18,5 @@ subroutine s_fft_tails(...)
 ```
 
 Note: The `s_fft_tails()` subroutine is called by the `s_fft_backward()` subroutine internally. DO NOT call it directly!
+
+## Theory

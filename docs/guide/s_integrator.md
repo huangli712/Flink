@@ -1,5 +1,9 @@
 ## Introduction
 
+This module is used to perform simple numerical integration.
+
+## Usage
+
 To use `s_int_trapezoid()` or `s_int_simpson()`, you have to define the integrand at first. For example:
 
 ```fortran
@@ -36,3 +40,5 @@ real(dp) :: val
 
 val = s_int_simpson(f, a, b, n)
 ```
+
+## Theory

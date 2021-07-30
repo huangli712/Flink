@@ -2,6 +2,8 @@
 
 To deal with the error and exception.
 
+## Usage
+
 1. Display the error, exception, or message on the terminal.
 
 ```fortran

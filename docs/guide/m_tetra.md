@@ -86,3 +86,5 @@ or
 ```fortran
 call smearing_marzari_weight3(...)
 ```
+
+## Theory

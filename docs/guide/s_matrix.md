@@ -2,6 +2,8 @@
 
 It provides a lot of subroutines to manipulate the matrix and implement the linear algebra.
 
+## Usage
+
 1. Build constants (0) matrix.
 
 ```fortran

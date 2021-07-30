@@ -49,7 +49,7 @@ data_ptr%something = something
 call list_init(list_ptr, transfer(data_ptr, list_d))
 ```
 
-here `list_d` is a public variable in linkedlist module.
+Here `list_d` is a public variable defined in linkedlist module.
 
 7. Insert new node.
 

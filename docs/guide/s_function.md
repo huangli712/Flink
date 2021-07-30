@@ -2,6 +2,8 @@
 
 Provide some subroutines to calculate the special functions.
 
+## Usage
+
 1. Orthogonal polynomial basis.
 
 ```fortran
@@ -30,3 +32,5 @@ function s_safe_exp(...)
 function s_f_kernel(...)
 function s_b_kernel(...)
 ```
+
+## Theory

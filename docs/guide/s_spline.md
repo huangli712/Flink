@@ -2,6 +2,8 @@
 
 These subroutines are used to perform spline interpolation.
 
+## Usage
+
 1. Calculate 1-order derivates for a given function.
 
 ```fortran
