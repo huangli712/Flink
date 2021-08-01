@@ -10,7 +10,7 @@ makedocs(
     ),
     pages = [
         "Home" => "index.md",
-        "Welcome" => "welcome.md",
+        "Introduction" => "intro.md",
         "Install" => "install.md",
         "Usage" => "usage.md",
         "Guide" => Any[
