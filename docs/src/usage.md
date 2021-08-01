@@ -1,5 +1,3 @@
-## Usage
-
 It is quite easy to use the *Flink* library.
 
 At first, please look at the user's guide to learn how to call the *Flink*'s subroutines and functions. Notice that some subroutines are encapsulated in various modules, while the others are not.
