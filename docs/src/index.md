@@ -2,6 +2,8 @@
 
 *A collection of Fortran modules and subroutines for scientific computing*.
 
+## Reference Manual Outline
+
 * [Introduction](intro.md)
 * [Installation](install.md)
 * [Basic usage](usage.md)
