@@ -29,7 +29,7 @@ Though it is not mandatory, we still strongly recommend to update the above soft
 
 ### F90
 
-The Fortran compiler. Both the parallel and sequential fortran compilers are supported. Note that only the Intel fortran compiler was extensively tested. And we recommend to use the very latest version of Intel fortran compiler (i.e, Intel Parallel Studio 2019).
+The Fortran compiler. Both the parallel and sequential Fortran compilers are supported. Note that only the Intel Fortran compiler was extensively tested. And we recommend to use the very latest version of Intel Fortran compiler (i.e, Intel Parallel Studio 2019).
 
 **Possible options**:
 
@@ -40,7 +40,7 @@ The Fortran compiler. Both the parallel and sequential fortran compilers are sup
 
 ### LINKER
 
-Linker. Here it should be the same with the fortran compiler. Do not change it.
+Linker. Here it should be the same with the Fortran compiler. Do not change it.
 
 **Possible options**:
 
@@ -70,11 +70,11 @@ Specify whether OpenMP is enable. If you want to disable it, please comment it o
 
 * -qopenmp
 
-If you are using old version Intel fortran compiler, this option may be '-openmp'.
+If you are using old version Intel Fortran compiler, this option may be '-openmp'.
 
 ### FPP
 
-Specify whether the fortran preprocessor (FPP) is used. It has to be enabled or else the source codes can not be compiled correctly.
+Specify whether the Fortran preprocessor (FPP) is used. It has to be enabled or else the source codes can not be compiled correctly.
 
 **Possible options**:
 

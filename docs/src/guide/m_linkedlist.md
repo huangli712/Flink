@@ -1,6 +1,6 @@
 ## Introduction
 
-This implementation of generic linked list in fortran 90 was taken from
+This implementation of generic linked list in Fortran 90 was taken from
 
 > Jason R. Blevins's code<br/>
 > journal: ACM Fortran Forum 28(3), 2-7, 2009.<br/>
