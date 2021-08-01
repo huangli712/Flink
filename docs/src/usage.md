@@ -8,4 +8,6 @@ Third, if your codes are using some modules of the *Flink* library, please copy 
 
 Fourth, modify your Makefile. Notify the linker to link `libflink.a` to your program. You can use the following syntax:
 
-> ifort your_code.f90 -Lpath_to_libflink -lflink -o your_code.x
+```text
+$ ifort your_code.f90 -Lpath_to_libflink -lflink -o your_code.x
+```
