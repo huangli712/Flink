@@ -1,10 +1,10 @@
-# Reference Manual of Flink
+# Flink
 
-Contents
+*A collection of Fortran modules and subroutines for scientific computing*.
 
-* [Introduction](welcome.md)
-* [How to install](install.md)
-* [How to use](usage.md)
+* [Introduction](intro.md)
+* [Installation](install.md)
+* [Basic usage](usage.md)
 * User's guide
   * [make.sys](guide/make.md)
   * [Constants](guide/m_constants.md)

@@ -11,8 +11,8 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Introduction" => "intro.md",
-        "Install" => "install.md",
-        "Usage" => "usage.md",
+        "Installation" => "install.md",
+        "Basic usage" => "usage.md",
         "Guide" => Any[
             "make.sys" => "guide/make.md",
             "Constants" => "guide/m_constants.md",
