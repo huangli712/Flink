@@ -11,20 +11,20 @@ The usages, subroutine parameters for these two stack types are almost identical
 
 ## Usage
 
-1. Import stack module support.
+(1) Import stack module support.
 
 ```fortran
 use stack
 ```
 
-2. Declare stack type.
+(2) Declare stack type.
 
 ```fortran
 type (istack) :: is
 type (gstack) :: gs
 ```
 
-3. Create stack struct.
+(3) Create stack struct.
 
 ```fortran
 call istack_create(is, 1024)
@@ -36,7 +36,7 @@ call gstack_create(gs, (1.0_dp, 1.0_dp), 1024) ! create stack to support complex
 
 Note: In istack_create(), the second parameter is the capacity of the stack. However, in gstack_create(), the second parameter means the data type that gstack will manipulate, and the third parameter will be used to determine the capacity. It is an optional parameter.
 
-4. Push element into stack.
+(4) Push element into stack.
 
 ```fortran
 call istack_push(is, 1)
@@ -46,14 +46,14 @@ call gstack_push(gs, 2.0_dp)
 call gstack_push(gs, (1.0_dp, 1.0_dp))
 ```
 
-5. Pop element from stack.
+(5) Pop element from stack.
 
 ```fortran
 call istack_pop(is, i) ! i is an integer
 call gstack_pop(is, j) ! j can be integer, logical, real(dp), and complex(dp)
 ```
 
-6. Check status of stack.
+(6) Check status of stack.
 
 ```fortran
 print *, istack_isfull(is)
@@ -69,7 +69,7 @@ print *, gstack_getrest(gs)
 
 The above three function calls will tell you whether the stack is full, whether it is empty, and its capacity.
 
-7. Clean the stack.
+(7) Clean the stack.
 
 ```fortran
 call istack_clean(is)
@@ -78,7 +78,7 @@ call gstack_clean(gs)
 
 Note: This operation will reset the top position of the stack, instead of releasing the memory of it. So you can still use the stack after that.
 
-8. Destroy the stack.
+(8) Destroy the stack.
 
 ```fortran
 call istack_destroy(is)

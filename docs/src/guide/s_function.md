@@ -4,7 +4,7 @@ Provide some subroutines to calculate the special functions.
 
 ## Usage
 
-1. Orthogonal polynomial basis.
+(1) Orthogonal polynomial basis.
 
 ```fortran
 subroutine s_leg_basis(...)
@@ -13,19 +13,19 @@ subroutine s_svd_basis(...)
 subroutine s_svd_point(...)
 ```
 
-2. Spheric Bessel function.
+(2) Spheric Bessel function.
 
 ```fortran
 subroutine s_sph_jl(...)
 ```
 
-3. Bernstein polynomial.
+(3) Bernstein polynomial.
 
 ```fortran
 subroutine s_bezier(...)
 ```
 
-4. Some helper functions for s_svd_basis().
+(4) Some helper functions for s_svd_basis().
 
 ```fortran
 function s_safe_exp(...)

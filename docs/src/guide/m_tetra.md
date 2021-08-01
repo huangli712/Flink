@@ -15,7 +15,7 @@ This module depends on the `s_util.f90/s_qsorter()` subroutine.
 
 ## Usage
 
-1. P. E. Blochl tetrahedron integration algorithm.
+(1) P. E. Blochl tetrahedron integration algorithm.
 
 ```fortran
 call tetra_blochl_weight1(...)
@@ -27,13 +27,13 @@ or
 call tetra_blochl_weight2(...)
 ```
 
-2. Lambin-Vigneron tetrahedron integration algorithm.
+(2) Lambin-Vigneron tetrahedron integration algorithm.
 
 ```fortran
 call tetra_lambin_weight(...)
 ```
 
-3. Gaussian smearing algorithm.
+(3) Gaussian smearing algorithm.
 
 ```fortran
 call smearing_gauss_weight1(...)
@@ -51,7 +51,7 @@ or
 call smearing_gauss_weight3(...)
 ```
 
-4. Fermi-Dirac smearing algorithm.
+(4) Fermi-Dirac smearing algorithm.
 
 ```fortran
 call smearing_fermi_weight1(...)
@@ -69,7 +69,7 @@ or
 call smearing_fermi_weight3(...)
 ```
 
-5. Marzari-Vanderbilt cold smearing algorithm.
+(5) Marzari-Vanderbilt cold smearing algorithm.
 
 ```fortran
 call smearing_marzari_weight1(...)
