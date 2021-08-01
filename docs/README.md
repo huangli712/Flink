@@ -4,8 +4,16 @@ This is the documentation for the *Flink* library. It is developed with the `Mar
 
 ## Prerequisites
 
-!!! note Make sure that the [`Julia`](https://julialang.org/) was installed in your system and the [`Documenter.jl`](https://github.com/JuliaDocs/Documenter.jl) package was ready.
+Make sure that the [`Julia`](https://julialang.org/) was installed in your system and the [`Documenter.jl`](https://github.com/JuliaDocs/Documenter.jl) package was ready. The latest versions of them are preferred.
 
 ## Compile the docs
 
+Just type the following command in your terminal
+
+```sh
+$ julia make.jl
+```
+
 ## Read the docs
+
+If everything is OK, you will find a new directory `build` under the `docs` folder. Get in it and then dobule click the `index.html` file to open it with browser.
