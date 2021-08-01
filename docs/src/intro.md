@@ -1,10 +1,12 @@
 ## Welcome
 
-*Flink* is a fortran utility library. It provides some useful features with which you can develop your scientific computation codes quickly. Actually, almost all of my fortran codes depend on the *Flink* library. They are
+*Flink* is a Fortran utility library. It provides some useful features with which you can develop your scientific computation codes quickly. Actually, almost all of my Fortran codes depend on the *Flink* library. They are
 
 * [iQIST](https://github.com/huangli712/iqist)
 * [Dyson](https://github.com/huangli712/dyson)
 * And so on...
+
+!!! note *Flink* obeys the Fortran 2003 standard. 
 
 ## Features
 
