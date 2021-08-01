@@ -6,7 +6,9 @@
 * [Dyson](https://github.com/huangli712/dyson)
 * And so on...
 
-!!! note *Flink* obeys the Fortran 2003 standard. 
+!!! note
+
+    *Flink* obeys the Fortran 2003 standard. 
 
 ## Features
 
