@@ -16,4 +16,4 @@ $ julia make.jl
 
 ## Read the docs
 
-If everything is OK, you will find a new directory `build` under the `docs` folder. Get in it and then double click the `index.html` file to open it with browser.
+If everything is OK, you will find a new directory `build` under the `docs` folder. Get in it and then double click the `index.html` file to open it with browser. Enjoy it!
