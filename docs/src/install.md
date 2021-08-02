@@ -14,4 +14,4 @@ Once the compilation is finished (It takes about a few seconds usually), we can 
 
     In order to compile *Flink*, you have to ensure that a MPI-enabled Fortran compiler (which is compatibe with Fortran 2003 standard), and a numerical library which implements the BLAS and LAPACK interfaces (such as Intel MKL), are installed and configured correctly in your system. You can setup your compiling environment via editing the `build/make.sys` file.
 
-    See [make.sys](guide/make.md) for more details.
+    See [make.sys](appendix/make.md) for more details.

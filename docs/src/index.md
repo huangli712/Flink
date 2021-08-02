@@ -8,7 +8,6 @@
 * [Installation](install.md)
 * [Basic usage](usage.md)
 * User's guide
-  * [make.sys](guide/make.md)
   * [Constants](guide/m_constants.md)
   * [Linked list](guide/m_linkedlist.md)
   * [Message passaging interface](guide/m_mpi.md)
@@ -25,4 +24,6 @@
   * [Spline interpolation](guide/s_spline.md)
   * [Utility](guide/s_util.md)
   * [Vector](guide/s_vector.md)
+* Appendix
+  * [make.sys](appendix/make.md)
 * FAQ
