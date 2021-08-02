@@ -2,6 +2,10 @@
 
 The original input file format for *iQIST* is not very good. We need a flexible, convenient, and powerful input file format, and corresponding file reader and parser. Thus, we redesign the input file format and implement this file parser.
 
+!!! note
+
+    This module depends on the `linkedlist` module internally.
+
 ## Type
 
 module
