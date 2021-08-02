@@ -3,29 +3,29 @@
 It is a common module which defines some common used numerical or physical constants. They are as follows:
 
 * for numerical precision:
-    * sp
-    * dp
+    * `sp`
+    * `dp`
 * for file units
-    * mystd
-    * myout
-    * mytmp
+    * `mystd`
+    * `myout`
+    * `mytmp`
 * for numerical constants
-    * pi
-    * zero
-    * one
-    * two
-    * half
-    * eps6
-    * eps8
-    * epst
-    * epss
-    * czi
-    * cone
-    * czero
+    * `pi`
+    * `zero`
+    * `one`
+    * `two`
+    * `half`
+    * `eps6`
+    * `eps8`
+    * `epst`
+    * `epss`
+    * `czi`
+    * `cone`
+    * `czero`
 * for physical constants
-    * ev2k
-    * ry2e
-    * ha2e 
+    * `ev2k`
+    * `ry2e`
+    * `ha2e` 
 
  We always need to import this module.
 
