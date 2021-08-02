@@ -1,12 +1,41 @@
 ## Introduction
 
-It is a common module which defines some common used numerical or physical constants. We always need it.
+It is a common module which defines some common used numerical or physical constants. They are as follows:
 
-As for how many constants are defined, please consult the source code (`src/m_constants.f90`).
+* for numerical precision:
+    * sp
+    * dp
+* for file units
+    * mystd
+    * myout
+    * mytmp
+* for numerical constants
+    * pi
+    * zero
+    * one
+    * two
+    * half
+    * eps6
+    * eps8
+    * epst
+    * epss
+    * czi
+    * cone
+    * czero
+* for physical constants
+    * ev2k
+    * ry2e
+    * ha2e 
+
+ We always need to import this module.
 
 ## Type
 
 module
+
+## Source
+
+`src/mconstants.f90`
 
 ## Usage
 
