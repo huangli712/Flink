@@ -127,11 +127,13 @@ call p_get('mune', mune)        ! get single value
 call p_get_vec('symm', symm, 2) ! get array
 ```
 
-Note 1: That if the desired parameter is not contained in the config file, then the default value will not be changed.
+!!! note
 
-Note 2: In the mpi environment, only the master node can execute these commands.
+    That if the desired parameter is not contained in the config file, then the default value will not be changed.
 
-Note 3: The parser **DO NOT** check the correctness (including number of values, key's name, and datatype of value) of the input file. So, please always monitor the output of ctqmc code which use this parser to parse the input file.
+    In the mpi environment, only the master node can execute these commands.
+
+    The parser **DO NOT** check the correctness (including number of values, key's name, and datatype of value) of the input file. So, please always monitor the output of ctqmc code which use this parser to parse the input file.
 
 (5) Destroy parser.
 
