@@ -13,6 +13,14 @@ Note that the former is used to calculate the DFT density of states, while the l
 
 This module depends on the `s_util.f90/s_qsorter()` subroutine.
 
+## Type
+
+module
+
+## Source
+
+`src/m_tetra.f90`
+
 ## Usage
 
 (1) P. E. Blochl tetrahedron integration algorithm.

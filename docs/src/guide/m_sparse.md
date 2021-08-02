@@ -2,6 +2,14 @@
 
 In this module, we implement some basic sparse matrix algebra. Now it supports double precision real and complex numbers.
 
+## Type
+
+module
+
+## Source
+
+`src/m_sparse.f90`
+
 ## Usage
 
 (1) Import sparse module support.

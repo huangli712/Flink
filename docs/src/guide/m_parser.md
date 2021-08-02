@@ -2,6 +2,14 @@
 
 The original input file format for *iQIST* is not very good. We need a flexible, convenient, and powerful input file format, and corresponding file reader and parser. Thus, we redesign the input file format and implement this file parser.
 
+## Type
+
+module
+
+## Source
+
+`src/m_parser.f90`
+
 ## Input File Format
 
 (1) Anything after "#" and "!" character can be treated as comments and will be ignored completely.
