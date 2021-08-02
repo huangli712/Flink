@@ -4,9 +4,13 @@ It is a common module which defines some common used numerical or physical const
 
 As for how many constants are defined, please consult the source code (`src/m_constants.f90`).
 
+## Type
+
+module
+
 ## Usage
 
-(1) Import module completely.
+(1) Import constants module completely.
 
 ```fortran
 program test
@@ -19,7 +23,7 @@ program test
 end program
 ```
 
-(2) Import module partially.
+(2) Import constants module partially.
 
 ```fortran
 program test
