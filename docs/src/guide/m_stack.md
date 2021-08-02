@@ -44,7 +44,7 @@ call gstack_create(gs, (1.0_dp, 1.0_dp), 1024) ! create stack to support complex
 
 !!! note
 
-    In istack_create(), the second parameter is the capacity of the stack. However, in gstack_create(), the second parameter means the data type that gstack will manipulate, and the third parameter will be used to determine the capacity. It is an optional parameter.
+    In istack\_create(), the second parameter is the capacity of the stack. However, in gstack\_create(), the second parameter means the data type that gstack will manipulate, and the third parameter will be used to determine the capacity. It is an optional parameter.
 
 (4) Push element into stack.
 
