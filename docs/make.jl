@@ -13,7 +13,7 @@ makedocs(
         "Introduction" => "intro.md",
         "Installation" => "install.md",
         "Basic usage" => "usage.md",
-        "Guide" => Any[
+        "User's guide" => Any[
             "Constants" => "guide/m_constants.md",
             "Linked list" => "guide/m_linkedlist.md",
             "Message passaging interface" => "guide/m_mpi.md",
