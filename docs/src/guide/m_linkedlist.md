@@ -12,7 +12,7 @@
 
     Of course, we have adapted the original code to fulfill our requirement.
 
-This linked list is capable of storing data of an any type by using the generic programming techniques. To access the data stored in the nodes, we have to use the intrinsic `transfer()` subroutine.
+This linked list is capable of storing data of an any type by using the generic programming techniques.
 
 ## Type
 
@@ -24,7 +24,7 @@ module
 
 ## Usage
 
-(1) Include linked list support.
+(1) Include linked list module support.
 
 ```fortran
 use linkedlist
@@ -64,6 +64,10 @@ call list_init(list_ptr, transfer(data_ptr, list_d))
 ```
 
 Here `list_d` is a public variable defined in linkedlist module.
+
+!!! note
+
+    To access the data stored in the nodes, we have to use the intrinsic `transfer()` subroutine.
 
 (7) Insert new node.
 
