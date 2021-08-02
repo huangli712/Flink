@@ -147,4 +147,4 @@ call p_destroy()
 
 (6) Broadcast the parameters read from input file.
 
-Do not forget to broadcast all of the parameters from master node to children nodes. Please see the comments in `src/m_mpi.f90`.
+Do not forget to broadcast all of the parameters from master node to children nodes.
