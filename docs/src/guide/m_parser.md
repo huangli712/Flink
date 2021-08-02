@@ -110,7 +110,9 @@ call p_create()
 call p_parse(file_name)
 ```
 
-Note: In the mpi environment, only the master node can execute this command. You should broadcast the data manually.
+!!! warning
+
+    In the mpi environment, only the master node can execute this command. You should broadcast the data manually.
 
 (4) Extract parameters.
 
