@@ -2,6 +2,14 @@
 
 To deal with the error and exception.
 
+## Type
+
+subroutines
+
+## Source
+
+`src/s_error.f90`
+
 ## Usage
 
 (1) Display the error, exception, or message on the terminal.

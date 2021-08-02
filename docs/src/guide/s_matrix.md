@@ -2,6 +2,14 @@
 
 It provides a lot of subroutines to manipulate the matrix and implement the linear algebra.
 
+## Type
+
+subroutines
+
+## Source
+
+`src/s_matrix.f90`
+
 ## Usage
 
 (1) Build constants (0) matrix.

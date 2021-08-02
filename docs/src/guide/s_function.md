@@ -2,6 +2,14 @@
 
 Provide some subroutines to calculate the special functions.
 
+## Type
+
+subroutines
+
+## Source
+
+`src/s_function.f90`
+
 ## Usage
 
 (1) Orthogonal polynomial basis.

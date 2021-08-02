@@ -2,6 +2,14 @@
 
 This module is used to perform simple numerical integration.
 
+## Type
+
+subroutines
+
+## Source
+
+`src/s_integrator.f90`
+
 ## Usage
 
 To use `s_int_trapezoid()` or `s_int_simpson()`, you have to define the integrand at first. For example:

@@ -2,6 +2,14 @@
 
 It provides some utility subroutines and functions.
 
+## Type
+
+subroutines
+
+## Source
+
+`src/s_util.f90`
+
 ## Usage
 
 (1) C-like assertion.
