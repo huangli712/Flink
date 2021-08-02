@@ -25,6 +25,8 @@ subroutine s_fft_backward(...)
 subroutine s_fft_tails(...)
 ```
 
-Note: The `s_fft_tails()` subroutine is called by the `s_fft_backward()` subroutine internally. DO NOT call it directly!
+!!! note
+
+    The `s_fft_tails()` subroutine is called by the `s_fft_backward()` subroutine internally. DO NOT call it directly!
 
 ## Theory
