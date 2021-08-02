@@ -28,7 +28,7 @@ subroutine s_qsorter(...)
 subroutine s_qscorer(...)
 ```
 
-Note: the `s_sorter()` and `s_sorter2()` subroutines implement the bubble algorithm, and the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
+The `s_sorter()` and `s_sorter2()` subroutines implement the bubble algorithm, and the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
 
 (3) Combination algrbra.
 
