@@ -31,7 +31,7 @@
 ## =======
 ##
 ## 04/09/2019 by li huang (created)
-## 07/29/2021 by li huang (last modified)
+## 08/02/2021 by li huang (last modified)
 ##
 ##
 
@@ -44,3 +44,4 @@ flink:
 clean:
 	@echo 'cleaning flink'
 	cd ../src; pwd; make clean
+	cd ../docs; pwd; rm -fr build
