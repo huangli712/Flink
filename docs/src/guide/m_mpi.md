@@ -24,6 +24,14 @@ This module wraps the most useful mpi calls by using generic programming techniq
 
 etc. However, none of the point-to-point operations is supported. In the module, we also try to implement a light-weight error handler. Enjoy it!
 
+## Type
+
+module
+
+## Source
+
+`src/m_mpi.f90`
+
 ## Usage
 
 (1) Include mpi support.

@@ -35,7 +35,7 @@ module
 
 ## Source
 
-`src/mconstants.f90`
+`src/m_constants.f90`
 
 ## Usage
 
