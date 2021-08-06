@@ -4,7 +4,7 @@ At first, you have to download the latest source codes from the official reposit
 
 ```sh
 $ cd flink/build
-$ editor make.sys
+$ editor make.inc
 $ make
 ```
 
@@ -12,6 +12,6 @@ Once the compilation is finished (It takes about a few seconds usually), we can 
 
 !!! note
 
-    In order to compile *Flink*, you have to ensure that a MPI-enabled Fortran compiler (which is compatibe with Fortran 2003 standard), and a numerical library which implements the BLAS and LAPACK interfaces (such as Intel MKL), are installed and configured correctly in your system. You can setup your compiling environment via editing the `build/make.sys` file.
+    In order to compile *Flink*, you have to ensure that a MPI-enabled Fortran compiler (which is compatibe with Fortran 2003 standard), and a numerical library which implements the BLAS and LAPACK interfaces (such as Intel MKL), are installed and configured correctly in your system. You can setup your compiling environment via editing the `build/make.inc` file.
 
-    See [make.sys](appendix/make.md) for more details.
+    See [make.inc](appendix/make.md) for more details.

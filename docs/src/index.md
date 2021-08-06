@@ -25,5 +25,5 @@
   * [Utility](guide/s_util.md)
   * [Vector](guide/s_vector.md)
 * Appendix
-  * [make.sys](appendix/make.md)
+  * [make.inc](appendix/make.md)
 * FAQ
