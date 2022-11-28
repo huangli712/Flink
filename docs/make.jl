@@ -16,7 +16,7 @@ makedocs(
         "User's guide" => Any[
             "Constants" => "guide/m_constants.md",
             "Linked list" => "guide/m_linkedlist.md",
-            "Message passaging interface" => "guide/m_mpi.md",
+            "Message passing interface" => "guide/m_mpi.md",
             "Configuration parser" => "guide/m_parser.md",
             "Sparse matrix" => "guide/m_sparse.md",
             "Pseudorandom number generator" => "guide/m_spring.md",
