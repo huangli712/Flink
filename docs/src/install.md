@@ -2,7 +2,7 @@ As mentioned before, almost all of my Fortran codes depend on the *Flink* librar
 
 At first, you have to download the latest source codes from the official repository of [*Flink*](https://github.com/huangli712/flink). If every thing is OK, you will have a compressed file, such as `flink.zip` or `flink.tar.gz`. And then you need to decompress it with `unzip` or `tar`. The next step is to compile *Flink*. Please execute the following three commands in your terminal.
 
-```sh
+```shell
 $ cd flink/build
 $ editor make.inc
 $ make
