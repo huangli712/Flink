@@ -18,7 +18,7 @@ subroutines
 subroutine s_fft_forward(...)
 ```
 
-(2) Backward FFT, from ``G(i\omega_n) \to G(\tau)``
+(2) Backward FFT, from ``G(i\omega_n) \to G(\tau)``.
 
 ```fortran
 subroutine s_fft_backward(...)

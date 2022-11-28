@@ -27,5 +27,5 @@ subroutine s_spl_deriv2(...)
 (3) Evaluate function value at a given point.
 
 ```fortran
-function   s_spl_funct(...)
+function s_spl_funct(...)
 ```

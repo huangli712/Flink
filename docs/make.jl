@@ -26,6 +26,7 @@ makedocs(
             "Fourier transformation" => "guide/s_fourier.md",
             "Special functions" => "guide/s_function.md",
             "Integration" => "guide/s_integrator.md",
+            "Matrix" => "guide/s_matrix.md",
             "Spline interpolation" => "guide/s_spline.md",
             "Utility" => "guide/s_util.md",
             "Vector" => "guide/s_vector.md",

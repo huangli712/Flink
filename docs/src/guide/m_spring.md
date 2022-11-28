@@ -37,7 +37,7 @@ r = spring_mt_stream()
 r = spring_mt_string()
 ```
 
-(2) Use SFMT
+(2) Use SFMT.
 
 ```fortran
 use spring
@@ -46,4 +46,6 @@ r = spring_sfmt_stream()
 r = spring_sfmt_string()
 ```
 
-Note: Since SFMT has a better performance, it is preferable.
+!!! note
+
+    Since SFMT has a better performance, it is preferable.

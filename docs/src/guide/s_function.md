@@ -33,7 +33,7 @@ subroutine s_sph_jl(...)
 subroutine s_bezier(...)
 ```
 
-(4) Some helper functions for s_svd_basis().
+(4) Some helper functions for s\_svd\_basis().
 
 ```fortran
 function s_safe_exp(...)
