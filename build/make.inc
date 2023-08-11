@@ -19,7 +19,7 @@
 ## =======
 ##
 ## 05/11/2015 by li huang (created)
-## 02/26/2021 by li huang (last modified)
+## 08/12/2023 by li huang (last modified)
 ##
 ##
 
@@ -45,7 +45,3 @@ MTUNE  = -O3 -xHost
 #-------------------------------------------------------------------------
 FFLAGS = -c $(CPP) $(CHECK) $(MTUNE)
 LFLAGS = $(OMP)
-
-# External linear algebra library
-#-------------------------------------------------------------------------
-LIBS   = -L/Users/lihuang/opt/intel/mkl/lib -lmkl_core -lmkl_sequential -lmkl_rt
