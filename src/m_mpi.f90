@@ -2162,6 +2162,9 @@
      subroutine mp_gather_int1(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -2202,6 +2205,9 @@
 !!
      subroutine mp_gather_int2(send, data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -2244,6 +2250,9 @@
      subroutine mp_gather_int3(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
@@ -2285,6 +2294,9 @@
      subroutine mp_gather_int4(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:)
@@ -2325,6 +2337,9 @@
 !!
      subroutine mp_gather_int5(send, data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
