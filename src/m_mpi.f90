@@ -4065,6 +4065,9 @@
      subroutine mp_allgatherv_int1(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -4108,6 +4111,9 @@
 !!
      subroutine mp_allgatherv_int2(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -4153,6 +4159,9 @@
      subroutine mp_allgatherv_int3(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
@@ -4196,6 +4205,9 @@
 !!
      subroutine mp_allgatherv_int4(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -4241,6 +4253,9 @@
      subroutine mp_allgatherv_int5(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:,:)
@@ -4284,6 +4299,9 @@
 !!
      subroutine mp_allgatherv_rdp1(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:)
