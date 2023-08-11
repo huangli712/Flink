@@ -912,6 +912,9 @@
      subroutine mp_dims_create(nprocs, dims)
          implicit none
 
+!! external subroutines
+         external :: MPI_DIMS_CREATE
+
 !! external arguments
          integer, intent(in) :: nprocs
          integer, intent(inout) :: dims(ndims)
@@ -936,6 +939,9 @@
 !!
      subroutine mp_cart_create(dims)
          implicit none
+
+!! external subroutines
+         external :: MPI_CART_CREATE
 
 !! external arguments
          integer, intent(in) :: dims(ndims)
