@@ -1370,6 +1370,9 @@
      subroutine mp_bcast_chr0(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          character(len = *), intent(in) :: data
          !
@@ -1406,6 +1409,9 @@
 !!
      subroutine mp_bcast_chr1(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          character(len = *), intent(in) :: data(:)
@@ -1447,6 +1453,9 @@
      subroutine mp_bcast_int0(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          integer, intent(in) :: data
          !
@@ -1483,6 +1492,9 @@
 !!
      subroutine mp_bcast_int1(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:)
@@ -1524,6 +1536,9 @@
      subroutine mp_bcast_int2(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          integer, intent(in) :: data(:,:)
          !
@@ -1563,6 +1578,9 @@
 !!
      subroutine mp_bcast_int3(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:,:,:)
@@ -1604,6 +1622,9 @@
      subroutine mp_bcast_int4(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 ! external arguments
          integer, intent(in) :: data(:,:,:,:)
          !
@@ -1643,6 +1664,9 @@
 !!
      subroutine mp_bcast_int5(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:,:,:,:,:)
