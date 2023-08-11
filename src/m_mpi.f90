@@ -6049,6 +6049,9 @@
      subroutine mp_allreduce_rdp3(source, data, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLREDUCE
+
 !! external arguments
          real(dp), intent(in) :: source(:,:,:)
          real(dp), intent(inout) :: data(:,:,:)
@@ -6097,6 +6100,9 @@
      subroutine mp_allreduce_rdp4(source, data, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLREDUCE
+
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:)
@@ -6144,6 +6150,9 @@
 !!
      subroutine mp_allreduce_rdp5(source, data, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:,:)
