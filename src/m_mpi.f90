@@ -1684,6 +1684,9 @@
      subroutine mp_bcast_rdp0(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          real(dp), intent(in) :: data
          !
@@ -1720,6 +1723,9 @@
 !!
      subroutine mp_bcast_rdp1(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:)
@@ -1761,6 +1767,9 @@
      subroutine mp_bcast_rdp2(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          real(dp), intent(in) :: data(:,:)
          !
@@ -1800,6 +1809,9 @@
 !!
      subroutine mp_bcast_rdp3(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:,:,:)
@@ -1841,6 +1853,9 @@
      subroutine mp_bcast_rdp4(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          real(dp), intent(in) :: data(:,:,:,:)
          !
@@ -1880,6 +1895,9 @@
 !!
      subroutine mp_bcast_rdp5(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:,:,:,:,:)
@@ -1921,6 +1939,9 @@
      subroutine mp_bcast_cdp0(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          complex(dp), intent(in) :: data
          !
@@ -1957,6 +1978,9 @@
 !!
      subroutine mp_bcast_cdp1(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:)
@@ -1998,6 +2022,9 @@
      subroutine mp_bcast_cdp2(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          complex(dp), intent(in) :: data(:,:)
          !
@@ -2037,6 +2064,9 @@
 !!
      subroutine mp_bcast_cdp3(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:)
@@ -2078,6 +2108,9 @@
      subroutine mp_bcast_cdp4(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:,:)
          !
@@ -2117,6 +2150,9 @@
 !!
      subroutine mp_bcast_cdp5(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:,:,:)
