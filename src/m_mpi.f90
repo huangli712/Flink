@@ -962,6 +962,9 @@
      subroutine mp_cart_coords(myid, cx, cy)
          implicit none
 
+!! external subroutines
+         external :: MPI_CART_COORDS
+
 !! external arguments
          integer, intent(in) :: myid
          integer, intent(out) :: cx
