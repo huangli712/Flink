@@ -42,7 +42,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           08/11/2023 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
@@ -212,7 +212,7 @@
 !!
 !! @sub s_any_i
 !!
-!! build an integer matrix with all elements are given by i
+!! build an integer matrix with all elements are given by i.
 !!
   subroutine s_any_i(n, i, A)
      implicit none
@@ -310,7 +310,7 @@
      ! size of matrix
      integer, intent(in)  :: n
 
-     ! index of the diagonal.
+     ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
      ! a positive value refers to an upper diagonal;
      ! and a negative value to a lower diagonal.
@@ -352,7 +352,7 @@
      ! size of matrix
      integer, intent(in)   :: n
 
-     ! index of the diagonal.
+     ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
      ! a positive value refers to an upper diagonal;
      ! and a negative value to a lower diagonal.
@@ -394,7 +394,7 @@
      ! size of matrix
      integer, intent(in)      :: n
 
-     ! index of the diagonal.
+     ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
      ! a positive value refers to an upper diagonal;
      ! and a negative value to a lower diagonal.
@@ -725,6 +725,12 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: s_print_exception
+     external :: DGETRF
+     external :: DGEEV
+
 !! external arguments
      ! dimension of dmat matrix
      integer, intent(in)     :: ndim
@@ -858,6 +864,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: ZGETRF
+
 !! external arguments
      ! dimension of zmat matrix
      integer, intent(in)        :: ndim
@@ -930,6 +940,11 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: DGETRF
+     external :: DGETRI
+
 !! external arguments
      ! dimension of dmat matrix
      integer, intent(in)     :: ndim
@@ -991,6 +1006,11 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZGETRF
+     external :: ZGETRI
 
 !! external arguments
      ! dimension of zmat matrix
@@ -1059,6 +1079,10 @@
      use constants, only : zero
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: DGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1155,6 +1179,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: ZGEEV
+
 !! external arguments
      ! leading dimension of matrix amat
      integer, intent(in)      :: ldim
@@ -1244,6 +1272,10 @@
      use constants, only : zero
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: DGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1339,6 +1371,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: ZGEEV
+
 !! external arguments
      ! leading dimension of matrix amat
      integer, intent(in)      :: ldim
@@ -1425,6 +1461,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: DSYEV
+
 !! external arguments
      ! leading dimension of matrix amat
      integer, intent(in)   :: ldim
@@ -1497,6 +1537,10 @@
      use constants, only : zero
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZHEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1577,6 +1621,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: DSYEV
+
 !! external arguments
      ! leading dimension of matrix amat
      integer, intent(in)   :: ldim
@@ -1651,6 +1699,10 @@
      use constants, only : zero
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZHEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1736,6 +1788,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: DGESV
+
 !! external arguments
      ! the number of linear equations
      integer, intent(in)     :: n
@@ -1796,6 +1852,10 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZGESV
 
 !! external arguments
      ! the number of linear equations
