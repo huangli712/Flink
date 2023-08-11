@@ -5072,6 +5072,9 @@
      subroutine mp_reduce_rdp1(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          real(dp), intent(in) :: source(:)
          real(dp), intent(inout) :: data(:)
@@ -5121,6 +5124,9 @@
 !!
      subroutine mp_reduce_rdp2(source, data, root, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:)
@@ -5172,6 +5178,9 @@
      subroutine mp_reduce_rdp3(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          real(dp), intent(in) :: source(:,:,:)
          real(dp), intent(inout) :: data(:,:,:)
@@ -5221,6 +5230,9 @@
 !!
      subroutine mp_reduce_rdp4(source, data, root, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:)
@@ -5272,6 +5284,9 @@
      subroutine mp_reduce_rdp5(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:,:)
@@ -5322,6 +5337,9 @@
      subroutine mp_reduce_cdp0(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source
          complex(dp), intent(inout) :: data
@@ -5368,6 +5386,9 @@
 !!
      subroutine mp_reduce_cdp1(source, data, root, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:)
@@ -5419,6 +5440,9 @@
      subroutine mp_reduce_cdp2(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source(:,:)
          complex(dp), intent(inout) :: data(:,:)
@@ -5468,6 +5492,9 @@
 !!
      subroutine mp_reduce_cdp3(source, data, root, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:)
