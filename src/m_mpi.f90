@@ -5519,6 +5519,9 @@
      subroutine mp_reduce_cdp4(source, data, root, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_REDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
