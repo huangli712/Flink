@@ -6193,6 +6193,9 @@
      subroutine mp_allreduce_cdp0(source, data, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLREDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source
          complex(dp), intent(inout) :: data
@@ -6237,6 +6240,9 @@
 !!
      subroutine mp_allreduce_cdp1(source, data, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:)
@@ -6286,6 +6292,9 @@
      subroutine mp_allreduce_cdp2(source, data, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLREDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source(:,:)
          complex(dp), intent(inout) :: data(:,:)
@@ -6334,6 +6343,9 @@
      subroutine mp_allreduce_cdp3(source, data, mop, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLREDUCE
+
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:)
          complex(dp), intent(inout) :: data(:,:,:)
@@ -6381,6 +6393,9 @@
 !!
      subroutine mp_allreduce_cdp4(source, data, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:)
