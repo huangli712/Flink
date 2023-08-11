@@ -4329,6 +4329,9 @@
      subroutine mp_allgatherv_rdp2(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
@@ -4372,6 +4375,9 @@
 !!
      subroutine mp_allgatherv_rdp3(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -4417,6 +4423,9 @@
      subroutine mp_allgatherv_rdp4(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:)
@@ -4460,6 +4469,9 @@
 !!
      subroutine mp_allgatherv_rdp5(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -4505,6 +4517,9 @@
      subroutine mp_allgatherv_cdp1(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:)
          complex(dp), intent(inout) :: data(:)
@@ -4548,6 +4563,9 @@
 !!
      subroutine mp_allgatherv_cdp2(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -4593,6 +4611,9 @@
      subroutine mp_allgatherv_cdp3(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
          complex(dp), intent(inout) :: data(:,:,:)
@@ -4637,6 +4658,9 @@
      subroutine mp_allgatherv_cdp4(send, data, recv, disp, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
@@ -4680,6 +4704,9 @@
 !!
      subroutine mp_allgatherv_cdp5(send, data, recv, disp, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
