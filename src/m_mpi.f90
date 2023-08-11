@@ -2781,6 +2781,9 @@
      subroutine mp_gatherv_int1(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -2824,6 +2827,9 @@
 !!
      subroutine mp_gatherv_int2(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -2869,6 +2875,9 @@
      subroutine mp_gatherv_int3(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
@@ -2912,6 +2921,9 @@
 !!
      subroutine mp_gatherv_int4(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -2957,6 +2969,9 @@
      subroutine mp_gatherv_int5(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:,:)
@@ -3000,6 +3015,9 @@
 !!
      subroutine mp_gatherv_rdp1(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -3045,6 +3063,9 @@
      subroutine mp_gatherv_rdp2(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
@@ -3088,6 +3109,9 @@
 !!
      subroutine mp_gatherv_rdp3(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -3133,6 +3157,9 @@
      subroutine mp_gatherv_rdp4(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:)
@@ -3176,6 +3203,9 @@
 !!
      subroutine mp_gatherv_rdp5(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -3221,6 +3251,9 @@
      subroutine mp_gatherv_cdp1(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:)
          complex(dp), intent(inout) :: data(:)
@@ -3264,6 +3297,9 @@
 !!
      subroutine mp_gatherv_cdp2(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -3309,6 +3345,9 @@
      subroutine mp_gatherv_cdp3(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
          complex(dp), intent(inout) :: data(:,:,:)
@@ -3353,6 +3392,9 @@
      subroutine mp_gatherv_cdp4(send, data, recv, disp, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHERV
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
@@ -3396,6 +3438,9 @@
 !!
      subroutine mp_gatherv_cdp5(send, data, recv, disp, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
