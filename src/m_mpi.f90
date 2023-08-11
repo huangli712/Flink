@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 08/09/2006 by li huang (created)
-!!!           07/30/2021 by li huang (last modified)
+!!!           08/12/2023 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
@@ -18,7 +18,7 @@
 !!!               mpich     3.0.3, 3.0.4, 3.1.4, 3.3a2
 !!!               mvapich2  1.2.0p1
 !!!               openmpi   1.6.4, 1.7.1, 1.8.3
-!!!               intel mpi 3.2.0
+!!!               intel mpi 3.2.0, v2021.10
 !!!-----------------------------------------------------------------------
 
 !!>>> whether the compiler support mpi environment, i.e, mpif90
@@ -6429,6 +6429,9 @@
 !!
      subroutine mp_allreduce_cdp5(source, data, mop, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:,:)
