@@ -1918,6 +1918,10 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+     external :: DSYSV
+
 !! external arguments
      ! the number of linear equations
      integer, intent(in)     :: n
@@ -1984,6 +1988,10 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZHESV
 
 !! external arguments
      ! the number of linear equations
@@ -2057,6 +2065,10 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: DGESVD
 
 !! external arguments
      ! number of rows of A matrix
@@ -2133,6 +2145,10 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: ZGESVD
 
 !! external arguments
      ! number of rows of A matrix
