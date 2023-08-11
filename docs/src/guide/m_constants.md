@@ -49,7 +49,7 @@ program test
 
     real(dp) :: A
     A = one
-end program
+end program test
 ```
 
 (2) Import constants module partially.
@@ -63,5 +63,5 @@ program test
 
     real(dp) :: A
     A = one
-end program
+end program test
 ```

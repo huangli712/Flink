@@ -8,7 +8,7 @@
 
 !!! note
 
-    *Flink* obeys the Fortran 2003 standard. 
+    *Flink* obeys the Fortran 2018 standard. 
 
 ## Features
 
@@ -21,7 +21,6 @@
     * Pseudo random number generator (**src/m_spring.f90**)
     * Stack (**src/m_stack.f90**)
     * Analytical tetrahedron method (**src/m_tetra.f90**)
-    * Version information (**src/m_version.f90**)
 
 * Subroutines
     * Warning and error messages (**src/s_error.f90**)
