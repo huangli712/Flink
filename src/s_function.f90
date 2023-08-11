@@ -13,7 +13,7 @@
 !!! type    : subroutines & functions
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           08/11/2023 by li huang (last modified)
 !!! purpose : these subroutines / functions are used to generate some
 !!!           special functions, such as the Legendre and Chebyshev
 !!!           orthogonal polynomials, Bessel function, etc.
@@ -35,6 +35,9 @@
      use constants, only : one
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
 
 !! external arguments
      ! maximum order for legendre orthogonal polynomial
@@ -100,6 +103,9 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_print_error
+
 !! external arguments
      ! maximum order for chebyshev orthogonal polynomial
      integer, intent(in)   :: chmax
@@ -162,6 +168,11 @@
      use constants, only : epss
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
+     external :: s_linspace_d
+     external :: s_svd_dg
 
 !! external arguments
      ! maximum order for svd orthogonal polynomial
@@ -404,6 +415,9 @@
      use constants, only : eps8
 
      implicit none
+
+!! external subroutines
+     external :: s_print_error
 
 !! external arguments
      ! maximum order of spherical Bessel function
