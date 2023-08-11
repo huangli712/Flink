@@ -1133,6 +1133,9 @@
      subroutine mp_bcast_log0(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          logical, intent(in) :: data
          !
@@ -1169,6 +1172,9 @@
 !!
      subroutine mp_bcast_log1(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:)
@@ -1210,6 +1216,9 @@
      subroutine mp_bcast_log2(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          logical, intent(in) :: data(:,:)
          !
@@ -1249,6 +1258,9 @@
 !!
      subroutine mp_bcast_log3(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:,:,:)
@@ -1290,6 +1302,9 @@
      subroutine mp_bcast_log4(data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_BCAST
+
 !! external arguments
          logical, intent(in) :: data(:,:,:,:)
          !
@@ -1329,6 +1344,9 @@
 !!
      subroutine mp_bcast_log5(data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:,:,:,:,:)
