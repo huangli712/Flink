@@ -2736,6 +2736,9 @@
      subroutine mp_gather_cdp5(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:,:)
