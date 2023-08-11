@@ -3446,6 +3446,9 @@
      subroutine mp_allgather_int1(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -3486,6 +3489,9 @@
 !!
      subroutine mp_allgather_int2(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -3528,6 +3534,9 @@
      subroutine mp_allgather_int3(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          integer, intent(in) :: send(:,:,:)
          integer, intent(inout) :: data(:,:,:)
@@ -3568,6 +3577,9 @@
 !!
      subroutine mp_allgather_int4(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -3610,6 +3622,9 @@
      subroutine mp_allgather_int5(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
          integer, intent(inout) :: data(:,:,:,:,:)
@@ -3650,6 +3665,9 @@
 !!
      subroutine mp_allgather_rdp1(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -3692,6 +3710,9 @@
      subroutine mp_allgather_rdp2(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          real(dp), intent(in) :: send(:,:)
          real(dp), intent(inout) :: data(:,:)
@@ -3732,6 +3753,9 @@
 !!
      subroutine mp_allgather_rdp3(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -3774,6 +3798,9 @@
      subroutine mp_allgather_rdp4(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:)
@@ -3815,6 +3842,9 @@
      subroutine mp_allgather_rdp5(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:,:)
@@ -3855,6 +3885,9 @@
 !!
      subroutine mp_allgather_cdp1(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
