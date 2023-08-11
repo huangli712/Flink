@@ -3897,6 +3897,9 @@
      subroutine mp_allgather_cdp2(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
          complex(dp), intent(inout) :: data(:,:)
@@ -3937,6 +3940,9 @@
 !!
      subroutine mp_allgather_cdp3(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
@@ -3979,6 +3985,9 @@
      subroutine mp_allgather_cdp4(send, data, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_ALLGATHER
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
          complex(dp), intent(inout) :: data(:,:,:,:)
@@ -4019,6 +4028,9 @@
 !!
      subroutine mp_allgather_cdp5(send, data, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
