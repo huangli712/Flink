@@ -17,7 +17,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           08/11/2023 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful features,
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
@@ -35,6 +35,9 @@
 !!
   subroutine s_assert(condition)
      implicit none
+
+!! external subroutines
+     external :: s_print_error
 
 !! external arguments
      ! the logical condition that we have to assert
@@ -60,6 +63,9 @@
 !!
   subroutine s_assert2(condition, message)
      implicit none
+
+!! external subroutines
+     external :: s_print_error
 
 !! external arguments
      ! the logical condition that we have to assert
@@ -200,6 +206,9 @@
      use constants, only : dp
 
      implicit none
+
+!! external subroutines
+     external :: s_qscorer
 
 !! external arguments
      ! grab the number of values from the calling code
