@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           08/11/2023 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement a generic and
 !!!           flexible config/input file reader and analyzer.
 !!! status  : unstable
@@ -119,6 +119,10 @@
      use, intrinsic :: iso_fortran_env, only : iostat_end
 
      implicit none
+
+!! external subroutines
+     external :: s_str_compress
+     external :: s_str_lowcase
 
 !! external arguments
      ! filename for the input/config file
@@ -271,6 +275,10 @@
   subroutine p_get(in_key, out_value)
      implicit none
 
+!! external subroutines
+     external :: s_str_compress
+     external :: s_str_lowcase
+
 !! external arguments
      ! string representation for the key of key-value pair
      character(len=*), intent(in) :: in_key
@@ -366,6 +374,10 @@
 !!
   subroutine p_get_vec(in_key, out_value, nsize)
      implicit none
+
+!! external subroutines
+     external :: s_str_compress
+     external :: s_str_lowcase
 
 !! external arguments
      ! size of out_value
