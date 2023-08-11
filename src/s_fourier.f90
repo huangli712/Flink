@@ -8,7 +8,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           08/11/2023 by li huang (last modified)
 !!! purpose : these subroutines are used to do fast fourier transformation
 !!!           for green's or hybridization functions.
 !!! status  : unstable
@@ -159,6 +159,9 @@
 
      implicit none
 
+!! external subroutines
+     external :: s_fft_tails
+
 !! external arguments
      ! number of matsubara frequency points
      integer, intent(in)   :: mfreq
@@ -229,6 +232,9 @@
      use constants, only : pi, zero, two, half
 
      implicit none
+
+!! external subroutines
+     external :: s_fft_tails
 
 !! external arguments
      ! number of matsubara frequency points
