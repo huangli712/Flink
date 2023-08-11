@@ -2531,6 +2531,9 @@
      subroutine mp_gather_rdp5(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
          real(dp), intent(inout) :: data(:,:,:,:,:)
@@ -2571,6 +2574,9 @@
 !!
      subroutine mp_gather_cdp1(send, data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
@@ -2613,6 +2619,9 @@
      subroutine mp_gather_cdp2(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
          complex(dp), intent(inout) :: data(:,:)
@@ -2654,6 +2663,9 @@
      subroutine mp_gather_cdp3(send, data, root, gid)
          implicit none
 
+!! external subroutines
+         external :: MPI_GATHER
+
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
          complex(dp), intent(inout) :: data(:,:,:)
@@ -2694,6 +2706,9 @@
 !!
      subroutine mp_gather_cdp4(send, data, root, gid)
          implicit none
+
+!! external subroutines
+         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
