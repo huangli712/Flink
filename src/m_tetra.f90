@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:lihuang.dmft@gmail.com)
 !!! history : 06/07/2006 by li huang (created)
-!!!           08/11/2023 by li huang (last modified)
+!!!           08/13/2023 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -57,7 +57,7 @@
      public  :: tetra_blochl_weight1
      public  :: tetra_blochl_weight2
 
-     ! Labmbin-Vigneron algorithm for crystal Green's function
+     ! Lambin-Vigneron algorithm for crystal Green's function
      public  :: tetra_lambin_weight
 
      ! Gaussian broadening algorithm for (integrated) density of states
