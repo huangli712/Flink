@@ -363,150 +363,149 @@ for ``\epsilon_3 < \epsilon < \epsilon_4``.
 In this part we will write up the equations of Lambin and Vigneron for the weight factors used in the analytical tetrahedron method. The purpose of this is to rewrite their formulas in a simpler, more readable and hopefully more
 stable form.
 
-Before we start writing out the equations let us define a few symbols. The external frequency is denoted by $z$ and the energy at corner number $i$ is denoted by $\epsilon_i$.  We define $z_i = z-\epsilon_i$ and also $E_{ij} = E_i-E_j$. 
+Before we start writing out the equations let us define a few symbols. The external frequency is denoted by ``z`` and the energy at corner number ``i`` is denoted by ``\epsilon_i``.  We define ``z_i = z-\epsilon_i`` and also ``\epsilon_{ij} = \epsilon_i-\epsilon_j``. 
 
-In the general case when all the tetrahedron corners have different energies
-the equation for the weight factor at corner $i$ is according to LV
-\begin{eqnarray}
-r_i &\equiv& 6\int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+In the general case when all the tetrahedron corners have different energies the equation for the weight factor at corner $i$ is according to LV
+
+
+```math
+\begin{align}
+r_i
+&\equiv
+6\int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
 \frac{(1-a-b-c)\delta_{i1}+a\delta_{i2}+b\delta_{i3}+c\delta_{i4}}
-{z_1-aE_{21}-bE_{31}-cE_{41}}
-\nonumber \\ &=&
-\frac{z_i^2}{\prod_{k\neq i}E_{ki}}+\sum_{j\neq i}
-\frac{z_j^3}{\prod_{k\neq j}E_{kj}}
-\frac{\log\left(\frac{z_j}{z_i}\right)}{E_{ij}}.
-\end{eqnarray}
+{z_1-a\epsilon_{21}-b\epsilon_{31}-c\epsilon_{41}} \\
+&=
+\frac{z_i^2}{\prod_{k\neq i}\epsilon_{ki}}+\sum_{j\neq i}
+\frac{z_j^3}{\prod_{k\neq j}\epsilon_{kj}}
+\frac{\log\left(\frac{z_j}{z_i}\right)}{\epsilon_{ij}}.
+\end{align}
+```
+
 If we now use the identity:
+
+```math
 \begin{equation}
-  \label{eq:identity}
   0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} = 
-  \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}E_{ji}}
+  \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}\epsilon_{ji}}
 \end{equation}
-the equation for the weight factor can be written as 
-\begin{eqnarray}
-r_i &=& 
-\sum_{j\neq i}
-\frac{z_j^2}{\prod_{k\neq j}E_{kj}}
-\left\{
-\frac{z_j}{E_{ij}}\log\left(\frac{z_j}{z_i}\right)-1
-\right\} 
-\nonumber \\ &=&
-\sum_{j\neq i}
-\frac{z_j}{\prod_{k\neq i,j}E_{kj}}
-\left\{
-\frac{z_j}{E_{ji}}-
-\frac{z_j^2}{E_{ij}^2}\log\left(1+\frac{E_{ji}}{z_j}\right)
-\right\} 
-\nonumber \\ &=&
-\sum_{j\neq i}
-\frac{z_j}{\prod_{k\neq i,j}E_{kj}}\lv\left(\frac{z_j}{E_{ji}}\right).
-\end{eqnarray}
+```
+
+the equation for the weight factor can be written as
+
+
 Here we have defined the so called Lambin-Vigneron function as:
+
+```math
 \begin{equation}
-  \label{eq:lvfunction}
-  \lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
+  lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
 \end{equation}
-This is a simple function which is easy to compute and also has the added
-benefit of having nice asymptotic limits, i.e.
+```
+
+This is a simple function which is easy to compute and also has the added benefit of having nice asymptotic limits, i.e.
+
+```math
 \begin{equation}
-  \label{eq:lvlimits}
-  \lim_{x\rightarrow 0}\lv(x) = 0
-  \qquad\mbox{and}\qquad
-  \lim_{x\rightarrow \infty}\lv(x) = \frac{1}{2}.
+  \lim_{x\rightarrow 0}lv(x) = 0
+  \qquad \text{and} \qquad
+  \lim_{x\rightarrow \infty}lv(x) = \frac{1}{2}.
 \end{equation}
-For considering the cases where the some of the corner energies are identical
-it is useful to write out the equations above explicitly for each corner:
-\begin{eqnarray}
-  \label{eq:arbek}
-r_1 &=& 
- \frac{z_2}{E_{32}E_{42}}\lv\left(\frac{z_2}{E_{21}}\right)
-+\frac{z_3}{E_{23}E_{43}}\lv\left(\frac{z_3}{E_{31}}\right)
-+\frac{z_4}{E_{24}E_{34}}\lv\left(\frac{z_4}{E_{41}}\right)
-\nonumber \\
-r_2 &=& 
- \frac{z_1}{E_{31}E_{41}}\lv\left(\frac{z_1}{E_{12}}\right)
-+\frac{z_3}{E_{13}E_{43}}\lv\left(\frac{z_3}{E_{32}}\right)
-+\frac{z_4}{E_{14}E_{34}}\lv\left(\frac{z_4}{E_{42}}\right)
-\nonumber \\
-r_3 &=& 
- \frac{z_1}{E_{21}E_{41}}\lv\left(\frac{z_1}{E_{13}}\right)
-+\frac{z_2}{E_{12}E_{42}}\lv\left(\frac{z_2}{E_{23}}\right)
-+\frac{z_4}{E_{14}E_{24}}\lv\left(\frac{z_4}{E_{43}}\right)
-\nonumber \\
-r_4 &=& 
- \frac{z_1}{E_{21}E_{31}}\lv\left(\frac{z_1}{E_{14}}\right)
-+\frac{z_2}{E_{12}E_{32}}\lv\left(\frac{z_2}{E_{24}}\right)
-+\frac{z_3}{E_{13}E_{23}}\lv\left(\frac{z_3}{E_{34}}\right)
-\end{eqnarray}
+```
 
-The next case we consider is when two corners have equal energies and we
-assume here that the corners have been ordered in such as way that $E_1 =
-E_2$.  Looking at the formulas in (\ref{eq:arbek}) we see that the limit
-$E_1 \rightarrow E_2$ is trivial take for the weight factors for corners 1 and
-2 but for corners 3 and 4 two terms must be taken together and using
-Mathematica we get:
-\begin{eqnarray}
-  \label{eq:ek2idn}
-r_2 &=&    
- \frac{1}{2}\frac{z_2}{E_{32}E_{42}}
-+\frac{z_3}{E_{23}E_{43}}\lv\left(\frac{z_3}{E_{32}}\right)
-+\frac{z_4}{E_{24}E_{34}}\lv\left(\frac{z_4}{E_{42}}\right)
-\nonumber \\
-r_3 &=& 
- \frac{z_2}{E_{23}E_{24}}
- -\left[\frac{2z_3}{E_{23}E_{24}}+\frac{z_4}{E_{24}^2}\right]
- \lv\left(\frac{z_2}{E_{23}}\right)
-+\frac{z_4}{E_{24}^2}\lv\left(\frac{z_4}{E_{43}}\right)
-\nonumber \\
-r_4 &=& 
- \frac{z_2}{E_{23}E_{24}}
- -\left[\frac{2z_4}{E_{23}E_{24}}+\frac{z_3}{E_{23}^2}\right]
- \lv\left(\frac{z_2}{E_{24}}\right)
-+\frac{z_3}{E_{23}^2}\lv\left(\frac{z_3}{E_{34}}\right)
-\end{eqnarray}
+For considering the cases where the some of the corner energies are identical it is useful to write out the equations above explicitly for each corner:
 
-The next case we consider is $E_1 = E_2$ and $E_4 = E_3$ and we see from the
-formulas in equation (\ref{eq:ek2idn}) that the limit $E_4\rightarrow E_3$ is
-trivial for corners 3 and 4 and the weight factor for corner 2 follows from
-symmetry.  Hence we get:
-\begin{eqnarray}
-  \label{eq:ek22idn}
-r_2 &=& 
- \frac{z_3}{E_{32}^2}+\frac{1}{2}\frac{z_2}{E_{32}^2}
- -3\frac{z_2}{E_{32}^2}\lv\left(\frac{z_3}{E_{32}}\right)
-\nonumber \\
-r_3 &=& 
- \frac{z_2}{E_{23}^2}+\frac{1}{2}\frac{z_3}{E_{23}^2}
- -3\frac{z_3}{E_{23}^2}\lv\left(\frac{z_2}{E_{23}}\right)
-\end{eqnarray}
+```math
+\begin{align}
+r_1 &=
+ \frac{z_2}{\epsilon_{32}\epsilon_{42}}lv\left(\frac{z_2}{\epsilon_{21}}\right)
++\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{31}}\right)
++\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{41}}\right)
+ \\
+r_2 &= 
+ \frac{z_1}{\epsilon_{31}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{12}}\right)
++\frac{z_3}{\epsilon_{13}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
++\frac{z_4}{\epsilon_{14}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
+ \\
+r_3 &= 
+ \frac{z_1}{\epsilon_{21}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{13}}\right)
++\frac{z_2}{\epsilon_{12}\epsilon_{42}}lv\left(\frac{z_2}{\epsilon_{23}}\right)
++\frac{z_4}{\epsilon_{14}\epsilon_{24}}lv\left(\frac{z_4}{\epsilon_{43}}\right)
+ \\
+r_4 &= 
+ \frac{z_1}{\epsilon_{21}\epsilon_{31}}lv\left(\frac{z_1}{\epsilon_{14}}\right)
++\frac{z_2}{\epsilon_{12}\epsilon_{32}}lv\left(\frac{z_2}{\epsilon_{24}}\right)
++\frac{z_3}{\epsilon_{13}\epsilon_{23}}lv\left(\frac{z_3}{\epsilon_{34}}\right)
+\end{align}
+```
 
-Next case is $E_1 = E_2 = E_3$ and this case we can either obtain from the
-formulas in equation (\ref{eq:ek2idn}) or simply do the corresponding integral
-which is simple in this case since we have:
-\begin{eqnarray}
-  r_3 &=& \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
-  \frac{b}{z_3-cE_{43}}
-  \nonumber \\
-  r_4 &=& \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
-  \frac{c}{z_3-cE_{43}}.
-\end{eqnarray}
+The next case we consider is when two corners have equal energies and we assume here that the corners have been ordered in such as way that $\epsilon_1 = \epsilon_2$.  Looking at the formulas above we see that the limit $\epsilon_1 \rightarrow \epsilon_2$ is trivial take for the weight factors for corners 1 and 2 but for corners 3 and 4 two terms must be taken together and using Mathematica we get:
+
+```math
+\begin{align}
+r_2 &=   
+ \frac{1}{2}\frac{z_2}{\epsilon_{32}\epsilon_{42}}
++\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
++\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
+ \\
+r_3 &=
+ \frac{z_2}{\epsilon_{23}\epsilon_{24}}
+ -\left[\frac{2z_3}{\epsilon_{23}\epsilon_{24}}+\frac{z_4}{\epsilon_{24}^2}\right]
+ lv\left(\frac{z_2}{\epsilon_{23}}\right)
++\frac{z_4}{\epsilon_{24}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right)
+ \\
+r_4 &=
+ \frac{z_2}{\epsilon_{23}\epsilon_{24}}
+ -\left[\frac{2z_4}{\epsilon_{23}\epsilon_{24}}+\frac{z_3}{\epsilon_{23}^2}\right]
+ lv\left(\frac{z_2}{\epsilon_{24}}\right)
++\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_3}{\epsilon_{34}}\right)
+\end{align}
+```
+
+The next case we consider is $\epsilon_1 = \epsilon_2$ and $\epsilon_4 = \epsilon_3$ and we see from the formulas in equation (see above) that the limit $\epsilon_4 \rightarrow \epsilon_3$ is trivial for corners 3 and 4 and the weight factor for corner 2 follows from symmetry. Hence we get:
+
+```math
+\begin{align}
+r_2 &=
+ \frac{z_3}{\epsilon_{32}^2}+\frac{1}{2}\frac{z_2}{\epsilon_{32}^2}
+ -3\frac{z_2}{\epsilon_{32}^2}lv\left(\frac{z_3}{\epsilon_{32}}\right)
+ \\
+r_3 &=
+ \frac{z_2}{\epsilon_{23}^2}+\frac{1}{2}\frac{z_3}{\epsilon_{23}^2}
+ -3\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_2}{\epsilon_{23}}\right)
+\end{align}
+```
+
+Next case is $\epsilon_1 = \epsilon_2 = \epsilon_3$ and this case we can either obtain from the formulas in equation (\ref{eq:ek2idn}) or simply do the corresponding integral which is simple in this case since we have:
+
+```math
+\begin{align}
+  r_3 &= \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+  \frac{b}{z_3-c\epsilon_{43}}
+  \\
+  r_4 &= \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+  \frac{c}{z_3-c\epsilon_{43}}.
+\end{align}
+```
+
 Performing these integrals we obtain:
-\begin{eqnarray}
-  \label{eq:ek3idn}
-r_3 &=& 
- \frac{2z_3-5z_4}{6E_{34}^2}+
- \frac{z_4}{E_{34}^2}\lv\left(\frac{z_4}{E_{43}}\right)
-\nonumber \\
-r_4 &=& 
- \frac{z_4}{E_{43}^2}+\frac{1}{2}\frac{z_3}{E_{43}^2}
- -3\frac{z_3}{E_{43}^2}\lv\left(\frac{z_4}{E_{43}}\right)
-\end{eqnarray}
 
-The final case is of course the simplest one where all the corners have the
-same energy and in that case we obtain:
+```math
+\begin{align}
+r_3 &=
+ \frac{2z_3-5z_4}{6\epsilon_{34}^2}+
+ \frac{z_4}{\epsilon_{34}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right) \\
+r_4 &= 
+ \frac{z_4}{\epsilon_{43}^2}+\frac{1}{2}\frac{z_3}{\epsilon_{43}^2}
+ -3\frac{z_3}{\epsilon_{43}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right)
+\end{align}
+```
+
+The final case is of course the simplest one where all the corners have the same energy and in that case we obtain:
+
+```math
 \begin{equation}
-  \label{eq:ek4idn}
 r_4 = \frac{1}{4}\frac{1}{z_4}
 \end{equation}
+```
 
 ### Smearning algorithm
