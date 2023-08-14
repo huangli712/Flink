@@ -7,7 +7,7 @@ In this module, we implement two types of stack, `istack` and `gstack`. The ista
 * real(dp),
 * complex(dp).
 
-The usages, subroutine parameters for these two stack types are almost identical. To implement gstack type, we generally use the unlimited polymorphic features in Fortran 2003/2008 standard. Noted that not all Fortran compilers can support these features. This module was tested using intel Fortran compiler only. We do not guarantee it can work/be compiled correctly for using the other Fortran compilers. So please use it carefully. In the *iQIST* project, so far we only use the istack type. However, in the future, we will turn to the gstack type.
+The usages and subroutine's parameters for these two stack types are almost identical. To implement the gstack type, we generally use the unlimited polymorphic features in Fortran 2003/2008 standard. Noted that not all Fortran compilers can support these features. This module was tested using Intel Fortran compiler only. We do not guarantee it can work/be compiled correctly for using the other Fortran compilers. So please use it carefully. In the *iQIST* project, so far we only use the istack type. However, in the future, we will turn to the gstack type.
 
 ## Type
 
