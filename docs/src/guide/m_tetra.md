@@ -155,7 +155,7 @@ for ``\epsilon > \epsilon_4``.
 
 **Integration weights**
 
-Here we give the expressions that results in the integration weights ``w_{nj}``. By ``w_1``, ``w_2``, ``w_3``, and ``w_4`` we denote the contribution to the integration weights at the four corners of a tetrahedron, which are again ordered according to increasing one-particle energies. Note that the band index ``n`` is suppressed.
+Here we give the expressions that result in the integration weights ``w_{nj}``. By ``w_1``, ``w_2``, ``w_3``, and ``w_4`` we denote the contribution to the integration weights at the four corners of a tetrahedron, which are again ordered according to increasing one-particle energies. Note that the band index ``n`` is suppressed.
 
 For a fully tetrahedron, i.e., ``\epsilon_F < \epsilon_1``, the contributions vanish:
 
@@ -164,5 +164,349 @@ For a fully tetrahedron, i.e., ``\epsilon_F < \epsilon_1``, the contributions va
 w_1 = w_2 = w_3 = w_4 = 0.
 \end{equation}
 ```
+
+For ``\epsilon_1 < \epsilon_F < \epsilon_2``, we obtain
+
+```math
+\begin{equation}
+w_1 = C 
+\left[
+4 - (\epsilon_F - \epsilon_1)
+\left(\frac{1}{\epsilon_{21}} + \frac{1}{\epsilon_{31}} + \frac{1}{\epsilon_{41}}\right)
+\right],
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_2 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{21}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_3 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{31}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_4 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{41}},
+\end{equation}
+```
+
+with
+
+```math
+\begin{equation}
+C = \frac{V_T}{4V_G} \frac{(\epsilon_F - \epsilon_1)^3}{\epsilon_{21}\epsilon_{31}\epsilon_{41}}.
+\end{equation}
+```
+
+For ``\epsilon_2 < \epsilon_F < \epsilon_3``, we obtain
+
+```math
+\begin{equation}
+w_1 = C_1 +
+(C_1 + C_2) \frac{\epsilon_3 - \epsilon_F}{\epsilon_{31}} +
+(C_1 + C_2 + C_3)\frac{\epsilon_4 - \epsilon_F}{\epsilon_{41}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_2 = C_1 + C_2 + C_3 +
+(C_2 + C_3) \frac{\epsilon_3 - \epsilon_F}{\epsilon_{32}} +
+C_3 \frac{\epsilon_4 - \epsilon_F}{\epsilon_{42}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_3 = (C_1 + C_2) \frac{\epsilon_F - \epsilon_1}{\epsilon_{31}} +
+(C_2 + C_3) \frac{\epsilon_F - \epsilon_2}{\epsilon_{32}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_4 = (C_1 + C_2 + C_3)\frac{\epsilon_F - \epsilon_1}{\epsilon_{41}} +
+C_3 \frac{\epsilon_F - \epsilon_2}{\epsilon_{42}},
+\end{equation}
+```
+
+with
+
+```math
+\begin{equation}
+C_1 = \frac{V_T}{4V_G} \frac{(\epsilon_F - \epsilon_1)^2}{\epsilon_{41}\epsilon_{31}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+C_2 = \frac{V_T}{4V_G}
+\frac{(\epsilon_F - \epsilon_1)(\epsilon_F - \epsilon_2)(\epsilon_3 - \epsilon_F)}{\epsilon_{41}\epsilon_{32}\epsilon_{31}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+C_3 = \frac{V_T}{4V_G}
+\frac{(\epsilon_F - \epsilon_2)^2(\epsilon_4 - \epsilon_F)}{\epsilon_{42}\epsilon_{32}\epsilon_{41}}.
+\end{equation}
+```
+
+For ``\epsilon_3 < \epsilon_F < \epsilon_4``, the weights are
+
+```math
+\begin{equation}
+w_1 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{41}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_2 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{42}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_3 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{43}},
+\end{equation}
+```
+
+```math
+\begin{equation}
+w_4 = \frac{V_T}{4V_G} - C
+\left[
+4 - \left(\frac{1}{\epsilon_{41}} + \frac{1}{\epsilon_{42}} + \frac{1}{\epsilon_{43}}\right)
+(\epsilon_4 - \epsilon_F)
+\right],
+\end{equation}
+```
+
+with
+
+```math
+\begin{equation}
+C = \frac{V_T}{4V_G} \frac{(\epsilon_4 - \epsilon_F)^3}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}.
+\end{equation}
+```
+
+For a fully occupied tetrahedron the contribution for each corner is identical:
+
+```math
+\begin{equation}
+w_1 = w_2 = w_3 = w_4 = \frac{V_T}{4V_G}.
+\end{equation}
+```
+
+The corresponding correction ``dw_i`` to the integration weights has an extremely simple form:
+
+```math
+\begin{equation}
+dw_i = \sum_T \frac{1}{40} D_T (\epsilon_F) \sum^4_{j=1} (\epsilon_j - \epsilon_i).
+\end{equation}
+```
+
+**Density of states**
+
+The contribution of one tetrahedron to the density of states at energy ``\epsilon`` is given by
+
+```math
+\begin{equation}
+D_T(\epsilon) = 0
+\end{equation}
+```
+
+for ``\epsilon < \epsilon_1`` and for ``\epsilon_4 < \epsilon``,
+
+```math
+\begin{equation}
+D_T(\epsilon) = \frac{V_T}{V_G}
+\frac{3(\epsilon-\epsilon_1)^2}{\epsilon_{21}\epsilon_{31}\epsilon_{41}}
+\end{equation}
+```
+
+for ``\epsilon_1 < \epsilon < \epsilon_2``,
+
+```math
+\begin{equation}
+D_T(\epsilon) = \frac{V_T}{V_G}
+\frac{1}{\epsilon_{31}\epsilon_{41}}
+\left[
+3\epsilon_{21} + 6(\epsilon - \epsilon_2)
+- 3\frac{(\epsilon_{31} + \epsilon_{42})(\epsilon - \epsilon_2)^2}{\epsilon_{32}\epsilon_{42}}
+\right]
+\end{equation}
+```
+
+for ``\epsilon_2 < \epsilon < \epsilon_3``, and
+
+```math
+\begin{equation}
+D_T(\epsilon) = \frac{V_T}{V_G}
+\frac{3(\epsilon_4 - \epsilon)^2}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}
+\end{equation}
+```
+
+for ``\epsilon_3 < \epsilon < \epsilon_4``.
+
+**Reference:**
+
+[1] P. E. Blochl, O. Jepsen, and O. K. Anderson, *Phys. Rev. B* **49**, 16223 (1994)
+
+### Analytical Tetrahedron Integration (Lambin-Vigneron's Algorithm)
+
+In this part we will write up the equations of Lambin and Vigneron for the weight factors used in the analytical tetrahedron method. The purpose of this is to rewrite their formulas in a simpler, more readable and hopefully more
+stable form.
+
+Before we start writing out the equations let us define a few symbols. The external frequency is denoted by $z$ and the energy at corner number $i$ is denoted by $\epsilon_i$.  We define $z_i = z-\epsilon_i$ and also $E_{ij} = E_i-E_j$. 
+
+In the general case when all the tetrahedron corners have different energies
+the equation for the weight factor at corner $i$ is according to LV
+\begin{eqnarray}
+r_i &\equiv& 6\int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+\frac{(1-a-b-c)\delta_{i1}+a\delta_{i2}+b\delta_{i3}+c\delta_{i4}}
+{z_1-aE_{21}-bE_{31}-cE_{41}}
+\nonumber \\ &=&
+\frac{z_i^2}{\prod_{k\neq i}E_{ki}}+\sum_{j\neq i}
+\frac{z_j^3}{\prod_{k\neq j}E_{kj}}
+\frac{\log\left(\frac{z_j}{z_i}\right)}{E_{ij}}.
+\end{eqnarray}
+If we now use the identity:
+\begin{equation}
+  \label{eq:identity}
+  0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} = 
+  \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}E_{ji}}
+\end{equation}
+the equation for the weight factor can be written as 
+\begin{eqnarray}
+r_i &=& 
+\sum_{j\neq i}
+\frac{z_j^2}{\prod_{k\neq j}E_{kj}}
+\left\{
+\frac{z_j}{E_{ij}}\log\left(\frac{z_j}{z_i}\right)-1
+\right\} 
+\nonumber \\ &=&
+\sum_{j\neq i}
+\frac{z_j}{\prod_{k\neq i,j}E_{kj}}
+\left\{
+\frac{z_j}{E_{ji}}-
+\frac{z_j^2}{E_{ij}^2}\log\left(1+\frac{E_{ji}}{z_j}\right)
+\right\} 
+\nonumber \\ &=&
+\sum_{j\neq i}
+\frac{z_j}{\prod_{k\neq i,j}E_{kj}}\lv\left(\frac{z_j}{E_{ji}}\right).
+\end{eqnarray}
+Here we have defined the so called Lambin-Vigneron function as:
+\begin{equation}
+  \label{eq:lvfunction}
+  \lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
+\end{equation}
+This is a simple function which is easy to compute and also has the added
+benefit of having nice asymptotic limits, i.e.
+\begin{equation}
+  \label{eq:lvlimits}
+  \lim_{x\rightarrow 0}\lv(x) = 0
+  \qquad\mbox{and}\qquad
+  \lim_{x\rightarrow \infty}\lv(x) = \frac{1}{2}.
+\end{equation}
+For considering the cases where the some of the corner energies are identical
+it is useful to write out the equations above explicitly for each corner:
+\begin{eqnarray}
+  \label{eq:arbek}
+r_1 &=& 
+ \frac{z_2}{E_{32}E_{42}}\lv\left(\frac{z_2}{E_{21}}\right)
++\frac{z_3}{E_{23}E_{43}}\lv\left(\frac{z_3}{E_{31}}\right)
++\frac{z_4}{E_{24}E_{34}}\lv\left(\frac{z_4}{E_{41}}\right)
+\nonumber \\
+r_2 &=& 
+ \frac{z_1}{E_{31}E_{41}}\lv\left(\frac{z_1}{E_{12}}\right)
++\frac{z_3}{E_{13}E_{43}}\lv\left(\frac{z_3}{E_{32}}\right)
++\frac{z_4}{E_{14}E_{34}}\lv\left(\frac{z_4}{E_{42}}\right)
+\nonumber \\
+r_3 &=& 
+ \frac{z_1}{E_{21}E_{41}}\lv\left(\frac{z_1}{E_{13}}\right)
++\frac{z_2}{E_{12}E_{42}}\lv\left(\frac{z_2}{E_{23}}\right)
++\frac{z_4}{E_{14}E_{24}}\lv\left(\frac{z_4}{E_{43}}\right)
+\nonumber \\
+r_4 &=& 
+ \frac{z_1}{E_{21}E_{31}}\lv\left(\frac{z_1}{E_{14}}\right)
++\frac{z_2}{E_{12}E_{32}}\lv\left(\frac{z_2}{E_{24}}\right)
++\frac{z_3}{E_{13}E_{23}}\lv\left(\frac{z_3}{E_{34}}\right)
+\end{eqnarray}
+
+The next case we consider is when two corners have equal energies and we
+assume here that the corners have been ordered in such as way that $E_1 =
+E_2$.  Looking at the formulas in (\ref{eq:arbek}) we see that the limit
+$E_1 \rightarrow E_2$ is trivial take for the weight factors for corners 1 and
+2 but for corners 3 and 4 two terms must be taken together and using
+Mathematica we get:
+\begin{eqnarray}
+  \label{eq:ek2idn}
+r_2 &=&    
+ \frac{1}{2}\frac{z_2}{E_{32}E_{42}}
++\frac{z_3}{E_{23}E_{43}}\lv\left(\frac{z_3}{E_{32}}\right)
++\frac{z_4}{E_{24}E_{34}}\lv\left(\frac{z_4}{E_{42}}\right)
+\nonumber \\
+r_3 &=& 
+ \frac{z_2}{E_{23}E_{24}}
+ -\left[\frac{2z_3}{E_{23}E_{24}}+\frac{z_4}{E_{24}^2}\right]
+ \lv\left(\frac{z_2}{E_{23}}\right)
++\frac{z_4}{E_{24}^2}\lv\left(\frac{z_4}{E_{43}}\right)
+\nonumber \\
+r_4 &=& 
+ \frac{z_2}{E_{23}E_{24}}
+ -\left[\frac{2z_4}{E_{23}E_{24}}+\frac{z_3}{E_{23}^2}\right]
+ \lv\left(\frac{z_2}{E_{24}}\right)
++\frac{z_3}{E_{23}^2}\lv\left(\frac{z_3}{E_{34}}\right)
+\end{eqnarray}
+
+The next case we consider is $E_1 = E_2$ and $E_4 = E_3$ and we see from the
+formulas in equation (\ref{eq:ek2idn}) that the limit $E_4\rightarrow E_3$ is
+trivial for corners 3 and 4 and the weight factor for corner 2 follows from
+symmetry.  Hence we get:
+\begin{eqnarray}
+  \label{eq:ek22idn}
+r_2 &=& 
+ \frac{z_3}{E_{32}^2}+\frac{1}{2}\frac{z_2}{E_{32}^2}
+ -3\frac{z_2}{E_{32}^2}\lv\left(\frac{z_3}{E_{32}}\right)
+\nonumber \\
+r_3 &=& 
+ \frac{z_2}{E_{23}^2}+\frac{1}{2}\frac{z_3}{E_{23}^2}
+ -3\frac{z_3}{E_{23}^2}\lv\left(\frac{z_2}{E_{23}}\right)
+\end{eqnarray}
+
+Next case is $E_1 = E_2 = E_3$ and this case we can either obtain from the
+formulas in equation (\ref{eq:ek2idn}) or simply do the corresponding integral
+which is simple in this case since we have:
+\begin{eqnarray}
+  r_3 &=& \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+  \frac{b}{z_3-cE_{43}}
+  \nonumber \\
+  r_4 &=& \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
+  \frac{c}{z_3-cE_{43}}.
+\end{eqnarray}
+Performing these integrals we obtain:
+\begin{eqnarray}
+  \label{eq:ek3idn}
+r_3 &=& 
+ \frac{2z_3-5z_4}{6E_{34}^2}+
+ \frac{z_4}{E_{34}^2}\lv\left(\frac{z_4}{E_{43}}\right)
+\nonumber \\
+r_4 &=& 
+ \frac{z_4}{E_{43}^2}+\frac{1}{2}\frac{z_3}{E_{43}^2}
+ -3\frac{z_3}{E_{43}^2}\lv\left(\frac{z_4}{E_{43}}\right)
+\end{eqnarray}
+
+The final case is of course the simplest one where all the corners have the
+same energy and in that case we obtain:
+\begin{equation}
+  \label{eq:ek4idn}
+r_4 = \frac{1}{4}\frac{1}{z_4}
+\end{equation}
 
 ### Smearning algorithm
