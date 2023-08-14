@@ -354,7 +354,7 @@ D_T(\epsilon) = \frac{V_T}{V_G}
 
 for ``\epsilon_3 < \epsilon < \epsilon_4``.
 
-**Reference:**
+**References:**
 
 [1] P. E. Blochl, O. Jepsen, and O. K. Anderson, *Phys. Rev. B* **49**, 16223 (1994)
 
@@ -366,7 +366,6 @@ stable form.
 Before we start writing out the equations let us define a few symbols. The external frequency is denoted by ``z`` and the energy at corner number ``i`` is denoted by ``\epsilon_i``.  We define ``z_i = z-\epsilon_i`` and also ``\epsilon_{ij} = \epsilon_i-\epsilon_j``. 
 
 In the general case when all the tetrahedron corners have different energies the equation for the weight factor at corner $i$ is according to LV
-
 
 ```math
 \begin{align}
@@ -393,12 +392,33 @@ If we now use the identity:
 
 the equation for the weight factor can be written as
 
+```math
+\begin{align}
+r_i
+&=
+\sum_{j \neq i} 
+\frac{z_j^2}{\prod_{k \neq j}\epsilon_{kj}}
+\left[
+\frac{z_j}{\epsilon_{ij}}\log\left(\frac{z_j}{z_i}\right)-1
+\right] \\
+&=
+\sum_{j \neq i}
+\frac{z_j}{\prod_{k \neq i,j}\epsilon_{kj}}
+\Big[
+\frac{z_j}{\epsilon_{ji}}-
+\frac{z_j^2}{\epsilon_{ij}^2}\log\left(1+\frac{\epsilon_{ji}}{z_j}\right)
+\Big] \\
+&=
+\sum_{j \neq i}
+\frac{z_j}{\prod_{k \neq i,j}\epsilon_{kj}}lv\left(\frac{z_j}{\epsilon_{ji}}\right).
+\end{align}
+```
 
 Here we have defined the so called Lambin-Vigneron function as:
 
 ```math
 \begin{equation}
-  lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
+lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
 \end{equation}
 ```
 
@@ -407,7 +427,13 @@ This is a simple function which is easy to compute and also has the added benefi
 ```math
 \begin{equation}
   \lim_{x\rightarrow 0}lv(x) = 0
-  \qquad \text{and} \qquad
+\end{equation}
+```
+
+and
+
+```math
+\begin{equation}
   \lim_{x\rightarrow \infty}lv(x) = \frac{1}{2}.
 \end{equation}
 ```
@@ -475,7 +501,7 @@ r_3 &=
 \end{align}
 ```
 
-Next case is $\epsilon_1 = \epsilon_2 = \epsilon_3$ and this case we can either obtain from the formulas in equation (\ref{eq:ek2idn}) or simply do the corresponding integral which is simple in this case since we have:
+Next case is $\epsilon_1 = \epsilon_2 = \epsilon_3$ and this case we can either obtain from the formulas in equation (44) or simply do the corresponding integral which is simple in this case since we have:
 
 ```math
 \begin{align}
@@ -508,4 +534,16 @@ r_4 = \frac{1}{4}\frac{1}{z_4}
 \end{equation}
 ```
 
+**References:**
+
+[1] Gunnar Palsson, *PhD Thesis*, Rutgers University (2001)
+
+[2] P. Lambin and J. P. Vigneron, *Phys. Rev. B* **29**, 3430 (1984)
+
 ### Smearning algorithm
+
+**Gaussian smearing**
+
+**Fermi-Dirac smearing**
+
+**Marzari-Vanderbilt cold smearing**
