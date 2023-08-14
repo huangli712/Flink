@@ -26,7 +26,7 @@
     * Warning and error messages (**src/s_error.f90**)
     * Fourier transformation (**src/s_fourier.f90**)
     * Special functions (**src/s_function.f90**)
-    * Numerical integral (**src/s_integrator.f90**)
+    * Numerical integration (**src/s_integrator.f90**)
     * Matrix computation (**src/s_matrix.f90**)
     * Spline interpolation (**src/s_spline.f90**)
     * Some auxiliary subroutines, such as sorting algorithm (**src/s_util.f90**)
