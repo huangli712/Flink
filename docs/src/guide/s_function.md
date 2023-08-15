@@ -60,6 +60,27 @@ They are used to calculate fermionic or bosonic kernel functions. `tau` means ``
 ## Theory
 
 **Legendre orthogonal polynomial**
+
+The legendre orthogonal polynomials obey the three term recurrence relation, known as Bonnet’s recursion formula:
+
+```math
+\begin{equation}
+P_0(x) = 1
+\end{equation}
+```
+
+```math
+\begin{equation}
+P_1(x) = x
+\end{equation}
+```
+
+```math
+\begin{equation}
+(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x)
+\end{equation}
+```
+
 **Chebyshev orthogonal polynomial**
 **SVD orthogonal polynomial**
 **Spheric Bessel function**
