@@ -54,17 +54,17 @@ subroutine s_combination(ntiny, nlarg, value)
 (4) String manipulation.
 
 ```fortran
-subroutine s_str_upcase(...)
-subroutine s_str_lowcase(...)
-subroutine s_str_count(...)
-subroutine s_str_compress(...)
+subroutine s_str_upcase(s)
+subroutine s_str_lowcase(s)
+subroutine s_str_count(string, substr, count)
+subroutine s_str_compress(string)
 ```
 
 (5) Date time manipulation.
 
 ```fortran
-subroutine s_time_builder(...)
-subroutine s_time_analyzer(...)
+subroutine s_time_builder(date_time_string)
+subroutine s_time_analyzer(time_iter, time_niter)
 ```
 
 ## Theory
