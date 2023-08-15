@@ -83,15 +83,25 @@ P_1(x) = x
 
 **Chebyshev orthogonal polynomial**
 
-The Chebyshev orthogonal polynomials of the second kind can be
-     ! defined by the following recurrence relation:
-     !
-     !     $U_0(x) = 1$
-     !
-     !     $U_1(x) = 2x$
-     !
-     !     $U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)$
-     !
+The Chebyshev orthogonal polynomials of the second kind can be defined by the following recurrence relation:
+
+```math
+\begin{equation}
+U_0(x) = 1
+\end{equation}
+```
+
+```math
+\begin{equation}
+U_1(x) = 2x
+\end{equation}
+```
+
+```math
+\begin{equation}
+U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)
+\end{equation}
+```
 
 **SVD orthogonal polynomial**
 **Spheric Bessel function**
