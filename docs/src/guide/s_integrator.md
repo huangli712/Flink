@@ -50,3 +50,31 @@ val = s_int_simpson(f, a, b, n)
 ```
 
 ## Theory
+
+**Trapezoid rule**
+
+```math
+\begin{equation}
+\int_{a}^{b} f(x) dx \approx
+\frac{h}{2}
+\left[
+f(x_0) + 2f(x_1) + \cdots + 2f(x_{n-1}) + f(x_n)
+\right]
+\end{equation}
+```
+
+**Simpson rule**
+
+```math
+\begin{equation}
+\int_{a}^{b} f(x) dx \approx
+\frac{h}{3}
+\left[
+f(x_0) + f(x_n) +
+4 \sum_{i = 1}^{n/2} f(x_{2i-1}) +
+2 \sum_{i = 1}^{n/2-1} f(x_{2i})
+\right]
+\end{equation}
+```
+
+where $h = (b-a)/n$, and $n$ must be even number.
