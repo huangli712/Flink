@@ -42,7 +42,7 @@ subroutine s_bezier(n, x, bern)
 
 `n` means the degree of the bernstein polynomials to be used. For any given $n$, there is a set of $n + 1$ bernstein polynomials, each of degree $n$, which form a basis for polynomials on [0,1]. `x` means the evaluation point. `bern` saves the values of the $n+1$ bernstein polynomials at $x$.
 
-(4) Some helper functions for `s\_svd\_basis()`.
+(4) Some helper functions for `s_svd_basis()`.
 
 ```fortran
 function s_safe_exp(x)
