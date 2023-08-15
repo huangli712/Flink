@@ -131,7 +131,7 @@ The bernstein polynomials are assumed to be based on [0,1]. The formula reads:
 
 ```math
 \begin{equation}
-B(N,I)(X) = \frac{N!}{I!*(N-I)!} (1-X)^{(N-I)} X^I
+B(N,I)(X) = \frac{N!}{I!(N-I)!} (1-X)^{(N-I)} X^I
 \end{equation}
 ```
 
@@ -170,4 +170,5 @@ B(N,I)(1/2) = \frac{C(N,K)}{2^N}
 ```
 
 **Fermionic kernel**
+
 **Bosonic kernel**
