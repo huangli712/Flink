@@ -105,6 +105,65 @@ U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)
 
 **SVD orthogonal polynomial**
 
+In the imaginary-frequency domain, the Lehmann representation reads,
+
+```math
+\begin{equation}
+G(i\nu) = \int_{-\infty}^\infty d\omega
+\underbrace{\frac{1}{i\nu - \omega}}_{\equiv K(i\nu, \omega)}
+A(\omega),
+\end{equation}
+```
+
+where ``A(\omega)`` is a spectral function. ``K(i\nu,\omega)`` is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as,
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "    G(\\tau) &= - \\int_{-\\infty}^\\infty \\dd\\omega K(\\tau, \\omega) A(\\omega),\n",
+    "\\end{align}\n",
+    "$$ (lehmann-tau)\n",
+    "\n",
+    "where $0 < \\tau < \\beta$ and \n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "    K(\\tau, \\omega) &\\equiv - \\frac{1}{\\beta} \\sum_{\\iv} e^{-\\iv \\tau} K(\\iv, \\omega) =\n",
+    "    \\begin{cases}\n",
+    "        \\frac{e^{-\\tau\\omega}}{1+e^{-\\beta\\omega}} & (\\mathrm{fermion}),\\\\\n",
+    "        \\frac{e^{-\\tau\\omega}}{1-e^{-\\beta\\omega}} & (\\mathrm{boson})\n",
+    "    \\end{cases}.\n",
+    "\\end{align}\n",
+    "$$\n",
+    "\n",
+    "The minus sign originates from our convention $K(\\tau, \\omega) > 0$.\n",
+    "To avoid the divergence of the bosonic kernel at $\\omega=0$, we reformulate Eq. {eq}`lehmann-tau` as\n",
+    "\n",
+    "$$\n",
+    "\\begin{equation}\n",
+    "    G(\\tau)= - \\int_{-\\infty}^\\infty\\dd{\\omega} K^\\mathrm{L}(\\tau,\\omega) \\rho(\\omega),\n",
+    "\\end{equation}\n",
+    "$$\n",
+    "\n",
+    "where $K^\\mathrm{L}(\\tau, \\omega)$ is the \"logistic kernel\" defined as\n",
+    "\n",
+    "$$\n",
+    "K^\\mathrm{L}(\\tau, \\omega) =  \\frac{e^{-\\tau\\omega}}{1+e^{-\\beta\\omega}},\n",
+    "$$ (KL)\n",
+    "\n",
+    "and $\\rho(\\omega)$ is the modified spectral function\n",
+    "\n",
+    "$$\n",
+    "\\begin{align}\n",
+    "    \\rho(\\omega) &\\equiv \n",
+    "    \\begin{cases}\n",
+    "        A(\\omega) & (\\mathrm{fermion}),\\\\\n",
+    "        \\frac{A(\\omega)}{\\tanh(\\beta \\omega/2)} & (\\mathrm{boson}).\n",
+    "    \\end{cases}\n",
+    "\\end{align}\n",
+    "$$"
+
+
+
 **Spheric Bessel function**
 
 The following recursion relation
