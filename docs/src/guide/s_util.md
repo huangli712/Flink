@@ -24,18 +24,31 @@ where `condition` is the logical condition that we have to assert, `message` is 
 (2) Sort algorithm.
 
 ```fortran
-subroutine s_sorter(...)
-subroutine s_sorter2(...)
-subroutine s_qsorter(...)
-subroutine s_qscorer(...)
+subroutine s_sorter(nsize, list)
+subroutine s_sorter2(nsize, list, indx)
+subroutine s_qsorter(nsize, list)
+subroutine s_qscorer(pstart, pend, nsize, list)
 ```
 
 The `s_sorter()` and `s_sorter2()` subroutines implement the bubble algorithm, and the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
 
+Here, `nsize` is size of the list, `list` is the dataset to be sorted.
+ 
 (3) Combination algrbra.
 
 ```fortran
-subroutine s_combination(...)
+subroutine s_combination(ntiny, nlarg, value)
+```
+
+```fortran
+     ! the small number
+     integer, intent(in)  :: ntiny
+
+     ! the large number
+     integer, intent(in)  :: nlarg
+
+     ! result value of the combination algebra
+     integer, intent(out) :: value
 ```
 
 (4) String manipulation.
