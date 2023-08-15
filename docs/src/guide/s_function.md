@@ -168,7 +168,3 @@ B(N,I)(1/2) = \frac{C(N,K)}{2^N}
 ```math
 \sum_{I=0}^{N} B(N,I)(X) = 1
 ```
-
-**Fermionic kernel**
-
-**Bosonic kernel**
