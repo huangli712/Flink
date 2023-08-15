@@ -111,7 +111,7 @@ Here, `z` means external energy, `e` means energy at given k-point and band in `
 
 **Number of states**
 
-Here we list the expressions for the integrated density of states or number of states function ``n(\epsilon)`` from a given tetrahedron. The number of states function is used to determine the Fermi level. The expressions shown are similar to those given in previous papers. For the sake of simplicity we have omitted all band indices. The one-particle energies at the corners of the tetrahedron are ``\epsilon_1``, ``\epsilon_2``, ``\epsilon_3``, ``\epsilon_4``, which are ordered according to increasing values. ``\epsilon_{ij}`` is a shorthand notation for ``\epsilon_i - \epsilon_j``. ``V_T`` is the reciprocal-space volume of the tetrahedron, and ``V_G`` is the volume of the reciprocal unit cell.
+Here we list the expressions for the integrated density of states or number of states function $n(\epsilon)$ from a given tetrahedron. The number of states function is used to determine the Fermi level. The expressions shown are similar to those given in previous papers. For the sake of simplicity we have omitted all band indices. The one-particle energies at the corners of the tetrahedron are $\epsilon_1$, $\epsilon_2$, $\epsilon_3$, $\epsilon_4$, which are ordered according to increasing values. $\epsilon_{ij}$ is a shorthand notation for $\epsilon_i - \epsilon_j$. $V_T$ is the reciprocal-space volume of the tetrahedron, and $V_G$ is the volume of the reciprocal unit cell.
 
 ```math
 \begin{equation}
@@ -119,7 +119,7 @@ n(\epsilon) = 0
 \end{equation}
 ```
 
-for ``\epsilon < \epsilon_1``,
+for $\epsilon < \epsilon_1$,
 
 ```math
 \begin{equation}
@@ -127,7 +127,7 @@ n(\epsilon) = \frac{V_T}{V_G} \frac{(\epsilon - \epsilon_1)^3}{\epsilon_{21}\eps
 \end{equation}
 ```
 
-for ``\epsilon_1 < \epsilon < \epsilon_2``,
+for $\epsilon_1 < \epsilon < \epsilon_2$,
 
 ```math
 \begin{equation}
@@ -142,7 +142,7 @@ n(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon_2 < \epsilon < \epsilon_3``,
+for $\epsilon_2 < \epsilon < \epsilon_3$,
 
 ```math
 \begin{equation}
@@ -153,7 +153,7 @@ n(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon_3 < \epsilon < \epsilon_4``, and
+for $\epsilon_3 < \epsilon < \epsilon_4$, and
 
 ```math
 \begin{equation}
@@ -161,7 +161,7 @@ n(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon > \epsilon_4``.
+for $\epsilon > \epsilon_4$.
 
 **Integration weights**
 

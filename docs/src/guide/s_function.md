@@ -24,7 +24,7 @@ subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 
 `chmax` means maximum order for chebyshev orthogonal polynomial, `chgrd` means number of mesh points for chebyshev orthogonal polynomial, `cmesh` means mesh for chebyshev orthogonal polynomial in [-1,1], `rep_c` saves chebyshev orthogonal polynomial defined on [-1,1].
 
-`svmax` means maximum order for svd orthogonal polynomial, `svgrd` means number of mesh points for svd orthogonal polynomial, `smesh` means mesh for svd orthogonal polynomial in [-1,1], `rep_s` saves svd orthogonal polynomial defined on [-1,1], `bose` determines whether the bosonic kernel is used, `beta` means inverse system temperature.
+`svmax` means maximum order for svd orthogonal polynomial, `svgrd` means number of mesh points for svd orthogonal polynomial, `smesh` means mesh for svd orthogonal polynomial in [-1,1], `rep_s` saves svd orthogonal polynomial defined on [-1,1], `bose` determines whether the bosonic kernel is used, `beta` means inverse system temperature $\beta$.
 
 (2) Spheric Bessel function.
 
@@ -32,7 +32,7 @@ subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 subroutine s_sph_jl(lmax, x, jl)
 ```
 
-It computes the spherical Bessel functions of the first kind, ``j_l(x)``, for argument ``x`` and ``l = 0, 1, \ldots, l_{max}``.
+It computes the spherical Bessel functions of the first kind, $j_l(x)$, for argument $x$ and $l = 0, 1, \ldots, l_{max}$.
 
 (3) Bernstein polynomial.
 
@@ -40,7 +40,7 @@ It computes the spherical Bessel functions of the first kind, ``j_l(x)``, for ar
 subroutine s_bezier(n, x, bern)
 ```
 
-`n` means the degree of the bernstein polynomials to be used. For any given ``n``, there is a set of ``n + 1`` bernstein polynomials, each of degree ``n``, which form a basis for polynomials on [0,1]. `x` means the evaluation point. `bern` saves the values of the ``n+1`` bernstein polynomials at ``x``.
+`n` means the degree of the bernstein polynomials to be used. For any given $n$, there is a set of $n + 1$ bernstein polynomials, each of degree $n$, which form a basis for polynomials on [0,1]. `x` means the evaluation point. `bern` saves the values of the $n+1$ bernstein polynomials at $x$.
 
 (4) Some helper functions for `s\_svd\_basis()`.
 
@@ -55,7 +55,7 @@ function s_f_kernel(tau, omega, beta)
 function s_b_kernel(tau, omega, beta)
 ```
 
-They are used to calculate fermionic or bosonic kernel functions. `tau` means ``\tau``, `omega` means ``\omega``, `beta` means inverse system temperature ``\beta``.
+They are used to calculate fermionic or bosonic kernel functions. `tau` means $\tau$, `omega` means $\omega$, `beta` means inverse system temperature $\beta$.
 
 ## Theory
 
@@ -115,7 +115,7 @@ A(\omega),
 \end{equation}
 ```
 
-where ``A(\omega)`` is a spectral function. ``K(i\nu,\omega)`` is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as
+where $A(\omega)$ is a spectral function. $K(i\nu,\omega)$ is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as
 
 ```math
 \begin{equation}
@@ -124,7 +124,7 @@ d\omega K(\tau,\omega) A(\omega),
 \end{equation}
 ```
 
-where ``0 < \tau < \beta`` and
+where $0 < \tau < \beta$ and
 
 ```math
 \begin{equation}
@@ -165,6 +165,24 @@ and $\rho(\omega)$ is the modified spectral function
 \end{equation}
 ```
 
+The singular value expnasion of the kernel reads
+
+```math
+\begin{equation}
+K^\mathrm{L}(\tau, \omega) = \sum_{l=0}^\infty U_l(\tau) S_l V_l(\omega)
+\end{equation}
+```
+
+for $\omega \in [-\omega_{max}, \omega_{max}]$ with $\omega_{max}$ ($> 0$) being a cut-off frequency. $U_l(\tau)$ and $V_l(\omega)$ are left and right singular functions and $S_l$ is the singular values (with $S_0>S_1>S_2>...>0$). The two sets of singular functions $U$ and $V$ make up the basis functions of the so-called Intermediate Representation (IR), which depends on $\beta$ and the cutoff $\omega_{max}$. For the peculiar choice of the regularization for the bosonic kernel using $K^\mathrm{L}$, these basis functions do not depend on statistical properties. The basis functions $U_l(\tau)$ are transformed to the imaginary-frequency axis as
+
+```math
+U_l(i\nu) \equiv \int_0^\beta d \tau e^{i\nu\tau} U_l(\tau).
+```
+
+Some of the information regarding real-frequency properties of the system is often lost during transition into the imaginary-time domain, so that the imaginary-frequency Green's function does hold less information than the real-frequency Green's function. The reason for using IR lies within its compactness and ability to display that information in imaginary quantities.
+
+The decay of the singular values depends on $\beta$ and $\omega_{max}$ only through the dimensionless parameter $\Lambda \equiv \beta\omega_{max}$.
+
 **Spheric Bessel function**
 
 The following recursion relation
@@ -175,7 +193,7 @@ j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
 \end{equation}
 ```
 
-is used either downwards for ``x < l`` or upwards for ``x \ge l``. For ``x \ll 1``, the following asymtotic form is used:
+is used either downwards for $x < l$ or upwards for $x \ge l$. For $x \ll 1$, the following asymtotic form is used:
 
 ```math
 \begin{equation}
@@ -183,7 +201,7 @@ j_l(x) \approx \frac{x^l}{(2l+1)!!}.
 \end{equation}
 ```
 
-This procedure is numerically stable and accurate to near this machine precision for ``l \le 50``.
+This procedure is numerically stable and accurate to near this machine precision for $l \le 50$.
 
 **Bernstein polynomial**
 
