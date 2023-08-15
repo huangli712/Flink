@@ -30,4 +30,4 @@ subroutine s_write_exception(sub, msg, file_unit)
 subroutine s_write_message(sub, msg, file_unit)
 ```
 
-where `sub` is the name of subroutine or function that emits the error, exception, or message, `msg` explains the error, exception, or message, `file_unit` denotes the file handler.
+where `sub` is the name of subroutine or function that emits the error, exception, or message, `msg` explains the error, exception, or message, `file_unit` denotes the handler of external file.
