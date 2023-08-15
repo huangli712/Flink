@@ -51,20 +51,73 @@ subroutine s_combination(ntiny, nlarg, value)
      integer, intent(out) :: value
 ```
 
+It calculates combination algebra.
+
 (4) String manipulation.
 
 ```fortran
 subroutine s_str_upcase(s)
 subroutine s_str_lowcase(s)
+```
+
+```fortran
+     ! input/output string
+     character(len=*), intent(inout) :: s
+```
+
+They are used to convert the input string `s` to upcase or lowcase.
+
+```fortran
 subroutine s_str_count(string, substr, count)
+```
+
+```fortran
+     ! string to be examined
+     character(len=*), intent(in) :: string
+
+     ! substring in question
+     character(len=*), intent(in) :: substr
+
+     ! return value, number of occurrences
+     integer, intent(out) :: count
+```
+
+It return the number of times a substring occurs.
+
+```fortran
 subroutine s_str_compress(string)
 ```
+
+```fortran
+     ! character string to be compressed.
+     character(len=*), intent(inout) :: string
+```
+
+It return a copy of an input string with all whitespace (spaces and tabs) is removed.
 
 (5) Date time manipulation.
 
 ```fortran
 subroutine s_time_builder(date_time_string)
+```
+
+```fortran
+     ! output date and time
+     character(len=20), intent(out) :: date_time_string
+```
+
+It returns a string containing date and time in human readable format.
+
+```fortran
 subroutine s_time_analyzer(time_iter, time_niter)
 ```
 
-## Theory
+```fortran
+     ! time used in this iteration
+     real(dp), intent(in) :: time_iter
+
+     ! time used in total iteration
+     real(dp), intent(in) :: time_niter
+```
+
+It is used to print the iteration timing information about continuous time quantum Monte Carlo quantum impurity solver.
