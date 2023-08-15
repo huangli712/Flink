@@ -45,26 +45,32 @@ To build a matrix with all elements are given by `i`, `d`, or `z`. Here `n` mean
 (4) Build diagonal matrix.
 
 ```fortran
-subroutine s_eye_i(...)
-subroutine s_eye_d(...)
-subroutine s_eye_z(...)
+subroutine s_eye_i(n, k, A)
+subroutine s_eye_d(n, k, A)
+subroutine s_eye_z(n, k, A)
 ```
+
+To build a matrix with ones on the diagonal and zeros elsewhere. Here `n` means size of matrix, `A` means input/output matrix, `k` means  index of the diagonal.
 
 (5) Build identity matrix.
 
 ```fortran
-subroutine s_identity_i(...)
-subroutine s_identity_d(...)
-subroutine s_identity_z(...)
+subroutine s_identity_i(n, A)
+subroutine s_identity_d(n, A)
+subroutine s_identity_z(n, A)
 ```
+
+To build an identity matrix. Here `n` means size of matrix, `A` means input/output matrix.
 
 (6) Build diagonal matrix from vector.
 
 ```fortran
-subroutine s_diag_i(...)
-subroutine s_diag_d(...)
-subroutine s_diag_z(...)
+subroutine s_diag_i(n, v, A)
+subroutine s_diag_d(n, v, A)
+subroutine s_diag_z(n, v, A)
 ```
+
+To build a diagonal matrix from a vector. Here `n` means size of matrix, `A` means input/output matrix, `v` means input vector.
 
 (7) Calculate trace for matrix.
 
