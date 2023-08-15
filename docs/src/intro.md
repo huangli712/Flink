@@ -8,7 +8,7 @@
 
 !!! note
 
-    *Flink* obeys the Fortran 2018 standard. 
+    *Flink* obeys the Fortran 2018 standard.
 
 ## Features
 
