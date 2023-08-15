@@ -554,6 +554,20 @@ r_4 = \frac{1}{4}\frac{1}{z_4}
 
 **Gaussian smearing**
 
+```math
+\begin{equation}
+n(x) = \frac{1 - \text{erfc}{(-x)}} {8}
+\end{equation}
+```
+
+```math
+\begin{equation}
+D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
+\end{equation}
+```
+
+where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter.
+
 **Fermi-Dirac smearing**
 
 **Marzari-Vanderbilt cold smearing**
