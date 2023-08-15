@@ -25,10 +25,12 @@ To create a linear mesh `x` in interval [`xmin`, `xmax`], `n` is size of array `
 (2) Calculate sum of vector.
 
 ```fortran
-subroutine s_cumsum_i(...)
-subroutine s_cumsum_d(...)
-subroutine s_cumsum_z(...)
+subroutine s_cumsum_i(n, v, vsum)
+subroutine s_cumsum_d(n, v, vsum)
+subroutine s_cumsum_z(n, v, vsum)
 ```
+
+Return the cumsum of an array `v`. `n` is size of array `v`, and `vsum` is cumsum of array `v`.
 
 (3) Calculate product of vector.
 
