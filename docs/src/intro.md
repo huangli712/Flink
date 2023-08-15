@@ -14,12 +14,12 @@
 
 * Modules
     * Physical and numerical constants (**src/m_constants.f90**)
-    * Linked list (**src/m_linkedlist.f90**)
+    * Data structure: Linked list (**src/m_linkedlist.f90**)
     * Message passing interface (**src/m_mpi.f90**)
     * Sparse matrix (**src/m_sparse.f90**)
     * Configuration file (**src/m_parser.f90**)
     * Pseudo random number generator (**src/m_spring.f90**)
-    * Stack (**src/m_stack.f90**)
+    * Data structure: Stack (**src/m_stack.f90**)
     * Analytical tetrahedron method (**src/m_tetra.f90**)
 
 * Subroutines
@@ -27,10 +27,10 @@
     * Fourier transformation (**src/s_fourier.f90**)
     * Special functions (**src/s_function.f90**)
     * Numerical integration (**src/s_integrator.f90**)
-    * Matrix computation (**src/s_matrix.f90**)
+    * Linear algebra: matrix (**src/s_matrix.f90**)
     * Spline interpolation (**src/s_spline.f90**)
-    * Some auxiliary subroutines, such as sorting algorithm (**src/s_util.f90**)
-    * Vector computation (**src/s_vector.90**)
+    * Auxiliary tools (**src/s_util.f90**)
+    * Linear algebra: vector (**src/s_vector.90**)
 
 ## Author
 
