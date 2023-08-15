@@ -103,6 +103,8 @@ or
 call smearing_marzari_weight3(z, e, dd, tt)
 ```
 
+Here, `z` means external energy, `e` means energy at given k-point and band in `smearing_marzari_weight1()`, corner energies at given tetrahedron in `smearing_marzari_weight2()` and `smearing_marzari_weight3()`. In `smearing_marzari_weight1()` and `smearing_marzari_weight2()`, the total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos` are returned. In `smearing_marzari_weight3()`, the corner-dependent contributions (integration weights) of the given tetrahedron to the density of states `dd` and integrated density of states `tt` are returned.
+
 ## Theory
 
 ### Analytical Tetrahedron Integration (Blochl's Algorithm)
