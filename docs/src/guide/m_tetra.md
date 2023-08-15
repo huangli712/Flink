@@ -601,3 +601,7 @@ D(x) = \frac{2}{\sqrt{\pi}}
 ```
 
 where ``x = (z - e) / \gamma`` and ``\tilde{x} = x - \frac{1}{\sqrt{2}}``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+
+**References:**
+
+[1] N. Marzari, D. Vanderbilt, *et al.*, *Phys. Rev. Lett.* **82**, 3296 (1999)
