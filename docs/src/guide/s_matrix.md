@@ -124,11 +124,13 @@ Here `ldim` is leading dimension of matrix, `ndim` is the order of the matrix, `
 (12) Linear equation solver.
 
 ```fortran
-subroutine s_solve_dg(...)
-subroutine s_solve_zg(...)
-subroutine s_solve_sy(...)
-subroutine s_solve_he(...)
+subroutine s_solve_dg(n, nrhs, A, B)
+subroutine s_solve_zg(n, nrhs, A, B)
+subroutine s_solve_sy(n, nrhs, A, B)
+subroutine s_solve_he(n, nrhs, A, B)
 ```
+
+Try to solve a linear system $AX = B$. Here, `n` is the number of linear equations, `nrhs` is the number of right-hand sides, `A` and `B` are input matrices. On exit, `B` is overwritten by the solution matrix $X$.
 
 (13) General singular value decomposition.
 
