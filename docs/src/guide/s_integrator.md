@@ -63,6 +63,8 @@ f(x_0) + 2f(x_1) + \cdots + 2f(x_{n-1}) + f(x_n)
 \end{equation}
 ```
 
+where $h = (b-a)/n$.
+
 **Simpson rule**
 
 ```math
