@@ -32,6 +32,8 @@ subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 subroutine s_sph_jl(lmax, x, jl)
 ```
 
+It computes the spherical Bessel functions of the first kind, ``j_l(x)``, for argument ``x`` and ``l = 0, 1, \ldots, l_{max}``.
+
 (3) Bernstein polynomial.
 
 ```fortran
