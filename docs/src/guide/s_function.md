@@ -15,30 +15,29 @@ subroutines
 (1) Orthogonal polynomial basis.
 
 ```fortran
-subroutine s_leg_basis(...)
-subroutine s_che_basis(...)
-subroutine s_svd_basis(...)
-subroutine s_svd_point(...)
+subroutine s_leg_basis(lemax, legrd, lmesh, rep_l)
+subroutine s_che_basis(chmax, chgrd, cmesh, rep_c)
+subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 ```
 
 (2) Spheric Bessel function.
 
 ```fortran
-subroutine s_sph_jl(...)
+subroutine s_sph_jl(lmax, x, jl)
 ```
 
 (3) Bernstein polynomial.
 
 ```fortran
-subroutine s_bezier(...)
+subroutine s_bezier(n, x, bern)
 ```
 
 (4) Some helper functions for s\_svd\_basis().
 
 ```fortran
-function s_safe_exp(...)
-function s_f_kernel(...)
-function s_b_kernel(...)
+function s_safe_exp(x)
+function s_f_kernel(tau, omega, beta)
+function s_b_kernel(tau, omega, beta)
 ```
 
 ## Theory
