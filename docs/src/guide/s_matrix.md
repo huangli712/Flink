@@ -113,11 +113,13 @@ Here `ldim` is leading dimension of matrix, `ndim` is the order of the matrix, `
 (11) Symmetric eigensystem problem.
 
 ```fortran
-subroutine s_eig_sy(...)
-subroutine s_eig_he(...)
-subroutine s_eigvals_sy(...)
-subroutine s_eigvals_he(...)
+subroutine s_eig_sy(ldim, ndim, amat, eval, evec)
+subroutine s_eig_he(ldim, ndim, amat, eval, evec)
+subroutine s_eigvals_sy(ldim, ndim, amat, eval)
+subroutine s_eigvals_he(ldim, ndim, amat, eval)
 ```
+
+Here `ldim` is leading dimension of matrix, `ndim` is the order of the matrix, `amat` is the input matrix, `eval` means eigenvalues, `evec` means eigenvectors.
 
 (12) Linear equation solver.
 
