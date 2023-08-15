@@ -55,15 +55,19 @@ Exchange two vectors, where `n` is dimension of the vectors.
 (5) Linear mixing for vectors.
 
 ```fortran
-subroutine s_mix_i(...)
-subroutine s_mix_d(...)
-subroutine s_mix_z(...)
+subroutine s_mix_i(n, ix, iy, alpha)
+subroutine s_mix_d(n, dx, dy, alpha)
+subroutine s_mix_z(n, zx, zy, alpha)
 ```
+
+Perform linear mixing for two vectors, where `n` is dimension of the vectors, and `alpha` is the mixing parameter $\alpha$.
 
 (6) Convert diagonal elements of matrix to vector.
 
 ```fortran
-subroutine s_vecadd_i(...)
-subroutine s_vecadd_d(...)
-subroutine s_vecadd_z(...)
+subroutine s_vecadd_i(n, ix, iy, alpha)
+subroutine s_vecadd_d(n, dx, dy, alpha)
+subroutine s_vecadd_z(n, zx, zy, alpha)
 ```
+
+Try to add diagonal elements of a matrix to a vector, where `n` is dimension of the vectors, and `alpha` is the prefactor.
