@@ -22,11 +22,10 @@ subroutine s_fft_forward(ntime, tmesh, ftau, mfreq, rmesh, fmat)
 
 ```fortran
 subroutine s_fft_backward(mfreq, rmesh, fmat, ntime, tmesh, ftau, beta)
-subroutine s_fft_tails(rtail, mfreq, rmesh, green)
 ```
+
+Here, `ntime` is number of imaginary time points, `tmesh` means ``\tau``, `ftau` means ``G(\tau)``, `mfreq` is number of Matsubara frequency points, `rmesh` means ``\omega_n``, `fmat` means ``G(i\omega_n)``, `beta` means inverse temperature of system ``\beta``.
 
 !!! note
 
     The `s_fft_tails()` subroutine is called by the `s_fft_backward()` subroutine internally. DO NOT call it directly!
-
-## Theory
