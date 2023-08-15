@@ -373,7 +373,7 @@ for $\epsilon_3 < \epsilon < \epsilon_4$.
 In this part we will write up the equations of Lambin and Vigneron for the weight factors used in the analytical tetrahedron method. The purpose of this is to rewrite their formulas in a simpler, more readable and hopefully more
 stable form.
 
-Before we start writing out the equations let us define a few symbols. The external frequency is denoted by ``z`` and the energy at corner number ``i`` is denoted by ``\epsilon_i``.  We define ``z_i = z-\epsilon_i`` and also ``\epsilon_{ij} = \epsilon_i-\epsilon_j``. 
+Before we start writing out the equations let us define a few symbols. The external frequency is denoted by $z$ and the energy at corner number $i$ is denoted by $\epsilon_i$.  We define $z_i = z-\epsilon_i$ and also $\epsilon_{ij} = \epsilon_i-\epsilon_j$. 
 
 In the general case when all the tetrahedron corners have different energies the equation for the weight factor at corner $i$ is according to LV
 
@@ -566,7 +566,7 @@ D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
 \end{equation}
 ```
 
-where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
 
 **Fermi-Dirac smearing**
 
@@ -582,7 +582,7 @@ D(x) = \frac{1}{2} \frac{1}{1 + \cosh{(x)}}
 \end{equation}
 ```
 
-where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
 
 **Marzari-Vanderbilt cold smearing**
 
@@ -600,7 +600,7 @@ D(x) = \frac{2}{\sqrt{\pi}}
 \end{equation}
 ```
 
-where ``x = (z - e) / \gamma`` and ``\tilde{x} = x - \frac{1}{\sqrt{2}}``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+where $x = (z - e) / \gamma$ and $\tilde{x} = x - \frac{1}{\sqrt{2}}$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
 
 **References:**
 
