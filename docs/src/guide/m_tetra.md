@@ -48,55 +48,57 @@ For the external energy `z` and the energy eigenvalues for four corners at given
 (3) Gaussian smearing algorithm.
 
 ```fortran
-call smearing_gauss_weight1(...)
+call smearing_gauss_weight1(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_gauss_weight2(...)
+call smearing_gauss_weight2(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_gauss_weight3(...)
+call smearing_gauss_weight3(z, e, dd, tt)
 ```
+
+Here, `z` means external energy, `e` means energy at given k-point and band in `smearing_gauss_weight1()`, corner energies at given tetrahedron in `smearing_gauss_weight2()` and `smearing_gauss_weight3()`. In `smearing_gauss_weight1()` and `smearing_gauss_weight2()`, the total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos` are returned. In `smearing_gauss_weight3()`, the corner-dependent contributions (integration weights) of the given tetrahedron to the density of states `dd` and integrated density of states `tt` are returned.
 
 (4) Fermi-Dirac smearing algorithm.
 
 ```fortran
-call smearing_fermi_weight1(...)
+call smearing_fermi_weight1(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_fermi_weight2(...)
+call smearing_fermi_weight2(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_fermi_weight3(...)
+call smearing_fermi_weight3(z, e, dd, tt)
 ```
 
 (5) Marzari-Vanderbilt cold smearing algorithm.
 
 ```fortran
-call smearing_marzari_weight1(...)
+call smearing_marzari_weight1(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_marzari_weight2(...)
+call smearing_marzari_weight2(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call smearing_marzari_weight3(...)
+call smearing_marzari_weight3(z, e, dd, tt)
 ```
 
 ## Theory
