@@ -61,7 +61,7 @@ They are used to calculate fermionic or bosonic kernel functions. `tau` means ``
 
 **Legendre orthogonal polynomial**
 
-The legendre orthogonal polynomials obey the three term recurrence relation, known as Bonnet’s recursion formula:
+The Legendre orthogonal polynomials obey the three term recurrence relation, known as Bonnet’s recursion formula:
 
 ```math
 \begin{equation}
@@ -82,8 +82,69 @@ P_1(x) = x
 ```
 
 **Chebyshev orthogonal polynomial**
+
+The Chebyshev orthogonal polynomials of the second kind can be
+     ! defined by the following recurrence relation:
+     !
+     !     $U_0(x) = 1$
+     !
+     !     $U_1(x) = 2x$
+     !
+     !     $U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)$
+     !
+
 **SVD orthogonal polynomial**
 **Spheric Bessel function**
+
+     ! the following recursion relation
+     !
+     !     j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
+     !
+     ! is used either downwards for x < l or upwards for x >= l.
+     ! for x << 1, the following asymtotic form is used:
+     !
+     !     j_l(x) \approx \frac{x^l}{(2l+1)!!}.
+     !
+     ! this procedure is numerically stable and accurate to near
+     ! this machine precision for l <= 50.
+     !
+
 **Bernstein polynomial**
+
+     ! the bernstein polynomials are assumed to be based on [0,1].
+     ! the formula reads:
+     !
+     !    B(N,I)(X) = [N!/(I!*(N-I)!)] * (1-X)**(N-I) * X**I
+     !
+     ! first values:
+     !
+     !    B(0,0)(X) = 1
+     !    B(1,0)(X) =      1-X
+     !    B(1,1)(X) =                X
+     !    B(2,0)(X) =     (1-X)**2
+     !    B(2,1)(X) = 2 * (1-X)    * X
+     !    B(2,2)(X) =                X**2
+     !    B(3,0)(X) =     (1-X)**3
+     !    B(3,1)(X) = 3 * (1-X)**2 * X
+     !    B(3,2)(X) = 3 * (1-X)    * X**2
+     !    B(3,3)(X) =                X**3
+     !    B(4,0)(X) =     (1-X)**4
+     !    B(4,1)(X) = 4 * (1-X)**3 * X
+     !    B(4,2)(X) = 6 * (1-X)**2 * X**2
+     !    B(4,3)(X) = 4 * (1-X)    * X**3
+     !    B(4,4)(X) =                X**4
+     !
+     ! special values:
+     !
+     !    B(N,I)(X) has a unique maximum value at X = I/N.
+     !
+     !    B(N,I)(X) has an I-fold zero at 0 and and N-I fold zero at 1.
+     !
+     !    B(N,I)(1/2) = C(N,K) / 2^N
+     !
+     !    for a fixed X and N, the polynomials add up to 1:
+     !        sum ( 0 <= I <= N ) B(N,I)(X) = 1
+     !
+
 **Fermionic kernel**
 **Bosonic kernel**
