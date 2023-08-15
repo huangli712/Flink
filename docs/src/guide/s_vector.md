@@ -15,10 +15,12 @@ subroutines
 (1) Mesh generation
 
 ```fortran
-subroutine s_linspace_i(...)
-subroutine s_linspace_d(...)
-subroutine s_linspace_z(...)
+subroutine s_linspace_i(xmin, xmax, n, x)
+subroutine s_linspace_d(xmin, xmax, n, x)
+subroutine s_linspace_z(xmin, xmax, n, x)
 ```
+
+To create a linear mesh `x` in interval [`xmin`, `xmax`], `n` is size of array `x`.
 
 (2) Calculate sum of vector.
 
