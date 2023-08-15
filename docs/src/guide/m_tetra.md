@@ -40,8 +40,10 @@ For the external energy `z` and the one-particle energies at the corners of the 
 (2) Lambin-Vigneron tetrahedron integration algorithm.
 
 ```fortran
-call tetra_lambin_weight(...)
+call tetra_lambin_weight(z, e, weights)
 ```
+
+For the external energy `z` and the energy eigenvalues for four corners at given tetrahedron, the subroutine `tetra_lambin_weight()` returns corner-dependent integration weights `weights` for lattice Green's function. Note that now `z`, `e`, and `weights` are all complex.
 
 (3) Gaussian smearing algorithm.
 
