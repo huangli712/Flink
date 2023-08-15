@@ -137,7 +137,7 @@ K(\tau,\omega) \equiv
 \end{equation}
 ```
 
-The minus sign originates from our convention ``K(\tau, \omega) > 0``. To avoid the divergence of the bosonic kernel at ``\omega=0``, we reformulate Equation of ``G(\tau)`` as
+The minus sign originates from our convention $K(\tau, \omega) > 0$. To avoid the divergence of the bosonic kernel at $\omega=0$, we reformulate Equation of $G(\tau)$ as
 
 ```math
 \begin{equation}
@@ -146,26 +146,24 @@ K^\mathrm{L}(\tau,\omega) \rho(\omega),
 \end{equation}
 ```
 
-where ``K^\mathrm{L}(\tau,\omega)`` is the *logistic kernel* defined as
+where $K^\mathrm{L}(\tau,\omega)$ is the *logistic kernel* defined as
 
 ```math
 K^\mathrm{L}(\tau,\omega) =  
 \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}},
 ```
 
-and $\rho(\omega)$ is the modified spectral function\n",
-    "\n",
-    "$$\n",
-    "\\begin{align}\n",
-    "    \\rho(\\omega) &\\equiv \n",
-    "    \\begin{cases}\n",
-    "        A(\\omega) & (\\mathrm{fermion}),\\\\\n",
-    "        \\frac{A(\\omega)}{\\tanh(\\beta \\omega/2)} & (\\mathrm{boson}).\n",
-    "    \\end{cases}\n",
-    "\\end{align}\n",
-    "$$"
+and $\rho(\omega)$ is the modified spectral function
 
-
+```math
+\begin{equation}
+\rho(\omega) \equiv
+\begin{cases}
+    A(\omega) & (\mathrm{fermion}),\\
+    \frac{A(\omega)}{\tanh(\beta \omega/2)} & (\mathrm{boson}).
+\end{cases}
+\end{equation}
+```
 
 **Spheric Bessel function**
 
