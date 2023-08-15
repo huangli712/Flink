@@ -115,24 +115,28 @@ A(\omega),
 \end{equation}
 ```
 
-where ``A(\omega)`` is a spectral function. ``K(i\nu,\omega)`` is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as,
-    "\n",
-    "$$\n",
-    "\\begin{align}\n",
-    "    G(\\tau) &= - \\int_{-\\infty}^\\infty \\dd\\omega K(\\tau, \\omega) A(\\omega),\n",
-    "\\end{align}\n",
-    "$$ (lehmann-tau)\n",
-    "\n",
-    "where $0 < \\tau < \\beta$ and \n",
-    "\n",
-    "$$\n",
-    "\\begin{align}\n",
-    "    K(\\tau, \\omega) &\\equiv - \\frac{1}{\\beta} \\sum_{\\iv} e^{-\\iv \\tau} K(\\iv, \\omega) =\n",
-    "    \\begin{cases}\n",
-    "        \\frac{e^{-\\tau\\omega}}{1+e^{-\\beta\\omega}} & (\\mathrm{fermion}),\\\\\n",
-    "        \\frac{e^{-\\tau\\omega}}{1-e^{-\\beta\\omega}} & (\\mathrm{boson})\n",
-    "    \\end{cases}.\n",
-    "\\end{align}\n",
+where ``A(\omega)`` is a spectral function. ``K(i\nu,\omega)`` is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as
+
+```math
+\begin{equation}
+G(\tau) = -\int_{-\infty}^\infty
+d\omega K(\tau,\omega) A(\omega),
+\end{equation}
+```
+
+where ``0 < \tau < \beta`` and
+
+```math
+\begin{equation}
+K(\tau,\omega) \equiv 
+-\frac{1}{\beta} \sum_{i\nu} e^{-i\nu \tau} K(i\nu,\omega)=
+\begin{cases}
+    \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}} & (\mathrm{fermion}),\\
+    \frac{e^{-\tau\omega}}{1-e^{-\beta\omega}} & (\mathrm{boson}).
+\end{cases}
+\end{equation}
+```
+
     "$$\n",
     "\n",
     "The minus sign originates from our convention $K(\\tau, \\omega) > 0$.\n",
