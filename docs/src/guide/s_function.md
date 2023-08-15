@@ -104,12 +104,17 @@ U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)
 ```
 
 **SVD orthogonal polynomial**
+
 **Spheric Bessel function**
 
-     ! the following recursion relation
-     !
-     !     j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
-     !
+The following recursion relation
+
+```math
+\begin{equation}
+j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
+\end{equation}
+```
+
      ! is used either downwards for x < l or upwards for x >= l.
      ! for x << 1, the following asymtotic form is used:
      !
