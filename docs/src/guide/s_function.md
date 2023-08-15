@@ -153,17 +153,21 @@ First values:
     B(4,3)(X) = 4 * (1-X)    * X**3
     B(4,4)(X) =                X**4
 
-     ! special values:
-     !
-     !    B(N,I)(X) has a unique maximum value at X = I/N.
-     !
-     !    B(N,I)(X) has an I-fold zero at 0 and and N-I fold zero at 1.
-     !
-     !    B(N,I)(1/2) = C(N,K) / 2^N
-     !
-     !    for a fixed X and N, the polynomials add up to 1:
-     !        sum ( 0 <= I <= N ) B(N,I)(X) = 1
-     !
+Special values:
+
+* B(N,I)(X) has a unique maximum value at X = I/N.
+* B(N,I)(X) has an I-fold zero at 0 and and N-I fold zero at 1.
+* For X = 1/2,
+
+```math
+B(N,I)(1/2) = \frac{C(N,K)}{2^N}
+```
+
+* For a fixed X and N, the polynomials add up to 1:
+
+```math
+\sum_{I=0}^{N} B(N,I)(X) = 1
+```
 
 **Fermionic kernel**
 **Bosonic kernel**
