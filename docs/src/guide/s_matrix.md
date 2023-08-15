@@ -97,6 +97,8 @@ subroutine s_inv_d(ndim, dmat)
 subroutine s_inv_z(ndim, zmat)
 ```
 
+where `ndim` means dimension of the matrix, `dmat` and `zmat` are the input/output matrices.
+
 (10) General eigensystem problem.
 
 ```fortran
