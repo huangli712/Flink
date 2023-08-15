@@ -145,12 +145,13 @@ G(\tau)= -\int_{-\infty}^\infty d{\omega}
 K^\mathrm{L}(\tau,\omega) \rho(\omega),
 \end{equation}
 ```
-    "$$\n",
-    "\n",
-    "where $K^\\mathrm{L}(\\tau, \\omega)$ is the \"logistic kernel\" defined as\n",
-    "\n",
-    "$$\n",
-    "K^\\mathrm{L}(\\tau, \\omega) =  \\frac{e^{-\\tau\\omega}}{1+e^{-\\beta\\omega}},\n",
+
+where ``K^\mathrm{L}(\tau,\omega)`` is the *logistic kernel* defined as
+
+```math
+K^\mathrm{L}(\tau,\omega) =  
+\frac{e^{-\tau\omega}}{1+e^{-\beta\omega}},
+```
     "$$ (KL)\n",
     "\n",
     "and $\\rho(\\omega)$ is the modified spectral function\n",
