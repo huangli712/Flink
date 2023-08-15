@@ -35,18 +35,22 @@ Return the cumsum of an array `v`. `n` is size of array `v`, and `vsum` is cumsu
 (3) Calculate product of vector.
 
 ```fortran
-subroutine s_cumprod_i(...)
-subroutine s_cumprod_d(...)
-subroutine s_cumprod_z(...)
+subroutine s_cumprod_i(n, v, vprod)
+subroutine s_cumprod_d(n, v, vprod)
+subroutine s_cumprod_z(n, v, vprod)
 ```
+
+Return the cumproduct of an array `v`. `n` is size of array `v`, and `vprod` is cumprod of array `v`.
 
 (4) Swap two vectors.
 
 ```fortran
-subroutine s_swap_i(...)
-subroutine s_swap_d(...)
-subroutine s_swap_z(...)
+subroutine s_swap_i(n, ix, iy)
+subroutine s_swap_d(n, dx, dy)
+subroutine s_swap_z(n, zx, zy)
 ```
+
+Exchange two vectors, where `n` is dimension of the vectors.
 
 (5) Linear mixing for vectors.
 
