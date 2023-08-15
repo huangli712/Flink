@@ -165,9 +165,9 @@ for $\epsilon > \epsilon_4$.
 
 **Integration weights**
 
-Here we give the expressions that result in the integration weights ``w_{nj}``. By ``w_1``, ``w_2``, ``w_3``, and ``w_4`` we denote the contribution to the integration weights at the four corners of a tetrahedron, which are again ordered according to increasing one-particle energies. Note that the band index ``n`` is suppressed.
+Here we give the expressions that result in the integration weights $w_{nj}$. By $w_1$, $w_2$, $w_3$, and $w_4$ we denote the contribution to the integration weights at the four corners of a tetrahedron, which are again ordered according to increasing one-particle energies. Note that the band index $n$ is suppressed.
 
-For a fully tetrahedron, i.e., ``\epsilon_F < \epsilon_1``, the contributions vanish:
+For a fully tetrahedron, i.e., $\epsilon_F < \epsilon_1$, the contributions vanish:
 
 ```math
 \begin{equation}
@@ -175,7 +175,7 @@ w_1 = w_2 = w_3 = w_4 = 0.
 \end{equation}
 ```
 
-For ``\epsilon_1 < \epsilon_F < \epsilon_2``, we obtain
+For $\epsilon_1 < \epsilon_F < \epsilon_2$, we obtain
 
 ```math
 \begin{equation}
@@ -213,7 +213,7 @@ C = \frac{V_T}{4V_G} \frac{(\epsilon_F - \epsilon_1)^3}{\epsilon_{21}\epsilon_{3
 \end{equation}
 ```
 
-For ``\epsilon_2 < \epsilon_F < \epsilon_3``, we obtain
+For $\epsilon_2 < \epsilon_F < \epsilon_3$, we obtain
 
 ```math
 \begin{equation}
@@ -267,7 +267,7 @@ C_3 = \frac{V_T}{4V_G}
 \end{equation}
 ```
 
-For ``\epsilon_3 < \epsilon_F < \epsilon_4``, the weights are
+For $\epsilon_3 < \epsilon_F < \epsilon_4$, the weights are
 
 ```math
 \begin{equation}
@@ -313,7 +313,7 @@ w_1 = w_2 = w_3 = w_4 = \frac{V_T}{4V_G}.
 \end{equation}
 ```
 
-The corresponding correction ``dw_i`` to the integration weights has an extremely simple form:
+The corresponding correction $dw_i$ to the integration weights has an extremely simple form:
 
 ```math
 \begin{equation}
@@ -323,7 +323,7 @@ dw_i = \sum_T \frac{1}{40} D_T (\epsilon_F) \sum^4_{j=1} (\epsilon_j - \epsilon_
 
 **Density of states**
 
-The contribution of one tetrahedron to the density of states at energy ``\epsilon`` is given by
+The contribution of one tetrahedron to the density of states at energy $\epsilon$ is given by
 
 ```math
 \begin{equation}
@@ -331,7 +331,7 @@ D_T(\epsilon) = 0
 \end{equation}
 ```
 
-for ``\epsilon < \epsilon_1`` and for ``\epsilon_4 < \epsilon``,
+for $\epsilon < \epsilon_1$ and for $\epsilon_4 < \epsilon$,
 
 ```math
 \begin{equation}
@@ -340,7 +340,7 @@ D_T(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon_1 < \epsilon < \epsilon_2``,
+for $\epsilon_1 < \epsilon < \epsilon_2$,
 
 ```math
 \begin{equation}
@@ -353,7 +353,7 @@ D_T(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon_2 < \epsilon < \epsilon_3``, and
+for $\epsilon_2 < \epsilon < \epsilon_3$, and
 
 ```math
 \begin{equation}
@@ -362,7 +362,7 @@ D_T(\epsilon) = \frac{V_T}{V_G}
 \end{equation}
 ```
 
-for ``\epsilon_3 < \epsilon < \epsilon_4``.
+for $\epsilon_3 < \epsilon < \epsilon_4$.
 
 **References:**
 
