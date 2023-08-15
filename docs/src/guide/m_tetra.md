@@ -566,8 +566,36 @@ D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
 \end{equation}
 ```
 
-where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter.
+where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
 
 **Fermi-Dirac smearing**
 
+```math
+\begin{equation}
+n(x) = \frac{1 - \text{erfc}{(-x)}} {8}
+\end{equation}
+```
+
+```math
+\begin{equation}
+D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
+\end{equation}
+```
+
+where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+
 **Marzari-Vanderbilt cold smearing**
+
+```math
+\begin{equation}
+n(x) = \frac{1 - \text{erfc}{(-x)}} {8}
+\end{equation}
+```
+
+```math
+\begin{equation}
+D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
+\end{equation}
+```
+
+where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
