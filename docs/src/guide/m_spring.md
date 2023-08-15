@@ -46,6 +46,9 @@ r = spring_sfmt_stream()
 r = spring_sfmt_string()
 ```
 
+The functions `spring_mt_stream()` and `sprint_sfmt_stream()` obtain a psuedo random real number in the range (0,1), i.e., a number
+greater than 0 and less than 1. The functions `spring_mt_string()` and `sprint_sfmt_string()` obtain a psuedo random real number in the range [0,1], i.e., a number greater than or equal to 0 and less than or equal to 1.
+
 !!! note
 
     Since SFMT has a better performance, it is preferable.
