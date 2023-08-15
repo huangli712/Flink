@@ -115,7 +115,7 @@ j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
 \end{equation}
 ```
 
-is used either downwards for ``x < l`` or upwards for ``x >= l``. For ``x << 1``, the following asymtotic form is used:
+is used either downwards for ``x < l`` or upwards for ``x \ge l``. For ``x \ll 1``, the following asymtotic form is used:
 
 ```math
 \begin{equation}
@@ -123,7 +123,7 @@ j_l(x) \approx \frac{x^l}{(2l+1)!!}.
 \end{equation}
 ```
 
-This procedure is numerically stable and accurate to near this machine precision for ``l <= 50``.
+This procedure is numerically stable and accurate to near this machine precision for ``l \le 50``.
 
 **Bernstein polynomial**
 
