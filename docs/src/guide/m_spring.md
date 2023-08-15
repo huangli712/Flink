@@ -28,7 +28,7 @@ module
 
 ## Usage
 
-(1) Use MT19937.
+**(1)** Use MT19937.
 
 ```fortran
 use spring
@@ -37,7 +37,7 @@ r = spring_mt_stream()
 r = spring_mt_string()
 ```
 
-(2) Use SFMT.
+**(2)** Use SFMT.
 
 ```fortran
 use spring

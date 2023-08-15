@@ -12,7 +12,7 @@ subroutines
 
 ## Usage
 
-(1) Calculate 1-order derivates for a given function.
+**(1)** Calculate 1-order derivates for a given function.
 
 ```fortran
 subroutine s_spl_deriv1(ydim, xval, yval, d1y)
@@ -32,8 +32,7 @@ subroutine s_spl_deriv1(ydim, xval, yval, d1y)
      real(dp), intent(out) :: d1y(ydim)
 ```
 
-
-(2) Calculate 2-order derivates for a given function.
+**(2)** Calculate 2-order derivates for a given function.
 
 ```fortran
 subroutine s_spl_deriv2(ydim, xval, yval, startu, startd, d2y)
@@ -59,7 +58,7 @@ subroutine s_spl_deriv2(ydim, xval, yval, startu, startd, d2y)
      real(dp), intent(out) :: d2y(ydim)
 ```
 
-(3) Evaluate function value at a given point.
+**(3)** Evaluate function value at a given point.
 
 ```fortran
 function s_spl_funct(xdim, xval, yval, d2y, x)

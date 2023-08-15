@@ -21,7 +21,7 @@ module
 
 ## Usage
 
-(1) Import constants module completely.
+**(1)** Import constants module completely.
 
 ```fortran
 program test
@@ -34,7 +34,7 @@ program test
 end program test
 ```
 
-(2) Import constants module partially.
+**(2)** Import constants module partially.
 
 ```fortran
 program test

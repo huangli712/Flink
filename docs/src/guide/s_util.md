@@ -12,7 +12,7 @@ subroutines
 
 ## Usage
 
-(1) C-like assertion.
+**(1)** C-like assertion.
 
 ```fortran
 subroutine s_assert(condition)
@@ -21,7 +21,7 @@ subroutine s_assert2(condition, message)
 
 where `condition` is the logical condition that we have to assert, `message` is the additional message.
 
-(2) Sort algorithm.
+**(2)** Sort algorithm.
 
 ```fortran
 subroutine s_sorter(nsize, list)
@@ -34,7 +34,7 @@ The `s_sorter()` and `s_sorter2()` subroutines implement the bubble algorithm, a
 
 Here, `nsize` is size of the list, `list` is the dataset to be sorted. In `s_sorter2()`, the index of the dataset (`indx`) is also sorted.
 
-(3) Combination algrbra.
+**(3)** Combination algrbra.
 
 ```fortran
 subroutine s_combination(ntiny, nlarg, value)
@@ -53,7 +53,7 @@ subroutine s_combination(ntiny, nlarg, value)
 
 It calculates combination algebra.
 
-(4) String manipulation.
+**(4)** String manipulation.
 
 ```fortran
 subroutine s_str_upcase(s)
@@ -95,7 +95,7 @@ subroutine s_str_compress(string)
 
 It return a copy of an input string with all whitespace (spaces and tabs) is removed.
 
-(5) Date time manipulation.
+**(5)** Date time manipulation.
 
 ```fortran
 subroutine s_time_builder(date_time_string)

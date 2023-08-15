@@ -12,13 +12,13 @@ subroutines
 
 ## Usage
 
-(1) Forward FFT, from $G(\tau) \to G(i\omega_n)$.
+**(1)** Forward FFT, from $G(\tau) \to G(i\omega_n)$.
 
 ```fortran
 subroutine s_fft_forward(ntime, tmesh, ftau, mfreq, rmesh, fmat)
 ```
 
-(2) Backward FFT, from $G(i\omega_n) \to G(\tau)$.
+**(2)** Backward FFT, from $G(i\omega_n) \to G(\tau)$.
 
 ```fortran
 subroutine s_fft_backward(mfreq, rmesh, fmat, ntime, tmesh, ftau, beta)

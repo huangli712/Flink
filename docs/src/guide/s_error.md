@@ -12,7 +12,7 @@ subroutines
 
 ## Usage
 
-(1) Display the error, exception, or message on the terminal.
+**(1)** Display the error, exception, or message on the terminal.
 
 ```fortran
 subroutine s_print_error(sub, msg)
@@ -22,7 +22,7 @@ subroutine s_print_message(sub, msg)
 
 where `sub` is the name of subroutine or function that emits the error, exception, or message, `msg` explains the error, exception, or message.
 
-(2) Write the error, exception, or message to external file.
+**(2)** Write the error, exception, or message to external file.
 
 ```fortran
 subroutine s_write_error(sub, msg, file_unit)

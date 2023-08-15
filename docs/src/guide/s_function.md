@@ -12,7 +12,7 @@ subroutines
 
 ## Usage
 
-(1) Orthogonal polynomial basis.
+**(1)** Orthogonal polynomial basis.
 
 ```fortran
 subroutine s_leg_basis(lemax, legrd, lmesh, rep_l)
@@ -26,7 +26,7 @@ subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 
 `svmax` means maximum order for svd orthogonal polynomial, `svgrd` means number of mesh points for svd orthogonal polynomial, `smesh` means mesh for svd orthogonal polynomial in [-1,1], `rep_s` saves svd orthogonal polynomial defined on [-1,1], `bose` determines whether the bosonic kernel is used, `beta` means inverse system temperature $\beta$.
 
-(2) Spheric Bessel function.
+**(2)** Spheric Bessel function.
 
 ```fortran
 subroutine s_sph_jl(lmax, x, jl)
@@ -34,7 +34,7 @@ subroutine s_sph_jl(lmax, x, jl)
 
 It computes the spherical Bessel functions of the first kind, $j_l(x)$, for argument $x$ and $l = 0, 1, \ldots, l_{max}$.
 
-(3) Bernstein polynomial.
+**(3)** Bernstein polynomial.
 
 ```fortran
 subroutine s_bezier(n, x, bern)
@@ -42,7 +42,7 @@ subroutine s_bezier(n, x, bern)
 
 `n` means the degree of the bernstein polynomials to be used. For any given $n$, there is a set of $n + 1$ bernstein polynomials, each of degree $n$, which form a basis for polynomials on [0,1]. `x` means the evaluation point. `bern` saves the values of the $n+1$ bernstein polynomials at $x$.
 
-(4) Some helper functions for `s_svd_basis()`.
+**(4)** Some helper functions for `s_svd_basis()`.
 
 ```fortran
 function s_safe_exp(x)

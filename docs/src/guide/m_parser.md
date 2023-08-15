@@ -16,7 +16,7 @@ module
 
 ## Input File Format
 
-(1) Anything after "#" and "!" character can be treated as comments and will be ignored completely.
+**(1)** Anything after "#" and "!" character can be treated as comments and will be ignored completely.
 
 Example:
 
@@ -28,7 +28,7 @@ Example:
    norbs = 8 ! this is in line comment
 ```
 
-(2) It is not case sensitive.
+**(2)** It is not case sensitive.
 
 Example:
 
@@ -38,7 +38,7 @@ Example:
    NspiN = 2
 ```
 
-(3) The key and value pair is separated by "=" or ":" character.
+**(3)** The key and value pair is separated by "=" or ":" character.
 
 Example:
 
@@ -47,7 +47,7 @@ Example:
    norbs : 8 ! you can use norbs = 8
 ```
 
-(4) Any space will be ignored. Any blank lines will be skipped as well.
+**(4)** Any space will be ignored. Any blank lines will be skipped as well.
 
 Example:
 
@@ -56,7 +56,7 @@ Example:
    no   rb s = 8 ! it is valid
 ```
 
-(5) You can only use one line to define one key-value pair.
+**(5)** You can only use one line to define one key-value pair.
 
 Example:
 
@@ -68,7 +68,7 @@ Example:
    4                    ! it is not valid
 ```
 
-(6) In the value part, now only `integer`, `real(dp)`, `logical`, and `character` data type are support.
+**(6)** In the value part, now only `integer`, `real(dp)`, `logical`, and `character` data type are support.
 
 Example:
 
@@ -79,7 +79,7 @@ Example:
    model = anderson ! character type, do not use "" or '' characters to quote it
 ```
 
-(7) In the value part, a vector is also support. the items in the vector should be separated by "," character.
+**(7)** In the value part, a vector is also support. the items in the vector should be separated by "," character.
 
 Example:
 
@@ -90,25 +90,25 @@ Example:
    model = anderson, hubbard            ! 2 items
 ```
 
-(8) An empty input file is acceptable.
+**(8)** An empty input file is acceptable.
 
-(9) If one key occurs in the input file for more than 1 times, only the last occurrence is recognized.
+**(9)** If one key occurs in the input file for more than 1 times, only the last occurrence is recognized.
 
 ## Usage
 
-(1) Import parser module support.
+**(1)** Import parser module support.
 
 ```fortran
 use parser
 ```
 
-(2) Create instance for parser.
+**(2)** Create instance for parser.
 
 ```fortran
 call p_create()
 ```
 
-(3) Parse the input file.
+**(3)** Parse the input file.
 
 ```fortran
 call p_parse(file_name)
@@ -118,7 +118,7 @@ call p_parse(file_name)
 
     In the mpi environment, only the master node can execute this command. You should broadcast the data manually.
 
-(4) Extract parameters.
+**(4)** Extract parameters.
 
 ```fortran
 integer :: nband = 2            ! default value
@@ -139,12 +139,12 @@ call p_get_vec('symm', symm, 2) ! get array
 
     The parser **DO NOT** check the correctness (including number of values, key's name, and datatype of value) of the input file. So, please always monitor the output of ctqmc code which use this parser to parse the input file.
 
-(5) Destroy parser.
+**(5)** Destroy parser.
 
 ```fortran
 call p_destroy()
 ```
 
-(6) Broadcast the parameters read from input file.
+**(6)** Broadcast the parameters read from input file.
 
 Do not forget to broadcast all of the parameters from master node to children nodes.

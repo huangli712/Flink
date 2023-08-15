@@ -24,13 +24,13 @@ module
 
 ## Usage
 
-(1) Include linked list module support.
+**(1)** Include linked list module support.
 
 ```fortran
 use linkedlist
 ```
 
-(2) Define user own data type.
+**(2)** Define user own data type.
 
 ```fortran
 type data_t
@@ -38,26 +38,26 @@ type data_t
 end type data_t
 ```
 
-(3) Define pointer to data.
+**(3)** Define pointer to data.
 
 ```fortran
 type (data_t), pointer  :: data_ptr => null()
 ```
 
-(4) Define pointer to list.
+**(4)** Define pointer to list.
 
 ```fortran
 type (list_t), pointer  :: list_ptr => null()
 ```
 
-(5) Prepare data.
+**(5)** Prepare data.
 
 ```fortran
 allocate(data_ptr)
 data_ptr%something = something
 ```
 
-(6) Create a linked list.
+**(6)** Create a linked list.
 
 ```fortran
 call list_init(list_ptr, transfer(data_ptr, list_d))
@@ -69,7 +69,7 @@ Here `list_d` is a public variable defined in linkedlist module.
 
     To access the data stored in the nodes, we have to use the intrinsic `transfer()` subroutine.
 
-(7) Insert new node.
+**(7)** Insert new node.
 
 ```fortran
 call list_insert(list_ptr, transfer(data_ptr, list_d))
@@ -81,7 +81,7 @@ call list_insert(list_ptr, transfer(data_ptr, list_d))
 call list_put(list_ptr, transfer(data_ptr, list_d))
 ```
 
-(8) Visit next node.
+**(8)** Visit next node.
 
 ```fortran
 curr => list_next(curr)
@@ -89,7 +89,7 @@ curr => list_next(curr)
 
 Here `curr` is a `list_t` type pointer.
 
-(9) Retrieve data stored in the node.
+**(9)** Retrieve data stored in the node.
 
 ```fortran
 data_ptr  = transfer(list_get(curr), data_ptr)
@@ -98,7 +98,7 @@ something = data_ptr%something
 
 Here `curr` is a `list_t` type pointer, it points to the current node.
 
-(10) Free memory for this linked list.
+**(10)** Free memory for this linked list.
 
 ```fortran
 call list_free(list_ptr)

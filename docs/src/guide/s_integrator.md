@@ -29,7 +29,7 @@ To use `s_int_trapezoid()` or `s_int_simpson()`, you have to define the integran
 
 Next, you have to determine the lower bound `a` and upper bound `b`, and the number of points `n`. Noted that now both the `s_int_trapezoid()` and `s_int_simpson()` functions only support the 1-D numerical integration.
 
-(1) Use `s_int_trapezoid()`.
+**(1)** Use `s_int_trapezoid()`.
 
 ```fortran
 procedure( real(dp) ) :: s_int_trapezoid
@@ -39,7 +39,7 @@ real(dp) :: val
 val = s_int_trapezoid(f, a, b, n)
 ```
 
-(2) Use `s_int_simpson()`.
+**(2)** Use `s_int_simpson()`.
 
 ```fortran
 procedure( real(dp) ) :: s_int_simpson

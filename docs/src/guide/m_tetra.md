@@ -23,7 +23,7 @@ module
 
 ## Usage
 
-(1) P. E. Blochl tetrahedron integration algorithm.
+**(1)** P. E. Blochl tetrahedron integration algorithm.
 
 ```fortran
 call tetra_blochl_weight1(z, e, dos, tos)
@@ -37,7 +37,7 @@ call tetra_blochl_weight2(z, e, ddd, ttt)
 
 For the external energy `z` and the one-particle energies at the corners of the tetrahedron `e`, the subroutine `tetra_blochl_weight1()` returns total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos`, the subroutine `tetra_blochl_weight2()` returns corner-dependent contributions of the given tetrahedron to the density of states `ddd` and integrated density of states `ttt`.
 
-(2) Lambin-Vigneron tetrahedron integration algorithm.
+**(2)** Lambin-Vigneron tetrahedron integration algorithm.
 
 ```fortran
 call tetra_lambin_weight(z, e, weights)
@@ -45,7 +45,7 @@ call tetra_lambin_weight(z, e, weights)
 
 For the external energy `z` and the energy eigenvalues for four corners at given tetrahedron, the subroutine `tetra_lambin_weight()` returns corner-dependent integration weights `weights` for lattice Green's function. Note that now `z`, `e`, and `weights` are all complex.
 
-(3) Gaussian smearing algorithm.
+**(3)** Gaussian smearing algorithm.
 
 ```fortran
 call smearing_gauss_weight1(z, e, dos, tos)
@@ -65,7 +65,7 @@ call smearing_gauss_weight3(z, e, dd, tt)
 
 Here, `z` means external energy, `e` means energy at given k-point and band in `smearing_gauss_weight1()`, corner energies at given tetrahedron in `smearing_gauss_weight2()` and `smearing_gauss_weight3()`. In `smearing_gauss_weight1()` and `smearing_gauss_weight2()`, the total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos` are returned. In `smearing_gauss_weight3()`, the corner-dependent contributions (integration weights) of the given tetrahedron to the density of states `dd` and integrated density of states `tt` are returned.
 
-(4) Fermi-Dirac smearing algorithm.
+**(4)** Fermi-Dirac smearing algorithm.
 
 ```fortran
 call smearing_fermi_weight1(z, e, dos, tos)
@@ -85,7 +85,7 @@ call smearing_fermi_weight3(z, e, dd, tt)
 
 Here, `z` means external energy, `e` means energy at given k-point and band in `smearing_fermi_weight1()`, corner energies at given tetrahedron in `smearing_fermi_weight2()` and `smearing_fermi_weight3()`. In `smearing_fermi_weight1()` and `smearing_fermi_weight2()`, the total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos` are returned. In `smearing_fermi_weight3()`, the corner-dependent contributions (integration weights) of the given tetrahedron to the density of states `dd` and integrated density of states `tt` are returned.
 
-(5) Marzari-Vanderbilt cold smearing algorithm.
+**(5)** Marzari-Vanderbilt cold smearing algorithm.
 
 ```fortran
 call smearing_marzari_weight1(z, e, dos, tos)

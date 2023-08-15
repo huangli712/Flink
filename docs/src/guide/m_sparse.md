@@ -12,31 +12,31 @@ module
 
 ## Usage
 
-(1) Import sparse module support.
+**(1)** Import sparse module support.
 
 ```fortran
 use sparse
 ```
 
-(2) Convert normal matrix to sparse matrix.
+**(2)** Convert normal matrix to sparse matrix.
 
 ```fortran
 call sp_dns_to_csr(...)
 ```
 
-(3) Convert sparse matrix to normal matrix.
+**(3)** Convert sparse matrix to normal matrix.
 
 ```fortran
 call sp_csr_to_dns(...)
 ```
 
-(4) Perform sparse matrix - vector multiplication.
+**(4)** Perform sparse matrix - vector multiplication.
 
 ```fortran
 call sp_csr_mv_vec(...)
 ```
 
-(5) Perform sparse matrix - matrix multiplication.
+**(5)** Perform sparse matrix - matrix multiplication.
 
 ```fortran
 call sp_csr_mm_csr(...)
