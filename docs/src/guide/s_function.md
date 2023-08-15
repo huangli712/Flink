@@ -152,9 +152,8 @@ where ``K^\mathrm{L}(\tau,\omega)`` is the *logistic kernel* defined as
 K^\mathrm{L}(\tau,\omega) =  
 \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}},
 ```
-    "$$ (KL)\n",
-    "\n",
-    "and $\\rho(\\omega)$ is the modified spectral function\n",
+
+and $\rho(\omega)$ is the modified spectral function\n",
     "\n",
     "$$\n",
     "\\begin{align}\n",
