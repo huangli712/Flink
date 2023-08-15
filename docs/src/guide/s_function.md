@@ -20,6 +20,8 @@ subroutine s_che_basis(chmax, chgrd, cmesh, rep_c)
 subroutine s_svd_basis(svmax, svgrd, smesh, rep_s, bose, beta)
 ```
 
+`lemax` means maximum order for legendre orthogonal polynomial, `legrd` means number of mesh points for legendre orthogonal polynomial, `lmesh` means mesh for legendre orthogonal polynomial in [-1,1], `rep_l` saves legendre orthogonal polynomial defined on [-1,1].
+
 (2) Spheric Bessel function.
 
 ```fortran
