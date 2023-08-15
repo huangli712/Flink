@@ -1,6 +1,6 @@
 ## Introduction
 
-In this module, we implement some basic sparse matrix algebra. Now it supports double precision real and complex numbers.
+In this module, we implement some basic sparse matrix algebra. Now it supports both double precision real and complex numbers. The internal format of sparse matrix used in this module is CSR (compressed sparse row) format.
 
 ## Type
 
@@ -21,13 +21,13 @@ use sparse
 (2) Convert normal matrix to sparse matrix.
 
 ```fortran
-call sp_csr_to_dns(...)
+call sp_dns_to_csr(...)
 ```
 
 (3) Convert sparse matrix to normal matrix.
 
 ```fortran
-call sp_dns_to_csr(...)
+call sp_csr_to_dns(...)
 ```
 
 (4) Perform sparse matrix - vector multiplication.

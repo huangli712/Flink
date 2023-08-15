@@ -2,32 +2,14 @@
 
 It is a common module which defines some common used numerical or physical constants. They are as follows:
 
-* for numerical precision:
-    * `sp`
-    * `dp`
-* for file units
-    * `mystd`
-    * `myout`
-    * `mytmp`
-* for numerical constants
-    * `pi`
-    * `zero`
-    * `one`
-    * `two`
-    * `half`
-    * `eps6`
-    * `eps8`
-    * `epst`
-    * `epss`
-    * `czi`
-    * `cone`
-    * `czero`
-* for physical constants
-    * `ev2k`
-    * `ry2e`
-    * `ha2e` 
+* Numerical precision: `sp`, `dp`
+* File units: `mystd`, `myout`, `mytmp`
+* Numerical constants (real number): `pi`, `zero`, `one`, `two`, `half`
+* Numerical constants (small number): `eps6`, `eps8`, `epst`, `epss`
+* Numerical constants (complex number): `czi`, `cone`, `czero`
+* Physical constants: `ev2k`, `ry2e`, `ha2e` 
 
- We always need to import this module.
+We always need to import this module.
 
 ## Type
 
