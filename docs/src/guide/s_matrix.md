@@ -102,11 +102,13 @@ where `ndim` means dimension of the matrix, `dmat` and `zmat` are the input/outp
 (10) General eigensystem problem.
 
 ```fortran
-subroutine s_eig_dg(...)
-subroutine s_eig_zg(...)
-subroutine s_eigvals_dg(...)
-subroutine s_eigvals_zg(...)
+subroutine s_eig_dg(ldim, ndim, amat, eval, evec)
+subroutine s_eig_zg(ldim, ndim, zmat, zeig, zvec)
+subroutine s_eigvals_dg(ldim, ndim, amat, eval)
+subroutine s_eigvals_zg(ldim, ndim, zmat, zeig)
 ```
+
+Here `ldim` is leading dimension of matrix, `ndim` is the order of the matrix, `amat` and `zmat` are the input matrices, `eval` and `zeig` mean eigenvalues, `evec` and `zvec` mean eigenvectors.
 
 (11) Symmetric eigensystem problem.
 
