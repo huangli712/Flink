@@ -15,9 +15,11 @@ subroutines
 (1) C-like assertion.
 
 ```fortran
-subroutine s_assert(...)
-subroutine s_assert2(...)
+subroutine s_assert(condition)
+subroutine s_assert2(condition, message)
 ```
+
+where `condition` is the logical condition that we have to assert, `message` is the additional message.
 
 (2) Sort algorithm.
 
