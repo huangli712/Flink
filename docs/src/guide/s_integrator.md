@@ -15,7 +15,7 @@ subroutines
 To use `s_int_trapezoid()` or `s_int_simpson()`, you have to define the integrand at first. For example:
 
 ```fortran
- function f(x)
+function f(x)
     use constants, only : dp
 
     implicit none
@@ -24,7 +24,7 @@ To use `s_int_trapezoid()` or `s_int_simpson()`, you have to define the integran
     real(dp) :: f
 
     f = x * x
- end function f
+end function f
 ```
 
 Next, you have to determine the lower bound `a` and upper bound `b`, and the number of points `n`. Noted that now both the `s_int_trapezoid()` and `s_int_simpson()` functions only support the 1-D numerical integration.
