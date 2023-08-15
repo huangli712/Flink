@@ -26,14 +26,16 @@ module
 (1) P. E. Blochl tetrahedron integration algorithm.
 
 ```fortran
-call tetra_blochl_weight1(...)
+call tetra_blochl_weight1(z, e, dos, tos)
 ```
 
 or
 
 ```fortran
-call tetra_blochl_weight2(...)
+call tetra_blochl_weight2(z, e, ddd, ttt)
 ```
+
+For the external energy `z` and the one-particle energies at the corners of the tetrahedron `e`, the subroutine `tetra_blochl_weight1()` returns total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos`, the subroutine `tetra_blochl_weight2()` returns corner-dependent contributions of the given tetrahedron to the density of states `ddd` and integrated density of states `ttt`.
 
 (2) Lambin-Vigneron tetrahedron integration algorithm.
 
