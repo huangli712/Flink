@@ -15,26 +15,32 @@ subroutines
 (1) Build constants (0) matrix.
 
 ```fortran
-subroutine s_zeros_i(...)
-subroutine s_zeros_d(...)
-subroutine s_zeros_z(...)
+subroutine s_zeros_i(n, A)
+subroutine s_zeros_d(n, A)
+subroutine s_zeros_z(n, A)
 ```
+
+To build a matrix with all elements are zero. Here `n` means size of matrix, `A` means input/output matrix.
 
 (2) Build constants (1) matrix.
 
 ```fortran
-subroutine s_ones_i(...)
-subroutine s_ones_d(...)
-subroutine s_ones_z(...)
+subroutine s_ones_i(n, A)
+subroutine s_ones_d(n, A)
+subroutine s_ones_z(n, A)
 ```
+
+To build a matrix with all elements are zero. Here `n` means size of matrix, `A` means input/output matrix.
 
 (3) Build constants (any values) matrix.
 
 ```fortran
-subroutine s_any_i(...)
-subroutine s_any_d(...)
-subroutine s_any_z(...)
+subroutine s_any_i(n, i, A)
+subroutine s_any_d(n, d, A)
+subroutine s_any_z(n, z, A)
 ```
+
+To build a matrix with all elements are given by `i`, `d`, or `z`. Here `n` means size of matrix, `A` means input/output matrix. `i`, `d`, and `z` are initial values of matrix elements.
 
 (4) Build diagonal matrix.
 
