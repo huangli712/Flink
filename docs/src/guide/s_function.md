@@ -137,15 +137,14 @@ K(\tau,\omega) \equiv
 \end{equation}
 ```
 
-    "$$\n",
-    "\n",
-    "The minus sign originates from our convention $K(\\tau, \\omega) > 0$.\n",
-    "To avoid the divergence of the bosonic kernel at $\\omega=0$, we reformulate Eq. {eq}`lehmann-tau` as\n",
-    "\n",
-    "$$\n",
-    "\\begin{equation}\n",
-    "    G(\\tau)= - \\int_{-\\infty}^\\infty\\dd{\\omega} K^\\mathrm{L}(\\tau,\\omega) \\rho(\\omega),\n",
-    "\\end{equation}\n",
+The minus sign originates from our convention ``K(\tau, \omega) > 0``. To avoid the divergence of the bosonic kernel at ``\omega=0``, we reformulate Equation of ``G(\tau)`` as
+
+```math
+\begin{equation}
+G(\tau)= -\int_{-\infty}^\infty d{\omega}
+K^\mathrm{L}(\tau,\omega) \rho(\omega),
+\end{equation}
+```
     "$$\n",
     "\n",
     "where $K^\\mathrm{L}(\\tau, \\omega)$ is the \"logistic kernel\" defined as\n",
