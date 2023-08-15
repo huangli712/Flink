@@ -135,10 +135,12 @@ Try to solve a linear system $AX = B$. Here, `n` is the number of linear equatio
 (13) General singular value decomposition.
 
 ```fortran
-subroutine s_svd_dg(...)
-subroutine s_svd_zg(...)
+subroutine s_svd_dg(m, n, min_mn, amat, umat, svec, vmat)
+subroutine s_svd_zg(m, n, min_mn, amat, umat, svec, vmat)
 ```
+
+To perform the singular values decomposition for a general `m`-by-`n` matrix $A$, where $A = U \Sigma V'$, return its left vectors, right vectors, and singular values. Here, `m` is number of rows of $A$ matrix, `n` is number of columns of $A$ matrix, `min_mn` is minimal value of `m` and `n`, `amat` means $A$, `umat` means  left vectors $U$, `svec` means singular values $\Sigma$, `vmat` means right vectors $V'$.
 
 !!! note
 
-    _i means integer version, _d real(dp) version, and _z complex(dp) version. _dg means real(dp) general version, _zg complex(dp) general version, _sy real(dp) symmetric version, _he complex(dp) Hermitian version.
+    `_i` means integer version, `_d` real(dp) version, and `_z` complex(dp) version. `_dg` means real(dp) general version, `_zg` complex(dp) general version, `_sy` real(dp) symmetric version, `_he` complex(dp) Hermitian version.
