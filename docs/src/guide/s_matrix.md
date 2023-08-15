@@ -75,22 +75,26 @@ To build a diagonal matrix from a vector. Here `n` means size of matrix, `A` mea
 (7) Calculate trace for matrix.
 
 ```fortran
-subroutine s_trace_d(...)
-subroutine s_trace_z(...)
+subroutine s_trace_d(n, A, tr)
+subroutine s_trace_z(n, A, tr)
 ```
+
+Return trace for a matrix. Here `n` means size of matrix, `A` means input/output matrix, `tr` means matrix's trace.
 
 (8) Calculate determinant for matrix.
 
 ```fortran
-subroutine s_det_d(...)
-subroutine s_det_z(...)
+subroutine s_det_d(ndim, dmat, ddet)
+subroutine s_det_z(ndim, zmat, zdet)
 ```
+
+where `ndim` means dimension of the matrix, `ddet` and `zdet` are the determinants, `dmat` and `zmat` are the input matrices.
 
 (9) Calculate matrix inversion.
 
 ```fortran
-subroutine s_inv_d(...)
-subroutine s_inv_z(...)
+subroutine s_inv_d(ndim, dmat)
+subroutine s_inv_z(ndim, zmat)
 ```
 
 (10) General eigensystem problem.
