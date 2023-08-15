@@ -127,11 +127,14 @@ This procedure is numerically stable and accurate to near this machine precision
 
 **Bernstein polynomial**
 
-     ! the bernstein polynomials are assumed to be based on [0,1].
-     ! the formula reads:
-     !
-     !    B(N,I)(X) = [N!/(I!*(N-I)!)] * (1-X)**(N-I) * X**I
-     !
+The bernstein polynomials are assumed to be based on [0,1]. The formula reads:
+
+```math
+\begin{equation}
+B(N,I)(X) = \frac{N!}{I!*(N-I)!} (1-X)^{(N-I)} X^I
+\end{equation}
+```
+
      ! first values:
      !
      !    B(0,0)(X) = 1
