@@ -588,14 +588,16 @@ where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is t
 
 ```math
 \begin{equation}
-n(x) = \frac{1 - \text{erfc}{(-x)}} {8}
+n(x) = \frac{\text{erf}(\tilde{x})}{2} + \frac{1}{\sqrt{2\pi}}
+\exp(-\tilde{x}^2) + \frac{1}{2}
 \end{equation}
 ```
 
 ```math
 \begin{equation}
-D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
+D(x) = \frac{2}{\sqrt{\pi}}
+\exp{(-\tilde{x}^2)}( 2 - \sqrt{2}x )
 \end{equation}
 ```
 
-where ``x = (z - e) / \gamma``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
+where ``x = (z - e) / \gamma`` and ``\tilde{x} = x - \frac{1}{\sqrt{2}}``. ``\gamma`` is a adjustable parameter, ``z`` is the external energy, ``e`` is the energy at given k-point and band or corner energies at given tetrahedron.
