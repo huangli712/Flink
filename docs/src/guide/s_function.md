@@ -128,7 +128,7 @@ where $0 < \tau < \beta$ and
 
 ```math
 \begin{equation}
-K(\tau,\omega) \equiv 
+K(\tau,\omega) \equiv
 -\frac{1}{\beta} \sum_{i\nu} e^{-i\nu \tau} K(i\nu,\omega)=
 \begin{cases}
     \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}} & (\mathrm{fermion}),\\
@@ -149,7 +149,7 @@ K^\mathrm{L}(\tau,\omega) \rho(\omega),
 where $K^\mathrm{L}(\tau,\omega)$ is the *logistic kernel* defined as
 
 ```math
-K^\mathrm{L}(\tau,\omega) =  
+K^\mathrm{L}(\tau,\omega) =
 \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}},
 ```
 

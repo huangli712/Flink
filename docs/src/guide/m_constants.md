@@ -7,7 +7,7 @@ It is a common module which defines some common used numerical or physical const
 * Numerical constants (real number): `pi`, `zero`, `one`, `two`, `half`
 * Numerical constants (small number): `eps6`, `eps8`, `epst`, `epss`
 * Numerical constants (complex number): `czi`, `cone`, `czero`
-* Physical constants: `ev2k`, `ry2e`, `ha2e` 
+* Physical constants: `ev2k`, `ry2e`, `ha2e`
 
 We always need to import this module.
 

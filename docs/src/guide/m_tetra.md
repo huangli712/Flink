@@ -131,7 +131,7 @@ for $\epsilon_1 < \epsilon < \epsilon_2$,
 
 ```math
 \begin{equation}
-n(\epsilon) = \frac{V_T}{V_G} 
+n(\epsilon) = \frac{V_T}{V_G}
 \frac{1}{\epsilon_{31}\epsilon_{41}}
 \left[
 \epsilon^2_{21} +
@@ -146,7 +146,7 @@ for $\epsilon_2 < \epsilon < \epsilon_3$,
 
 ```math
 \begin{equation}
-n(\epsilon) = \frac{V_T}{V_G} 
+n(\epsilon) = \frac{V_T}{V_G}
 \left(
 1 - \frac{(\epsilon_4 - \epsilon)^3}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}
 \right)
@@ -179,7 +179,7 @@ For $\epsilon_1 < \epsilon_F < \epsilon_2$, we obtain
 
 ```math
 \begin{equation}
-w_1 = C 
+w_1 = C
 \left[
 4 - (\epsilon_F - \epsilon_1)
 \left(\frac{1}{\epsilon_{21}} + \frac{1}{\epsilon_{31}} + \frac{1}{\epsilon_{41}}\right)
@@ -373,7 +373,7 @@ for $\epsilon_3 < \epsilon < \epsilon_4$.
 In this part we will write up the equations of Lambin and Vigneron for the weight factors used in the analytical tetrahedron method. The purpose of this is to rewrite their formulas in a simpler, more readable and hopefully more
 stable form.
 
-Before we start writing out the equations let us define a few symbols. The external frequency is denoted by $z$ and the energy at corner number $i$ is denoted by $\epsilon_i$.  We define $z_i = z-\epsilon_i$ and also $\epsilon_{ij} = \epsilon_i-\epsilon_j$. 
+Before we start writing out the equations let us define a few symbols. The external frequency is denoted by $z$ and the energy at corner number $i$ is denoted by $\epsilon_i$.  We define $z_i = z-\epsilon_i$ and also $\epsilon_{ij} = \epsilon_i-\epsilon_j$.
 
 In the general case when all the tetrahedron corners have different energies the equation for the weight factor at corner $i$ is according to LV
 
@@ -395,7 +395,7 @@ If we now use the identity:
 
 ```math
 \begin{equation}
-  0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} = 
+  0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} =
   \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}\epsilon_{ji}}
 \end{equation}
 ```
@@ -406,7 +406,7 @@ the equation for the weight factor can be written as
 \begin{align}
 r_i
 &=
-\sum_{j \neq i} 
+\sum_{j \neq i}
 \frac{z_j^2}{\prod_{k \neq j}\epsilon_{kj}}
 \left[
 \frac{z_j}{\epsilon_{ij}}\log\left(\frac{z_j}{z_i}\right)-1
@@ -457,17 +457,17 @@ r_1 &=
 +\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{31}}\right)
 +\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{41}}\right)
  \\
-r_2 &= 
+r_2 &=
  \frac{z_1}{\epsilon_{31}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{12}}\right)
 +\frac{z_3}{\epsilon_{13}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
 +\frac{z_4}{\epsilon_{14}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
  \\
-r_3 &= 
+r_3 &=
  \frac{z_1}{\epsilon_{21}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{13}}\right)
 +\frac{z_2}{\epsilon_{12}\epsilon_{42}}lv\left(\frac{z_2}{\epsilon_{23}}\right)
 +\frac{z_4}{\epsilon_{14}\epsilon_{24}}lv\left(\frac{z_4}{\epsilon_{43}}\right)
  \\
-r_4 &= 
+r_4 &=
  \frac{z_1}{\epsilon_{21}\epsilon_{31}}lv\left(\frac{z_1}{\epsilon_{14}}\right)
 +\frac{z_2}{\epsilon_{12}\epsilon_{32}}lv\left(\frac{z_2}{\epsilon_{24}}\right)
 +\frac{z_3}{\epsilon_{13}\epsilon_{23}}lv\left(\frac{z_3}{\epsilon_{34}}\right)
@@ -478,7 +478,7 @@ The next case we consider is when two corners have equal energies and we assume 
 
 ```math
 \begin{align}
-r_2 &=   
+r_2 &=
  \frac{1}{2}\frac{z_2}{\epsilon_{32}\epsilon_{42}}
 +\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
 +\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
@@ -530,7 +530,7 @@ Performing these integrals we obtain:
 r_3 &=
  \frac{2z_3-5z_4}{6\epsilon_{34}^2}+
  \frac{z_4}{\epsilon_{34}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right) \\
-r_4 &= 
+r_4 &=
  \frac{z_4}{\epsilon_{43}^2}+\frac{1}{2}\frac{z_3}{\epsilon_{43}^2}
  -3\frac{z_3}{\epsilon_{43}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right)
 \end{align}

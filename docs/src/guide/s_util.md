@@ -33,7 +33,7 @@ subroutine s_qscorer(pstart, pend, nsize, list)
 The `s_sorter()` and `s_sorter2()` subroutines implement the bubble algorithm, and the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
 
 Here, `nsize` is size of the list, `list` is the dataset to be sorted. In `s_sorter2()`, the index of the dataset (`indx`) is also sorted.
- 
+
 (3) Combination algrbra.
 
 ```fortran
