@@ -32,7 +32,7 @@ makedocs(
             "Vector" => "guide/s_vector.md",
         ],
         "Appendix" => Any[
-            "make.sys" => "appendix/make.md",
+            "make.inc" => "appendix/make.md",
         ],
     ],
 )
