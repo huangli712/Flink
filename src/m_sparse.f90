@@ -3,7 +3,7 @@
 !!! program : sparse
 !!! source  : m_sparse.f90
 !!! type    : module
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
 !!!           07/29/2021 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse

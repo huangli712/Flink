@@ -3,7 +3,7 @@
 !!! program : mtetra
 !!! source  : m_tetra.f90
 !!! type    : module
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 06/07/2006 by li huang (created)
 !!!           08/13/2023 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration

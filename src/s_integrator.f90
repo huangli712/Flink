@@ -4,7 +4,7 @@
 !!!           s_int_simpson
 !!! source  : s_integrator.f90
 !!! type    : functions
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 09/20/2014 by li huang (created)
 !!!           02/05/2022 by li huang (last modified)
 !!! purpose : the purpose of these functions is to implement the composite

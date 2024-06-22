@@ -20,7 +20,7 @@
 !!!           s_vecadd_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
 !!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they

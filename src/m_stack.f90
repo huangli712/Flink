@@ -3,7 +3,7 @@
 !!! program : stack
 !!! source  : m_stack.f90
 !!! type    : module
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 09/14/2009 by li huang (created)
 !!!           07/30/2021 by li huang (last modified)
 !!! purpose : the purpose of this module is to define a stack-type (LIFO)

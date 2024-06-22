@@ -8,7 +8,7 @@
 !!!           s_write_message
 !!! source  : s_error.f90
 !!! type    : subroutines
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 09/15/2009 by li huang (created)
 !!!           07/29/2021 by li huang (last modified)
 !!! purpose : these subroutines are used to display the (error/exception/

@@ -15,7 +15,7 @@
 !!!           s_time_analyzer
 !!! source  : s_util.f90
 !!! type    : subroutines
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
 !!!           08/11/2023 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful features,

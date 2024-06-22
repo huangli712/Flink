@@ -3,7 +3,7 @@
 !!! program : mmpi
 !!! source  : m_mpi.f90
 !!! type    : module
-!!! author  : li huang (email:lihuang.dmft@gmail.com)
+!!! author  : li huang (email:huangli@caep.cn)
 !!! history : 08/09/2006 by li huang (created)
 !!!           08/12/2023 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
