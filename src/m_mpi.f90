@@ -1612,7 +1612,7 @@
      subroutine mp_bcast_int4(data, root, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: data(:,:,:,:)
          !
          integer, intent(in) :: root
@@ -5853,7 +5853,7 @@
      subroutine mp_allreduce_int3(source, data, mop, gid)
          implicit none
 
-! external arguments
+!! external arguments
          integer, intent(in) :: source(:,:,:)
          integer, intent(inout) :: data(:,:,:)
          !

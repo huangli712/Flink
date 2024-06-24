@@ -120,10 +120,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_str_compress
-     external :: s_str_lowcase
-
 !! external arguments
      ! filename for the input/config file
      character(len=*), intent(in) :: in_file
@@ -279,10 +275,6 @@
   subroutine p_get(in_key, out_value)
      implicit none
 
-!! external subroutines
-     external :: s_str_compress
-     external :: s_str_lowcase
-
 !! external arguments
      ! string representation for the key of key-value pair
      character(len=*), intent(in) :: in_key
@@ -378,10 +370,6 @@
 !!
   subroutine p_get_vec(in_key, out_value, nsize)
      implicit none
-
-!! external subroutines
-     external :: s_str_compress
-     external :: s_str_lowcase
 
 !! external arguments
      ! size of out_value
