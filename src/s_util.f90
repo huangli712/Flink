@@ -92,7 +92,7 @@
 !!
 !! is a approximately equal b?
 !!
-  function s_equal_approx(a, b, reltol, abstol) result(val)
+  function s_equal_approx(a, b) result(val)
      use constants, only : dp
      use constants, only : one
 
@@ -100,27 +100,22 @@
 
 !! external arguments
      ! values to compare
-     real(dp), intent(in)           :: a, b
-
-     ! relative and absolute error thresholds.
-     ! defaults: epsilon, smallest non-denormal number
-     real(dp), intent(in), optional :: reltol, abstol
+     real(dp), intent(in) :: a
+     real(dp), intent(in) :: b
 
 !! local variables
      ! return value
      logical  :: val
 
      ! relative and absolute error thresholds.
-     real(dp) :: rt, at
+     ! defaults: epsilon, smallest non-denormal number
+     real(dp) :: rt
+     real(dp) :: at
 
 !! [body
 
      rt = epsilon(one)
      at = tiny(one)
-     !
-     if (present(reltol)) rt = reltol
-     if (present(abstol)) at = abstol
-
      val = abs(a - b) <= max(rt * max(abs(a), abs(b)), at)
 
 !! body]
