@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           08/11/2023 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement a generic and
 !!!           flexible config/input file reader and analyzer.
 !!! status  : unstable
@@ -207,13 +207,15 @@
              !
              ! case 1: we do not find any ":" or "=" character
              if ( p == 0 .and. q == 0 ) then
-                 write(mystd,'(a)') 'parser: p_parse, wrong file format for '//trim(in_file)
+                 write(mystd,'(a)') 'parser: p_parse, &
+                                    & wrong file format for '//trim(in_file)
                  STOP
              endif ! back if ( p == 0 .and. q == 0 ) block
              !
              ! case 2: we find both ":" and "=" characters
              if ( p >  0 .and. q >  0 ) then
-                 write(mystd,'(a)') 'parser: p_parse, wrong file format for '//trim(in_file)
+                 write(mystd,'(a)') 'parser: p_parse, &
+                                    & wrong file format for '//trim(in_file)
                  STOP
              endif ! back if ( p >  0 .and. q >  0 ) block
              !
@@ -237,12 +239,14 @@
 
              ! check the length of str_key and str_value
              if ( len_trim(str_key) == 0   ) then
-                 write(mystd,'(a)') 'parser: p_parse, wrong file format for '//trim(in_file)
+                 write(mystd,'(a)') 'parser: p_parse, &
+                                    & wrong file format for '//trim(in_file)
                  STOP
              endif ! back if ( len_trim(str_key) == 0   ) block
              !
              if ( len_trim(str_value) == 0 ) then
-                 write(mystd,'(a)') 'parser: p_parse, wrong file format for '//trim(in_file)
+                 write(mystd,'(a)') 'parser: p_parse, &
+                                    & wrong file format for '//trim(in_file)
                  STOP
              endif ! back if ( len_trim(str_value) == 0 ) block
 
@@ -467,7 +471,8 @@
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
                  if ( offset == 0 ) then
-                     write(mystd,'(a)') 'parser: p_get_vec, wrong number of vector'
+                     write(mystd,'(a)') 'parser: p_get_vec, &
+                                        & wrong number of vector'
                      STOP
                  endif ! back if ( offset == 0 ) block
                  read (str_value(q+1:q+offset-1),'(I10)') int_aux
@@ -483,7 +488,8 @@
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
                  if ( offset == 0 ) then
-                     write(mystd,'(a)') 'parser: p_get_vec, wrong number of vector'
+                     write(mystd,'(a)') 'parser: p_get_vec, &
+                                        & wrong number of vector'
                      STOP
                  endif ! back if ( offset == 0 ) block
                  read (str_value(q+1:q+offset-1),'(L4)') bool_aux
@@ -499,7 +505,8 @@
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
                  if ( offset == 0 ) then
-                     write(mystd,'(a)') 'parser: p_get_vec, wrong number of vector'
+                     write(mystd,'(a)') 'parser: p_get_vec, &
+                                        & wrong number of vector'
                      STOP
                  endif ! back if ( offset == 0 ) block
                  read (str_value(q+1:q+offset-1),'(F16.8)') real_aux
@@ -515,7 +522,8 @@
              do p=1,nsize-1
                  offset = index(str_value(q+1:), ',')
                  if ( offset == 0 ) then
-                     write(mystd,'(a)') 'parser: p_get_vec, wrong number of vector'
+                     write(mystd,'(a)') 'parser: p_get_vec, &
+                                        & wrong number of vector'
                      STOP
                  endif ! back if ( offset == 0 ) block
                  out_value(p) = str_value(q+1:q+offset-1)
