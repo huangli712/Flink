@@ -193,6 +193,57 @@
   end subroutine s_sorter1_d
 
 !!
+!! @sub s_sorter2_i
+!!
+!! using bubble algorithm to sort an integer list and its index according
+!! to the descending order of the list.
+!!
+  subroutine s_sorter2_i(nsize, list, indx)
+     implicit none
+
+!! external arguments
+     ! size of the list
+     integer, intent(in)    :: nsize
+
+     ! in: index of original list
+     ! out: original index of the sorted list
+     integer, intent(inout) :: indx(nsize)
+
+     ! the list to be sorted
+     integer, intent(inout) :: list(nsize)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+
+     ! used to exchange index
+     integer :: int_tmp
+
+     ! used to exchange list element
+     integer :: int_aux
+
+!! [body
+
+     do i=1,nsize-1
+         do j=1,nsize-i
+             if ( list(j) < list(j+1) ) then
+                 int_aux = list(j)
+                 list(j) = list(j+1)
+                 list(j+1) = int_aux
+                 int_tmp = indx(j)
+                 indx(j) = indx(j+1)
+                 indx(j+1) = int_tmp
+             endif ! back if ( list(j) < list(j+1) ) block
+         enddo ! over j={1,nsize-i} loop
+     enddo ! over i={1,nsize-1} loop
+
+!! body]
+
+     return
+  end subroutine s_sorter2_i
+
+!!
 !! @sub s_sorter2_d
 !!
 !! using bubble algorithm to sort a real list and its index according to
