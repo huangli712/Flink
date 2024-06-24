@@ -2,8 +2,10 @@
 !!! project : flink @ sakura
 !!! program : s_assert
 !!!           s_assert2
-!!!           s_sorter
-!!!           s_sorter2
+!!!           s_sorter1_i
+!!!           s_sorter1_d
+!!!           s_sorter2_i
+!!!           s_sorter2_d
 !!!           s_qsorter
 !!!           s_qscorer
 !!!           s_combination
@@ -85,11 +87,11 @@
 !!========================================================================
 
 !!
-!! @sub s_sorter
+!! @sub s_sorter1_d
 !!
 !! using bubble algorithm to sort a real dataset. it is the slowest.
 !!
-  subroutine s_sorter(nsize, list)
+  subroutine s_sorter1_d(nsize, list)
      use constants, only : dp
 
      implicit none
@@ -136,15 +138,15 @@
 !! body]
 
      return
-  end subroutine s_sorter
+  end subroutine s_sorter1_d
 
 !!
-!! @sub s_sorter2
+!! @sub s_sorter2_d
 !!
 !! using bubble algorithm to sort a real list and its index according to
 !! the descending order of the list.
 !!
-  subroutine s_sorter2(nsize, list, indx)
+  subroutine s_sorter2_d(nsize, list, indx)
      use constants, only : dp
 
      implicit none
@@ -189,7 +191,7 @@
 !! body]
 
      return
-  end subroutine s_sorter2
+  end subroutine s_sorter2_d
 
 !!
 !! @sub s_qsorter
