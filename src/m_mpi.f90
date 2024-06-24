@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 08/09/2006 by li huang (created)
-!!!           08/12/2023 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
@@ -68,10 +68,12 @@
      ! ndims: number of cartesian dimensions, and we need a 2D grid
      integer, private, parameter :: ndims = 2
 
-     ! reorder: ranking may be reordered (true) or not (false) in a new grid
+     ! reorder: ranking may be reordered (true) or not (false)
+     ! in a new grid
      logical, private, parameter :: reorder = .false.
 
-     ! periods: specifying whether the grid is periodic or not in each dimens
+     ! periods: specifying whether the grid is periodic or not
+     ! in each dimens
      logical, private, parameter :: periods(ndims) = .false.
 
 !!========================================================================
@@ -138,13 +140,16 @@
      ! makes a new communicator to which topology is cartesian
      public :: mp_cart_create
 
-     ! determines process coords in cartesian topology given rank in group
+     ! determines process coords in cartesian topology
+     ! given rank in group
      public :: mp_cart_coords
 
-     ! creates new communicators based on colors and keys for rowwise grid
+     ! creates new communicators based on colors and keys
+     ! for rowwise grid
      public :: mp_comm_split_row
 
-     ! creates new communicators based on colors and keys for columnwise grid
+     ! creates new communicators based on colors and keys
+     ! for columnwise grid
      public :: mp_comm_split_col
 
 !!>>> synchronics operations
@@ -912,9 +917,6 @@
      subroutine mp_dims_create(nprocs, dims)
          implicit none
 
-!! external subroutines
-         external :: MPI_DIMS_CREATE
-
 !! external arguments
          integer, intent(in) :: nprocs
          integer, intent(inout) :: dims(ndims)
@@ -940,9 +942,6 @@
      subroutine mp_cart_create(dims)
          implicit none
 
-!! external subroutines
-         external :: MPI_CART_CREATE
-
 !! external arguments
          integer, intent(in) :: dims(ndims)
 
@@ -950,7 +949,8 @@
 
          ! invoke related mpi subroutines.
          ! mpi_comm_cart should be overwriten in output.
-         call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, reorder, mpi_comm_cart, ierror)
+         call MPI_CART_CREATE(MPI_COMM_WORLD, ndims, dims, periods, &
+                              & reorder, mpi_comm_cart, ierror)
 
          ! handler for return code
          call mp_error('mp_cart_create', ierror)
@@ -967,9 +967,6 @@
 !!
      subroutine mp_cart_coords(myid, cx, cy)
          implicit none
-
-!! external subroutines
-         external :: MPI_CART_COORDS
 
 !! external arguments
          integer, intent(in) :: myid
@@ -1013,7 +1010,8 @@
 
          ! invoke related mpi subroutines.
          ! mpi_comm_row should be overwritten in output.
-         call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_row, ierror)
+         call MPI_COMM_SPLIT(mpi_comm_cart, color, key, &
+                             & mpi_comm_row, ierror)
 
          ! handler for return code
          call mp_error('mp_comm_split_row', ierror)
@@ -1039,7 +1037,8 @@
 
          ! invoke related mpi subroutines.
          ! mpi_comm_col should be overwritten in output.
-         call MPI_COMM_SPLIT(mpi_comm_cart, color, key, mpi_comm_col, ierror)
+         call MPI_COMM_SPLIT(mpi_comm_cart, color, key, &
+                             & mpi_comm_col, ierror)
 
          ! handler for return code
          call mp_error('mp_comm_split_col', ierror)
@@ -1142,9 +1141,6 @@
      subroutine mp_bcast_log0(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          logical, intent(in) :: data
          !
@@ -1181,9 +1177,6 @@
 !!
      subroutine mp_bcast_log1(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:)
@@ -1225,9 +1218,6 @@
      subroutine mp_bcast_log2(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          logical, intent(in) :: data(:,:)
          !
@@ -1267,9 +1257,6 @@
 !!
      subroutine mp_bcast_log3(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:,:,:)
@@ -1311,9 +1298,6 @@
      subroutine mp_bcast_log4(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          logical, intent(in) :: data(:,:,:,:)
          !
@@ -1353,9 +1337,6 @@
 !!
      subroutine mp_bcast_log5(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          logical, intent(in) :: data(:,:,:,:,:)
@@ -1397,9 +1378,6 @@
      subroutine mp_bcast_chr0(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          character(len = *), intent(in) :: data
          !
@@ -1436,9 +1414,6 @@
 !!
      subroutine mp_bcast_chr1(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          character(len = *), intent(in) :: data(:)
@@ -1480,9 +1455,6 @@
      subroutine mp_bcast_int0(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          integer, intent(in) :: data
          !
@@ -1519,9 +1491,6 @@
 !!
      subroutine mp_bcast_int1(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:)
@@ -1563,9 +1532,6 @@
      subroutine mp_bcast_int2(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          integer, intent(in) :: data(:,:)
          !
@@ -1605,9 +1571,6 @@
 !!
      subroutine mp_bcast_int3(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:,:,:)
@@ -1649,9 +1612,6 @@
      subroutine mp_bcast_int4(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 ! external arguments
          integer, intent(in) :: data(:,:,:,:)
          !
@@ -1691,9 +1651,6 @@
 !!
      subroutine mp_bcast_int5(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          integer, intent(in) :: data(:,:,:,:,:)
@@ -1735,9 +1692,6 @@
      subroutine mp_bcast_rdp0(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          real(dp), intent(in) :: data
          !
@@ -1774,9 +1728,6 @@
 !!
      subroutine mp_bcast_rdp1(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:)
@@ -1818,9 +1769,6 @@
      subroutine mp_bcast_rdp2(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          real(dp), intent(in) :: data(:,:)
          !
@@ -1860,9 +1808,6 @@
 !!
      subroutine mp_bcast_rdp3(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:,:,:)
@@ -1904,9 +1849,6 @@
      subroutine mp_bcast_rdp4(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          real(dp), intent(in) :: data(:,:,:,:)
          !
@@ -1946,9 +1888,6 @@
 !!
      subroutine mp_bcast_rdp5(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          real(dp), intent(in) :: data(:,:,:,:,:)
@@ -1990,9 +1929,6 @@
      subroutine mp_bcast_cdp0(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          complex(dp), intent(in) :: data
          !
@@ -2029,9 +1965,6 @@
 !!
      subroutine mp_bcast_cdp1(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:)
@@ -2073,9 +2006,6 @@
      subroutine mp_bcast_cdp2(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          complex(dp), intent(in) :: data(:,:)
          !
@@ -2115,9 +2045,6 @@
 !!
      subroutine mp_bcast_cdp3(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:)
@@ -2159,9 +2086,6 @@
      subroutine mp_bcast_cdp4(data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_BCAST
-
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:,:)
          !
@@ -2201,9 +2125,6 @@
 !!
      subroutine mp_bcast_cdp5(data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_BCAST
 
 !! external arguments
          complex(dp), intent(in) :: data(:,:,:,:,:)
@@ -2249,9 +2170,6 @@
      subroutine mp_gather_int1(send, data, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_GATHER
-
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -2275,7 +2193,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
+         call MPI_GATHER(send, isize, m_int, data, isize, &
+                         & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_int1', ierror)
@@ -2292,9 +2211,6 @@
 !!
      subroutine mp_gather_int2(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -2319,7 +2235,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
+         call MPI_GATHER(send, isize, m_int, data, isize, &
+                         & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_int2', ierror)
@@ -2336,9 +2253,6 @@
 !!
      subroutine mp_gather_int3(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:)
@@ -2363,7 +2277,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
+         call MPI_GATHER(send, isize, m_int, data, isize, &
+                         & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_int3', ierror)
@@ -2380,9 +2295,6 @@
 !!
      subroutine mp_gather_int4(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -2407,7 +2319,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
+         call MPI_GATHER(send, isize, m_int, data, isize, &
+                         & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_int4', ierror)
@@ -2424,9 +2337,6 @@
 !!
      subroutine mp_gather_int5(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
@@ -2451,7 +2361,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_int, data, isize, m_int, root, group, ierror)
+         call MPI_GATHER(send, isize, m_int, data, isize, &
+                         & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_int5', ierror)
@@ -2468,9 +2379,6 @@
 !!
      subroutine mp_gather_rdp1(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -2495,7 +2403,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_rdp, data, isize, &
+                         & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_rdp1', ierror)
@@ -2512,9 +2421,6 @@
 !!
      subroutine mp_gather_rdp2(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:)
@@ -2539,7 +2445,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_rdp, data, isize, &
+                         & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_rdp2', ierror)
@@ -2556,9 +2463,6 @@
 !!
      subroutine mp_gather_rdp3(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -2583,7 +2487,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_rdp, data, isize, &
+                         & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_rdp3', ierror)
@@ -2600,9 +2505,6 @@
 !!
      subroutine mp_gather_rdp4(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
@@ -2627,7 +2529,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_rdp, data, isize, &
+                         & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_rdp4', ierror)
@@ -2644,9 +2547,6 @@
 !!
      subroutine mp_gather_rdp5(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -2671,7 +2571,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_rdp, data, isize, m_rdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_rdp, data, isize, &
+                         & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_rdp5', ierror)
@@ -2688,9 +2589,6 @@
 !!
      subroutine mp_gather_cdp1(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
@@ -2715,7 +2613,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_cdp, data, isize, &
+                         & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_cdp1', ierror)
@@ -2732,9 +2631,6 @@
 !!
      subroutine mp_gather_cdp2(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -2759,7 +2655,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_cdp, data, isize, &
+                         & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_cdp2', ierror)
@@ -2776,9 +2673,6 @@
 !!
      subroutine mp_gather_cdp3(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
@@ -2803,7 +2697,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_cdp, data, isize, &
+                         & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_cdp3', ierror)
@@ -2820,9 +2715,6 @@
 !!
      subroutine mp_gather_cdp4(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
@@ -2847,7 +2739,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_cdp, data, isize, &
+                         & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_cdp4', ierror)
@@ -2864,9 +2757,6 @@
 !!
      subroutine mp_gather_cdp5(send, data, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
@@ -2891,7 +2781,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHER(send, isize, m_cdp, data, isize, m_cdp, root, group, ierror)
+         call MPI_GATHER(send, isize, m_cdp, data, isize, &
+                         & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gather_cdp5', ierror)
@@ -2913,9 +2804,6 @@
      subroutine mp_gatherv_int1(send, data, recv, disp, root, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_GATHERV
-
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -2942,7 +2830,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_int, data, recv, disp, &
+                          & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_int1', ierror)
@@ -2959,9 +2848,6 @@
 !!
      subroutine mp_gatherv_int2(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -2989,7 +2875,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_int, data, recv, disp, &
+                          & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_int2', ierror)
@@ -3006,9 +2893,6 @@
 !!
      subroutine mp_gatherv_int3(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:)
@@ -3036,7 +2920,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_int, data, recv, disp, &
+                          & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_int3', ierror)
@@ -3053,9 +2938,6 @@
 !!
      subroutine mp_gatherv_int4(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -3083,7 +2965,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_int, data, recv, disp, &
+                          & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_int4', ierror)
@@ -3100,9 +2983,6 @@
 !!
      subroutine mp_gatherv_int5(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
@@ -3130,7 +3010,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_int, data, recv, disp, m_int, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_int, data, recv, disp, &
+                          & m_int, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_int5', ierror)
@@ -3147,9 +3028,6 @@
 !!
      subroutine mp_gatherv_rdp1(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -3177,7 +3055,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, &
+                          & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_rdp1', ierror)
@@ -3194,9 +3073,6 @@
 !!
      subroutine mp_gatherv_rdp2(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:)
@@ -3224,7 +3100,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, &
+                          & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_rdp2', ierror)
@@ -3241,9 +3118,6 @@
 !!
      subroutine mp_gatherv_rdp3(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -3271,7 +3145,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, &
+                          & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_rdp3', ierror)
@@ -3288,9 +3163,6 @@
 !!
      subroutine mp_gatherv_rdp4(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
@@ -3318,7 +3190,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, &
+                          & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_rdp4', ierror)
@@ -3335,9 +3208,6 @@
 !!
      subroutine mp_gatherv_rdp5(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -3365,7 +3235,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_rdp, data, recv, disp, &
+                          & m_rdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_rdp5', ierror)
@@ -3382,9 +3253,6 @@
 !!
      subroutine mp_gatherv_cdp1(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
@@ -3412,7 +3280,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, &
+                          & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_cdp1', ierror)
@@ -3429,9 +3298,6 @@
 !!
      subroutine mp_gatherv_cdp2(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -3459,7 +3325,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, &
+                          & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_cdp2', ierror)
@@ -3476,9 +3343,6 @@
 !!
      subroutine mp_gatherv_cdp3(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
@@ -3506,7 +3370,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, &
+                          & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_cdp3', ierror)
@@ -3523,9 +3388,6 @@
 !!
      subroutine mp_gatherv_cdp4(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
@@ -3553,7 +3415,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, &
+                          & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_cdp4', ierror)
@@ -3570,9 +3433,6 @@
 !!
      subroutine mp_gatherv_cdp5(send, data, recv, disp, root, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_GATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
@@ -3600,7 +3460,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, root, group, ierror)
+         call MPI_GATHERV(send, isize, m_cdp, data, recv, disp, &
+                          & m_cdp, root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_gatherv_cdp5', ierror)
@@ -3623,9 +3484,6 @@
      subroutine mp_allgather_int1(send, data, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_ALLGATHER
-
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -3648,7 +3506,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_int, data, isize, &
+                            & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_int1', ierror)
@@ -3666,9 +3525,6 @@
 !!
      subroutine mp_allgather_int2(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -3692,7 +3548,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_int, data, isize, &
+                            & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_int2', ierror)
@@ -3710,9 +3567,6 @@
 !!
      subroutine mp_allgather_int3(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:)
@@ -3736,7 +3590,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_int, data, isize, &
+                            & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_int3', ierror)
@@ -3754,9 +3609,6 @@
 !!
      subroutine mp_allgather_int4(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -3780,7 +3632,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_int, data, isize, &
+                            & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_int4', ierror)
@@ -3798,9 +3651,6 @@
 !!
      subroutine mp_allgather_int5(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
@@ -3824,7 +3674,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_int, data, isize, m_int, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_int, data, isize, &
+                            & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_int5', ierror)
@@ -3842,9 +3693,6 @@
 !!
      subroutine mp_allgather_rdp1(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -3868,7 +3716,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, m_rdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, &
+                            & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_rdp1', ierror)
@@ -3886,9 +3735,6 @@
 !!
      subroutine mp_allgather_rdp2(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:)
@@ -3912,7 +3758,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, m_rdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, &
+                            & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_rdp2', ierror)
@@ -3930,9 +3777,6 @@
 !!
      subroutine mp_allgather_rdp3(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -3956,7 +3800,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, m_rdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, &
+                            & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_rdp3', ierror)
@@ -3974,9 +3819,6 @@
 !!
      subroutine mp_allgather_rdp4(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
@@ -4000,7 +3842,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, m_rdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, &
+                            & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_rdp4', ierror)
@@ -4018,9 +3861,6 @@
 !!
      subroutine mp_allgather_rdp5(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -4044,7 +3884,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, m_rdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_rdp, data, isize, &
+                            & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_rdp5', ierror)
@@ -4062,9 +3903,6 @@
 !!
      subroutine mp_allgather_cdp1(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
@@ -4088,7 +3926,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, &
+                            & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_cdp1', ierror)
@@ -4106,9 +3945,6 @@
 !!
      subroutine mp_allgather_cdp2(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -4132,7 +3968,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, &
+                            & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_cdp2', ierror)
@@ -4150,9 +3987,6 @@
 !!
      subroutine mp_allgather_cdp3(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
@@ -4176,7 +4010,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, &
+                            & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_cdp3', ierror)
@@ -4194,9 +4029,6 @@
 !!
      subroutine mp_allgather_cdp4(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
@@ -4220,7 +4052,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, &
+                            & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_cdp4', ierror)
@@ -4238,9 +4071,6 @@
 !!
      subroutine mp_allgather_cdp5(send, data, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHER
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
@@ -4264,7 +4094,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, m_cdp, group, ierror)
+         call MPI_ALLGATHER(send, isize, m_cdp, data, isize, &
+                            & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgather_cdp5', ierror)
@@ -4287,9 +4118,6 @@
      subroutine mp_allgatherv_int1(send, data, recv, disp, gid)
          implicit none
 
-!! external subroutines
-         external :: MPI_ALLGATHERV
-
 !! external arguments
          integer, intent(in) :: send(:)
          integer, intent(inout) :: data(:)
@@ -4315,7 +4143,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, &
+                             & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_int1', ierror)
@@ -4333,9 +4162,6 @@
 !!
      subroutine mp_allgatherv_int2(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:)
@@ -4362,7 +4188,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, &
+                             & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_int2', ierror)
@@ -4380,9 +4207,6 @@
 !!
      subroutine mp_allgatherv_int3(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:)
@@ -4409,7 +4233,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, &
+                             & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_int3', ierror)
@@ -4427,9 +4252,6 @@
 !!
      subroutine mp_allgatherv_int4(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:)
@@ -4456,7 +4278,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, &
+                             & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_int4', ierror)
@@ -4474,9 +4297,6 @@
 !!
      subroutine mp_allgatherv_int5(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          integer, intent(in) :: send(:,:,:,:,:)
@@ -4503,7 +4323,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, m_int, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_int, data, recv, disp, &
+                             & m_int, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_int5', ierror)
@@ -4521,9 +4342,6 @@
 !!
      subroutine mp_allgatherv_rdp1(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:)
@@ -4550,7 +4368,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, &
+                             & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_rdp1', ierror)
@@ -4568,9 +4387,6 @@
 !!
      subroutine mp_allgatherv_rdp2(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:)
@@ -4597,7 +4413,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, &
+                             & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_rdp2', ierror)
@@ -4615,9 +4432,6 @@
 !!
      subroutine mp_allgatherv_rdp3(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:)
@@ -4644,7 +4458,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, &
+                             & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_rdp3', ierror)
@@ -4662,9 +4477,6 @@
 !!
      subroutine mp_allgatherv_rdp4(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:)
@@ -4691,7 +4503,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, &
+                             & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_rdp4', ierror)
@@ -4709,9 +4522,6 @@
 !!
      subroutine mp_allgatherv_rdp5(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          real(dp), intent(in) :: send(:,:,:,:,:)
@@ -4738,7 +4548,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, m_rdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_rdp, data, recv, disp, &
+                             & m_rdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_rdp5', ierror)
@@ -4756,9 +4567,6 @@
 !!
      subroutine mp_allgatherv_cdp1(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:)
@@ -4785,7 +4593,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, &
+                             & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_cdp1', ierror)
@@ -4803,9 +4612,6 @@
 !!
      subroutine mp_allgatherv_cdp2(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:)
@@ -4832,7 +4638,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, &
+                             & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_cdp2', ierror)
@@ -4850,9 +4657,6 @@
 !!
      subroutine mp_allgatherv_cdp3(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:)
@@ -4879,7 +4683,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, &
+                             & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_cdp3', ierror)
@@ -4897,9 +4702,6 @@
 !!
      subroutine mp_allgatherv_cdp4(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:)
@@ -4926,7 +4728,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, &
+                             & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_cdp4', ierror)
@@ -4944,9 +4747,6 @@
 !!
      subroutine mp_allgatherv_cdp5(send, data, recv, disp, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLGATHERV
 
 !! external arguments
          complex(dp), intent(in) :: send(:,:,:,:,:)
@@ -4973,7 +4773,8 @@
          isize = size(send)
 
          ! invoke related mpi subroutines
-         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, m_cdp, group, ierror)
+         call MPI_ALLGATHERV(send, isize, m_cdp, data, recv, disp, &
+                             & m_cdp, group, ierror)
 
          ! handler for return code
          call mp_error('mp_allgatherv_cdp5', ierror)
@@ -4994,9 +4795,6 @@
 !!
      subroutine mp_reduce_int0(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source
@@ -5027,7 +4825,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, 1, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, 1, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int0', ierror)
@@ -5044,9 +4843,6 @@
 !!
      subroutine mp_reduce_int1(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source(:)
@@ -5080,7 +4876,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int1', ierror)
@@ -5097,9 +4894,6 @@
 !!
      subroutine mp_reduce_int2(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:)
@@ -5133,7 +4927,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int2', ierror)
@@ -5150,9 +4945,6 @@
 !!
      subroutine mp_reduce_int3(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:,:)
@@ -5186,7 +4978,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int3', ierror)
@@ -5203,9 +4996,6 @@
 !!
      subroutine mp_reduce_int4(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:,:,:)
@@ -5239,7 +5029,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int4', ierror)
@@ -5256,9 +5047,6 @@
 !!
      subroutine mp_reduce_int5(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:,:,:,:)
@@ -5292,7 +5080,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_int, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_int, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_int5', ierror)
@@ -5309,9 +5098,6 @@
 !!
      subroutine mp_reduce_rdp0(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source
@@ -5342,7 +5128,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, 1, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, 1, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp0', ierror)
@@ -5359,9 +5146,6 @@
 !!
      subroutine mp_reduce_rdp1(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:)
@@ -5395,7 +5179,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp1', ierror)
@@ -5412,9 +5197,6 @@
 !!
      subroutine mp_reduce_rdp2(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:)
@@ -5448,7 +5230,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp2', ierror)
@@ -5465,9 +5248,6 @@
 !!
      subroutine mp_reduce_rdp3(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:)
@@ -5501,7 +5281,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp3', ierror)
@@ -5518,9 +5299,6 @@
 !!
      subroutine mp_reduce_rdp4(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:)
@@ -5554,7 +5332,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp4', ierror)
@@ -5571,9 +5350,6 @@
 !!
      subroutine mp_reduce_rdp5(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:,:)
@@ -5607,7 +5383,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_rdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_rdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_rdp5', ierror)
@@ -5624,9 +5401,6 @@
 !!
      subroutine mp_reduce_cdp0(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source
@@ -5657,7 +5431,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, 1, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, 1, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp0', ierror)
@@ -5674,9 +5449,6 @@
 !!
      subroutine mp_reduce_cdp1(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:)
@@ -5710,7 +5482,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp1', ierror)
@@ -5727,9 +5500,6 @@
 !!
      subroutine mp_reduce_cdp2(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:)
@@ -5763,7 +5533,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp2', ierror)
@@ -5780,9 +5551,6 @@
 !!
      subroutine mp_reduce_cdp3(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:)
@@ -5816,7 +5584,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp3', ierror)
@@ -5833,9 +5602,6 @@
 !!
      subroutine mp_reduce_cdp4(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:)
@@ -5869,7 +5635,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp4', ierror)
@@ -5886,9 +5653,6 @@
 !!
      subroutine mp_reduce_cdp5(source, data, root, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_REDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:,:)
@@ -5922,7 +5686,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_REDUCE(source, data, isize, m_cdp, opera, root, group, ierror)
+         call MPI_REDUCE(source, data, isize, m_cdp, opera, &
+                         & root, group, ierror)
 
          ! handler for return code
          call mp_error('mp_reduce_cdp5', ierror)
@@ -5943,9 +5708,6 @@
 !!
      subroutine mp_allreduce_int0(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          integer, intent(in) :: source
@@ -5974,7 +5736,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, 1, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, 1, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int0', ierror)
@@ -5991,9 +5754,6 @@
 !!
      subroutine mp_allreduce_int1(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          integer, intent(in) :: source(:)
@@ -6025,7 +5785,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int1', ierror)
@@ -6042,9 +5803,6 @@
 !!
      subroutine mp_allreduce_int2(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:)
@@ -6076,7 +5834,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int2', ierror)
@@ -6093,9 +5852,6 @@
 !!
      subroutine mp_allreduce_int3(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 ! external arguments
          integer, intent(in) :: source(:,:,:)
@@ -6127,7 +5883,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int3', ierror)
@@ -6144,9 +5901,6 @@
 !!
      subroutine mp_allreduce_int4(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:,:,:)
@@ -6178,7 +5932,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int4', ierror)
@@ -6195,9 +5950,6 @@
 !!
      subroutine mp_allreduce_int5(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          integer, intent(in) :: source(:,:,:,:,:)
@@ -6229,7 +5981,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_int, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_int, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_int5', ierror)
@@ -6246,9 +5999,6 @@
 !!
      subroutine mp_allreduce_rdp0(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source
@@ -6277,7 +6027,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, 1, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, 1, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp0', ierror)
@@ -6294,9 +6045,6 @@
 !!
      subroutine mp_allreduce_rdp1(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:)
@@ -6328,7 +6076,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp1', ierror)
@@ -6345,9 +6094,6 @@
 !!
      subroutine mp_allreduce_rdp2(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:)
@@ -6379,7 +6125,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp2', ierror)
@@ -6396,9 +6143,6 @@
 !!
      subroutine mp_allreduce_rdp3(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:)
@@ -6430,7 +6174,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp3', ierror)
@@ -6447,9 +6192,6 @@
 !!
      subroutine mp_allreduce_rdp4(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:)
@@ -6481,7 +6223,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp4', ierror)
@@ -6498,9 +6241,6 @@
 !!
      subroutine mp_allreduce_rdp5(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          real(dp), intent(in) :: source(:,:,:,:,:)
@@ -6532,7 +6272,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_rdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_rdp5', ierror)
@@ -6549,9 +6290,6 @@
 !!
      subroutine mp_allreduce_cdp0(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source
@@ -6580,7 +6318,8 @@
          call mp_barrier(group)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, 1, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, 1, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp0', ierror)
@@ -6597,9 +6336,6 @@
 !!
      subroutine mp_allreduce_cdp1(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:)
@@ -6631,7 +6367,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp1', ierror)
@@ -6648,9 +6385,6 @@
 !!
      subroutine mp_allreduce_cdp2(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:)
@@ -6682,7 +6416,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp2', ierror)
@@ -6699,9 +6434,6 @@
 !!
      subroutine mp_allreduce_cdp3(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:)
@@ -6733,7 +6465,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp3', ierror)
@@ -6750,9 +6483,6 @@
 !!
      subroutine mp_allreduce_cdp4(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:)
@@ -6784,7 +6514,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp4', ierror)
@@ -6801,9 +6532,6 @@
 !!
      subroutine mp_allreduce_cdp5(source, data, mop, gid)
          implicit none
-
-!! external subroutines
-         external :: MPI_ALLREDUCE
 
 !! external arguments
          complex(dp), intent(in) :: source(:,:,:,:,:)
@@ -6835,7 +6563,8 @@
          isize = size(source)
 
          ! invoke related mpi subroutines
-         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, group, ierror)
+         call MPI_ALLREDUCE(source, data, isize, m_cdp, opera, &
+                            & group, ierror)
 
          ! handler for return code
          call mp_error('mp_allreduce_cdp5', ierror)
@@ -7055,6 +6784,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7069,6 +6800,8 @@
          implicit none
 
 !! [body
+
+         CONTINUE
 
 !! body]
 
@@ -7089,6 +6822,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7103,6 +6838,9 @@
          implicit none
 
 !! [body
+
+         CONTINUE
+
 !! body]
 
          return
@@ -7121,6 +6859,8 @@
          implicit none
 
 !! [body
+
+         CONTINUE
 
 !! body]
 
@@ -7141,6 +6881,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7159,6 +6901,8 @@
          implicit none
 
 !! [body
+
+         CONTINUE
 
 !! body]
 
@@ -7179,6 +6923,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7197,6 +6943,8 @@
          implicit none
 
 !! [body
+
+         CONTINUE
 
 !! body]
 
@@ -7217,6 +6965,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7236,6 +6986,8 @@
 
 !! [body
 
+         CONTINUE
+
 !! body]
 
          return
@@ -7254,6 +7006,8 @@
          implicit none
 
 !! [body
+
+         CONTINUE
 
 !! body]
 
