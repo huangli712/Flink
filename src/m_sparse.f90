@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -345,7 +345,8 @@
      ia(1) = 1
      do i=1,nrow
          do j=1,ncol
-             if ( real( dns(i,j) ) == 0.0_dp .and. aimag( dns(i,j) ) == 0.0_dp ) CYCLE
+             if ( real( dns(i,j) ) == 0.0_dp .and. &
+                & aimag( dns(i,j) ) == 0.0_dp ) CYCLE
              ja(k) = j
              sa(k) = dns(i,j)
              k = k + 1
@@ -877,7 +878,7 @@
 
      ! check the number of nonzero elements
      if ( q > nmax ) then
-         write(mystd,'(a)') 'sparse: error in sp_format_amumat'
+         write(mystd,'(a)') 'sparse: error in sp_matmul_amumat'
          STOP
      endif ! back if ( q > nmax ) block
 
@@ -983,7 +984,7 @@
 
      ! check the number of nonzero elements
      if ( q > nmax ) then
-         write(mystd,'(a)') 'sparse: error in sp_format_amumat_z'
+         write(mystd,'(a)') 'sparse: error in sp_matmul_amumat_z'
          STOP
      endif ! back if ( q > nmax ) block
 
