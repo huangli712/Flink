@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 06/07/2006 by li huang (created)
-!!!           08/13/2023 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -109,9 +109,6 @@
 !!
   subroutine tetra_blochl_weight1(z, e, dos, tos)
      implicit none
-
-!! external subroutines
-     external :: s_qsorter
 
 !! external arguments
      ! current energy
@@ -220,9 +217,6 @@
 !!
   subroutine tetra_blochl_weight2(z, e, ddd, ttt)
      implicit none
-
-!! external subroutines
-     external :: s_qsorter
 
 !! external arguments
      ! current energy
