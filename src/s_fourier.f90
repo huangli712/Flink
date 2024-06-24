@@ -8,7 +8,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           08/11/2023 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : these subroutines are used to do fast fourier transformation
 !!!           for green's or hybridization functions.
 !!! status  : unstable
@@ -159,9 +159,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_fft_tails
-
 !! external arguments
      ! number of matsubara frequency points
      integer, intent(in)   :: mfreq
@@ -233,9 +230,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_fft_tails
-
 !! external arguments
      ! number of matsubara frequency points
      integer, intent(in)   :: mfreq
@@ -267,9 +261,11 @@
 
      ! perform infourier transformation
      raux = zero
+     !
      do j=1,mfreq
          raux = raux + real( fmat(j) )
      enddo ! over j={1,mfreq} loop
+     !
      density = two * raux / beta - half * tail
 
      ! corrections for the boundary point

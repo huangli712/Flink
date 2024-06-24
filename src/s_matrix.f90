@@ -42,7 +42,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           08/11/2023 by li huang (last modified)
+!!!           06/24/2024 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
@@ -725,12 +725,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: s_print_exception
-     external :: DGETRF
-     external :: DGEEV
-
 !! external arguments
      ! dimension of dmat matrix
      integer, intent(in)     :: ndim
@@ -825,7 +819,8 @@
 !-------------------------------------------------------------------------
 
      ! diagonalize amat to obtain its eigenvalues: wr and wi.
-     call DGEEV('N', 'N', ndim, amat, ndim, wr, wi, vl, ndim, vr, ndim, work, lwork, ierror)
+     call DGEEV('N', 'N', ndim, amat, ndim, wr, wi, vl, ndim, vr, &
+         & ndim, work, lwork, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_det_d','error in lapack subroutine dgeev')
@@ -863,10 +858,6 @@
      use constants, only : cone
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZGETRF
 
 !! external arguments
      ! dimension of zmat matrix
@@ -940,11 +931,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: DGETRF
-     external :: DGETRI
-
 !! external arguments
      ! dimension of dmat matrix
      integer, intent(in)     :: ndim
@@ -956,7 +942,7 @@
 
 !! local variables
      ! error flag
-     integer  :: ierror
+     integer :: ierror
 
      ! working arrays for lapack subroutines
      integer, allocatable  :: ipiv(:)
@@ -1007,11 +993,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: ZGETRF
-     external :: ZGETRI
-
 !! external arguments
      ! dimension of zmat matrix
      integer, intent(in)        :: ndim
@@ -1023,7 +1004,7 @@
 
 !! local variables
      ! error flag
-     integer     :: ierror
+     integer :: ierror
 
      ! working arrays for lapack subroutines
      integer, allocatable     :: ipiv(:)
@@ -1079,10 +1060,6 @@
      use constants, only : zero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: DGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1144,7 +1121,8 @@
      evec = amat
 
      ! call the computational subroutine: dgeev
-     call DGEEV('N', 'V', ndim, evec, ldim, wr, wi, vl, ndim, vr, ndim, work, lwork, info)
+     call DGEEV('N', 'V', ndim, evec, ldim, wr, wi, vl, ndim, vr, &
+         & ndim, work, lwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -1178,10 +1156,6 @@
      use constants, only : czero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1241,7 +1215,8 @@
      zvec = zmat
 
      ! call the computational subroutine: zgeev
-     call ZGEEV('N', 'V', ndim, zvec, ldim, zeig, vl, ndim, vr, ndim, work, lwork, rwork, info)
+     call ZGEEV('N', 'V', ndim, zvec, ldim, zeig, vl, ndim, vr, &
+         & ndim, work, lwork, rwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -1272,10 +1247,6 @@
      use constants, only : zero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: DGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1337,7 +1308,8 @@
      evec = amat
 
      ! call the computational subroutine: dgeev
-     call DGEEV('N', 'N', ndim, evec, ldim, wr, wi, vl, ndim, vr, ndim, work, lwork, info)
+     call DGEEV('N', 'N', ndim, evec, ldim, wr, wi, vl, ndim, vr, &
+         & ndim, work, lwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -1370,10 +1342,6 @@
      use constants, only : czero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZGEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1433,7 +1401,8 @@
      zvec = zmat
 
      ! call the computational subroutine: zgeev
-     call ZGEEV('N', 'N', ndim, zvec, ldim, zeig, vl, ndim, vr, ndim, work, lwork, rwork, info)
+     call ZGEEV('N', 'N', ndim, zvec, ldim, zeig, vl, ndim, vr, &
+         & ndim, work, lwork, rwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -1460,10 +1429,6 @@
      use constants, only : zero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: DSYEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1537,10 +1502,6 @@
      use constants, only : zero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZHEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1621,10 +1582,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: DSYEV
-
 !! external arguments
      ! leading dimension of matrix amat
      integer, intent(in)   :: ldim
@@ -1699,10 +1656,6 @@
      use constants, only : zero
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZHEEV
 
 !! external arguments
      ! leading dimension of matrix amat
@@ -1788,10 +1741,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: DGESV
-
 !! external arguments
      ! the number of linear equations
      integer, intent(in)     :: n
@@ -1853,10 +1802,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: ZGESV
-
 !! external arguments
      ! the number of linear equations
      integer, intent(in)        :: n
@@ -1917,10 +1862,6 @@
      use constants, only : dp
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: DSYSV
 
 !! external arguments
      ! the number of linear equations
@@ -1988,10 +1929,6 @@
      use constants, only : dp
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZHESV
 
 !! external arguments
      ! the number of linear equations
@@ -2066,10 +2003,6 @@
 
      implicit none
 
-!! external subroutines
-     external :: s_print_error
-     external :: DGESVD
-
 !! external arguments
      ! number of rows of A matrix
      integer, intent(in)     :: m
@@ -2119,7 +2052,8 @@
      endif ! back if ( istat /= 0 ) block
 
      ! call the computational subroutine: dgesvd
-     call DGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, min_mn, work, lwork, info)
+     call DGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, &
+         & min_mn, work, lwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -2145,10 +2079,6 @@
      use constants, only : dp
 
      implicit none
-
-!! external subroutines
-     external :: s_print_error
-     external :: ZGESVD
 
 !! external arguments
      ! number of rows of A matrix
@@ -2201,7 +2131,8 @@
      endif ! back if ( istat /= 0 ) block
 
      ! call the computational subroutine: zgesvd
-     call ZGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, min_mn, work, lwork, rwork, info)
+     call ZGESVD('S', 'S', m, n, amat, m, svec, umat, m, vmat, &
+         & min_mn, work, lwork, rwork, info)
 
      ! check the status
      if ( info /= 0 ) then

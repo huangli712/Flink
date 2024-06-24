@@ -334,7 +334,7 @@
 
      implicit none
 
-!! external variables
+!! external arguments
      ! the small number
      integer, intent(in)  :: ntiny
 
