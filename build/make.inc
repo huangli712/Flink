@@ -25,7 +25,7 @@
 
 # Fortran compiler, linker, and archiver
 #-------------------------------------------------------------------------
-F90    = mpiifort
+F90    = mpifort
 LINKER = $(F90)
 ARCHIVER = ar -ruv
 
