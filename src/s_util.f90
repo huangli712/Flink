@@ -2,6 +2,7 @@
 !!! project : flink @ sakura
 !!! program : s_assert
 !!!           s_assert2
+!!!           s_equal_approx
 !!!           s_sorter1_i
 !!!           s_sorter1_d
 !!!           s_sorter2_i
@@ -81,6 +82,51 @@
 
      return
   end subroutine s_assert2
+
+!!========================================================================
+!!>>> comparison                                                       <<<
+!!========================================================================
+
+!!
+!! @fun s_equal_approx
+!!
+!! is a approximately equal b?
+!!
+  function s_equal_approx(a, b, reltol, abstol) result(val)
+     use constants, only : dp
+     use constants, only : one
+
+     implicit none
+
+!! external arguments
+     ! values to compare
+     real(dp), intent(in)           :: a, b
+
+     ! relative and absolute error thresholds.
+     ! defaults: epsilon, smallest non-denormal number
+     real(dp), intent(in), optional :: reltol, abstol
+
+!! local variables
+     ! return value
+     logical  :: val
+
+     ! relative and absolute error thresholds.
+     real(dp) :: rt, at
+
+!! [body
+
+     rt = epsilon(one)
+     at = tiny(one)
+     !
+     if (present(reltol)) rt = reltol
+     if (present(abstol)) at = abstol
+
+     val = abs(a - b) <= max(rt * max(abs(a), abs(b)), at)
+
+!! body]
+
+    return
+  end function s_equal_approx
 
 !!========================================================================
 !!>>> sort algorithm                                                   <<<
@@ -507,7 +553,8 @@
 
      ! if lowercase, make uppercase
      do i=1,len(s)
-         if ( ichar(s(i:i)) >= ichar('a') .and. ichar(s(i:i)) <= ichar('z') ) then
+         if ( ichar(s(i:i)) >= ichar('a') .and. &
+            & ichar(s(i:i)) <= ichar('z') ) then
              s(i:i) = char(ichar(s(i:i)) + diff)
          endif ! back if block
      enddo ! over i={1,len(s)} loop
@@ -542,7 +589,8 @@
 
      ! if uppercase, make lowercase
      do i=1,len(s)
-         if ( ichar(s(i:i)) >= ichar('A') .and. ichar(s(i:i)) <= ichar('Z') ) then
+         if ( ichar(s(i:i)) >= ichar('A') .and. &
+            & ichar(s(i:i)) <= ichar('Z') ) then
              s(i:i) = char(ichar(s(i:i)) - diff)
          endif ! back if block
      enddo ! over i={1,len(s)} loop
@@ -656,7 +704,9 @@
          !
          ! if the character is NOT a space ' ' or a tab '->|', copy
          ! it to the output string.
-         if ( curr_char /= SPACE .and. curr_char /= TAB .and. curr_char /= NUL ) then
+         if ( curr_char /= SPACE .and. &
+            & curr_char /= TAB   .and. &
+            & curr_char /= NUL ) then
              j = j + 1
              output(j:j) = string(i:i)
          endif ! back if block
@@ -711,8 +761,12 @@
      call date_and_time(values = date_time)
 
      ! convert date and time from integer to string
-     write(cdate,'(1X,a3,1X,i2,1X,i4)') months(date_time(2)), date_time(3), date_time(1)
-     write(ctime,'(i2,":",i2,":",i2)') date_time(5), date_time(6), date_time(7)
+     write(cdate,'(1X,a3,1X,i2,1X,i4)') months(date_time(2)), &
+                                      & date_time(3), &
+                                      & date_time(1)
+     write(ctime,'(i2,":",i2,":",i2)') date_time(5), &
+                                     & date_time(6), &
+                                     & date_time(7)
 
      ! build final output string by concating them
      date_time_string = ctime // cdate
