@@ -24,7 +24,7 @@
          ! Size of the subtree rooted at this node, for maintaining tree balance
          integer :: size
 
-     end type node_t     
+     end type node_t
 
      ! Define a derived type for the red-black binary search tree (BST)
      type tree_t
@@ -59,10 +59,10 @@
          ! The node whose subtree size is to be calculated
          type(node_t), pointer, intent(in) :: x
 
-         if (associated(x)) then
+         if ( associated(x) ) then
              size = x%size
          else
-             size = 0  
+             size = 0
          end if
 
          return
@@ -76,7 +76,7 @@
          class(tree_t), intent(in) :: tree
 
          ! The key to search for
-         integer, intent(in) :: key 
+         integer, intent(in) :: key
 
          type(node_t), pointer :: current
 
@@ -119,4 +119,41 @@
 
          return
      end function contains
+
+     function rotateRight(h) result(x)
+         implicit none
+
+         type(node_t), pointer, intent(inout) :: h
+
+         type(node_t), pointer :: x
+       
+         x => h%left
+         h%left => x%right
+         x%right => h
+         x%color = h%color
+         h%color = RED
+         x%size = h%size
+         h%size = size(h%left) + size(h%right) + 1
+ 
+         return
+     end function rotateRight
+
+     function rotateLeft(h) result(x)
+         implicit none
+
+         type(node_t), pointer, intent(inout) :: h
+
+         type(node_t), pointer :: x
+
+         x => h%right
+         h%right => x%left
+         x%left => h
+         x%color = h%color
+         h%color = RED
+         x%size = h%size
+         h%size = size(h%left) + size(h%right) + 1
+
+         return
+     end function rotateLeft
+
   end module rbtree
