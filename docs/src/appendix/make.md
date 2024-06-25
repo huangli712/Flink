@@ -44,7 +44,7 @@ Linker. Here it should be the same with the Fortran compiler. Do not change it.
 
 **Possible options**:
 
-* $(F90)
+* \$(F90)
 
 ### ARCHIVER
 
@@ -86,11 +86,11 @@ Collection of preprocessor directives. Do not modify it unless you are an expert
 
 **Possible options**:
 
-* $(FPP)
-* $(MPI)
-* $(OMP)
+* \$(FPP)
+* \$(MPI)
+* \$(OMP)
 
-Please make sure that the '$(FPP)' option is always present.
+Please make sure that the '\$(FPP)' option is always present.
 
 ### CHECK
 
@@ -124,9 +124,9 @@ Collection of Fortran compiler options. Do not modify them for ever.
 **Possible options**:
 
 * -c
-* $(CPP)
-* $(CHECK)
-* $(MTUNE)
+* \$(CPP)
+* \$(CHECK)
+* \$(MTUNE)
 
 ### LFLAGS
 
@@ -134,7 +134,7 @@ Collection of linker options. Do not modify them unless you know what you are do
 
 **Possible options**:
 
-* $(OMP)
+* \$(OMP)
 * -Wl,-no_pie
 
 The '-Wl,-no_pie' option is useful when you are using the macOS system and want to traceback the code (the -traceback option is applied). If you are using the Linux system, you can skip it.
