@@ -34,12 +34,14 @@
 
      end type tree_t
 
+  contains
+
      ! Function to check if a node is red
      logical function isRed(x)
          implicit none
 
          ! The node to check
-         type(node_t), intent(in) :: x
+         type(node_t), pointer, intent(in) :: x
 
          if ( associated(x) ) then
              isRed = (x%color == RED)
@@ -50,13 +52,63 @@
          return
      end function isRed
 
-    ! Function to get the size of the subtree rooted at a given node
-    integer function size(node)
-        type(Node), intent(in) :: node  ! The node whose subtree size is to be calculated
-        if (associated(node)) then
-            size = node%size
-        else
-            size = 0  ! If the node is null, the size of the subtree is 0
-        end if
-    end function size
+     ! Function to get the size of the subtree rooted at a given node
+     integer function size(x)
+         implicit none
+
+         ! The node whose subtree size is to be calculated
+         type(node_t), pointer, intent(in) :: x
+
+         if (associated(x)) then
+             size = x%size
+         else
+             size = 0  
+         end if
+
+         return
+     end function size
+
+     ! Function to get the value associated with the given key
+     integer function get(tree, key) result(value)
+         implicit none
+
+         ! The red-black tree to search
+         class(tree_t), intent(in) :: tree
+
+         ! The key to search for
+         integer, intent(in) :: key 
+
+         type(node_t), pointer :: current
+
+         ! Initialize the current pointer to the root of the tree
+         current => tree%root
+
+         ! Search for the key in the tree
+         do while (associated(current))
+             if (key < current%key) then
+                 current => current%left
+             else if (key > current%key) then
+                 current => current%right
+             else
+                 ! Key found, return the associated value
+                 value = current%value
+                 return
+             end if
+         end do
+
+         ! If we reach here, the key was not found
+         ! Assuming -1 is an invalid value for demonstration
+         value = -1
+
+         return
+     end function get
+
+    ! Function to check if the symbol table contains the given key
+    logical function contains(tree, key)
+        class(RedBlackBST), intent(in) :: tree  ! The red-black tree to search
+        integer, intent(in) :: key               ! The key to search for
+
+        ! Call the get function and check if the returned value is valid
+        contains = (get(tree, key) /= -1)  ! Assuming -1 is an invalid value
+    end function contains
   end module rbtree
