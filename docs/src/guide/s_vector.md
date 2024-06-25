@@ -71,3 +71,7 @@ subroutine s_vecadd_z(n, zx, zy, alpha)
 ```
 
 Try to add diagonal elements of a matrix to a vector, where `n` is dimension of the vectors, and `alpha` is the prefactor. `*x` is vector, and `*y` is a `n`-by-`n` matrix.
+
+!!! note
+
+    `_i` means integer version, `_d` real(dp) version, and `_z` complex(dp) version.
