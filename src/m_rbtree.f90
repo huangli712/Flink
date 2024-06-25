@@ -103,12 +103,20 @@
          return
      end function get
 
-    ! Function to check if the symbol table contains the given key
-    logical function contains(tree, key)
-        class(RedBlackBST), intent(in) :: tree  ! The red-black tree to search
-        integer, intent(in) :: key               ! The key to search for
+     ! Function to check if the symbol table contains the given key
+     logical function contains(tree, key)
+         implicit none
 
-        ! Call the get function and check if the returned value is valid
-        contains = (get(tree, key) /= -1)  ! Assuming -1 is an invalid value
-    end function contains
+         ! The red-black tree to search
+         class(tree_t), intent(in) :: tree
+
+         ! The key to search for
+         integer, intent(in) :: key
+
+         ! Call the get function and check if the returned value is valid
+         ! Assuming -1 is an invalid value
+         contains = (get(tree, key) /= -1)
+
+         return
+     end function contains
   end module rbtree
