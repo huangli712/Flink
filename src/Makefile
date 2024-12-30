@@ -21,7 +21,7 @@
 ## =======
 ##
 ## 09/18/2014 by li huang (created)
-## 06/25/2024 by li huang (last modified)
+## 12/30/2024 by li huang (last modified)
 ##
 ##
 
@@ -31,7 +31,7 @@ include ../build/make.inc
 
 mods1 = m_constants.o
 mods2 = m_linkedlist.o m_stack.o
-mods3 = m_mpi.o m_parser.o m_sparse.o m_spring.o m_tetra.o
+mods3 = m_face.o m_mpi.o m_parser.o m_sparse.o m_spring.o m_tetra.o
 subs1 = s_error.o s_util.o
 subs2 = s_fourier.o s_function.o s_integrator.o s_spline.o
 subs3 = s_matrix.o s_vector.o
