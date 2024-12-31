@@ -20,6 +20,7 @@
 !!>>> declare global parameters                                        <<<
 !!========================================================================
 
+!! module parameters
 
      ! parameters
      character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
