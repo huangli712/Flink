@@ -92,6 +92,7 @@
      character(len=*), intent(in), optional :: color_bg  !< Background color definition.
      character(len=*), intent(in), optional :: style     !< Style definition.
 
+!! local variables
      character(len=:), allocatable          :: colorized !< Colorized string.
      integer(int32)                         :: i         !< Counter.
 
@@ -134,6 +135,8 @@
 !! external arguments
      character(len=*), intent(in) :: color       !< Color definition.
      integer(int32)               :: color_index !< Index into the colors arrays.
+
+!! local variables
      integer(int32)               :: c           !< Counter.
 
 !! [body
@@ -162,6 +165,8 @@
 !! external arguments
      character(len=*), intent(in) :: style       !< Style definition.
      integer(int32)               :: style_index !< Index into the styles array.
+
+!! local variables
      integer(int32)               :: s           !< Counter.
 
 !! [body
@@ -190,6 +195,8 @@
 !! external arguments
      character(len=*), intent(in) :: string !< Input string.
      character(len=len(string))   :: upper  !< Upper case string.
+
+!! local variables
      integer                      :: n1     !< Characters counter.
      integer                      :: n2     !< Characters counter.
 
