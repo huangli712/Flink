@@ -156,11 +156,15 @@
      implicit none
 
 !! external arguments
-     character(len=*), intent(in) :: color       !< Color definition.
-     integer(int32)               :: color_index !< Index into the colors arrays.
+     ! color definition
+     character(len=*), intent(in) :: color
+
+     ! index into the colors arrays
+     integer(int32) :: color_index
 
 !! local variables
-     integer(int32)               :: c           !< Counter.
+     ! counter
+     integer(int32) :: c
 
 !! [body
 
