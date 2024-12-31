@@ -110,14 +110,24 @@
      implicit none
 
 !! external arguments
-     character(len=*), intent(in)           :: string    !< Input string.
-     character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
-     character(len=*), intent(in), optional :: color_bg  !< Background color definition.
-     character(len=*), intent(in), optional :: style     !< Style definition.
+     ! input string
+     character(len=*), intent(in)           :: string
+
+     ! foreground color definition
+     character(len=*), intent(in), optional :: color_fg
+
+     ! background color definition
+     character(len=*), intent(in), optional :: color_bg
+
+     ! style definition
+     character(len=*), intent(in), optional :: style 
 
 !! local variables
-     character(len=:), allocatable          :: colorized !< Colorized string.
-     integer(int32)                         :: i         !< Counter.
+     ! colorized string
+     character(len=:), allocatable :: colorized
+
+     ! counter
+     integer(int32) :: i
 
 !! [body
 
@@ -172,7 +182,7 @@
      do c=1, size(COLORS_FG, dim=2)
          if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
              color_index = c
-             exit
+             EXIT
          endif
      enddo
 
@@ -206,7 +216,7 @@
      do s=1, size(STYLES, dim=2)
          if (trim(STYLES(1, s))==trim(adjustl(style))) then
              style_index = s
-             exit
+             EXIT
          endif
      enddo
 
