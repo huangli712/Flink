@@ -92,6 +92,10 @@
          'WHITE_INTENSE  '  , '107'  & ! White intense.
          ], [2,17]) !< Background colors.
 
+!!========================================================================
+!!>>> declare accessibility for module routines                        <<<
+!!========================================================================
+
      public :: pcs
 
   contains
