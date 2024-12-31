@@ -16,7 +16,10 @@
 
      implicit none
 
-     public :: pcs
+!!========================================================================
+!!>>> declare global parameters                                        <<<
+!!========================================================================
+
 
      ! parameters
      character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
@@ -88,6 +91,8 @@
          'CYAN_INTENSE   '  , '106', & ! Cyan intense.
          'WHITE_INTENSE  '  , '107'  & ! White intense.
          ], [2,17]) !< Background colors.
+
+     public :: pcs
 
   contains
 
