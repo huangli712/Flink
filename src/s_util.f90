@@ -460,6 +460,83 @@
   end subroutine s_sorter3_d
 
 !!
+!! @sub s_sorter4_i
+!!
+!! using heap algorithm to sort an integer list and its index according
+!! to the descending order of the list.
+!!
+  subroutine s_sorter4_i(nsize, list, indx)
+     implicit none
+
+!! external arguments
+     ! size of the list
+     integer, intent(in)    :: nsize
+
+     ! in: index of original list
+     ! out: original index of the sorted list
+     integer, intent(inout) :: indx(nsize)
+
+     ! the list to be sorted
+     integer, intent(inout) :: list(nsize)
+
+!! local variables
+     ! loop index
+     integer :: i, j, k
+
+     ! used to exchange index
+     integer :: int_tmp
+
+     ! used to exchange list element
+     integer :: int_aux
+
+!! [body
+
+     do i = 1, nsize
+         j = i
+         do while ( j > 1 )
+             k = j/2
+             if ( list(j) > list(k) ) then
+                 int_aux = list(j)
+                 list(j) = list(k)
+                 list(k) = int_aux
+                 int_tmp = indx(j)
+                 indx(j) = indx(k)
+                 indx(k) = int_tmp
+             endif
+             j = k
+         enddo
+     enddo
+
+     do i = nsize, 1, -1
+         int_aux = list(i)
+         list(i) = list(1)
+         list(1) = int_aux
+         int_tmp = indx(i)
+         indx(i) = indx(1)
+         indx(1) = int_tmp
+
+         j = 1
+         do while ( 2*j < i )
+             k = 2*j
+             if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
+             if ( list(j) < list(k) ) then
+                 int_aux = list(j)
+                 list(j) = list(k)
+                 list(k) = int_aux
+                 int_tmp = indx(j)
+                 indx(j) = indx(k)
+                 indx(k) = int_tmp
+             endif
+             j = k
+         enddo
+     enddo
+
+!! body]
+
+     return
+  end subroutine s_sorter4_i
+
+!!
 !! @sub s_qsorter
 !!
 !! sets up for the quick sort recursive method.
