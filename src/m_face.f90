@@ -86,6 +86,7 @@
   pure function pcs(string, color_fg, color_bg, style) result(colorized)
      implicit none
 
+!! external arguments
      character(len=*), intent(in)           :: string    !< Input string.
      character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
      character(len=*), intent(in), optional :: color_bg  !< Background color definition.
@@ -130,6 +131,7 @@
   elemental function color_index(color)
      implicit none
 
+!! external arguments
      character(len=*), intent(in) :: color       !< Color definition.
      integer(int32)               :: color_index !< Index into the colors arrays.
      integer(int32)               :: c           !< Counter.
@@ -157,6 +159,7 @@
   elemental function style_index(style)
      implicit none
 
+!! external arguments
      character(len=*), intent(in) :: style       !< Style definition.
      integer(int32)               :: style_index !< Index into the styles array.
      integer(int32)               :: s           !< Counter.
@@ -184,6 +187,7 @@
   elemental function upper(string)
      implicit none
  
+!! external arguments
      character(len=*), intent(in) :: string !< Input string.
      character(len=len(string))   :: upper  !< Upper case string.
      integer                      :: n1     !< Characters counter.
