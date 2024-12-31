@@ -13,3 +13,4 @@
 .DS_Store
 fort.*
 docs/build
+test.f90

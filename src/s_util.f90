@@ -34,7 +34,7 @@
 !!
 !! @sub s_assert
 !!
-!! fortran version of assert.
+!! fortran version of assertion.
 !!
   subroutine s_assert(condition)
      implicit none
@@ -47,7 +47,7 @@
 
      ! if condition == .false., it aborts the program.
      if ( .not. condition ) then
-         call s_print_error('s_assert','assert failed.')
+         call s_print_error('s_assert','assertion failed.')
      endif ! back if ( .not. condition ) block
 
 !! body]
@@ -58,7 +58,7 @@
 !!
 !! @sub s_assert2
 !!
-!! fortran version of assert. additional message will be printed
+!! fortran version of assertion. additional message will be printed
 !! for further analysis.
 !!
   subroutine s_assert2(condition, message)
@@ -75,7 +75,7 @@
 
      ! if condition == .false., it aborts the program.
      if ( .not. condition ) then
-         call s_print_error('s_assert2','assert failed -> '//message)
+         call s_print_error('s_assert2','assertion failed -> '//message)
      endif ! back if ( .not. condition ) block
 
 !! body]
@@ -336,6 +336,49 @@
 
      return
   end subroutine s_sorter2_d
+
+  subroutine heap_sort(n, a)
+     implicit none
+
+     integer, intent(in) :: n
+     integer, intent(inout) :: a(n)
+     integer :: i, j, k
+     integer :: tmp
+
+     do i = 1, n
+         j = i
+         do while ( j > 1 )
+             k = j/2
+             if ( a(j) > a(k) ) then
+                 tmp = a(j)
+                 a(j) = a(k)
+                 a(k) = tmp
+             endif
+             j = k
+         enddo
+     enddo
+
+     do i = n, 1, -1
+         tmp = a(i)
+         a(i) = a(1)
+         a(1) = tmp
+
+         j = 1
+         do while ( 2*j < i )
+             k = 2*j
+             if ( ( k < i-1 ) .and. ( a(k+1) > a(k) ) ) k = k + 1
+             if ( a(j) < a(k) ) then
+                 tmp = a(j)
+                 a(j) = a(k)
+                 a(k) = tmp
+             endif
+             j = k
+         enddo
+     enddo
+
+     return
+  end subroutine heap_sort
+
 
 !!
 !! @sub s_qsorter
