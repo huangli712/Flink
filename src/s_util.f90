@@ -397,6 +397,67 @@
      return
   end subroutine s_sorter3_i
 
+!!
+!! @sub s_sorter3_d
+!!
+!! using heap algorithm to sort a real dataset.
+!!
+  subroutine s_sorter3_d(nsize, list)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! grab the number of values from the calling code
+     integer, intent(in)     :: nsize
+
+     ! dataset to be sorted
+     real(dp), intent(inout) :: list(nsize)
+
+!! local variables
+     ! dataset index
+     integer  :: i, j, k
+
+     ! dummy variables
+     real(dp) :: swap
+
+!! [body
+
+     do i = 1, nsize
+         j = i
+         do while ( j > 1 )
+             k = j/2
+             if ( list(j) > list(k) ) then
+                 swap = list(j)
+                 list(j) = list(k)
+                 list(k) = swap
+             endif
+             j = k
+         enddo
+     enddo
+
+     do i = nsize, 1, -1
+         swap = list(i)
+         list(i) = list(1)
+         list(1) = swap
+
+         j = 1
+         do while ( 2*j < i )
+             k = 2*j
+             if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
+             if ( list(j) < list(k) ) then
+                 swap = list(j)
+                 list(j) = list(k)
+                 list(k) = swap
+             endif
+             j = k
+         enddo
+     enddo
+
+!! body]
+
+     return
+  end subroutine s_sorter3_d
 
 !!
 !! @sub s_qsorter
