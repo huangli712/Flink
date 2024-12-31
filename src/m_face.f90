@@ -98,7 +98,7 @@
 
      public :: pcs
 
-  contains
+  contains ! encapsulated functionality
 
 !!
 !! @fun pcs
