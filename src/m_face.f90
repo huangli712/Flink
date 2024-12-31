@@ -216,12 +216,16 @@
      implicit none
  
 !! external arguments
-     character(len=*), intent(in) :: string !< Input string.
-     character(len=len(string))   :: upper  !< Upper case string.
+     ! input string
+     character(len=*), intent(in) :: string
+
+     ! upper case string
+     character(len=len(string))   :: upper
 
 !! local variables
-     integer                      :: n1     !< Characters counter.
-     integer                      :: n2     !< Characters counter.
+     ! characters counter
+     integer :: n1
+     integer :: n2
 
 !! [body
 
