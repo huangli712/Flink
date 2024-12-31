@@ -4,8 +4,7 @@
      ! parameters
      character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
      character(26), private, parameter :: LOWER_ALPHABET='abcdefghijklmnopqrstuvwxyz' !< Lower case alphabet.
-     character(1),  private, parameter :: NL=new_line('a')                            !< New line character.
-     character(1),  private, parameter :: ESCAPE=achar(27)                            !< "\" character.
+     character(1) , private, parameter :: ESCAPE=achar(27)                            !< "\" character.
 
      ! codes
      character(2), private, parameter :: CODE_START=ESCAPE//'['               !< Start ansi code, "\[".
@@ -73,28 +72,81 @@
          'WHITE_INTENSE  '  , '107'  & ! White intense.
          ], [2,17]) !< Background colors.
 
-   pure function colorize_default(string, color_fg, color_bg, style) result(colorized)
-   !< Colorize and stylize strings, DEFAULT kind.
-   character(len=*), intent(in)           :: string    !< Input string.
-   character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
-   character(len=*), intent(in), optional :: color_bg  !< Background color definition.
-   character(len=*), intent(in), optional :: style     !< Style definition.
-   character(len=:), allocatable          :: colorized !< Colorized string.
-   integer(int32)                         :: i         !< Counter.
+     pure function colorize_default(string, color_fg, color_bg, style) result(colorized)
+         !< Colorize and stylize strings, DEFAULT kind.
+         character(len=*), intent(in)           :: string    !< Input string.
+         character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
+         character(len=*), intent(in), optional :: color_bg  !< Background color definition.
+         character(len=*), intent(in), optional :: style     !< Style definition.
 
-   colorized = string
-   if (present(color_fg)) then
-      i = color_index(upper(color_fg))
-      if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
-   endif
-   if (present(color_bg)) then
-      i = color_index(upper(color_bg))
-      if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
-   endif
-   if (present(style)) then
-      i = style_index(upper(style))
-      if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
-   endif
-   endfunction colorize_default
+         character(len=:), allocatable          :: colorized !< Colorized string.
+         integer(int32)                         :: i         !< Counter.
+
+         colorized = string
+         !
+         if (present(color_fg)) then
+             i = color_index(upper(color_fg))
+             if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
+         endif
+         !
+         if (present(color_bg)) then
+             i = color_index(upper(color_bg))
+             if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
+         endif
+         !
+         if (present(style)) then
+             i = style_index(upper(style))
+             if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
+         endif
+
+         return
+     end function colorize_default
+
+   elemental function color_index(color)
+   !< Return the array-index corresponding to the queried color.
+   !<
+   !< @note Because Foreground and backround colors lists share the same name, no matter what array is used to find the color index.
+   !< Thus, the foreground array is used.
+   character(len=*), intent(in) :: color       !< Color definition.
+   integer(int32)               :: color_index !< Index into the colors arrays.
+   integer(int32)               :: c           !< Counter.
+
+   color_index = 0
+   do c=1, size(COLORS_FG, dim=2)
+      if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
+         color_index = c
+         exit
+      endif
+   enddo
+   endfunction color_index
+
+   elemental function style_index(style)
+   !< Return the array-index corresponding to the queried style.
+   character(len=*), intent(in) :: style       !< Style definition.
+   integer(int32)               :: style_index !< Index into the styles array.
+   integer(int32)               :: s           !< Counter.
+
+   style_index = 0
+   do s=1, size(STYLES, dim=2)
+      if (trim(STYLES(1, s))==trim(adjustl(style))) then
+         style_index = s
+         exit
+      endif
+   enddo
+   endfunction style_index
+
+   elemental function upper(string)
+   !< Return a string with all uppercase characters.
+   character(len=*), intent(in) :: string !< Input string.
+   character(len=len(string))   :: upper  !< Upper case string.
+   integer                      :: n1     !< Characters counter.
+   integer                      :: n2     !< Characters counter.
+
+   upper = string
+   do n1=1, len(string)
+      n2 = index(LOWER_ALPHABET, string(n1:n1))
+      if (n2>0) upper(n1:n1) = UPPER_ALPHABET(n2:n2)
+   enddo
+   endfunction upper
 
   end module face
