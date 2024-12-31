@@ -186,11 +186,15 @@
      implicit none
 
 !! external arguments
-     character(len=*), intent(in) :: style       !< Style definition.
-     integer(int32)               :: style_index !< Index into the styles array.
+     ! style definition
+     character(len=*), intent(in) :: style
+
+     ! index into the styles array 
+     integer(int32)               :: style_index
 
 !! local variables
-     integer(int32)               :: s           !< Counter.
+     ! counter
+     integer(int32) :: s
 
 !! [body
 
