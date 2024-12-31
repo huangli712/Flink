@@ -337,47 +337,65 @@
      return
   end subroutine s_sorter2_d
 
-  subroutine heap_sort(n, a)
+!!
+!! @sub s_sorter3_i
+!!
+!! using heap algorithm to sort an integer dataset.
+!!
+  subroutine s_sorter3_i(nsize, list)
      implicit none
 
-     integer, intent(in) :: n
-     integer, intent(inout) :: a(n)
-     integer :: i, j, k
-     integer :: tmp
+!! external arguments
+     ! grab the number of values from the calling code
+     integer, intent(in)    :: nsize
 
-     do i = 1, n
+     ! dataset to be sorted
+     integer, intent(inout) :: list(nsize)
+
+!! local variables
+     ! dataset index
+     integer :: i, j, k
+
+     ! dummy variables
+     integer :: swap
+
+!! [body
+
+     do i = 1, nsize
          j = i
          do while ( j > 1 )
              k = j/2
-             if ( a(j) > a(k) ) then
-                 tmp = a(j)
-                 a(j) = a(k)
-                 a(k) = tmp
+             if ( list(j) > list(k) ) then
+                 swap = list(j)
+                 list(j) = list(k)
+                 list(k) = swap
              endif
              j = k
          enddo
      enddo
 
-     do i = n, 1, -1
-         tmp = a(i)
-         a(i) = a(1)
-         a(1) = tmp
+     do i = nsize, 1, -1
+         swap = list(i)
+         list(i) = list(1)
+         list(1) = swap
 
          j = 1
          do while ( 2*j < i )
              k = 2*j
-             if ( ( k < i-1 ) .and. ( a(k+1) > a(k) ) ) k = k + 1
-             if ( a(j) < a(k) ) then
-                 tmp = a(j)
-                 a(j) = a(k)
-                 a(k) = tmp
+             if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
+             if ( list(j) < list(k) ) then
+                 swap = list(j)
+                 list(j) = list(k)
+                 list(k) = swap
              endif
              j = k
          enddo
      enddo
 
+!! body]
+
      return
-  end subroutine heap_sort
+  end subroutine s_sorter3_i
 
 
 !!
