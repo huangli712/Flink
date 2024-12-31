@@ -1,5 +1,9 @@
   module face
+     use, intrinsic :: iso_fortran_env, only: int32
+
      implicit none
+
+     public :: colorize
 
      ! parameters
      character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
@@ -72,7 +76,9 @@
          'WHITE_INTENSE  '  , '107'  & ! White intense.
          ], [2,17]) !< Background colors.
 
-     pure function colorize_default(string, color_fg, color_bg, style) result(colorized)
+contains
+
+     pure function colorize(string, color_fg, color_bg, style) result(colorized)
          !< Colorize and stylize strings, DEFAULT kind.
          character(len=*), intent(in)           :: string    !< Input string.
          character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
@@ -100,7 +106,7 @@
          endif
 
          return
-     end function colorize_default
+     end function colorize
 
    elemental function color_index(color)
    !< Return the array-index corresponding to the queried color.
