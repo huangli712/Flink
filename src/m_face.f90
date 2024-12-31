@@ -84,36 +84,38 @@
 !! colorize and stylize strings.
 !!
   pure function pcs(string, color_fg, color_bg, style) result(colorized)
-      character(len=*), intent(in)           :: string    !< Input string.
-      character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
-      character(len=*), intent(in), optional :: color_bg  !< Background color definition.
-      character(len=*), intent(in), optional :: style     !< Style definition.
+     implicit none
 
-      character(len=:), allocatable          :: colorized !< Colorized string.
-      integer(int32)                         :: i         !< Counter.
+     character(len=*), intent(in)           :: string    !< Input string.
+     character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
+     character(len=*), intent(in), optional :: color_bg  !< Background color definition.
+     character(len=*), intent(in), optional :: style     !< Style definition.
+
+     character(len=:), allocatable          :: colorized !< Colorized string.
+     integer(int32)                         :: i         !< Counter.
 
 !! [body
 
-      colorized = string
-      !
-      if (present(color_fg)) then
-          i = color_index(upper(color_fg))
-          if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
-      endif
-      !
-      if (present(color_bg)) then
-          i = color_index(upper(color_bg))
-          if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
-      endif
-      !
-      if (present(style)) then
-          i = style_index(upper(style))
-          if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
-      endif
+     colorized = string
+     !
+     if (present(color_fg)) then
+         i = color_index(upper(color_fg))
+         if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
+     endif
+     !
+     if (present(color_bg)) then
+         i = color_index(upper(color_bg))
+         if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
+     endif
+     !
+     if (present(style)) then
+         i = style_index(upper(style))
+         if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
+     endif
 
 !! body]
 
-      return
+     return
   end function colorize
 
 !!
@@ -126,25 +128,25 @@
 !! foreground array is used.
 !!
   elemental function color_index(color)
-      implicit none
+     implicit none
 
-      character(len=*), intent(in) :: color       !< Color definition.
-      integer(int32)               :: color_index !< Index into the colors arrays.
-      integer(int32)               :: c           !< Counter.
+     character(len=*), intent(in) :: color       !< Color definition.
+     integer(int32)               :: color_index !< Index into the colors arrays.
+     integer(int32)               :: c           !< Counter.
 
 !! [body
 
-      color_index = 0
-      do c=1, size(COLORS_FG, dim=2)
-          if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
-              color_index = c
-              exit
-          endif
-      enddo
+     color_index = 0
+     do c=1, size(COLORS_FG, dim=2)
+         if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
+             color_index = c
+             exit
+         endif
+     enddo
 
 !! body]
 
-      return
+     return
   end function color_index
 
 !!
@@ -153,23 +155,25 @@
 !! return the array-index corresponding to the queried style.
 !!
   elemental function style_index(style)
-      character(len=*), intent(in) :: style       !< Style definition.
-      integer(int32)               :: style_index !< Index into the styles array.
-      integer(int32)               :: s           !< Counter.
+     implicit none
+
+     character(len=*), intent(in) :: style       !< Style definition.
+     integer(int32)               :: style_index !< Index into the styles array.
+     integer(int32)               :: s           !< Counter.
 
 !! [body
 
-      style_index = 0
-      do s=1, size(STYLES, dim=2)
-          if (trim(STYLES(1, s))==trim(adjustl(style))) then
-              style_index = s
-              exit
-          endif
-      enddo
+     style_index = 0
+     do s=1, size(STYLES, dim=2)
+         if (trim(STYLES(1, s))==trim(adjustl(style))) then
+             style_index = s
+             exit
+         endif
+     enddo
 
 !! body]
 
-      return
+     return
   end function style_index
 
 !!
@@ -178,22 +182,24 @@
 !! return a string with all uppercase characters.
 !!
   elemental function upper(string)
-      character(len=*), intent(in) :: string !< Input string.
-      character(len=len(string))   :: upper  !< Upper case string.
-      integer                      :: n1     !< Characters counter.
-      integer                      :: n2     !< Characters counter.
+     implicit none
+ 
+     character(len=*), intent(in) :: string !< Input string.
+     character(len=len(string))   :: upper  !< Upper case string.
+     integer                      :: n1     !< Characters counter.
+     integer                      :: n2     !< Characters counter.
 
 !! [body
 
-      upper = string
-      do n1=1, len(string)
-          n2 = index(LOWER_ALPHABET, string(n1:n1))
-          if (n2>0) upper(n1:n1) = UPPER_ALPHABET(n2:n2)
-      enddo
+     upper = string
+     do n1=1, len(string)
+         n2 = index(LOWER_ALPHABET, string(n1:n1))
+         if (n2>0) upper(n1:n1) = UPPER_ALPHABET(n2:n2)
+     enddo
 
 !! body]
 
-      return
+     return
   end function upper
 
   end module face
