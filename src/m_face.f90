@@ -73,4 +73,28 @@
          'WHITE_INTENSE  '  , '107'  & ! White intense.
          ], [2,17]) !< Background colors.
 
+   pure function colorize_default(string, color_fg, color_bg, style) result(colorized)
+   !< Colorize and stylize strings, DEFAULT kind.
+   character(len=*), intent(in)           :: string    !< Input string.
+   character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
+   character(len=*), intent(in), optional :: color_bg  !< Background color definition.
+   character(len=*), intent(in), optional :: style     !< Style definition.
+   character(len=:), allocatable          :: colorized !< Colorized string.
+   integer(int32)                         :: i         !< Counter.
+
+   colorized = string
+   if (present(color_fg)) then
+      i = color_index(upper(color_fg))
+      if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
+   endif
+   if (present(color_bg)) then
+      i = color_index(upper(color_bg))
+      if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
+   endif
+   if (present(style)) then
+      i = style_index(upper(style))
+      if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
+   endif
+   endfunction colorize_default
+
   end module face
