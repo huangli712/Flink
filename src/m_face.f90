@@ -92,6 +92,8 @@
       character(len=:), allocatable          :: colorized !< Colorized string.
       integer(int32)                         :: i         !< Counter.
 
+!! [body
+
       colorized = string
       !
       if (present(color_fg)) then
@@ -108,6 +110,8 @@
           i = style_index(upper(style))
           if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
       endif
+
+!! body]
 
       return
   end function colorize
@@ -128,6 +132,8 @@
       integer(int32)               :: color_index !< Index into the colors arrays.
       integer(int32)               :: c           !< Counter.
 
+!! [body
+
       color_index = 0
       do c=1, size(COLORS_FG, dim=2)
           if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
@@ -135,6 +141,8 @@
               exit
           endif
       enddo
+
+!! body]
 
       return
   end function color_index
@@ -149,6 +157,8 @@
       integer(int32)               :: style_index !< Index into the styles array.
       integer(int32)               :: s           !< Counter.
 
+!! [body
+
       style_index = 0
       do s=1, size(STYLES, dim=2)
           if (trim(STYLES(1, s))==trim(adjustl(style))) then
@@ -156,6 +166,8 @@
               exit
           endif
       enddo
+
+!! body]
 
       return
   end function style_index
@@ -171,11 +183,15 @@
       integer                      :: n1     !< Characters counter.
       integer                      :: n2     !< Characters counter.
 
+!! [body
+
       upper = string
       do n1=1, len(string)
           n2 = index(LOWER_ALPHABET, string(n1:n1))
           if (n2>0) upper(n1:n1) = UPPER_ALPHABET(n2:n2)
       enddo
+
+!! body]
 
       return
   end function upper
