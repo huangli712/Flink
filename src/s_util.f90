@@ -7,6 +7,10 @@
 !!!           s_sorter1_d
 !!!           s_sorter2_i
 !!!           s_sorter2_d
+!!!           s_sorter3_i
+!!!           s_sorter3_d
+!!!           s_sorter4_i
+!!!           s_sorter4_d
 !!!           s_qsorter
 !!!           s_qscorer
 !!!           s_combination
@@ -20,7 +24,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           12/31/2024 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful features,
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
