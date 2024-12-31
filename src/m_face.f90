@@ -3,7 +3,7 @@
 
      implicit none
 
-     public :: colorize
+     public :: pcs
 
      ! parameters
      character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
@@ -78,8 +78,12 @@
 
   contains
 
-  pure function colorize(string, color_fg, color_bg, style) result(colorized)
-      !< Colorize and stylize strings, DEFAULT kind.
+!!
+!! @fun pcs
+!!
+!! colorize and stylize strings.
+!!
+  pure function pcs(string, color_fg, color_bg, style) result(colorized)
       character(len=*), intent(in)           :: string    !< Input string.
       character(len=*), intent(in), optional :: color_fg  !< Foreground color definition.
       character(len=*), intent(in), optional :: color_bg  !< Background color definition.
@@ -108,10 +112,15 @@
       return
   end function colorize
 
-  !< Return the array-index corresponding to the queried color.
-  !<
-  !< @note Because Foreground and backround colors lists share the same name, no matter what array is used to find the color index.
-  !< Thus, the foreground array is used.
+!!
+!! @fun color_index
+!!
+!! return the array-index corresponding to the queried color.
+!!
+!! because foreground and backround colors lists share the same name,
+!! no matter what array is used to find the color index. thus, the
+!! foreground array is used.
+!!
   elemental function color_index(color)
       implicit none
 
@@ -126,11 +135,15 @@
               exit
           endif
       enddo
-  
+
       return
   end function color_index
 
-  !< Return the array-index corresponding to the queried style.
+!!
+!! @fun style_index
+!!
+!! return the array-index corresponding to the queried style.
+!!
   elemental function style_index(style)
       character(len=*), intent(in) :: style       !< Style definition.
       integer(int32)               :: style_index !< Index into the styles array.
@@ -147,8 +160,12 @@
       return
   end function style_index
 
+!!
+!! @fun upper
+!!
+!! return a string with all uppercase characters.
+!!
   elemental function upper(string)
-  !< Return a string with all uppercase characters.
       character(len=*), intent(in) :: string !< Input string.
       character(len=len(string))   :: upper  !< Upper case string.
       integer                      :: n1     !< Characters counter.
