@@ -118,6 +118,10 @@
 
      public :: pcs
 
+     private :: color_index
+     private :: style_index
+     private :: upper
+
   contains ! encapsulated functionality
 
 !!
