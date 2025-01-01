@@ -156,19 +156,25 @@
 
      cstr = string
      !
-     if (present(fg)) then
+     if ( present(fg) ) then
          i = color_index(upper(fg))
-         if (i>0) cstr = C_START//trim(COLORS_FG(2, i))//C_END//cstr//C_CLEAR
+         if ( i > 0 ) then
+             cstr = C_START//trim(COLORS_FG(2,i))//C_END//cstr//C_CLEAR
+         endif
      endif
      !
-     if (present(bg)) then
+     if ( present(bg) ) then
          i = color_index(upper(bg))
-         if (i>0) cstr = C_START//trim(COLORS_BG(2, i))//C_END//cstr//C_CLEAR
+         if ( i > 0 ) then
+             cstr = C_START//trim(COLORS_BG(2,i))//C_END//cstr//C_CLEAR
+         endif
      endif
      !
-     if (present(style)) then
+     if ( present(style) ) then
          i = style_index(upper(style))
-         if (i>0) cstr = C_START//trim(STYLES(2, i))//C_END//cstr//C_CLEAR
+         if ( i > 0 ) then
+             cstr = C_START//trim(STYLES(2,i))//C_END//cstr//C_CLEAR
+         endif
      endif
 
 !! body]
