@@ -198,10 +198,10 @@
      ! color definition
      character(len=*), intent(in) :: color
 
+!! local variables
      ! index into the colors arrays
      integer(int32) :: color_index
 
-!! local variables
      ! counter
      integer(int32) :: c
 
@@ -209,7 +209,7 @@
 
      color_index = 0
      do c=1, size(COLORS_FG, dim=2)
-         if (trim(COLORS_FG(1, c))==trim(adjustl(color))) then
+         if ( trim(COLORS_FG(1, c)) == trim(adjustl(color)) ) then
              color_index = c
              EXIT
          endif
@@ -232,10 +232,10 @@
      ! style definition
      character(len=*), intent(in) :: style
 
-     ! index into the styles array 
-     integer(int32)               :: style_index
-
 !! local variables
+     ! index into the styles array 
+     integer(int32) :: style_index
+
      ! counter
      integer(int32) :: s
 
@@ -243,7 +243,7 @@
 
      style_index = 0
      do s=1, size(STYLES, dim=2)
-         if (trim(STYLES(1, s))==trim(adjustl(style))) then
+         if ( trim(STYLES(1, s)) == trim(adjustl(style)) ) then
              style_index = s
              EXIT
          endif
@@ -266,10 +266,10 @@
      ! input string
      character(len=*), intent(in) :: string
 
-     ! upper case string
-     character(len=len(string))   :: upper
-
 !! local variables
+     ! upper case string
+     character(len=len(string)) :: upper
+
      ! characters counter
      integer :: n1
      integer :: n2
@@ -279,7 +279,9 @@
      upper = string
      do n1=1, len(string)
          n2 = index(LOWER_ALPHABET, string(n1:n1))
-         if (n2>0) upper(n1:n1) = UPPER_ALPHABET(n2:n2)
+         if ( n2 > 0 ) then
+             upper(n1:n1) = UPPER_ALPHABET(n2:n2)
+         endif
      enddo
 
 !! body]
