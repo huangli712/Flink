@@ -5,8 +5,8 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 12/31/2024 by li huang (created)
-!!!           12/31/2024 by li huang (last modified)
-!!! purpose : 
+!!!           01/02/2025 by li huang (last modified)
+!!! purpose : to support colorful outputs via ascii escape sequences.
 !!! status  : unstable
 !!! comment :
 !!!-----------------------------------------------------------------------
@@ -22,15 +22,31 @@
 
 !! module parameters
 
-     ! parameters
-     character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ' !< Upper case alphabet.
-     character(26), private, parameter :: LOWER_ALPHABET='abcdefghijklmnopqrstuvwxyz' !< Lower case alphabet.
-     character(1) , private, parameter :: ESCAPE=achar(27)                            !< "\" character.
+     ! general parameters
+     !
+     ! upper case alphabet
+     character(26), private, parameter :: UPPER_ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+     !
+     ! lower case alphabet
+     character(26), private, parameter :: LOWER_ALPHABET='abcdefghijklmnopqrstuvwxyz'
 
-     ! codes
-     character(2), private, parameter :: CODE_START=ESCAPE//'['               !< Start ansi code, "\[".
-     character(1), private, parameter :: CODE_END='m'                         !< End ansi code, "m".
-     character(4), private, parameter :: CODE_CLEAR=CODE_START//'0'//CODE_END !< Clear all styles, "\[0m".
+!! module parameters
+
+     ! general codes
+     !
+     ! "\" character
+     character(1), private, parameter :: ESCAPE=achar(27)
+     !
+     ! start ansi code, "\["
+     character(2), private, parameter :: C_START=ESCAPE//'['
+     !
+     ! end ansi code, "m"
+     character(1), private, parameter :: C_END='m'
+     !
+     ! clear all styles, "\[0m"
+     character(4), private, parameter :: C_CLEAR=C_START//'0'//C_END
+
+!! module parameters
 
      ! styles codes
      character(17), private, parameter :: STYLES(1:2,1:16)=reshape([&
@@ -52,46 +68,49 @@
          'OVERLINED_OFF    ', '55 '  & ! Overlined off.
          ], [2,16]) !< Styles.
 
-     ! colors codes
-     character(15), private, parameter :: COLORS_FG(1:2,1:17)=reshape([&
-         'BLACK          '  , '30 ', & ! Black.
-         'RED            '  , '31 ', & ! Red.
-         'GREEN          '  , '32 ', & ! Green.
-         'YELLOW         '  , '33 ', & ! Yellow.
-         'BLUE           '  , '34 ', & ! Blue.
-         'MAGENTA        '  , '35 ', & ! Magenta.
-         'CYAN           '  , '36 ', & ! Cyan.
-         'WHITE          '  , '37 ', & ! White.
-         'DEFAULT        '  , '39 ', & ! Default (white).
-         'BLACK_INTENSE  '  , '90 ', & ! Black intense.
-         'RED_INTENSE    '  , '91 ', & ! Red intense.
-         'GREEN_INTENSE  '  , '92 ', & ! Green intense.
-         'YELLOW_INTENSE '  , '93 ', & ! Yellow intense.
-         'BLUE_INTENSE   '  , '94 ', & ! Blue intense.
-         'MAGENTA_INTENSE'  , '95 ', & ! Magenta intense.
-         'CYAN_INTENSE   '  , '96 ', & ! Cyan intense.
-         'WHITE_INTENSE  '  , '97 '  & ! White intense.
-         ], [2,17]) !< Foreground colors.
+!! module parameters
 
+     ! colors codes: foreground colors
+     character(15), private, parameter :: COLORS_FG(1:2,1:17)=reshape([&
+         'BLACK          '  , '30 ', & ! black
+         'RED            '  , '31 ', & ! red
+         'GREEN          '  , '32 ', & ! green
+         'YELLOW         '  , '33 ', & ! yellow
+         'BLUE           '  , '34 ', & ! blue
+         'MAGENTA        '  , '35 ', & ! magenta
+         'CYAN           '  , '36 ', & ! cyan
+         'WHITE          '  , '37 ', & ! white
+         'DEFAULT        '  , '39 ', & ! default (white)
+         'BLACK_INTENSE  '  , '90 ', & ! black intense
+         'RED_INTENSE    '  , '91 ', & ! red intense
+         'GREEN_INTENSE  '  , '92 ', & ! green intense
+         'YELLOW_INTENSE '  , '93 ', & ! yellow intense
+         'BLUE_INTENSE   '  , '94 ', & ! blue intense
+         'MAGENTA_INTENSE'  , '95 ', & ! magenta intense
+         'CYAN_INTENSE   '  , '96 ', & ! cyan intense
+         'WHITE_INTENSE  '  , '97 '  & ! white intense
+         ], [2,17])
+
+     ! colors codes: background colors
      character(15), private, parameter :: COLORS_BG(1:2,1:17)=reshape([&
-         'BLACK          '  , '40 ', & ! Black.
-         'RED            '  , '41 ', & ! Red.
-         'GREEN          '  , '42 ', & ! Green.
-         'YELLOW         '  , '43 ', & ! Yellow.
-         'BLUE           '  , '44 ', & ! Blue.
-         'MAGENTA        '  , '45 ', & ! Magenta.
-         'CYAN           '  , '46 ', & ! Cyan.
-         'WHITE          '  , '47 ', & ! White.
-         'DEFAULT        '  , '49 ', & ! Default (black).
-         'BLACK_INTENSE  '  , '100', & ! Black intense.
-         'RED_INTENSE    '  , '101', & ! Red intense.
-         'GREEN_INTENSE  '  , '102', & ! Green intense.
-         'YELLOW_INTENSE '  , '103', & ! Yellow intense.
-         'BLUE_INTENSE   '  , '104', & ! Blue intense.
-         'MAGENTA_INTENSE'  , '105', & ! Magenta intense.
-         'CYAN_INTENSE   '  , '106', & ! Cyan intense.
-         'WHITE_INTENSE  '  , '107'  & ! White intense.
-         ], [2,17]) !< Background colors.
+         'BLACK          '  , '40 ', & ! black
+         'RED            '  , '41 ', & ! red
+         'GREEN          '  , '42 ', & ! green
+         'YELLOW         '  , '43 ', & ! yellow
+         'BLUE           '  , '44 ', & ! blue
+         'MAGENTA        '  , '45 ', & ! magenta
+         'CYAN           '  , '46 ', & ! cyan
+         'WHITE          '  , '47 ', & ! white
+         'DEFAULT        '  , '49 ', & ! default (black)
+         'BLACK_INTENSE  '  , '100', & ! black intense
+         'RED_INTENSE    '  , '101', & ! red intense
+         'GREEN_INTENSE  '  , '102', & ! green intense
+         'YELLOW_INTENSE '  , '103', & ! yellow intense
+         'BLUE_INTENSE   '  , '104', & ! blue intense
+         'MAGENTA_INTENSE'  , '105', & ! magenta intense
+         'CYAN_INTENSE   '  , '106', & ! cyan intense
+         'WHITE_INTENSE  '  , '107'  & ! white intense
+         ], [2,17])
 
 !!========================================================================
 !!>>> declare accessibility for module routines                        <<<
@@ -106,7 +125,7 @@
 !!
 !! colorize and stylize strings.
 !!
-  pure function pcs(string, color_fg, color_bg, style) result(colorized)
+  pure function pcs(string, fg, bg, style) result(cstr)
      implicit none
 
 !! external arguments
@@ -114,44 +133,44 @@
      character(len=*), intent(in)           :: string
 
      ! foreground color definition
-     character(len=*), intent(in), optional :: color_fg
+     character(len=*), intent(in), optional :: fg
 
      ! background color definition
-     character(len=*), intent(in), optional :: color_bg
+     character(len=*), intent(in), optional :: bg
 
      ! style definition
      character(len=*), intent(in), optional :: style 
 
 !! local variables
      ! colorized string
-     character(len=:), allocatable :: colorized
+     character(len=:), allocatable :: cstr
 
      ! counter
      integer(int32) :: i
 
 !! [body
 
-     colorized = string
+     cstr = string
      !
-     if (present(color_fg)) then
-         i = color_index(upper(color_fg))
-         if (i>0) colorized = CODE_START//trim(COLORS_FG(2, i))//CODE_END//colorized//CODE_CLEAR
+     if (present(fg)) then
+         i = color_index(upper(fg))
+         if (i>0) cstr = C_START//trim(COLORS_FG(2, i))//C_END//cstr//C_CLEAR
      endif
      !
-     if (present(color_bg)) then
-         i = color_index(upper(color_bg))
-         if (i>0) colorized = CODE_START//trim(COLORS_BG(2, i))//CODE_END//colorized//CODE_CLEAR
+     if (present(bg)) then
+         i = color_index(upper(bg))
+         if (i>0) cstr = C_START//trim(COLORS_BG(2, i))//C_END//cstr//C_CLEAR
      endif
      !
      if (present(style)) then
          i = style_index(upper(style))
-         if (i>0) colorized = CODE_START//trim(STYLES(2, i))//CODE_END//colorized//CODE_CLEAR
+         if (i>0) cstr = C_START//trim(STYLES(2, i))//C_END//cstr//C_CLEAR
      endif
 
 !! body]
 
      return
-  end function colorize
+  end function pcs
 
 !!
 !! @fun color_index
