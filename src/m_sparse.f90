@@ -180,4 +180,42 @@
      return
   end subroutine csr_dns_z
 
+  subroutine csr_dns_d_t(nrows, ncols, dns)
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)   :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)   :: ncols
+
+     ! array where to store dense matrix
+     real(dp), intent(out) :: dns(nrows,ncols)
+
+!! [body
+
+     ! init dns matrix
+     dns = 0.0_dp
+
+  end subroutine csr_dns_d_t
+
+  subroutine csr_dns_z_t(nrows, ncols, dns)
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncols
+
+     ! array where to store dense matrix
+     complex(dp), intent(out) :: dns(nrows,ncols)
+
+!! [body
+
+     ! init dns matrix
+     dns = dcmplx(0.0_dp, 0.0_dp)
+
+  end subroutine csr_dns_z_t
+
   end module sparse
