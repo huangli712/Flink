@@ -29,10 +29,21 @@
      integer, private, parameter :: mystd = 6
 
      type, public, abstract :: sparse_t
-         integer :: nrows = 0 !! number of rows
-         integer :: ncols = 0 !! number of columns
-         integer :: nnz   = 0 !! number of non-zero values
+         integer :: nrows = 0 ! number of rows
+         integer :: ncols = 0 ! number of columns
+         integer :: nnz   = 0 ! number of non-zero values
+         integer, allocatable :: rowptr(:) ! matrix row pointer
+         integer, allocatable :: colptr(:) ! matrix column pointer
      end type sparse_t
+
+     !! CSR: Compressed sparse row or Yale format
+     type, public, extends(sparse_t) :: csr_d
+         real(dp), allocatable :: Vd(:) 
+     end type csr_d
+
+     type, public, extends(sparse_t) :: csr_z
+         complex(dp), allocatable :: Vz(:)
+     end type csr_z
 
 !!========================================================================
 !!>>> declare accessibility for module routines                        <<<
