@@ -836,15 +836,15 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_d(nrow, ndim, ncol, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
+  subroutine csr_mm_d(nrows, ndims, ncol, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
      implicit none
 
 !! external arguments
      ! the row dimension of matrix A = row dimension of matrix C
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! the column dimension of matrix A = row dimension of matrix B
-     integer, intent(in)   :: ndim
+     integer, intent(in)   :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
      integer, intent(in)   :: ncol
@@ -856,17 +856,17 @@
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)   :: ia(nrow+1)
+     integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
 
      ! b, jb, ib, matrix B in compressed sparse row format
-     integer, intent(in)   :: ib(ndim+1)
+     integer, intent(in)   :: ib(ndims+1)
      integer, intent(in)   :: jb(nnz)
      real(dp), intent(in)  :: b(nnz)
 
      ! c, jc, ic, resulting matrix C in compressed sparse row format
-     integer, intent(out)  :: ic(nrow+1)
+     integer, intent(out)  :: ic(nrows+1)
      integer, intent(out)  :: jc(nnz)
      real(dp), intent(out) :: c(nnz)
 
@@ -899,7 +899,7 @@
      ic(1) = 1
 
      q = 0
-     do i=1,nrow
+     do i=1,nrows
          do ka=ia(i),ia(i+1)-1
              j = ja(ka)
              atmp = a(ka)
@@ -924,7 +924,7 @@
              iw( jc( k ) ) = 0
          enddo ! over k={ic(i),q} loop
          ic(i+1) = q + 1
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
      ! check the number of nonzero elements
      if ( q > nnz ) then
@@ -942,15 +942,15 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_z(nrow, ndim, ncol, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
+  subroutine csr_mm_z(nrows, ndims, ncol, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
      implicit none
 
 !! external arguments
      ! the row dimension of matrix A = row dimension of matrix C
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! the column dimension of matrix A = row dimension of matrix B
-     integer, intent(in)      :: ndim
+     integer, intent(in)      :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
      integer, intent(in)      :: ncol
@@ -962,17 +962,17 @@
      integer, intent(in)      :: nnz
 
      ! sa, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrow+1)
+     integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
      complex(dp), intent(in)  :: sa(nnz)
 
      ! sb, jb, ib, matrix B in compressed sparse row format
-     integer, intent(in)      :: ib(ndim+1)
+     integer, intent(in)      :: ib(ndims+1)
      integer, intent(in)      :: jb(nnz)
      complex(dp), intent(in)  :: sb(nnz)
 
      ! sc, jc, ic, resulting matrix C in compressed sparse row format
-     integer, intent(out)     :: ic(nrow+1)
+     integer, intent(out)     :: ic(nrows+1)
      integer, intent(out)     :: jc(nnz)
      complex(dp), intent(out) :: sc(nnz)
 
@@ -1005,7 +1005,7 @@
      ic(1) = 1
 
      q = 0
-     do i=1,nrow
+     do i=1,nrows
          do ka=ia(i),ia(i+1)-1
              j = ja(ka)
              atmp = sa(ka)
@@ -1030,7 +1030,7 @@
              iw( jc( k ) ) = 0
          enddo ! over k={ic(i),q} loop
          ic(i+1) = q + 1
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
      ! check the number of nonzero elements
      if ( q > nnz ) then
