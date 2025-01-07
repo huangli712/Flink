@@ -1,13 +1,3 @@
-! DIA X CSR
-     private :: csr_dm_d ! real(dp) version
-     private :: csr_dm_z ! complex(dp) version
-
-     public :: sp_dia_mm_csr
-     interface sp_dia_mm_csr
-         module procedure sp_matmul_diamua
-         module procedure sp_matmul_diamua_z
-     end interface sp_dia_mm_csr
-
 !!
 !! @sub sp_matmul_amudia
 !!

@@ -94,6 +94,13 @@
      private :: get_csr_d_t
      private :: get_csr_z_t
 
+     ! CSR -> setter
+     private :: set_csr_d ! real(dp) version
+     private :: set_csr_z ! complex(dp) version
+     !
+     private :: set_csr_d_t
+     private :: set_csr_z_t
+
      ! CSR X VEC
      private :: csr_mv_d ! real(dp) version
      private :: csr_mv_z ! complex(dp) version
