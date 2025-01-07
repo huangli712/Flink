@@ -831,4 +831,222 @@
   subroutine csr_mv_z_t()
   end subroutine csr_mv_z_t
 
+!!
+!! @sub csr_mm_d
+!!
+!! performs the matrix by matrix product C = A * B.
+!!
+  subroutine csr_mm_d(nrow, ndim, ncol, nmax, a, ja, ia, b, jb, ib, c, jc, ic)
+     implicit none
+
+!! external arguments
+     ! the row dimension of matrix A = row dimension of matrix C
+     integer, intent(in)   :: nrow
+
+     ! the column dimension of matrix A = row dimension of matrix B
+     integer, intent(in)   :: ndim
+
+     ! the column dimension of matrix B = column dimension of matrix C
+     integer, intent(in)   :: ncol
+
+     ! the length of the arrays c and jc.
+     !
+     ! this subroutine will stop if the result matrix C has a number of
+     ! elements that exceeds nmax.
+     integer, intent(in)   :: nmax
+
+     ! a, ja, ia, matrix A in compressed sparse row format
+     integer, intent(in)   :: ia(nrow+1)
+     integer, intent(in)   :: ja(nmax)
+     real(dp), intent(in)  :: a(nmax)
+
+     ! b, jb, ib, matrix B in compressed sparse row format
+     integer, intent(in)   :: ib(ndim+1)
+     integer, intent(in)   :: jb(nmax)
+     real(dp), intent(in)  :: b(nmax)
+
+     ! c, jc, ic, resulting matrix C in compressed sparse row format
+     integer, intent(out)  :: ic(nrow+1)
+     integer, intent(out)  :: jc(nmax)
+     real(dp), intent(out) :: c(nmax)
+
+!! local variables
+     ! loop index
+     integer :: i, j, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in
+     ! matrix B, which is an array that has nonzero value if the column
+     ! index already exist, in which case the value is the index of
+     ! that column.
+     integer :: iw(ncol)
+
+     ! dummy real(dp) variables, used to improve the ratio of floating
+     ! point operations to memory accesses.
+     real(dp) :: atmp, btmp
+
+!! [body
+
+     ! init work array
+     iw = 0
+
+     ! init C sparse matrix
+     ic(1) = 1
+
+     q = 0
+     do i=1,nrow
+         do ka=ia(i),ia(i+1)-1
+             j = ja(ka)
+             atmp = a(ka)
+             do kb=ib(j),ib(j+1)-1
+                 k = jb(kb)
+                 btmp = b(kb)
+
+                 p = iw(k)
+                 if ( p == 0 ) then
+                     q = q + 1
+                     iw(k) = q
+                     jc(q) = k
+                     c(q) = atmp * btmp
+                 else
+                     c(p) = c(p) + atmp * btmp
+                 endif ! back if ( p == 0 ) block
+             enddo ! over kb={ib(j),ib(j+1)-1} loop
+         enddo ! over ka={ia(i),ia(i+1)-1} loop
+
+         ! done this row i, so set work array to zero again
+         do k=ic(i),q
+             iw( jc( k ) ) = 0
+         enddo ! over k={ic(i),q} loop
+         ic(i+1) = q + 1
+     enddo ! over i={1,nrow} loop
+
+     ! check the number of nonzero elements
+     if ( q > nmax ) then
+         write(mystd,'(a)') 'sparse: error in csr_mm_d'
+         STOP
+     endif ! back if ( q > nmax ) block
+
+!! body]
+
+     return
+  end subroutine csr_mm_d
+
+!!
+!! @sub csr_mm_z
+!!
+!! performs the matrix by matrix product C = A * B.
+!!
+  subroutine csr_mm_z(nrow, ndim, ncol, nmax, sa, ja, ia, sb, jb, ib, sc, jc, ic)
+     implicit none
+
+!! external arguments
+     ! the row dimension of matrix A = row dimension of matrix C
+     integer, intent(in)      :: nrow
+
+     ! the column dimension of matrix A = row dimension of matrix B
+     integer, intent(in)      :: ndim
+
+     ! the column dimension of matrix B = column dimension of matrix C
+     integer, intent(in)      :: ncol
+
+     ! the length of the arrays sc and jc.
+     !
+     ! this subroutine will stop if the result matrix C has a number of
+     ! elements that exceeds nmax.
+     integer, intent(in)      :: nmax
+
+     ! sa, ja, ia, matrix A in compressed sparse row format
+     integer, intent(in)      :: ia(nrow+1)
+     integer, intent(in)      :: ja(nmax)
+     complex(dp), intent(in)  :: sa(nmax)
+
+     ! sb, jb, ib, matrix B in compressed sparse row format
+     integer, intent(in)      :: ib(ndim+1)
+     integer, intent(in)      :: jb(nmax)
+     complex(dp), intent(in)  :: sb(nmax)
+
+     ! sc, jc, ic, resulting matrix C in compressed sparse row format
+     integer, intent(out)     :: ic(nrow+1)
+     integer, intent(out)     :: jc(nmax)
+     complex(dp), intent(out) :: sc(nmax)
+
+!! local variables
+     ! loop index
+     integer :: i, j, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in
+     ! matrix B, which is an array that has nonzero value if the column
+     ! index already exist, in which case the value is the index of
+     ! that column.
+     integer :: iw(ncol)
+
+     ! dummy complex(dp) variables, used to improve the ratio of
+     ! floating point operations to memory accesses.
+     complex(dp) :: atmp, btmp
+
+!! [body
+
+     ! init work array
+     iw = 0
+
+     ! init C sparse matrix
+     ic(1) = 1
+
+     q = 0
+     do i=1,nrow
+         do ka=ia(i),ia(i+1)-1
+             j = ja(ka)
+             atmp = sa(ka)
+             do kb=ib(j),ib(j+1)-1
+                 k = jb(kb)
+                 btmp = sb(kb)
+
+                 p = iw(k)
+                 if ( p == 0 ) then
+                     q = q + 1
+                     iw(k) = q
+                     jc(q) = k
+                     sc(q) = atmp * btmp
+                 else
+                     sc(p) = sc(p) + atmp * btmp
+                 endif ! back if ( p == 0 ) block
+             enddo ! over kb={ib(j),ib(j+1)-1} loop
+         enddo ! over ka={ia(i),ia(i+1)-1} loop
+
+         ! done this row i, so set work array to zero again
+         do k=ic(i),q
+             iw( jc( k ) ) = 0
+         enddo ! over k={ic(i),q} loop
+         ic(i+1) = q + 1
+     enddo ! over i={1,nrow} loop
+
+     ! check the number of nonzero elements
+     if ( q > nmax ) then
+         write(mystd,'(a)') 'sparse: error in csr_mm_z'
+         STOP
+     endif ! back if ( q > nmax ) block
+
+!! body]
+
+     return
+  end subroutine csr_mm_z
+
+  subroutine csr_mm_d_t()
+  end subroutine csr_mm_d_t
+
+  subroutine csr_mm_z_t()
+  end subroutine csr_mm_z_t
+
   end module sparse
