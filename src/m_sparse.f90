@@ -165,6 +165,14 @@
          module procedure get_csr_z_t
      end interface get_csr
 
+     public :: set_csr
+     interface set_csr
+         module procedure set_csr_d
+         module procedure set_csr_z
+         module procedure set_csr_d_t
+         module procedure set_csr_z_t
+     end interface set_csr
+
      public :: csr_mv
      interface csr_mv
          module procedure csr_mv_d
