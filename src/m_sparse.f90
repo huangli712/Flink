@@ -810,4 +810,10 @@
      return
   end subroutine csr_mv_z
 
+  subroutine csr_mv_d_t()
+  end subroutine csr_mv_d_t
+
+  subroutine csr_mv_z_t()
+  end subroutine csr_mv_z_t
+
   end module sparse
