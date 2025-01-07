@@ -143,7 +143,7 @@
          module procedure csr_mv_z
          module procedure csr_mv_d_t
          module procedure csr_mv_z_t
-     end interface sp_csr_mv_vec
+     end interface csr_mv
 
   contains ! encapsulated functionality
 
