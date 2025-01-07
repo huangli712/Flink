@@ -681,4 +681,14 @@
      return
   end function get_csr_z
 
+  real(dp) &
+  function get_csr_d_t() result(elm)
+     elm = 0.0_dp
+  end function get_csr_d_t
+
+  complex(dp) &
+  function get_csr_z_t() result(elm)
+     elm = dcmplx(0.0_dp, 0.0_dp)
+  end function get_csr_z_t
+
   end module sparse
