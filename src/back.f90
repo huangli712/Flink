@@ -1,7 +1,3 @@
-! CSR X CSR
-     private :: csr_mm_d ! real(dp) version
-     private :: csr_mm_z ! complex(dp) version
-
 ! CSR X DIA
      private :: csr_md_d ! real(dp) version
      private :: csr_md_z ! complex(dp) version
@@ -9,12 +5,6 @@
 ! DIA X CSR
      private :: csr_dm_d ! real(dp) version
      private :: csr_dm_z ! complex(dp) version
-
-     public :: sp_csr_mm_csr
-     interface sp_csr_mm_csr
-         module procedure sp_matmul_amumat
-         module procedure sp_matmul_amumat_z
-     end interface sp_csr_mm_csr
 
      public :: sp_csr_mm_dia
      interface sp_csr_mm_dia

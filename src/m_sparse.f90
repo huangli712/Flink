@@ -101,6 +101,13 @@
      private :: csr_mv_d_t
      private :: csr_mv_z_t
 
+     ! CSR X CSR
+     private :: csr_mm_d ! real(dp) version
+     private :: csr_mm_z ! complex(dp) version
+     !
+     private :: csr_mm_d_t
+     private :: csr_mm_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
@@ -144,6 +151,14 @@
          module procedure csr_mv_d_t
          module procedure csr_mv_z_t
      end interface csr_mv
+
+     public :: csr_mm
+     interface csr_mm
+         module procedure csr_mm_d
+         module procedure csr_mm_z
+         module procedure csr_mm_d_t
+         module procedure csr_mm_z_t
+     end interface csr_mm
 
   contains ! encapsulated functionality
 
