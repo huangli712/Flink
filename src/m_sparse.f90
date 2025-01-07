@@ -766,6 +766,18 @@
      elm = dcmplx(0.0_dp, 0.0_dp)
   end function get_csr_z_t
 
+  subroutine set_csr_d()
+  end subroutine set_csr_d
+
+  subroutine set_csr_z()
+  end subroutine set_csr_z
+
+  subroutine set_csr_d_t()
+  end subroutine set_csr_d_t
+
+  subroutine set_csr_z_t()
+  end subroutine set_csr_z_t
+
 !!
 !! @sub csr_mv_d
 !!
