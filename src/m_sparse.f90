@@ -836,7 +836,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_d(nrows, ndims, ncol, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
+  subroutine csr_mm_d(nrows, ndims, ncols, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
      implicit none
 
 !! external arguments
@@ -847,7 +847,7 @@
      integer, intent(in)   :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
-     integer, intent(in)   :: ncol
+     integer, intent(in)   :: ncols
 
      ! the length of the arrays c and jc.
      !
@@ -884,7 +884,7 @@
      ! matrix B, which is an array that has nonzero value if the column
      ! index already exist, in which case the value is the index of
      ! that column.
-     integer :: iw(ncol)
+     integer :: iw(ncols)
 
      ! dummy real(dp) variables, used to improve the ratio of floating
      ! point operations to memory accesses.
@@ -942,7 +942,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_z(nrows, ndims, ncol, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
+  subroutine csr_mm_z(nrows, ndims, ncols, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
      implicit none
 
 !! external arguments
@@ -953,7 +953,7 @@
      integer, intent(in)      :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
-     integer, intent(in)      :: ncol
+     integer, intent(in)      :: ncols
 
      ! the length of the arrays sc and jc.
      !
@@ -990,7 +990,7 @@
      ! matrix B, which is an array that has nonzero value if the column
      ! index already exist, in which case the value is the index of
      ! that column.
-     integer :: iw(ncol)
+     integer :: iw(ncols)
 
      ! dummy complex(dp) variables, used to improve the ratio of
      ! floating point operations to memory accesses.
