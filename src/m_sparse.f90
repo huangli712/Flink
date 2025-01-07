@@ -836,7 +836,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_d(nrow, ndim, ncol, nmax, a, ja, ia, b, jb, ib, c, jc, ic)
+  subroutine csr_mm_d(nrow, ndim, ncol, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
      implicit none
 
 !! external arguments
@@ -852,23 +852,23 @@
      ! the length of the arrays c and jc.
      !
      ! this subroutine will stop if the result matrix C has a number of
-     ! elements that exceeds nmax.
-     integer, intent(in)   :: nmax
+     ! elements that exceeds nnz.
+     integer, intent(in)   :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)   :: ia(nrow+1)
-     integer, intent(in)   :: ja(nmax)
-     real(dp), intent(in)  :: a(nmax)
+     integer, intent(in)   :: ja(nnz)
+     real(dp), intent(in)  :: a(nnz)
 
      ! b, jb, ib, matrix B in compressed sparse row format
      integer, intent(in)   :: ib(ndim+1)
-     integer, intent(in)   :: jb(nmax)
-     real(dp), intent(in)  :: b(nmax)
+     integer, intent(in)   :: jb(nnz)
+     real(dp), intent(in)  :: b(nnz)
 
      ! c, jc, ic, resulting matrix C in compressed sparse row format
      integer, intent(out)  :: ic(nrow+1)
-     integer, intent(out)  :: jc(nmax)
-     real(dp), intent(out) :: c(nmax)
+     integer, intent(out)  :: jc(nnz)
+     real(dp), intent(out) :: c(nnz)
 
 !! local variables
      ! loop index
@@ -927,10 +927,10 @@
      enddo ! over i={1,nrow} loop
 
      ! check the number of nonzero elements
-     if ( q > nmax ) then
+     if ( q > nnz ) then
          write(mystd,'(a)') 'sparse: error in csr_mm_d'
          STOP
-     endif ! back if ( q > nmax ) block
+     endif ! back if ( q > nnz ) block
 
 !! body]
 
@@ -942,7 +942,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_z(nrow, ndim, ncol, nmax, sa, ja, ia, sb, jb, ib, sc, jc, ic)
+  subroutine csr_mm_z(nrow, ndim, ncol, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
      implicit none
 
 !! external arguments
@@ -958,23 +958,23 @@
      ! the length of the arrays sc and jc.
      !
      ! this subroutine will stop if the result matrix C has a number of
-     ! elements that exceeds nmax.
-     integer, intent(in)      :: nmax
+     ! elements that exceeds nnz.
+     integer, intent(in)      :: nnz
 
      ! sa, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)      :: ia(nrow+1)
-     integer, intent(in)      :: ja(nmax)
-     complex(dp), intent(in)  :: sa(nmax)
+     integer, intent(in)      :: ja(nnz)
+     complex(dp), intent(in)  :: sa(nnz)
 
      ! sb, jb, ib, matrix B in compressed sparse row format
      integer, intent(in)      :: ib(ndim+1)
-     integer, intent(in)      :: jb(nmax)
-     complex(dp), intent(in)  :: sb(nmax)
+     integer, intent(in)      :: jb(nnz)
+     complex(dp), intent(in)  :: sb(nnz)
 
      ! sc, jc, ic, resulting matrix C in compressed sparse row format
      integer, intent(out)     :: ic(nrow+1)
-     integer, intent(out)     :: jc(nmax)
-     complex(dp), intent(out) :: sc(nmax)
+     integer, intent(out)     :: jc(nnz)
+     complex(dp), intent(out) :: sc(nnz)
 
 !! local variables
      ! loop index
@@ -1033,10 +1033,10 @@
      enddo ! over i={1,nrow} loop
 
      ! check the number of nonzero elements
-     if ( q > nmax ) then
+     if ( q > nnz ) then
          write(mystd,'(a)') 'sparse: error in csr_mm_z'
          STOP
-     endif ! back if ( q > nmax ) block
+     endif ! back if ( q > nnz ) block
 
 !! body]
 
