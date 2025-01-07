@@ -361,12 +361,12 @@
   end subroutine dns_csr_d
 
 !!
-!! @sub sp_format_dnscsr_z
+!! @sub dns_csr_z
 !!
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine sp_format_dnscsr_z(nrow, ncol, nmax, dns, sa, ja, ia)
+  subroutine dns_csr_z(nrow, ncol, nmax, dns, sa, ja, ia)
      implicit none
 
 !! external arguments
@@ -421,6 +421,6 @@
 !! body]
 
      return
-  end subroutine sp_format_dnscsr_z
+  end subroutine dns_csr_z
 
   end module sparse
