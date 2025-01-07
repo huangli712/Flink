@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 09/14/2009 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to define a stack-type (LIFO)
 !!!           data structure in fortran version.
 !!! status  : unstable
@@ -16,7 +16,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global parameters                                        <<<
+!!>>> declare local parameters                                         <<<
 !!========================================================================
 
 !! module parameters

@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/02/2025 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -18,7 +18,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global parameters                                        <<<
+!!>>> declare local parameters                                         <<<
 !!========================================================================
 
 !! module parameters
@@ -27,6 +27,10 @@
 
      ! mystd: device descriptor, console output
      integer, private, parameter :: mystd = 6
+
+!!========================================================================
+!!>>> declare global structures                                        <<<
+!!========================================================================
 
      type, public, abstract :: sparse_t
          integer :: nrows = 0 ! number of rows

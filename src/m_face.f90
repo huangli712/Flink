@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 12/31/2024 by li huang (created)
-!!!           01/02/2025 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : to support colorful outputs via ascii escape sequences.
 !!! status  : unstable
 !!! comment :
@@ -17,7 +17,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global parameters                                        <<<
+!!>>> declare local parameters                                         <<<
 !!========================================================================
 
 !! module parameters
@@ -46,6 +46,10 @@
      ! clear all styles, "\[0m"
      character(4), private, parameter :: C_CLEAR=C_START//'0'//C_END
 
+!!========================================================================
+!!>>> declare local parameters                                         <<<
+!!========================================================================
+
 !! module parameters
 
      ! styles codes
@@ -66,7 +70,7 @@
          'FRAMED_OFF       ', '54 ', & ! Framed off.
          'ENCIRCLED_OFF    ', '54 ', & ! Encircled off.
          'OVERLINED_OFF    ', '55 '  & ! Overlined off.
-         ], [2,16]) !< Styles.
+         ], [2,16])
 
 !! module parameters
 

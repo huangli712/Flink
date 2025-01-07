@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement a generic and
 !!!           flexible config/input file reader and analyzer.
 !!! status  : unstable
@@ -18,7 +18,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global constants                                         <<<
+!!>>> declare local constants                                          <<<
 !!========================================================================
 
 !! module parameters
@@ -32,7 +32,7 @@
      integer, private, parameter :: mytmp = 100
 
 !!========================================================================
-!!>>> declare global data types                                        <<<
+!!>>> declare local datatypes                                          <<<
 !!========================================================================
 
 !! module structs

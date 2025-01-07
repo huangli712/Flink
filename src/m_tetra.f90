@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 06/07/2006 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : this module is devoted to compute the analytical integration
 !!!           weights for brillouin zone sampling.
 !!! status  : unstable
@@ -16,7 +16,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global parameters                                        <<<
+!!>>> declare local parameters                                         <<<
 !!========================================================================
 
 !! module parameters

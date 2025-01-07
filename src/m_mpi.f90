@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 08/09/2006 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           01/07/2025 by li huang (last modified)
 !!! purpose : define my own mpi calls, inspired by famous quantum espresso
 !!!           code. we note that the original mpi interfaces/subroutines
 !!!           are rather complicated for newbies, thus we try to wrap the
@@ -30,7 +30,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global constants                                         <<<
+!!>>> declare local constants                                          <<<
 !!========================================================================
 
 !! module parameters
@@ -6700,7 +6700,7 @@
      implicit none
 
 !!========================================================================
-!!>>> declare global constants                                         <<<
+!!>>> declare local constants                                          <<<
 !!========================================================================
 
 !! module parameters
