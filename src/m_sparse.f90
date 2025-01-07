@@ -80,6 +80,13 @@
      private :: dns_csr_d_t
      private :: dns_csr_z_t
 
+     ! CSR -> CSR
+     private :: csr_csr_d ! real(dp) version
+     private :: csr_csr_z ! complex(dp) version
+     !
+     private :: csr_csr_d_t
+     private :: csr_csr_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================

@@ -1,6 +1,3 @@
-! CSR -> CSR
-     private :: csr_csr_d ! real(dp) version
-     private :: csr_csr_z ! complex(dp) version
 
 ! CSR -> extractor
      private :: get_csr_d ! real(dp) version
