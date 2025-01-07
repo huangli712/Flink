@@ -711,30 +711,30 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_d(nrow, ncol, nmax, a, ja, ia, x, y)
+  subroutine csr_mv_d(nrows, ncols, nnz, a, ja, ia, x, y)
      implicit none
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncol
+     integer, intent(in)   :: ncols
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays a and ja.
-     integer, intent(in)   :: nmax
+     integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)   :: ia(nrow+1)
-     integer, intent(in)   :: ja(nmax)
-     real(dp), intent(in)  :: a(nmax)
+     integer, intent(in)   :: ia(nrows+1)
+     integer, intent(in)   :: ja(nnz)
+     real(dp), intent(in)  :: a(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
-     real(dp), intent(in)  :: x(ncol)
+     real(dp), intent(in)  :: x(ncols)
 
-     ! vector, real array of length nrow, containing the product y = A . x
-     real(dp), intent(out) :: y(nrow)
+     ! vector, real array of length nrows, containing the product y = A . x
+     real(dp), intent(out) :: y(nrows)
 
 !! local variables
      ! loop index
@@ -747,11 +747,11 @@
      y = 0.0_dp
 
      ! compute the inner product of row i with vector x
-     do i=1,nrow
+     do i=1,nrows
          do k=ia(i),ia(i+1)-1
              y(i) = y(i) + a(k) * x( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
 !! body]
 
@@ -763,30 +763,30 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_z(nrow, ncol, nmax, sa, ja, ia, sx, sy)
+  subroutine csr_mv_z(nrows, ncols, nnz, sa, ja, ia, sx, sy)
      implicit none
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncol
+     integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sa and ja.
-     integer, intent(in)      :: nmax
+     integer, intent(in)      :: nnz
 
      ! sa, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)      :: ia(nrow+1)
-     integer, intent(in)      :: ja(nmax)
-     complex(dp), intent(in)  :: sa(nmax)
+     integer, intent(in)      :: ia(nrows+1)
+     integer, intent(in)      :: ja(nnz)
+     complex(dp), intent(in)  :: sa(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
-     complex(dp), intent(in)  :: sx(ncol)
+     complex(dp), intent(in)  :: sx(ncols)
 
-     ! vector, complex(dp) array of length nrow, containing the product y = A . x
-     complex(dp), intent(out) :: sy(nrow)
+     ! vector, complex(dp) array of length nrows, containing the product y = A . x
+     complex(dp), intent(out) :: sy(nrows)
 
 !! local variables
      ! loop index
@@ -799,11 +799,11 @@
      sy = dcmplx(0.0_dp, 0.0_dp)
 
      ! compute the inner product of row i with vector sx
-     do i=1,nrow
+     do i=1,nrows
          do k=ia(i),ia(i+1)-1
              sy(i) = sy(i) + sa(k) * sx( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
 !! body]
 
