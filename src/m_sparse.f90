@@ -1095,11 +1095,11 @@
   end subroutine csr_mm_z_t
 
 !!
-!! @sub sp_matmul_amudia
+!! @sub csr_md_d
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine sp_matmul_amudia(nrow, nmax, a, ja, ia, diag, b, jb, ib)
+  subroutine csr_md_d(nrow, nmax, a, ja, ia, diag, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -1159,14 +1159,14 @@
 !! body]
 
      return
-  end subroutine sp_matmul_amudia
+  end subroutine csr_md_d
 
 !!
-!! @sub sp_matmul_amudia_z
+!! @sub csr_md_z
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine sp_matmul_amudia_z(nrow, nmax, sa, ja, ia, diag, sb, jb, ib)
+  subroutine csr_md_z(nrow, nmax, sa, ja, ia, diag, sb, jb, ib)
      implicit none
 
 !! external arguments
@@ -1226,14 +1226,20 @@
 !! body]
 
      return
-  end subroutine sp_matmul_amudia_z
+  end subroutine csr_md_z
+
+  subroutine csr_md_d_t()
+  end subroutine csr_md_d_t
+
+  subroutine csr_md_z_t()
+  end subroutine csr_md_z_t
 
 !!
-!! @sub sp_matmul_diamua
+!! @sub csr_dm_d
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine sp_matmul_diamua(nrow, nmax, diag, a, ja, ia, b, jb, ib)
+  subroutine csr_dm_d(nrow, nmax, diag, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -1293,14 +1299,14 @@
 !! body]
 
      return
-  end subroutine sp_matmul_diamua
+  end subroutine csr_dm_d
 
 !!
-!! @sub sp_matmul_diamua_z
+!! @sub csr_dm_z
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine sp_matmul_diamua_z(nrow, nmax, diag, sa, ja, ia, sb, jb, ib)
+  subroutine csr_dm_z(nrow, nmax, diag, sa, ja, ia, sb, jb, ib)
      implicit none
 
 !! external arguments
@@ -1360,6 +1366,12 @@
 !! body]
 
      return
-  end subroutine sp_matmul_diamua_z
+  end subroutine csr_dm_z
+
+  subroutine csr_dm_d_t()
+  end subroutine csr_dm_d_t
+
+  subroutine csr_dm_z_t()
+  end subroutine csr_dm_z_t
 
   end module sparse
