@@ -759,11 +759,11 @@
   end subroutine csr_mv_d
 
 !!
-!! @sub sp_matmul_amuvec_z
+!! @sub csr_mv_z
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine sp_matmul_amuvec_z(nrow, ncol, nmax, sa, ja, ia, sx, sy)
+  subroutine csr_mv_z(nrow, ncol, nmax, sa, ja, ia, sx, sy)
      implicit none
 
 !! external arguments
@@ -808,6 +808,6 @@
 !! body]
 
      return
-  end subroutine sp_matmul_amuvec_z
+  end subroutine csr_mv_z
 
   end module sparse
