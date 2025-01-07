@@ -366,27 +366,27 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_z(nrow, ncol, nmax, dns, sa, ja, ia)
+  subroutine dns_csr_z(nrows, ncols, nnz, dns, sa, ja, ia)
      implicit none
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncol
+     integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sa and ja.
-     integer, intent(in)      :: nmax
+     integer, intent(in)      :: nnz
 
      ! input densely stored matrix
-     complex(dp), intent(in)  :: dns(nrow,ncol)
+     complex(dp), intent(in)  :: dns(nrows,ncols)
 
      ! sa, ja, ia, output matrix in compressed sparse row format
-     integer, intent(out)     :: ia(nrow+1)
-     integer, intent(out)     :: ja(nmax)
-     complex(dp), intent(out) :: sa(nmax)
+     integer, intent(out)     :: ia(nrows+1)
+     integer, intent(out)     :: ja(nnz)
+     complex(dp), intent(out) :: sa(nnz)
 
 !! local variables
      ! loop index
@@ -403,20 +403,20 @@
 
      k = 1
      ia(1) = 1
-     do i=1,nrow
-         do j=1,ncol
+     do i=1,nrows
+         do j=1,ncols
              if ( real( dns(i,j) ) == 0.0_dp .and. &
                 & aimag( dns(i,j) ) == 0.0_dp ) CYCLE
              ja(k) = j
              sa(k) = dns(i,j)
              k = k + 1
-             if ( k > nmax ) then
-                 write(mystd,'(a)') 'sparse: error in sp_format_dnscsr_z'
+             if ( k > nnz ) then
+                 write(mystd,'(a)') 'sparse: error in dns_csr_z'
                  STOP
-             endif ! back if ( k > nmax ) block
-         enddo ! over j={1,ncol} loop
+             endif ! back if ( k > nnz ) block
+         enddo ! over j={1,ncols} loop
          ia(i+1) = k
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
 !! body]
 
