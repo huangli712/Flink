@@ -108,6 +108,13 @@
      private :: csr_mm_d_t
      private :: csr_mm_z_t
 
+     ! CSR X DIA
+     private :: csr_md_d ! real(dp) version
+     private :: csr_md_z ! complex(dp) version
+     !
+     private :: csr_md_d_t
+     private :: csr_md_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
