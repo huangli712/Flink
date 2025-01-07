@@ -113,7 +113,7 @@
          module procedure csr_csr_z
          module procedure csr_csr_d_t
          module procedure csr_csr_z_t
-     end interface sp_csr_cp_csr
+     end interface csr_csr
 
   contains ! encapsulated functionality
 
@@ -449,26 +449,26 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_d(nrow, nmax, a, ja, ia, b, jb, ib)
+  subroutine csr_csr_d(nrows, nnz, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays a and ja.
-     integer, intent(in)   :: nmax
+     integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)   :: ia(nrow+1)
-     integer, intent(in)   :: ja(nmax)
-     real(dp), intent(in)  :: a(nmax)
+     integer, intent(in)   :: ia(nrows+1)
+     integer, intent(in)   :: ja(nnz)
+     real(dp), intent(in)  :: a(nnz)
 
      ! b, jb, ib, output matrix in compressed sparse row format
-     integer, intent(out)  :: ib(nrow+1)
-     integer, intent(out)  :: jb(nmax)
-     real(dp), intent(out) :: b(nmax)
+     integer, intent(out)  :: ib(nrows+1)
+     integer, intent(out)  :: jb(nnz)
+     real(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -476,17 +476,17 @@
 
 !! [body
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do i=ia(1),ia(nrow+1)-1
+     do i=ia(1),ia(nrows+1)-1
          jb(i) = ja(i)
-     enddo ! over i={ia(1),ia(nrow+1)-1} loop
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
-     do i=ia(1),ia(nrow+1)-1
+     do i=ia(1),ia(nrows+1)-1
          b(i) = a(i)
-     enddo ! over i={ia(1),ia(nrow+1)-1} loop
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
@@ -498,26 +498,26 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_z(nrow, nmax, sa, ja, ia, sb, jb, ib)
+  subroutine csr_csr_z(nrows, nnz, sa, ja, ia, sb, jb, ib)
      implicit none
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sa and ja.
-     integer, intent(in)      :: nmax
+     integer, intent(in)      :: nnz
 
      ! sa, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)      :: ia(nrow+1)
-     integer, intent(in)      :: ja(nmax)
-     complex(dp), intent(in)  :: sa(nmax)
+     integer, intent(in)      :: ia(nrows+1)
+     integer, intent(in)      :: ja(nnz)
+     complex(dp), intent(in)  :: sa(nnz)
 
      ! sb, jb, ib, output matrix in compressed sparse row format
-     integer, intent(out)     :: ib(nrow+1)
-     integer, intent(out)     :: jb(nmax)
-     complex(dp), intent(out) :: sb(nmax)
+     integer, intent(out)     :: ib(nrows+1)
+     integer, intent(out)     :: jb(nnz)
+     complex(dp), intent(out) :: sb(nnz)
 
 !! local variables
      ! loop index
@@ -525,21 +525,27 @@
 
 !! [body
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do i=ia(1),ia(nrow+1)-1
+     do i=ia(1),ia(nrows+1)-1
          jb(i) = ja(i)
-     enddo ! over i={ia(1),ia(nrow+1)-1} loop
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
-     do i=ia(1),ia(nrow+1)-1
+     do i=ia(1),ia(nrows+1)-1
          sb(i) = sa(i)
-     enddo ! over i={ia(1),ia(nrow+1)-1} loop
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
      return
   end subroutine csr_csr_z
+
+  subroutine csr_csr_d_t()
+  end subroutine csr_csr_d_t
+
+  subroutine csr_csr_z_t()
+  end subroutine csr_csr_z_t
 
   end module sparse
