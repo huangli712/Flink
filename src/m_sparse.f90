@@ -240,23 +240,47 @@
      return
   end subroutine csr_dns_d_t
 
-  subroutine csr_dns_z_t(nrows, ncols, dns)
+!!
+!! @sub csr_dns_z_t
+!!
+!! converts a row-stored sparse matrix into a densely stored one.
+!!
+  subroutine csr_dns_z_t(csr, dns)
+     implicit none
 
 !! external arguments
-     ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
-
-     ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     ! sparse matrix in CSR format
+     type (csr_z), intent(in) :: csr
 
      ! array where to store dense matrix
-     complex(dp), intent(out) :: dns(nrows,ncols)
+     complex(dp), intent(out) :: dns(csr%nrows,csr%ncols)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
 
 !! [body
 
      ! init dns matrix
      dns = dcmplx(0.0_dp, 0.0_dp)
 
+     ! convert sparse matrix to dense matrix
+     do i=1,csr%nrows
+         do k=csr%rowptr(i),csr%rowptr(i+1)-1
+             j = csr%colptr(k)
+             if ( j > csr%ncols ) then
+                 write(mystd,'(a)') 'sparse: error in csr_dns_z_t'
+                 STOP
+             endif ! back if ( j > csr%ncols ) block
+             dns(i,j) = csr%V(k)
+         enddo ! over k={csr%rowptr(i),csr%rowptr(i+1)-1} loop
+     enddo ! over i={1,csr%nrows} loop
+
+!! body]
+
+     return
   end subroutine csr_dns_z_t
 
   end module sparse
