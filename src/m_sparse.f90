@@ -319,12 +319,12 @@
      integer, intent(in)   :: nnz
 
      ! input densely stored matrix
-     real(dp), intent(in)  :: dns(nrow,ncol)
+     real(dp), intent(in)  :: dns(nrows,ncols)
 
      ! a, ja, ia, output matrix in compressed sparse row format
-     integer, intent(out)  :: ia(nrow+1)
-     integer, intent(out)  :: ja(nmax)
-     real(dp), intent(out) :: a(nmax)
+     integer, intent(out)  :: ia(nrows+1)
+     integer, intent(out)  :: ja(nnz)
+     real(dp), intent(out) :: a(nnz)
 
 !! local variables
      ! loop index
@@ -341,24 +341,24 @@
 
      k = 1
      ia(1) = 1
-     do i=1,nrow
-         do j=1,ncol
+     do i=1,nrows
+         do j=1,ncols
              if ( dns(i,j) == 0.0_dp ) CYCLE
              ja(k) = j
              a(k) = dns(i,j)
              k = k + 1
-             if ( k > nmax ) then
-                 write(mystd,'(a)') 'sparse: error in sp_format_dnscsr'
+             if ( k > nnz ) then
+                 write(mystd,'(a)') 'sparse: error in dns_crs_d'
                  STOP
-             endif ! back if ( k > nmax ) block
-         enddo ! over j={1,ncol} loop
+             endif ! back if ( k > nnz ) block
+         enddo ! over j={1,ncols} loop
          ia(i+1) = k
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
 !! body]
 
      return
-  end subroutine sp_format_dnscsr
+  end subroutine dns_csr_d
 
 !!
 !! @sub sp_format_dnscsr_z
