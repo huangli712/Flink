@@ -147,7 +147,7 @@
      character(len=*), intent(in), optional :: bg
 
      ! style definition
-     character(len=*), intent(in), optional :: style 
+     character(len=*), intent(in), optional :: style
 
 !! local variables
      ! colorized string
@@ -237,7 +237,7 @@
      character(len=*), intent(in) :: style
 
 !! local variables
-     ! index into the styles array 
+     ! index into the styles array
      integer(int32) :: style_index
 
      ! counter
@@ -265,7 +265,7 @@
 !!
   elemental function upper(string)
      implicit none
- 
+
 !! external arguments
      ! input string
      character(len=*), intent(in) :: string

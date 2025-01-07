@@ -32,21 +32,34 @@
 !!>>> declare global structures                                        <<<
 !!========================================================================
 
-     type, public, abstract :: sparse_t
-         integer :: nrows = 0 ! number of rows
-         integer :: ncols = 0 ! number of columns
-         integer :: nnz   = 0 ! number of non-zero values
-         integer, allocatable :: rowptr(:) ! matrix row pointer
-         integer, allocatable :: colptr(:) ! matrix column pointer
+     ! sparse_t: abstract struct for sparse matrix
+     type, private, abstract :: sparse_t
+
+         ! nrows: number of rows
+         integer :: nrows = 0
+
+         ! ncols: ! number of columns
+         integer :: ncols = 0
+
+         ! nnz: number of non-zero values
+         integer :: nnz   = 0
+
+         ! rowptr: matrix row pointer
+         integer, allocatable :: rowptr(:)
+
+         ! colptr: matrix column pointer
+         integer, allocatable :: colptr(:)
+
      end type sparse_t
 
-     !! CSR: Compressed sparse row or Yale format
+     ! csr_d: compressed sparse row format, real(dp) version
      type, public, extends(sparse_t) :: csr_d
-         real(dp), allocatable :: Vd(:) 
+         real(dp), allocatable :: V(:)
      end type csr_d
 
+     ! csr_z: compressed sparse row format, complex(dp) version
      type, public, extends(sparse_t) :: csr_z
-         complex(dp), allocatable :: Vz(:)
+         complex(dp), allocatable :: V(:)
      end type csr_z
 
 !!========================================================================
@@ -184,23 +197,47 @@
      return
   end subroutine csr_dns_z
 
-  subroutine csr_dns_d_t(nrows, ncols, dns)
+!!
+!! @sub csr_dns_d_t
+!!
+!! converts a row-stored sparse matrix into a densely stored one.
+!!
+  subroutine csr_dns_d_t(csr, dns)
+     implicit none
 
 !! external arguments
-     ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
-
-     ! column dimension of dense matrix
-     integer, intent(in)   :: ncols
+     ! sparse matrix in CSR format
+     type (csr_d), intent(in) :: csr
 
      ! array where to store dense matrix
-     real(dp), intent(out) :: dns(nrows,ncols)
+     real(dp), intent(out) :: dns(csr%nrows,csr%ncols)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
 
 !! [body
 
      ! init dns matrix
      dns = 0.0_dp
 
+     ! convert sparse matrix to dense matrix
+     do i=1,csr%nrows
+         do k=csr%rowptr(i),csr%rowptr(i+1)-1
+             j = csr%colptr(k)
+             if ( j > csr%ncols ) then
+                 write(mystd,'(a)') 'sparse: error in csr_dns_d_t'
+                 STOP
+             endif ! back if ( j > csr%ncols ) block
+             dns(i,j) = csr%V(k)
+         enddo ! over k={csr%rowptr(i),csr%rowptr(i+1)-1} loop
+     enddo ! over i={1,csr%nrows} loop
+
+!! body]
+
+     return
   end subroutine csr_dns_d_t
 
   subroutine csr_dns_z_t(nrows, ncols, dns)
