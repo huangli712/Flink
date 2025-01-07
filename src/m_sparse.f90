@@ -94,6 +94,13 @@
      private :: get_csr_d_t
      private :: get_csr_z_t
 
+     ! CSR X VEC
+     private :: csr_mv_d ! real(dp) version
+     private :: csr_mv_z ! complex(dp) version
+     !
+     private :: csr_mv_d_t
+     private :: csr_mv_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================

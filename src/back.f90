@@ -1,6 +1,4 @@
-! CSR X VEC
-     private :: csr_mv_d ! real(dp) version
-     private :: csr_mv_z ! complex(dp) version
+
 
 ! CSR X CSR
      private :: csr_mm_d ! real(dp) version
