@@ -1130,29 +1130,29 @@
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_d(nrow, nmax, a, ja, ia, diag, b, jb, ib)
+  subroutine csr_md_d(nrows, nnz, a, ja, ia, diag, b, jb, ib)
      implicit none
 
 !! external arguments
      ! the row dimension of dense matrix
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays b and jb.
-     integer, intent(in)   :: nmax
+     integer, intent(in)   :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)   :: ia(nrow+1)
-     integer, intent(in)   :: ja(nmax)
-     real(dp), intent(in)  :: a(nmax)
+     integer, intent(in)   :: ia(nrows+1)
+     integer, intent(in)   :: ja(nnz)
+     real(dp), intent(in)  :: a(nnz)
 
      ! diagonal matrix stored as a vector diag
-     real(dp), intent(in)  :: diag(nrow)
+     real(dp), intent(in)  :: diag(nrows)
 
      ! b, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)  :: ib(nrow+1)
-     integer, intent(out)  :: jb(nmax)
-     real(dp), intent(out) :: b(nmax)
+     integer, intent(out)  :: ib(nrows+1)
+     integer, intent(out)  :: jb(nnz)
+     real(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -1171,21 +1171,21 @@
      jb = 0
 
      ! scale each element
-     do i=1,nrow
+     do i=1,nrows
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
              b(k) = a(k) * diag( ja(k) )
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do k=ia(1),ia(nrow+1)-1
+     do k=ia(1),ia(nrows+1)-1
          jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrow+1)-1} loop
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
@@ -1197,29 +1197,29 @@
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_z(nrow, nmax, sa, ja, ia, diag, sb, jb, ib)
+  subroutine csr_md_z(nrows, nnz, sa, ja, ia, diag, sb, jb, ib)
      implicit none
 
 !! external arguments
      ! the row dimension of dense matrix
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sb and jb.
-     integer, intent(in)      :: nmax
+     integer, intent(in)      :: nnz
 
      ! sa, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrow+1)
-     integer, intent(in)      :: ja(nmax)
-     complex(dp), intent(in)  :: sa(nmax)
+     integer, intent(in)      :: ia(nrows+1)
+     integer, intent(in)      :: ja(nnz)
+     complex(dp), intent(in)  :: sa(nnz)
 
      ! diagonal matrix stored as a vector diag
-     complex(dp), intent(in)  :: diag(nrow)
+     complex(dp), intent(in)  :: diag(nrows)
 
      ! sb, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)     :: ib(nrow+1)
-     integer, intent(out)     :: jb(nmax)
-     complex(dp), intent(out) :: sb(nmax)
+     integer, intent(out)     :: ib(nrows+1)
+     integer, intent(out)     :: jb(nnz)
+     complex(dp), intent(out) :: sb(nnz)
 
 !! local variables
      ! loop index
@@ -1238,21 +1238,21 @@
      jb = 0
 
      ! scale each element
-     do i=1,nrow
+     do i=1,nrows
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
              sb(k) = sa(k) * diag( ja(k) )
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do k=ia(1),ia(nrow+1)-1
+     do k=ia(1),ia(nrows+1)-1
          jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrow+1)-1} loop
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
@@ -1272,29 +1272,29 @@
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine csr_dm_d(nrow, nmax, diag, a, ja, ia, b, jb, ib)
+  subroutine csr_dm_d(nrows, nnz, diag, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
      ! the row dimension of dense matrix
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays b and jb.
-     integer, intent(in)   :: nmax
+     integer, intent(in)   :: nnz
 
      ! diagonal matrix stored as a vector diag
-     real(dp), intent(in)  :: diag(nrow)
+     real(dp), intent(in)  :: diag(nrows)
 
      ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)   :: ia(nrow+1)
-     integer, intent(in)   :: ja(nmax)
-     real(dp), intent(in)  :: a(nmax)
+     integer, intent(in)   :: ia(nrows+1)
+     integer, intent(in)   :: ja(nnz)
+     real(dp), intent(in)  :: a(nnz)
 
      ! b, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)  :: ib(nrow+1)
-     integer, intent(out)  :: jb(nmax)
-     real(dp), intent(out) :: b(nmax)
+     integer, intent(out)  :: ib(nrows+1)
+     integer, intent(out)  :: jb(nnz)
+     real(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -1313,21 +1313,21 @@
      jb = 0
 
      ! normalize each row
-     do i=1,nrow
+     do i=1,nrows
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
              b(k) = a(k) * diag(i)
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do k=ia(1),ia(nrow+1)-1
+     do k=ia(1),ia(nrows+1)-1
          jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrow+1)-1} loop
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
@@ -1339,29 +1339,29 @@
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine csr_dm_z(nrow, nmax, diag, sa, ja, ia, sb, jb, ib)
+  subroutine csr_dm_z(nrows, nnz, diag, sa, ja, ia, sb, jb, ib)
      implicit none
 
 !! external arguments
      ! the row dimension of dense matrix
-     integer, intent(in)      :: nrow
+     integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sb and jb.
-     integer, intent(in)      :: nmax
+     integer, intent(in)      :: nnz
 
      ! diagonal matrix stored as a vector diag
-     complex(dp), intent(in)  :: diag(nrow)
+     complex(dp), intent(in)  :: diag(nrows)
 
      ! sa, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrow+1)
-     integer, intent(in)      :: ja(nmax)
-     complex(dp), intent(in)  :: sa(nmax)
+     integer, intent(in)      :: ia(nrows+1)
+     integer, intent(in)      :: ja(nnz)
+     complex(dp), intent(in)  :: sa(nnz)
 
      ! sb, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)     :: ib(nrow+1)
-     integer, intent(out)     :: jb(nmax)
-     complex(dp), intent(out) :: sb(nmax)
+     integer, intent(out)     :: ib(nrows+1)
+     integer, intent(out)     :: jb(nnz)
+     complex(dp), intent(out) :: sb(nnz)
 
 !! local variables
      ! loop index
@@ -1380,21 +1380,21 @@
      jb = 0
 
      ! normalize each row
-     do i=1,nrow
+     do i=1,nrows
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
              sb(k) = sa(k) * diag(i)
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrow} loop
+     enddo ! over i={1,nrows} loop
 
-     do i=1,nrow+1
+     do i=1,nrows+1
          ib(i) = ia(i)
-     enddo ! over i={1,nrow+1} loop
+     enddo ! over i={1,nrows+1} loop
 
-     do k=ia(1),ia(nrow+1)-1
+     do k=ia(1),ia(nrows+1)-1
          jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrow+1)-1} loop
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
 
 !! body]
 
