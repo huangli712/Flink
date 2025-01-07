@@ -73,6 +73,13 @@
      private :: csr_dns_d_t
      private :: csr_dns_z_t
 
+     ! DNS -> CSR
+     private :: dns_csr_d ! real(dp) version
+     private :: dns_csr_z ! complex(dp) version
+     !
+     private :: dns_csr_d_t
+     private :: dns_csr_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
@@ -84,6 +91,14 @@
          module procedure csr_dns_d_t
          module procedure csr_dns_z_t
      end interface csr_dns
+
+     public :: dns_csr
+     interface dns_csr
+         module procedure dns_csr_d
+         module procedure dns_csr_z
+         module procedure dns_csr_d_t
+         module procedure dns_csr_z_t
+     end interface dns_csr
 
   contains ! encapsulated functionality
 
@@ -282,5 +297,130 @@
 
      return
   end subroutine csr_dns_z_t
+
+!!
+!! @sub dns_csr_d
+!!
+!! converts a densely stored matrix into a row orientied compactly
+!! sparse matrix.
+!!
+  subroutine dns_csr_d(nrows, ncols, nnz, dns, a, ja, ia)
+     implicit none
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)   :: nrow
+
+     ! column dimension of dense matrix
+     integer, intent(in)   :: ncol
+
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
+     integer, intent(in)   :: nmax
+
+     ! input densely stored matrix
+     real(dp), intent(in)  :: dns(nrow,ncol)
+
+     ! a, ja, ia, output matrix in compressed sparse row format
+     integer, intent(out)  :: ia(nrow+1)
+     integer, intent(out)  :: ja(nmax)
+     real(dp), intent(out) :: a(nmax)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
+
+!! [body
+
+     ! init sparse matrix
+     a = 0.0_dp
+     ia = 0
+     ja = 0
+
+     k = 1
+     ia(1) = 1
+     do i=1,nrow
+         do j=1,ncol
+             if ( dns(i,j) == 0.0_dp ) CYCLE
+             ja(k) = j
+             a(k) = dns(i,j)
+             k = k + 1
+             if ( k > nmax ) then
+                 write(mystd,'(a)') 'sparse: error in sp_format_dnscsr'
+                 STOP
+             endif ! back if ( k > nmax ) block
+         enddo ! over j={1,ncol} loop
+         ia(i+1) = k
+     enddo ! over i={1,nrow} loop
+
+!! body]
+
+     return
+  end subroutine sp_format_dnscsr
+
+!!
+!! @sub sp_format_dnscsr_z
+!!
+!! converts a densely stored matrix into a row orientied compactly
+!! sparse matrix.
+!!
+  subroutine sp_format_dnscsr_z(nrow, ncol, nmax, dns, sa, ja, ia)
+     implicit none
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrow
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncol
+
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays sa and ja.
+     integer, intent(in)      :: nmax
+
+     ! input densely stored matrix
+     complex(dp), intent(in)  :: dns(nrow,ncol)
+
+     ! sa, ja, ia, output matrix in compressed sparse row format
+     integer, intent(out)     :: ia(nrow+1)
+     integer, intent(out)     :: ja(nmax)
+     complex(dp), intent(out) :: sa(nmax)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
+
+!! [body
+
+     ! init sparse matrix
+     sa = dcmplx(0.0_dp, 0.0_dp)
+     ia = 0
+     ja = 0
+
+     k = 1
+     ia(1) = 1
+     do i=1,nrow
+         do j=1,ncol
+             if ( real( dns(i,j) ) == 0.0_dp .and. &
+                & aimag( dns(i,j) ) == 0.0_dp ) CYCLE
+             ja(k) = j
+             sa(k) = dns(i,j)
+             k = k + 1
+             if ( k > nmax ) then
+                 write(mystd,'(a)') 'sparse: error in sp_format_dnscsr_z'
+                 STOP
+             endif ! back if ( k > nmax ) block
+         enddo ! over j={1,ncol} loop
+         ia(i+1) = k
+     enddo ! over i={1,nrow} loop
+
+!! body]
+
+     return
+  end subroutine sp_format_dnscsr_z
 
   end module sparse
