@@ -167,6 +167,12 @@
          module procedure csr_mm_z_t
      end interface csr_mm
 
+     public :: csr_md
+     interface csr_md
+         module procedure csr_md_d
+         module procedure csr_md_z
+     end interface sp_csr_mm_dia
+
   contains ! encapsulated functionality
 
 !!
