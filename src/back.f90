@@ -1,4 +1,3 @@
-
 ! CSR -> extractor
      private :: get_csr_d ! real(dp) version
      private :: get_csr_z ! complex(dp) version
@@ -18,12 +17,6 @@
 ! DIA X CSR
      private :: csr_dm_d ! real(dp) version
      private :: csr_dm_z ! complex(dp) version
-
-     public :: sp_csr_cp_csr
-     interface sp_csr_cp_csr
-         module procedure sp_matrix_copyer
-         module procedure sp_matrix_copyer_z
-     end interface sp_csr_cp_csr
 
      public :: sp_csr_cp_elm
      interface sp_csr_cp_elm

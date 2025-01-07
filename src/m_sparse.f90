@@ -107,6 +107,14 @@
          module procedure dns_csr_z_t
      end interface dns_csr
 
+     public :: csr_csr
+     interface csr_csr
+         module procedure csr_csr_d
+         module procedure csr_csr_z
+         module procedure csr_csr_d_t
+         module procedure csr_csr_z_t
+     end interface sp_csr_cp_csr
+
   contains ! encapsulated functionality
 
 !!
