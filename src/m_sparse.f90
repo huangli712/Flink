@@ -423,4 +423,11 @@
      return
   end subroutine dns_csr_z
 
+  subroutine dns_csr_d_t()
+  end subroutine dns_csr_d_t
+
+  subroutine dns_csr_z_t()
+  end subroutine dns_csr_z_t
+
+
   end module sparse
