@@ -638,7 +638,7 @@
   end function get_csr_d
 
 !!
-!! @fun sp_matrix_getter_z
+!! @fun get_csr_z
 !!
 !! this function returns the element sa(i,j) of matrix sa.
 !!
@@ -707,11 +707,11 @@
   end function get_csr_z_t
 
 !!
-!! @sub sp_matmul_amuvec
+!! @sub csr_mv_d
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine sp_matmul_amuvec(nrow, ncol, nmax, a, ja, ia, x, y)
+  subroutine csr_mv_d(nrow, ncol, nmax, a, ja, ia, x, y)
      implicit none
 
 !! external arguments
@@ -756,7 +756,7 @@
 !! body]
 
      return
-  end subroutine sp_matmul_amuvec
+  end subroutine csr_mv_d
 
 !!
 !! @sub sp_matmul_amuvec_z
