@@ -137,6 +137,14 @@
          module procedure get_csr_z_t
      end interface get_csr
 
+     public :: csr_mv
+     interface csr_mv
+         module procedure csr_mv_d
+         module procedure csr_mv_z
+         module procedure csr_mv_d_t
+         module procedure csr_mv_z_t
+     end interface sp_csr_mv_vec
+
   contains ! encapsulated functionality
 
 !!
