@@ -309,14 +309,14 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrow
+     integer, intent(in)   :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncol
+     integer, intent(in)   :: ncols
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays a and ja.
-     integer, intent(in)   :: nmax
+     integer, intent(in)   :: nnz
 
      ! input densely stored matrix
      real(dp), intent(in)  :: dns(nrow,ncol)
