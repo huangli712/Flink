@@ -173,7 +173,7 @@
          module procedure csr_md_z
          module procedure csr_md_d_t
          module procedure csr_md_z_t
-     end interface sp_csr_mm_dia
+     end interface csr_md
 
   contains ! encapsulated functionality
 
