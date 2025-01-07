@@ -115,6 +115,13 @@
      private :: csr_md_d_t
      private :: csr_md_z_t
 
+     ! DIA X CSR
+     private :: csr_dm_d ! real(dp) version
+     private :: csr_dm_z ! complex(dp) version
+     !
+     private :: csr_dm_d_t
+     private :: csr_dm_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
@@ -174,6 +181,12 @@
          module procedure csr_md_d_t
          module procedure csr_md_z_t
      end interface csr_md
+
+     public :: csr_dm
+     interface csr_dm
+         module procedure csr_dm_d
+         module procedure csr_dm_z
+     end interface csr_dm
 
   contains ! encapsulated functionality
 
