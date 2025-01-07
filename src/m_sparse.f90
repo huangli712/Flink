@@ -531,7 +531,9 @@
   subroutine dns_csr_d_t()
   end subroutine dns_csr_d_t
 
-  subroutine dns_csr_z_t()
+  subroutine dns_csr_z_t(i)
+     integer :: i
+     i = 0
   end subroutine dns_csr_z_t
 
 !!
@@ -635,7 +637,9 @@
   subroutine csr_csr_d_t()
   end subroutine csr_csr_d_t
 
-  subroutine csr_csr_z_t()
+  subroutine csr_csr_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_csr_z_t
 
 !!
@@ -762,20 +766,31 @@
   end function get_csr_d_t
 
   complex(dp) &
-  function get_csr_z_t() result(elm)
+  function get_csr_z_t(i) result(elm)
+     integer :: i
+     i = 0
      elm = dcmplx(0.0_dp, 0.0_dp)
   end function get_csr_z_t
 
   subroutine set_csr_d()
   end subroutine set_csr_d
 
-  subroutine set_csr_z()
+  subroutine set_csr_z(i)
+     integer :: i
+     i = 0
   end subroutine set_csr_z
 
-  subroutine set_csr_d_t()
+  subroutine set_csr_d_t(i, j)
+     integer :: i, j
+     i = 0
+     j = 0
   end subroutine set_csr_d_t
 
-  subroutine set_csr_z_t()
+  subroutine set_csr_z_t(i, j, k)
+     integer :: i, j, k
+     i = 0
+     j = 0
+     k = 0
   end subroutine set_csr_z_t
 
 !!
@@ -885,7 +900,9 @@
   subroutine csr_mv_d_t()
   end subroutine csr_mv_d_t
 
-  subroutine csr_mv_z_t()
+  subroutine csr_mv_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_mv_z_t
 
 !!
@@ -1103,7 +1120,9 @@
   subroutine csr_mm_d_t()
   end subroutine csr_mm_d_t
 
-  subroutine csr_mm_z_t()
+  subroutine csr_mm_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_mm_z_t
 
 !!
@@ -1243,7 +1262,9 @@
   subroutine csr_md_d_t()
   end subroutine csr_md_d_t
 
-  subroutine csr_md_z_t()
+  subroutine csr_md_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_md_z_t
 
 !!
@@ -1383,7 +1404,9 @@
   subroutine csr_dm_d_t()
   end subroutine csr_dm_d_t
 
-  subroutine csr_dm_z_t()
+  subroutine csr_dm_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_dm_z_t
 
   end module sparse
