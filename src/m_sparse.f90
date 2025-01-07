@@ -564,12 +564,12 @@
   end subroutine csr_csr_z_t
 
 !!
-!! @fun sp_matrix_getter
+!! @fun get_csr_d
 !!
 !! this function returns the element a(i,j) of matrix a.
 !!
   real(dp) &
-  function sp_matrix_getter(i, j, nrow, nmax, a, ja, ia) result(elm)
+  function get_csr_d(i, j, nrow, nmax, a, ja, ia) result(elm)
      implicit none
 
 !! external arguments
@@ -620,7 +620,7 @@
 !! body]
 
      return
-  end function sp_matrix_getter
+  end function get_crs_d
 
 !!
 !! @fun sp_matrix_getter_z
