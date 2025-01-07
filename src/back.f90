@@ -1,6 +1,4 @@
-! CSR -> extractor
-     private :: get_csr_d ! real(dp) version
-     private :: get_csr_z ! complex(dp) version
+
 
 ! CSR X VEC
      private :: csr_mv_d ! real(dp) version

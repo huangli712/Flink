@@ -87,6 +87,13 @@
      private :: csr_csr_d_t
      private :: csr_csr_z_t
 
+     ! CSR -> getter
+     private :: get_csr_d ! real(dp) version
+     private :: get_csr_z ! complex(dp) version
+     !
+     private :: get_csr_d_t
+     private :: get_csr_z_t
+
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
