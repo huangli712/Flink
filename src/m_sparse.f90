@@ -445,11 +445,11 @@
   end subroutine dns_csr_z_t
 
 !!
-!! @sub sp_matrix_copyer
+!! @sub csr_csr_d
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine sp_matrix_copyer(nrow, nmax, a, ja, ia, b, jb, ib)
+  subroutine csr_csr_d(nrow, nmax, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -491,14 +491,14 @@
 !! body]
 
      return
-  end subroutine sp_matrix_copyer
+  end subroutine csr_csr_d
 
 !!
-!! @sub sp_matrix_copyer_z
+!! @sub csr_csr_z
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine sp_matrix_copyer_z(nrow, nmax, sa, ja, ia, sb, jb, ib)
+  subroutine csr_csr_z(nrow, nmax, sa, ja, ia, sb, jb, ib)
      implicit none
 
 !! external arguments
@@ -540,6 +540,6 @@
 !! body]
 
      return
-  end subroutine sp_matrix_copyer_z
+  end subroutine csr_csr_z
 
   end module sparse
