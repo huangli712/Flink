@@ -128,7 +128,7 @@
          module procedure get_csr_z
          module procedure get_csr_d_t
          module procedure get_csr_z_t
-     end interface sp_csr_cp_elm
+     end interface get_csr
 
   contains ! encapsulated functionality
 
@@ -378,7 +378,7 @@
              a(k) = dns(i,j)
              k = k + 1
              if ( k > nnz ) then
-                 write(mystd,'(a)') 'sparse: error in dns_crs_d'
+                 write(mystd,'(a)') 'sparse: error in dns_csr_d'
                  STOP
              endif ! back if ( k > nnz ) block
          enddo ! over j={1,ncols} loop
@@ -620,7 +620,7 @@
 !! body]
 
      return
-  end function get_crs_d
+  end function get_csr_d
 
 !!
 !! @fun sp_matrix_getter_z
@@ -628,7 +628,7 @@
 !! this function returns the element sa(i,j) of matrix sa.
 !!
   complex(dp) &
-  function sp_matrix_getter_z(i, j, nrow, nmax, sa, ja, ia) result(elm)
+  function get_csr_z(i, j, nrow, nmax, sa, ja, ia) result(elm)
      implicit none
 
 !! external arguments
@@ -679,6 +679,6 @@
 !! body]
 
      return
-  end function sp_matrix_getter_z
+  end function get_csr_z
 
   end module sparse
