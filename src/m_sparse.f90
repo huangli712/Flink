@@ -569,7 +569,7 @@
 !! this function returns the element a(i,j) of matrix a.
 !!
   real(dp) &
-  function get_csr_d(i, j, nrow, nmax, a, ja, ia) result(elm)
+  function get_csr_d(i, j, nrows, nnz, a, ja, ia) result(elm)
      implicit none
 
 !! external arguments
@@ -580,16 +580,16 @@
      integer, intent(in)  :: j
 
      ! row dimension of dense matrix
-     integer, intent(in)  :: nrow
+     integer, intent(in)  :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays a and ja.
-     integer, intent(in)  :: nmax
+     integer, intent(in)  :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)  :: ia(nrow+1)
-     integer, intent(in)  :: ja(nmax)
-     real(dp), intent(in) :: a(nmax)
+     integer, intent(in)  :: ia(nrows+1)
+     integer, intent(in)  :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
 
 !! local variables
      ! loop index
@@ -628,7 +628,7 @@
 !! this function returns the element sa(i,j) of matrix sa.
 !!
   complex(dp) &
-  function get_csr_z(i, j, nrow, nmax, sa, ja, ia) result(elm)
+  function get_csr_z(i, j, nrows, nnz, sa, ja, ia) result(elm)
      implicit none
 
 !! external arguments
@@ -639,16 +639,16 @@
      integer, intent(in)     :: j
 
      ! row dimension of dense matrix
-     integer, intent(in)     :: nrow
+     integer, intent(in)     :: nrows
 
      ! maximum number of nonzero elements allowed.
      ! this should be set to be the lengths of the arrays sa and ja.
-     integer, intent(in)     :: nmax
+     integer, intent(in)     :: nnz
 
      ! sa, ja, ia, input matrix in compressed sparse row format
-     integer, intent(in)     :: ia(nrow+1)
-     integer, intent(in)     :: ja(nmax)
-     complex(dp), intent(in) :: sa(nmax)
+     integer, intent(in)     :: ia(nrows+1)
+     integer, intent(in)     :: ja(nnz)
+     complex(dp), intent(in) :: sa(nnz)
 
 !! local variables
      ! loop index
