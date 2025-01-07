@@ -186,6 +186,8 @@
      interface csr_dm
          module procedure csr_dm_d
          module procedure csr_dm_z
+         module procedure csr_dm_d_t
+         module procedure csr_dm_z_t
      end interface csr_dm
 
   contains ! encapsulated functionality
