@@ -1381,13 +1381,46 @@
      return
   end subroutine csr_csr_z
 
-  subroutine csr_csr_d_t()
+!!
+!! @sub csr_csr_d_t
+!!
+!! copy data between two row orientied compactly sparse matrices.
+!!
+  subroutine csr_csr_d_t(csra, csrb)
+     implicit none
+
+!! external arguments
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+!! body]
+
+     return
   end subroutine csr_csr_d_t
 
-  subroutine csr_csr_z_t(i)
-     integer :: i
-     i = 0
+!!
+!! @sub csr_csr_z_t
+!!
+!! copy data between two row orientied compactly sparse matrices.
+!!
+  subroutine csr_csr_z_t()
   end subroutine csr_csr_z_t
+
+
+
+
+
+
+
+
+
+
+
+
 
 !!
 !! @fun get_csr_d
