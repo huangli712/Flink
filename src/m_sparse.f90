@@ -258,6 +258,15 @@
 !! allocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_alloc_d()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_alloc_d
 
 !!
@@ -265,9 +274,16 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_z(i)
-     integer :: i
-     i = 0
+  subroutine csr_alloc_z()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_alloc_z
 
 !!
@@ -275,10 +291,16 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_d_t(i, j)
-     integer :: i, j
-     i = 0
-     j = 0
+  subroutine csr_alloc_d_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_alloc_d_t
 
 !!
@@ -286,11 +308,16 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_z_t(i, j, k)
-     integer :: i, j, k
-     i = 0
-     j = 0
-     k = 0
+  subroutine csr_alloc_z_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_alloc_z_t
 
 !!
