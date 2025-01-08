@@ -255,7 +255,9 @@
   subroutine csr_alloc_d()
   end subroutine csr_alloc_d
 
-  subroutine csr_alloc_z()
+  subroutine csr_alloc_z(i)
+     integer :: i
+     i = 0
   end subroutine csr_alloc_z
 
   subroutine csr_alloc_d_t()
@@ -267,7 +269,9 @@
   subroutine csr_free_d()
   end subroutine csr_free_d
 
-  subroutine csr_free_z()
+  subroutine csr_free_z(i)
+     integer :: i
+     i = 0
   end subroutine csr_free_z
 
   subroutine csr_free_d_t()
@@ -279,7 +283,9 @@
   subroutine csr_print_d()
   end subroutine csr_print_d
 
-  subroutine csr_print_z()
+  subroutine csr_print_z(i)
+     integer :: i
+     i = 0
   end subroutine csr_print_z
 
   subroutine csr_print_d_t()
