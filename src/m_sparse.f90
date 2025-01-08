@@ -654,7 +654,7 @@
      write(mystd,'(a)') 'ia:'
      do i=1,nrows+1
          write(mystd,'(2i4)') i, ia(i)
-     enddo
+     enddo ! over i={1,nrows+1} loop
 
 !! body]
 
