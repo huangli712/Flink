@@ -699,6 +699,26 @@
      integer :: i
 
 !! [body
+
+     write(mystd,'(a,i4)') 'number of rows: ', nrows
+     write(mystd,'(a,i4)') 'number of columns: ', ncols
+     write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', nnz
+     !
+     write(mystd,'(a)') 'ia:'
+     do i=1,nrows+1
+         write(mystd,'(2i4)') i, ia(i)
+     enddo ! over i={1,nrows+1} loop
+     !
+     write(mystd,'(a)') 'ja:'
+     do i=1,nnz
+         write(mystd,'(2i4)') i, ja(i)
+     enddo ! over i={1,nnz} loop
+     !
+     write(mystd,'(a)') 'a:'
+     do i=1,nnz
+         write(mystd,'(i4,2f16.8)') i, a(i)
+     enddo ! over i={1,nnz} loop
+
 !! body]
 
      return
@@ -721,6 +741,26 @@
      integer :: i
 
 !! [body
+
+     write(mystd,'(a,i4)') 'number of rows: ', csr%nrows
+     write(mystd,'(a,i4)') 'number of columns: ', csr%ncols
+     write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', csr%nnz
+     !
+     write(mystd,'(a)') 'ia:'
+     do i=1,csr%nrows+1
+         write(mystd,'(2i4)') i, csr%rowptr(i)
+     enddo ! over i={1,csr%nrows+1} loop
+     !
+     write(mystd,'(a)') 'ja:'
+     do i=1,csr%nnz
+         write(mystd,'(2i4)') i, csr%colptr(i)
+     enddo ! over i={1,csr%nnz} loop
+     !
+     write(mystd,'(a)') 'a:'
+     do i=1,csr%nnz
+         write(mystd,'(i4,f16.8)') i, csr%V(i)
+     enddo ! over i={1,csr%nnz} loop
+
 !! body]
 
      return
@@ -743,6 +783,26 @@
      integer :: i
 
 !! [body
+
+     write(mystd,'(a,i4)') 'number of rows: ', csr%nrows
+     write(mystd,'(a,i4)') 'number of columns: ', csr%ncols
+     write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', csr%nnz
+     !
+     write(mystd,'(a)') 'ia:'
+     do i=1,csr%nrows+1
+         write(mystd,'(2i4)') i, csr%rowptr(i)
+     enddo ! over i={1,csr%nrows+1} loop
+     !
+     write(mystd,'(a)') 'ja:'
+     do i=1,csr%nnz
+         write(mystd,'(2i4)') i, csr%colptr(i)
+     enddo ! over i={1,csr%nnz} loop
+     !
+     write(mystd,'(a)') 'a:'
+     do i=1,csr%nnz
+         write(mystd,'(i4,2f16.8)') i, csr%V(i)
+     enddo ! over i={1,csr%nnz} loop
+
 !! body]
 
      return
