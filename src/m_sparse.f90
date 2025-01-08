@@ -1,4 +1,3 @@
-!!!-----------------------------------------------------------------------
 !!! project : flink @ sakura
 !!! program : sparse
 !!! source  : m_sparse.f90
@@ -287,7 +286,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -297,7 +296,7 @@
      allocate(a(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_d'
+         write(mystd,'(a)') 'sparse: can not allocate enough memory in csr_alloc_d'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -342,7 +341,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -352,7 +351,7 @@
      allocate(a(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_z'
+         write(mystd,'(a)') 'sparse: can not allocate enough memory in csr_alloc_z'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -395,7 +394,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -405,7 +404,7 @@
      allocate(csr%V(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_d_t'
+         write(mystd,'(a)') 'sparse: can not allocate enough memory in csr_alloc_d_t'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -452,7 +451,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -462,7 +461,7 @@
      allocate(csr%V(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_z_t'
+         write(mystd,'(a)') 'sparse: can not allocate enough memory in csr_alloc_z_t'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -649,7 +648,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -708,7 +707,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -756,7 +755,7 @@
 
      ! check dimensions
      if ( csr%nrows <= 0 .or. csr%ncols <= 0 .or. csr%nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -804,7 +803,7 @@
 
      ! check dimensions
      if ( csr%nrows <= 0 .or. csr%ncols <= 0 .or. csr%nnz <= 0 ) then
-         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -854,7 +853,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(in)   :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
@@ -908,7 +907,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(in)      :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
      complex(dp), intent(in)  :: a(nnz)
@@ -1029,6 +1028,10 @@
 
      return
   end subroutine csr_dns_z_t
+
+!!========================================================================
+!!>>> convert dense matrix into sparse matrix                          <<<
+!!========================================================================
 
 !!
 !! @sub dns_csr_d
