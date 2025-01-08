@@ -650,6 +650,11 @@
      write(mystd,'(a,i4)') 'number of rows: ', nrows
      write(mystd,'(a,i4)') 'number of columns: ', ncols
      write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', nnz
+     !
+     write(mystd,'(a)') 'ia:'
+     do i=1,nrows+1
+         write(mystd,'(2i4)') i, ia(i)
+     enddo
 
 !! body]
 
