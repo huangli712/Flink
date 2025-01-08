@@ -1162,8 +1162,10 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_d_t()
+  subroutine dns_csr_d_t(nrows, ncols, nnz, dns, csr)
      implicit none
+
+!! external arguments
 
      return
   end subroutine dns_csr_d_t
