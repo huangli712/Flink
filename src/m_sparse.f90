@@ -493,6 +493,15 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(inout) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(inout) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(inout) :: nnz
+
      ! ia, ja, a input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
@@ -503,6 +512,10 @@
      if ( allocated(ia) ) deallocate(ia)
      if ( allocated(ja) ) deallocate(ja)
      if ( allocated( a) ) deallocate( a)
+     !
+     nrows = 0
+     ncols = 0
+     nnz   = 0
 
 !! body]
 
@@ -518,6 +531,15 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(inout) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(inout) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(inout) :: nnz
+
      ! ia, ja, a input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
@@ -528,6 +550,10 @@
      if ( allocated(ia) ) deallocate(ia)
      if ( allocated(ja) ) deallocate(ja)
      if ( allocated( a) ) deallocate( a)
+     !
+     nrows = 0
+     ncols = 0
+     nnz   = 0
 
 !! body]
 
