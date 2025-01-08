@@ -485,9 +485,9 @@
 !!========================================================================
 
 !!
-!! @sub
+!! @sub csr_free_d
 !!
-!!
+!! deallocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_free_d()
      implicit none
@@ -502,9 +502,9 @@
   end subroutine csr_free_d
 
 !!
-!! @sub
+!! @sub csr_free_z
 !!
-!!
+!! deallocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_free_z()
      implicit none
@@ -519,9 +519,9 @@
   end subroutine csr_free_z
 
 !!
-!! @sub
+!! @sub csr_free_d_t
 !!
-!!
+!! deallocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_free_d_t()
      implicit none
@@ -536,9 +536,9 @@
   end subroutine csr_free_d_t
 
 !!
-!! @sub
+!! @sub csr_free_z_t
 !!
-!!
+!! deallocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_free_z_t()
      implicit none
@@ -551,6 +551,22 @@
 
      return
   end subroutine csr_free_z_t
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 !!
 !! @sub
