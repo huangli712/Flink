@@ -489,7 +489,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_d(ia, ja, a)
+  subroutine csr_free_d(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -514,7 +514,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_z(ia, ja, a)
+  subroutine csr_free_z(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -524,6 +524,11 @@
      complex(dp), allocatable, intent(inout) :: a(:)
 
 !! [body
+
+     if ( allocated(ia) ) deallocate(ia)
+     if ( allocated(ja) ) deallocate(ja)
+     if ( allocated( a) ) deallocate( a)
+
 !! body]
 
      return
