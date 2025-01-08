@@ -689,6 +689,9 @@
      implicit none
 
 !! external arguments
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csr
+
 !! local variables
 
 !! [body
@@ -706,6 +709,9 @@
      implicit none
 
 !! external arguments
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csr
+
 !! local variables
 
 !! [body
