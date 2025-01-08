@@ -647,6 +647,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      write(mystd,'(a,i4)') 'number of rows: ', nrows
      write(mystd,'(a,i4)') 'number of columns: ', ncols
      write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', nnz
@@ -700,6 +706,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      write(mystd,'(a,i4)') 'number of rows: ', nrows
      write(mystd,'(a,i4)') 'number of columns: ', ncols
      write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', nnz
@@ -742,6 +754,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( csr%nrows <= 0 .or. csr%ncols <= 0 .or. csr%nnz <= 0 ) then
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      write(mystd,'(a,i4)') 'number of rows: ', csr%nrows
      write(mystd,'(a,i4)') 'number of columns: ', csr%ncols
      write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', csr%nnz
@@ -783,6 +801,12 @@
      integer :: i
 
 !! [body
+
+     ! check dimensions
+     if ( csr%nrows <= 0 .or. csr%ncols <= 0 .or. csr%nnz <= 0 ) then
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      write(mystd,'(a,i4)') 'number of rows: ', csr%nrows
      write(mystd,'(a,i4)') 'number of columns: ', csr%ncols
