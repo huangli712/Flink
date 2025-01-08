@@ -952,7 +952,7 @@
      implicit none
 
 !! external arguments
-     ! sparse matrix in CSR format
+     ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! array where to store dense matrix
@@ -995,7 +995,7 @@
      implicit none
 
 !! external arguments
-     ! sparse matrix in CSR format
+     ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
      ! array where to store dense matrix
@@ -1166,6 +1166,20 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)   :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)   :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(in)   :: nnz
+
+     ! input densely stored matrix
+     real(dp), intent(in)  :: dns(nrows,ncols)
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csr
 
      return
   end subroutine dns_csr_d_t
