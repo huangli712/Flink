@@ -287,7 +287,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(*,*) 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -297,7 +297,7 @@
      allocate(a(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(*,*) 'can not allocate enough memory in csr_alloc_d'
+         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_d'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -342,7 +342,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(*,*) 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -352,7 +352,7 @@
      allocate(a(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(*,*) 'can not allocate enough memory in csr_alloc_z'
+         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_z'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -395,7 +395,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(*,*) 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -405,7 +405,7 @@
      allocate(csr%V(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(*,*) 'can not allocate enough memory in csr_alloc_d_t'
+         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_d_t'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -452,7 +452,7 @@
 
      ! check dimensions
      if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
-         write(*,*) 'wrong dimensions for sparse matrix'
+         write(mystd,'(a)') 'wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
@@ -462,7 +462,7 @@
      allocate(csr%V(nnz), stat = istat)
      !
      if ( istat /= 0 ) then
-         write(*,*) 'can not allocate enough memory in csr_alloc_z_t'
+         write(mystd,'(a)') 'can not allocate enough memory in csr_alloc_z_t'
          STOP
      endif ! back if ( istat /= 0 ) block
 
@@ -646,6 +646,11 @@
      integer :: i
 
 !! [body
+
+     write(mystd,'(a,i4)') 'number of rows: ', nrows
+     write(mystd,'(a,i4)') 'number of columns: ', ncols
+     write(mystd,'(a,i4)') 'maximum number of nonzero elements: ', nnz
+
 !! body]
 
      return
