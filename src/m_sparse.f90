@@ -286,6 +286,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(*,*) 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! allocate memory
      allocate(ia(nrows+1), stat = istat)
      allocate(ja(nnz), stat = istat)
@@ -331,8 +337,32 @@
      complex(dp), allocatable, intent(inout) :: a(:)
 
 !! local variables
+     ! status flag
+     integer :: istat
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(*,*) 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! allocate memory
+     allocate(ia(nrows+1), stat = istat)
+     allocate(ja(nnz), stat = istat)
+     allocate(a(nnz), stat = istat)
+     !
+     if ( istat /= 0 ) then
+         write(*,*) 'can not allocate enough memory in csr_alloc_z'
+         STOP
+     endif ! back if ( istat /= 0 ) block
+
+     ! initialize them
+     ia = 0
+     ja = 0
+     a = dcmplx(0.0_dp, 0.0_dp)
+
 !! body]
 
      return
