@@ -498,9 +498,12 @@
      integer, allocatable, intent(inout) :: ja(:)
      real(dp), allocatable, intent(inout) :: a(:)
 
-!! local variables
-
 !! [body
+
+     if ( allocated(ia) ) deallocate(ia)
+     if ( allocated(ja) ) deallocate(ja)
+     if ( allocated( a) ) deallocate( a)
+
 !! body]
 
      return
