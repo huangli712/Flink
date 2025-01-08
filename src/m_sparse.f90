@@ -1248,6 +1248,34 @@
 
 !! [body
 
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix
+     csr%V = dcmplx(0.0_dp, 0.0_dp)
+     csr%rowptr = 0
+     csr%colptr = 0
+
+     k = 1
+     csr%rowptr(1) = 1
+     do i=1,nrows
+         do j=1,ncols
+             if ( real( dns(i,j) ) == 0.0_dp .and. &
+                & aimag( dns(i,j) ) == 0.0_dp ) CYCLE
+             csr%colptr(k) = j
+             csr%V(k) = dns(i,j)
+             k = k + 1
+             if ( k > csr%nnz ) then
+                 write(mystd,'(a)') 'sparse: error in dns_csr_z_t'
+                 STOP
+             endif ! back if ( k > csr%nnz ) block
+         enddo ! over j={1,ncols} loop
+         csr%rowptr(i+1) = k
+     enddo ! over i={1,nrows} loop
+
 !! body]
 
      return
