@@ -636,6 +636,11 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(in) :: nnz
 
+     ! ia, ja, a, input matrix in compressed sparse row format
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
+
 !! local variables
 
 !! [body
