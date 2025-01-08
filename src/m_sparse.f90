@@ -655,6 +655,16 @@
      do i=1,nrows+1
          write(mystd,'(2i4)') i, ia(i)
      enddo ! over i={1,nrows+1} loop
+     !
+     write(mystd,'(a)') 'ja:'
+     do i=1,nnz
+         write(mystd,'(2i4)') i, ja(i)
+     enddo ! over i={1,nnz} loop
+     !
+     write(mystd,'(a)') 'a:'
+     do i=1,nnz
+         write(mystd,'(i4,f16.8)') i, a(i)
+     enddo ! over i={1,nnz} loop
 
 !! body]
 
