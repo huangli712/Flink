@@ -489,7 +489,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_d()
+  subroutine csr_free_d(nrows, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -506,7 +506,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_z()
+  subroutine csr_free_z(nrows, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -523,7 +523,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_d_t()
+  subroutine csr_free_d_t(csr)
      implicit none
 
 !! external arguments
@@ -540,7 +540,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_z_t()
+  subroutine csr_free_z_t(csr)
      implicit none
 
 !! external arguments
