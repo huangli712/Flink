@@ -577,6 +577,10 @@
      if ( allocated(csr%rowptr) ) deallocate(csr%rowptr)
      if ( allocated(csr%colptr) ) deallocate(csr%colptr)
      if ( allocated(csr%V     ) ) deallocate(csr%V     )
+     !
+     csr%nrows = 0
+     csr%ncols = 0
+     csr%nnz   = 0
 
 !! body]
 
