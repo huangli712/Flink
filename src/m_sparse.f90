@@ -383,7 +383,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! local variables
@@ -440,7 +440,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! local variables
@@ -568,7 +568,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! [body
@@ -595,7 +595,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! [body
@@ -1175,7 +1175,7 @@
      ! input densely stored matrix
      real(dp), intent(in) :: dns(nrows,ncols)
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! local variables
@@ -1237,7 +1237,7 @@
      ! input densely stored matrix
      complex(dp), intent(in) :: dns(nrows,ncols)
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, a input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! local variables
@@ -1390,6 +1390,11 @@
      implicit none
 
 !! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csra
+
+     ! csrb, a input/output matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csrb
 
 !! local variables
      ! loop index
