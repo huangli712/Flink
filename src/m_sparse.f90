@@ -642,6 +642,8 @@
      real(dp), intent(in) :: a(nnz)
 
 !! local variables
+     ! loop index
+     integer :: i
 
 !! [body
 !! body]
@@ -673,6 +675,8 @@
      complex(dp), intent(in) :: a(nnz)
 
 !! local variables
+     ! loop index
+     integer :: i
 
 !! [body
 !! body]
@@ -693,6 +697,8 @@
      type (csr_d), intent(in) :: csr
 
 !! local variables
+     ! loop index
+     integer :: i
 
 !! [body
 !! body]
@@ -713,6 +719,8 @@
      type (csr_z), intent(in) :: csr
 
 !! local variables
+     ! loop index
+     integer :: i
 
 !! [body
 !! body]
