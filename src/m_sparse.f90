@@ -373,11 +373,26 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_d_t()
+  subroutine csr_alloc_d_t(nrows, ncols, nnz, csr)
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
+     integer, intent(in) :: nnz
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csr
+
 !! local variables
+     ! status flag
+     integer :: istat
 
 !! [body
 !! body]
