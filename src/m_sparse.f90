@@ -1348,12 +1348,12 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
      complex(dp), intent(in)  :: a(nnz)
 
-     ! b, jb, ib, output matrix in compressed sparse row format
+     ! ib, jb, b, input matrix in compressed sparse row format
      integer, intent(out)     :: ib(nrows+1)
      integer, intent(out)     :: jb(nnz)
      complex(dp), intent(out) :: b(nnz)
