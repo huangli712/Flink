@@ -1402,6 +1402,26 @@
 
 !! [body
 
+     ! check dimensions
+     if ( csra%nrows /= csrb%nrows .or. &
+          csra%ncols /= csrb%ncols .or. &
+          csra%nnz   /= csrb%nnz ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     do i=1,nrows+1
+         ib(i) = ia(i)
+     enddo ! over i={1,nrows+1} loop
+
+     do i=ia(1),ia(nrows+1)-1
+         jb(i) = ja(i)
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
+
+     do i=ia(1),ia(nrows+1)-1
+         b(i) = a(i)
+     enddo ! over i={ia(1),ia(nrows+1)-1} loop
+
 !! body]
 
      return
