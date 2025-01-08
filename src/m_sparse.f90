@@ -1162,7 +1162,7 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_d_t(nrows, ncols, nnz, dns, csr)
+  subroutine dns_csr_d_t(nrows, ncols, dns, csr)
      implicit none
 
 !! external arguments
@@ -1171,9 +1171,6 @@
 
      ! column dimension of dense matrix
      integer, intent(in)   :: ncols
-
-     ! maximum number of nonzero elements allowed.
-     integer, intent(in)   :: nnz
 
      ! input densely stored matrix
      real(dp), intent(in)  :: dns(nrows,ncols)
@@ -1188,6 +1185,33 @@
      integer :: k
 
 !! [body
+
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix
+     csr%V = 0.0_dp
+     csr%rowptr = 0
+     csr%colptr = 0
+
+     k = 1
+     csr%rowptr(1) = 1
+     do i=1,nrows
+         do j=1,ncols
+             if ( dns(i,j) == 0.0_dp ) CYCLE
+             csr%colptr(k) = j
+             csr%V(k) = dns(i,j)
+             k = k + 1
+             if ( k > csr%nnz ) then
+                 write(mystd,'(a)') 'sparse: error in dns_csr_d_t'
+                 STOP
+             endif ! back if ( k > csr%nnz ) block
+         enddo ! over j={1,ncols} loop
+         csr%rowptr(i+1) = k
+     enddo ! over i={1,nrows} loop
 
 !! body]
 
