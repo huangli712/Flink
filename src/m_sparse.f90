@@ -1055,7 +1055,7 @@
      ! input densely stored matrix
      real(dp), intent(in)  :: dns(nrows,ncols)
 
-     ! a, ja, ia, output matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(out)  :: ia(nrows+1)
      integer, intent(out)  :: ja(nnz)
      real(dp), intent(out) :: a(nnz)
@@ -1116,7 +1116,7 @@
      ! input densely stored matrix
      complex(dp), intent(in)  :: dns(nrows,ncols)
 
-     ! a, ja, ia, output matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(out)     :: ia(nrows+1)
      integer, intent(out)     :: ja(nnz)
      complex(dp), intent(out) :: a(nnz)
@@ -1156,13 +1156,30 @@
      return
   end subroutine dns_csr_z
 
+!!
+!! @sub dns_csr_d_t
+!!
+!! converts a densely stored matrix into a row orientied compactly
+!! sparse matrix.
+!!
   subroutine dns_csr_d_t()
+     implicit none
+
+     return
   end subroutine dns_csr_d_t
 
-  subroutine dns_csr_z_t(i)
-     integer :: i
-     i = 0
+  subroutine dns_csr_z_t()
   end subroutine dns_csr_z_t
+
+
+
+
+
+
+
+
+
+
 
 !!
 !! @sub csr_csr_d
