@@ -573,6 +573,11 @@
      type (csr_d), intent(inout) :: csr
 
 !! [body
+
+     if ( allocated(csr%rowptr) ) deallocate(csr%rowptr)
+     if ( allocated(csr%colptr) ) deallocate(csr%colptr)
+     if ( allocated(csr%V     ) ) deallocate(csr%V     )
+
 !! body]
 
      return
