@@ -265,9 +265,42 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
+     integer, intent(in) :: nnz
+
+     ! ia, ja, a input matrix in compressed sparse row format
+     integer, allocatable, intent(inout) :: ia(:)
+     integer, allocatable, intent(inout) :: ja(:)
+     real(dp), allocatable, intent(inout) :: a(:)
+
 !! local variables
+     ! status flag
+     integer :: istat
 
 !! [body
+
+     ! allocate memory
+     allocate(ia(nrows+1), stat = istat)
+     allocate(ja(nnz), stat = istat)
+     allocate(a(nnz), stat = istat)
+     !
+     if ( istat /= 0 ) then
+         write(*,*) 'can not allocate enough memory in csr_alloc_d'
+         STOP
+     endif ! back if ( istat /= 0 ) block
+
+     ! initialize them
+     ia = 0
+     ja = 0
+     a = 0.0_dp
+
 !! body]
 
      return
@@ -282,6 +315,21 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     ! this should be set to be the lengths of the arrays a and ja.
+     integer, intent(in) :: nnz
+
+     ! ia, ja, a input matrix in compressed sparse row format
+     integer, allocatable, intent(inout) :: ia(:)
+     integer, allocatable, intent(inout) :: ja(:)
+     complex(dp), allocatable, intent(inout) :: a(:)
+
 !! local variables
 
 !! [body
@@ -524,7 +572,7 @@
 !!
 !! converts a row-stored sparse matrix into a densely stored one.
 !!
-  subroutine csr_dns_z(nrows, ncols, nnz, sa, ja, ia, dns)
+  subroutine csr_dns_z(nrows, ncols, nnz, a, ja, ia, dns)
      implicit none
 
 !! external arguments
@@ -535,13 +583,13 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sa and ja.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
-     ! sa, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
      ! array where to store dense matrix
      complex(dp), intent(out) :: dns(nrows,ncols)
@@ -565,7 +613,7 @@
                  write(mystd,'(a)') 'sparse: error in csr_dns_z'
                  STOP
              endif ! back if ( j > ncols ) block
-             dns(i,j) = sa(k)
+             dns(i,j) = a(k)
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrows} loop
 
@@ -728,7 +776,7 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_z(nrows, ncols, nnz, dns, sa, ja, ia)
+  subroutine dns_csr_z(nrows, ncols, nnz, dns, a, ja, ia)
      implicit none
 
 !! external arguments
@@ -739,16 +787,16 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sa and ja.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
      ! input densely stored matrix
      complex(dp), intent(in)  :: dns(nrows,ncols)
 
-     ! sa, ja, ia, output matrix in compressed sparse row format
+     ! a, ja, ia, output matrix in compressed sparse row format
      integer, intent(out)     :: ia(nrows+1)
      integer, intent(out)     :: ja(nnz)
-     complex(dp), intent(out) :: sa(nnz)
+     complex(dp), intent(out) :: a(nnz)
 
 !! local variables
      ! loop index
@@ -759,7 +807,7 @@
 !! [body
 
      ! init sparse matrix
-     sa = dcmplx(0.0_dp, 0.0_dp)
+     a = dcmplx(0.0_dp, 0.0_dp)
      ia = 0
      ja = 0
 
@@ -770,7 +818,7 @@
              if ( real( dns(i,j) ) == 0.0_dp .and. &
                 & aimag( dns(i,j) ) == 0.0_dp ) CYCLE
              ja(k) = j
-             sa(k) = dns(i,j)
+             a(k) = dns(i,j)
              k = k + 1
              if ( k > nnz ) then
                  write(mystd,'(a)') 'sparse: error in dns_csr_z'
@@ -847,7 +895,7 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_z(nrows, nnz, sa, ja, ia, sb, jb, ib)
+  subroutine csr_csr_z(nrows, nnz, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -855,18 +903,18 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sa and ja.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
-     ! sa, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
-     ! sb, jb, ib, output matrix in compressed sparse row format
+     ! b, jb, ib, output matrix in compressed sparse row format
      integer, intent(out)     :: ib(nrows+1)
      integer, intent(out)     :: jb(nnz)
-     complex(dp), intent(out) :: sb(nnz)
+     complex(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -883,7 +931,7 @@
      enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
      do i=ia(1),ia(nrows+1)-1
-         sb(i) = sa(i)
+         b(i) = a(i)
      enddo ! over i={ia(1),ia(nrows+1)-1} loop
 
 !! body]
@@ -961,10 +1009,10 @@
 !!
 !! @fun get_csr_z
 !!
-!! this function returns the element sa(i,j) of matrix sa.
+!! this function returns the element a(i,j) of matrix a.
 !!
   complex(dp) &
-  function get_csr_z(i, j, nrows, nnz, sa, ja, ia) result(elm)
+  function get_csr_z(i, j, nrows, nnz, a, ja, ia) result(elm)
      implicit none
 
 !! external arguments
@@ -978,19 +1026,19 @@
      integer, intent(in)     :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sa and ja.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)     :: nnz
 
-     ! sa, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)     :: ia(nrows+1)
      integer, intent(in)     :: ja(nnz)
-     complex(dp), intent(in) :: sa(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
 !! local variables
      ! loop index
      integer :: k
 
-     ! memory address of sa(i,j)
+     ! memory address of a(i,j)
      integer :: addr
 
 !! [body
@@ -999,7 +1047,7 @@
      addr = 0
      elm = dcmplx(0.0_dp, 0.0_dp)
 
-     ! scan the row - exit as soon as sa(i,j) is found
+     ! scan the row - exit as soon as a(i,j) is found
      do k=ia(i),ia(i+1)-1
          if ( ja(k) == j ) then
              addr = k
@@ -1009,7 +1057,7 @@
 
      ! the required element is contained in sparse matrix
      if ( addr /= 0 ) then
-         elm = sa(addr)
+         elm = a(addr)
      endif ! back if ( addr /= 0 ) block
 
 !! body]
@@ -1107,7 +1155,7 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_z(nrows, ncols, nnz, sa, ja, ia, sx, sy)
+  subroutine csr_mv_z(nrows, ncols, nnz, a, ja, ia, sx, sy)
      implicit none
 
 !! external arguments
@@ -1118,13 +1166,13 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sa and ja.
+     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
-     ! sa, ja, ia, input matrix in compressed sparse row format
+     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
      complex(dp), intent(in)  :: sx(ncols)
@@ -1145,7 +1193,7 @@
      ! compute the inner product of row i with vector sx
      do i=1,nrows
          do k=ia(i),ia(i+1)-1
-             sy(i) = sy(i) + sa(k) * sx( ja(k) )
+             sy(i) = sy(i) + a(k) * sx( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrows} loop
 
@@ -1273,7 +1321,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_z(nrows, ndims, ncols, nnz, sa, ja, ia, sb, jb, ib, sc, jc, ic)
+  subroutine csr_mm_z(nrows, ndims, ncols, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
      implicit none
 
 !! external arguments
@@ -1286,26 +1334,26 @@
      ! the column dimension of matrix B = column dimension of matrix C
      integer, intent(in)      :: ncols
 
-     ! the length of the arrays sc and jc.
+     ! the length of the arrays c and jc.
      !
      ! this subroutine will stop if the result matrix C has a number of
      ! elements that exceeds nnz.
      integer, intent(in)      :: nnz
 
-     ! sa, ja, ia, matrix A in compressed sparse row format
+     ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
-     ! sb, jb, ib, matrix B in compressed sparse row format
+     ! b, jb, ib, matrix B in compressed sparse row format
      integer, intent(in)      :: ib(ndims+1)
      integer, intent(in)      :: jb(nnz)
-     complex(dp), intent(in)  :: sb(nnz)
+     complex(dp), intent(in)  :: b(nnz)
 
-     ! sc, jc, ic, resulting matrix C in compressed sparse row format
+     ! c, jc, ic, resulting matrix C in compressed sparse row format
      integer, intent(out)     :: ic(nrows+1)
      integer, intent(out)     :: jc(nnz)
-     complex(dp), intent(out) :: sc(nnz)
+     complex(dp), intent(out) :: c(nnz)
 
 !! local variables
      ! loop index
@@ -1339,19 +1387,19 @@
      do i=1,nrows
          do ka=ia(i),ia(i+1)-1
              j = ja(ka)
-             atmp = sa(ka)
+             atmp = a(ka)
              do kb=ib(j),ib(j+1)-1
                  k = jb(kb)
-                 btmp = sb(kb)
+                 btmp = b(kb)
 
                  p = iw(k)
                  if ( p == 0 ) then
                      q = q + 1
                      iw(k) = q
                      jc(q) = k
-                     sc(q) = atmp * btmp
+                     c(q) = atmp * btmp
                  else
-                     sc(p) = sc(p) + atmp * btmp
+                     c(p) = c(p) + atmp * btmp
                  endif ! back if ( p == 0 ) block
              enddo ! over kb={ib(j),ib(j+1)-1} loop
          enddo ! over ka={ia(i),ia(i+1)-1} loop
@@ -1454,7 +1502,7 @@
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_z(nrows, nnz, sa, ja, ia, diag, sb, jb, ib)
+  subroutine csr_md_z(nrows, nnz, a, ja, ia, diag, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -1462,21 +1510,21 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sb and jb.
+     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)      :: nnz
 
-     ! sa, ja, ia, matrix A in compressed sparse row format
+     ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
      ! diagonal matrix stored as a vector diag
      complex(dp), intent(in)  :: diag(nrows)
 
-     ! sb, jb, ib, resulting matrix B in compressed sparse row format
+     ! b, jb, ib, resulting matrix B in compressed sparse row format
      integer, intent(out)     :: ib(nrows+1)
      integer, intent(out)     :: jb(nnz)
-     complex(dp), intent(out) :: sb(nnz)
+     complex(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -1490,7 +1538,7 @@
 !! [body
 
      ! init B sparse matrix
-     sb = dcmplx(0.0_dp, 0.0_dp)
+     b = dcmplx(0.0_dp, 0.0_dp)
      ib = 0
      jb = 0
 
@@ -1499,7 +1547,7 @@
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
-             sb(k) = sa(k) * diag( ja(k) )
+             b(k) = a(k) * diag( ja(k) )
          enddo ! over k={k1,k2} loop
      enddo ! over i={1,nrows} loop
 
@@ -1596,7 +1644,7 @@
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine csr_dm_z(nrows, nnz, diag, sa, ja, ia, sb, jb, ib)
+  subroutine csr_dm_z(nrows, nnz, diag, a, ja, ia, b, jb, ib)
      implicit none
 
 !! external arguments
@@ -1604,21 +1652,21 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays sb and jb.
+     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)      :: nnz
 
      ! diagonal matrix stored as a vector diag
      complex(dp), intent(in)  :: diag(nrows)
 
-     ! sa, ja, ia, matrix A in compressed sparse row format
+     ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: sa(nnz)
+     complex(dp), intent(in)  :: a(nnz)
 
-     ! sb, jb, ib, resulting matrix B in compressed sparse row format
+     ! b, jb, ib, resulting matrix B in compressed sparse row format
      integer, intent(out)     :: ib(nrows+1)
      integer, intent(out)     :: jb(nnz)
-     complex(dp), intent(out) :: sb(nnz)
+     complex(dp), intent(out) :: b(nnz)
 
 !! local variables
      ! loop index
@@ -1632,7 +1680,7 @@
 !! [body
 
      ! init B sparse matrix
-     sb = dcmplx(0.0_dp, 0.0_dp)
+     b = dcmplx(0.0_dp, 0.0_dp)
      ib = 0
      jb = 0
 
@@ -1641,7 +1689,7 @@
          k1 = ia(i)
          k2 = ia(i+1) - 1
          do k=k1,k2
-             sb(k) = sa(k) * diag(i)
+             b(k) = a(k) * diag(i)
          enddo ! over k={k1,k2} loop
      enddo ! over i={1,nrows} loop
 
