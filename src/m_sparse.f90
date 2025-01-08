@@ -324,12 +324,25 @@
      return
   end subroutine csr_alloc_z_t
 
+!!========================================================================
+!!>>> deallocate memory                                                <<<
+!!========================================================================
+
 !!
 !! @sub
 !!
 !!
 !!
   subroutine csr_free_d()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_free_d
 
 !!
@@ -337,9 +350,16 @@
 !!
 !!
 !!
-  subroutine csr_free_z(i)
-     integer :: i
-     i = 0
+  subroutine csr_free_z()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_free_z
 
 !!
@@ -347,10 +367,16 @@
 !!
 !!
 !!
-  subroutine csr_free_d_t(i, j)
-     integer :: i, j
-     i = 0
-     j = 0
+  subroutine csr_free_d_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_free_d_t
 
 !!
@@ -358,11 +384,16 @@
 !!
 !!
 !!
-  subroutine csr_free_z_t(i, j, k)
-     integer :: i, j, k
-     i = 0
-     j = 0
-     k = 0
+  subroutine csr_free_z_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_free_z_t
 
 !!
@@ -371,6 +402,15 @@
 !!
 !!
   subroutine csr_print_d()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_print_d
 
 !!
@@ -378,9 +418,16 @@
 !!
 !!
 !!
-  subroutine csr_print_z(i)
-     integer :: i
-     i = 0
+  subroutine csr_print_z()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_print_z
 
 !!
@@ -388,10 +435,16 @@
 !!
 !!
 !!
-  subroutine csr_print_d_t(i, j)
-     integer :: i, j
-     i = 0
-     j = 0
+  subroutine csr_print_d_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_print_d_t
 
 !!
@@ -399,11 +452,16 @@
 !!
 !!
 !!
-  subroutine csr_print_z_t(i, j, k)
-     integer :: i, j, k
-     i = 0
-     j = 0
-     k = 0
+  subroutine csr_print_z_t()
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_print_z_t
 
 !!
