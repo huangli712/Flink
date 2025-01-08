@@ -261,7 +261,7 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_d()
+  subroutine csr_alloc_d(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -278,7 +278,7 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_z()
+  subroutine csr_alloc_z(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
