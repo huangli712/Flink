@@ -1181,6 +1181,14 @@
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
+
+!! [body
+
      return
   end subroutine dns_csr_d_t
 
