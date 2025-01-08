@@ -260,10 +260,17 @@
      i = 0
   end subroutine csr_alloc_z
 
-  subroutine csr_alloc_d_t()
+  subroutine csr_alloc_d_t(i, j)
+     integer :: i, j
+     i = 0
+     j = 0
   end subroutine csr_alloc_d_t
 
-  subroutine csr_alloc_z_t()
+  subroutine csr_alloc_z_t(i, j, k)
+     integer :: i, j, k
+     i = 0
+     j = 0
+     k = 0
   end subroutine csr_alloc_z_t
 
   subroutine csr_free_d()
@@ -274,10 +281,17 @@
      i = 0
   end subroutine csr_free_z
 
-  subroutine csr_free_d_t()
+  subroutine csr_free_d_t(i, j)
+     integer :: i, j
+     i = 0
+     j = 0
   end subroutine csr_free_d_t
 
-  subroutine csr_free_z_t()
+  subroutine csr_free_z_t(i, j, k)
+     integer :: i, j, k
+     i = 0
+     j = 0
+     k = 0
   end subroutine csr_free_z_t
 
   subroutine csr_print_d()
@@ -288,10 +302,17 @@
      i = 0
   end subroutine csr_print_z
 
-  subroutine csr_print_d_t()
+  subroutine csr_print_d_t(i, j)
+     integer :: i, j
+     i = 0
+     j = 0
   end subroutine csr_print_d_t
 
-  subroutine csr_print_z_t()
+  subroutine csr_print_z_t(i, j, k)
+     integer :: i, j, k
+     i = 0
+     j = 0
+     k = 0
   end subroutine csr_print_z_t
 
 !!
