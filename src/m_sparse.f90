@@ -518,7 +518,10 @@
      implicit none
 
 !! external arguments
-!! local variables
+     ! ia, ja, a input matrix in compressed sparse row format
+     integer, allocatable, intent(inout) :: ia(:)
+     integer, allocatable, intent(inout) :: ja(:)
+     complex(dp), allocatable, intent(inout) :: a(:)
 
 !! [body
 !! body]
