@@ -395,6 +395,13 @@
      integer :: istat
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(*,*) 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
 !! body]
 
      return
