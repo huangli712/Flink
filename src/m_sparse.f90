@@ -272,7 +272,6 @@
      integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in) :: nnz
 
      ! ia, ja, a input matrix in compressed sparse row format
@@ -328,7 +327,6 @@
      integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in) :: nnz
 
      ! ia, ja, a input matrix in compressed sparse row format
@@ -384,7 +382,6 @@
      integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in) :: nnz
 
      ! csr, a input matrix in compressed sparse row format
@@ -431,7 +428,7 @@
 !!
 !! allocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_alloc_z_t()
+  subroutine csr_alloc_z_t(nrows, ncols, nnz, csr)
      implicit none
 
 !! external arguments
@@ -599,7 +596,6 @@
      integer, intent(in)   :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -654,7 +650,6 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -796,7 +791,6 @@
      integer, intent(in)   :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nnz
 
      ! input densely stored matrix
@@ -858,7 +852,6 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
      ! input densely stored matrix
@@ -925,7 +918,6 @@
      integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -974,7 +966,6 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1038,7 +1029,6 @@
      integer, intent(in)  :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)  :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1097,7 +1087,6 @@
      integer, intent(in)     :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)     :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1185,7 +1174,6 @@
      integer, intent(in)   :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1237,7 +1225,6 @@
      integer, intent(in)      :: ncols
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays a and ja.
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1514,7 +1501,6 @@
      integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
@@ -1581,7 +1567,6 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
@@ -1656,7 +1641,6 @@
      integer, intent(in)   :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)   :: nnz
 
      ! diagonal matrix stored as a vector diag
@@ -1723,7 +1707,6 @@
      integer, intent(in)      :: nrows
 
      ! maximum number of nonzero elements allowed.
-     ! this should be set to be the lengths of the arrays b and jb.
      integer, intent(in)      :: nnz
 
      ! diagonal matrix stored as a vector diag
