@@ -252,20 +252,40 @@
 
   contains ! encapsulated functionality
 
+!!
+!! @sub csr_alloc_d
+!!
+!!
+!!
   subroutine csr_alloc_d()
   end subroutine csr_alloc_d
 
+!!
+!! @sub csr_alloc_z
+!!
+!!
+!!
   subroutine csr_alloc_z(i)
      integer :: i
      i = 0
   end subroutine csr_alloc_z
 
+!!
+!! @sub csr_alloc_d_t
+!!
+!!
+!!
   subroutine csr_alloc_d_t(i, j)
      integer :: i, j
      i = 0
      j = 0
   end subroutine csr_alloc_d_t
 
+!!
+!! @sub csr_alloc_z_t
+!!
+!!
+!!
   subroutine csr_alloc_z_t(i, j, k)
      integer :: i, j, k
      i = 0
@@ -273,20 +293,40 @@
      k = 0
   end subroutine csr_alloc_z_t
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_free_d()
   end subroutine csr_free_d
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_free_z(i)
      integer :: i
      i = 0
   end subroutine csr_free_z
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_free_d_t(i, j)
      integer :: i, j
      i = 0
      j = 0
   end subroutine csr_free_d_t
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_free_z_t(i, j, k)
      integer :: i, j, k
      i = 0
@@ -294,20 +334,40 @@
      k = 0
   end subroutine csr_free_z_t
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_print_d()
   end subroutine csr_print_d
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_print_z(i)
      integer :: i
      i = 0
   end subroutine csr_print_z
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_print_d_t(i, j)
      integer :: i, j
      i = 0
      j = 0
   end subroutine csr_print_d_t
 
+!!
+!! @sub
+!!
+!!
+!!
   subroutine csr_print_z_t(i, j, k)
      integer :: i, j, k
      i = 0
