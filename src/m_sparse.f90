@@ -270,7 +270,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -325,7 +325,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -380,7 +380,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! csr, a input matrix in compressed sparse row format
@@ -437,7 +437,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! csr, a input matrix in compressed sparse row format
@@ -498,7 +498,7 @@
      ! column dimension of dense matrix
      integer, intent(inout) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(inout) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -536,7 +536,7 @@
      ! column dimension of dense matrix
      integer, intent(inout) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(inout) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -632,7 +632,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -691,7 +691,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -850,7 +850,7 @@
      ! column dimension of dense matrix
      integer, intent(in)   :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -904,7 +904,7 @@
      ! column dimension of dense matrix
      integer, intent(in)      :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
@@ -1049,7 +1049,7 @@
      ! column dimension of dense matrix
      integer, intent(in)   :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! input densely stored matrix
@@ -1110,7 +1110,7 @@
      ! column dimension of dense matrix
      integer, intent(in)      :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! input densely stored matrix
@@ -1167,13 +1167,13 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
+     integer, intent(in)  :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncols
+     integer, intent(in)  :: ncols
 
      ! input densely stored matrix
-     real(dp), intent(in)  :: dns(nrows,ncols)
+     real(dp), intent(in) :: dns(nrows,ncols)
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
@@ -1218,7 +1218,39 @@
      return
   end subroutine dns_csr_d_t
 
-  subroutine dns_csr_z_t()
+!!
+!! @sub dns_csr_z_t
+!!
+!! converts a densely stored matrix into a row orientied compactly
+!! sparse matrix.
+!!
+  subroutine dns_csr_z_t(nrows, ncols, dns, csr)
+     implicit none
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)     :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)     :: ncols
+
+     ! input densely stored matrix
+     complex(dp), intent(in) :: dns(nrows,ncols)
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csr
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: j
+     integer :: k
+
+!! [body
+
+!! body]
+
+     return
   end subroutine dns_csr_z_t
 
 
@@ -1243,7 +1275,7 @@
      ! row dimension of dense matrix
      integer, intent(in)   :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1291,7 +1323,7 @@
      ! row dimension of dense matrix
      integer, intent(in)      :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1354,7 +1386,7 @@
      ! row dimension of dense matrix
      integer, intent(in)  :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)  :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1412,7 +1444,7 @@
      ! row dimension of dense matrix
      integer, intent(in)     :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)     :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1499,7 +1531,7 @@
      ! column dimension of dense matrix
      integer, intent(in)   :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1550,7 +1582,7 @@
      ! column dimension of dense matrix
      integer, intent(in)      :: ncols
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, input matrix in compressed sparse row format
@@ -1826,7 +1858,7 @@
      ! the row dimension of dense matrix
      integer, intent(in)   :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
@@ -1892,7 +1924,7 @@
      ! the row dimension of dense matrix
      integer, intent(in)      :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! a, ja, ia, matrix A in compressed sparse row format
@@ -1966,7 +1998,7 @@
      ! the row dimension of dense matrix
      integer, intent(in)   :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
      ! diagonal matrix stored as a vector diag
@@ -2032,7 +2064,7 @@
      ! the row dimension of dense matrix
      integer, intent(in)      :: nrows
 
-     ! maximum number of nonzero elements allowed.
+     ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
      ! diagonal matrix stored as a vector diag
