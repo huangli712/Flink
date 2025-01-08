@@ -402,6 +402,25 @@
          STOP
      endif ! back if block
 
+     ! allocate memory
+     allocate(csr%rowptr(nrows+1), stat = istat)
+     allocate(csr%colptr(nnz), stat = istat)
+     allocate(csr%V(nnz), stat = istat)
+     !
+     if ( istat /= 0 ) then
+         write(*,*) 'can not allocate enough memory in csr_alloc_d_t'
+         STOP
+     endif ! back if ( istat /= 0 ) block
+
+     ! initialize them
+     csr%rowptr = 0
+     csr%colptr = 0
+     csr%V = 0.0_dp
+     !
+     csr%nrows = nrows
+     csr%ncols = ncols
+     csr%nnz   = nnz
+
 !! body]
 
      return
