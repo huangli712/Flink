@@ -255,7 +255,7 @@
 !!
 !! @sub csr_alloc_d
 !!
-!!
+!! allocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_alloc_d()
   end subroutine csr_alloc_d
@@ -263,7 +263,7 @@
 !!
 !! @sub csr_alloc_z
 !!
-!!
+!! allocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_alloc_z(i)
      integer :: i
@@ -273,7 +273,7 @@
 !!
 !! @sub csr_alloc_d_t
 !!
-!!
+!! allocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_alloc_d_t(i, j)
      integer :: i, j
@@ -284,7 +284,7 @@
 !!
 !! @sub csr_alloc_z_t
 !!
-!!
+!! allocates memory for a row-stored sparse matrix.
 !!
   subroutine csr_alloc_z_t(i, j, k)
      integer :: i, j, k
