@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/07/2025 by li huang (last modified)
+!!!           01/08/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -66,65 +66,86 @@
 !!>>> declare accessibility for module routines                        <<<
 !!========================================================================
 
-     ! CSR -> DNS
-     private :: csr_dns_d ! real(dp) version
-     private :: csr_dns_z ! complex(dp) version
+     ! CSR -> allocation
+     private :: csr_alloc_d ! real(dp) version
+     private :: csr_alloc_z ! complex(dp) version
+     !
+     private :: csr_alloc_d_t
+     private :: csr_alloc_z_t
+
+     ! CSR -> deallocation
+     private :: csr_free_d  ! real(dp) version
+     private :: csr_free_z  ! complex(dp) version
+     !
+     private :: csr_free_d_t
+     private :: csr_free_z_t
+
+     ! CSR -> print
+     private :: csr_print_d ! real(dp) version
+     private :: csr_print_z ! complex(dp) version
+     !
+     private :: csr_print_d_t
+     private :: csr_print_z_t
+
+     ! CSR -> DNS (conversion)
+     private :: csr_dns_d   ! real(dp) version
+     private :: csr_dns_z   ! complex(dp) version
      !
      private :: csr_dns_d_t
      private :: csr_dns_z_t
 
-     ! DNS -> CSR
-     private :: dns_csr_d ! real(dp) version
-     private :: dns_csr_z ! complex(dp) version
+     ! DNS -> CSR (conversion)
+     private :: dns_csr_d   ! real(dp) version
+     private :: dns_csr_z   ! complex(dp) version
      !
      private :: dns_csr_d_t
      private :: dns_csr_z_t
 
-     ! CSR -> CSR
-     private :: csr_csr_d ! real(dp) version
-     private :: csr_csr_z ! complex(dp) version
+     ! CSR -> CSR (copy)
+     private :: csr_csr_d   ! real(dp) version
+     private :: csr_csr_z   ! complex(dp) version
      !
      private :: csr_csr_d_t
      private :: csr_csr_z_t
 
      ! CSR -> getter
-     private :: get_csr_d ! real(dp) version
-     private :: get_csr_z ! complex(dp) version
+     private :: get_csr_d   ! real(dp) version
+     private :: get_csr_z   ! complex(dp) version
      !
      private :: get_csr_d_t
      private :: get_csr_z_t
 
      ! CSR -> setter
-     private :: set_csr_d ! real(dp) version
-     private :: set_csr_z ! complex(dp) version
+     private :: set_csr_d   ! real(dp) version
+     private :: set_csr_z   ! complex(dp) version
      !
      private :: set_csr_d_t
      private :: set_csr_z_t
 
      ! CSR X VEC
-     private :: csr_mv_d ! real(dp) version
-     private :: csr_mv_z ! complex(dp) version
+     private :: csr_mv_d    ! real(dp) version
+     private :: csr_mv_z    ! complex(dp) version
      !
      private :: csr_mv_d_t
      private :: csr_mv_z_t
 
      ! CSR X CSR
-     private :: csr_mm_d ! real(dp) version
-     private :: csr_mm_z ! complex(dp) version
+     private :: csr_mm_d    ! real(dp) version
+     private :: csr_mm_z    ! complex(dp) version
      !
      private :: csr_mm_d_t
      private :: csr_mm_z_t
 
      ! CSR X DIA
-     private :: csr_md_d ! real(dp) version
-     private :: csr_md_z ! complex(dp) version
+     private :: csr_md_d    ! real(dp) version
+     private :: csr_md_z    ! complex(dp) version
      !
      private :: csr_md_d_t
      private :: csr_md_z_t
 
      ! DIA X CSR
-     private :: csr_dm_d ! real(dp) version
-     private :: csr_dm_z ! complex(dp) version
+     private :: csr_dm_d    ! real(dp) version
+     private :: csr_dm_z    ! complex(dp) version
      !
      private :: csr_dm_d_t
      private :: csr_dm_z_t
@@ -132,6 +153,30 @@
 !!========================================================================
 !!>>> declare interface and module procedure                           <<<
 !!========================================================================
+
+     public :: csr_alloc
+     interface csr_alloc
+         module procedure csr_alloc_d
+         module procedure csr_alloc_z
+         module procedure csr_alloc_d_t
+         module procedure csr_alloc_z_t
+     end interface csr_alloc
+
+     public :: csr_free
+     interface csr_free
+         module procedure csr_free_d
+         module procedure csr_free_z
+         module procedure csr_free_d_t
+         module procedure csr_free_z_t
+     end interface csr_free
+
+     public :: csr_print
+     interface csr_print
+         module procedure csr_print_d
+         module procedure csr_print_z
+         module procedure csr_print_d_t
+         module procedure csr_print_z_t
+     end interface csr_print
 
      public :: csr_dns
      interface csr_dns
@@ -206,6 +251,42 @@
      end interface csr_dm
 
   contains ! encapsulated functionality
+
+  subroutine csr_alloc_d()
+  end subroutine csr_alloc_d
+
+  subroutine csr_alloc_z()
+  end subroutine csr_alloc_z
+
+  subroutine csr_alloc_d_t()
+  end subroutine csr_alloc_d_t
+
+  subroutine csr_alloc_z_t()
+  end subroutine csr_alloc_z_t
+
+  subroutine csr_free_d()
+  end subroutine csr_free_d
+
+  subroutine csr_free_z()
+  end subroutine csr_free_z
+
+  subroutine csr_free_d_t()
+  end subroutine csr_free_d_t
+
+  subroutine csr_free_z_t()
+  end subroutine csr_free_z_t
+
+  subroutine csr_print_d()
+  end subroutine csr_print_d
+
+  subroutine csr_print_z()
+  end subroutine csr_print_z
+
+  subroutine csr_print_d_t()
+  end subroutine csr_print_d_t
+
+  subroutine csr_print_z_t()
+  end subroutine csr_print_z_t
 
 !!
 !! @sub csr_dns_d
