@@ -1189,6 +1189,8 @@
 
 !! [body
 
+!! body]
+
      return
   end subroutine dns_csr_d_t
 
