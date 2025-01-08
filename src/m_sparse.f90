@@ -1432,20 +1432,50 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_z_t()
+  subroutine csr_csr_z_t(csra, csrb)
+     implicit none
+
+!! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csra
+
+     ! csrb, a input/output matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csrb
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     ! check dimensions
+     if ( csra%nrows /= csrb%nrows .or. &
+          csra%ncols /= csrb%ncols .or. &
+          csra%nnz   /= csrb%nnz ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     do i=1,csra%nrows+1
+         csrb%rowptr(i) = csra%rowptr(i)
+     enddo ! over i={1,csra%nrows+1} loop
+
+     do i=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%colptr(i) = csra%colptr(i)
+     enddo ! over i={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
+
+     do i=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%V(i) = csra%V(i)
+     enddo ! over i={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
+
+!! body]
+
+     return
   end subroutine csr_csr_z_t
 
-
-
-
-
-
-
-
-
-
-
-
+!!========================================================================
+!!>>> visit elements in sparse matrix                                  <<<
+!!========================================================================
 
 !!
 !! @fun get_csr_d
