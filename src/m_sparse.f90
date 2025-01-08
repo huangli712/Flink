@@ -489,10 +489,15 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_d(nrows, nnz, ia, ja, a)
+  subroutine csr_free_d(ia, ja, a)
      implicit none
 
 !! external arguments
+     ! ia, ja, a input matrix in compressed sparse row format
+     integer, allocatable, intent(inout) :: ia(:)
+     integer, allocatable, intent(inout) :: ja(:)
+     real(dp), allocatable, intent(inout) :: a(:)
+
 !! local variables
 
 !! [body
@@ -506,7 +511,7 @@
 !!
 !! deallocates memory for a row-stored sparse matrix.
 !!
-  subroutine csr_free_z(nrows, nnz, ia, ja, a)
+  subroutine csr_free_z(ia, ja, a)
      implicit none
 
 !! external arguments
