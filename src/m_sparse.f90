@@ -432,9 +432,49 @@
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(in) :: nnz
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csr
+
 !! local variables
+     ! status flag
+     integer :: istat
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(*,*) 'wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! allocate memory
+     allocate(csr%rowptr(nrows+1), stat = istat)
+     allocate(csr%colptr(nnz), stat = istat)
+     allocate(csr%V(nnz), stat = istat)
+     !
+     if ( istat /= 0 ) then
+         write(*,*) 'can not allocate enough memory in csr_alloc_z_t'
+         STOP
+     endif ! back if ( istat /= 0 ) block
+
+     ! initialize them
+     csr%rowptr = 0
+     csr%colptr = 0
+     csr%V = dcmplx(0.0_dp, 0.0_dp)
+     !
+     csr%nrows = nrows
+     csr%ncols = ncols
+     csr%nnz   = nnz
+
 !! body]
 
      return
