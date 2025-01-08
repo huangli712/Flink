@@ -274,7 +274,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(in) :: nnz
 
-     ! ia, ja, a input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
      real(dp), allocatable, intent(inout) :: a(:)
@@ -329,7 +329,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(in) :: nnz
 
-     ! ia, ja, a input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
      complex(dp), allocatable, intent(inout) :: a(:)
@@ -502,7 +502,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(inout) :: nnz
 
-     ! ia, ja, a input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
      real(dp), allocatable, intent(inout) :: a(:)
@@ -540,7 +540,7 @@
      ! maximum number of nonzero elements allowed.
      integer, intent(inout) :: nnz
 
-     ! ia, ja, a input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, allocatable, intent(inout) :: ia(:)
      integer, allocatable, intent(inout) :: ja(:)
      complex(dp), allocatable, intent(inout) :: a(:)
@@ -614,31 +614,28 @@
      return
   end subroutine csr_free_z_t
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+!!========================================================================
+!!>>> Input / output                                                   <<<
+!!========================================================================
 
 !!
-!! @sub
+!! @sub csr_print_d
 !!
+!! prints a row-stored sparse matrix.
 !!
-!!
-  subroutine csr_print_d()
+  subroutine csr_print_d(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(in) :: nnz
+
 !! local variables
 
 !! [body
@@ -648,14 +645,23 @@
   end subroutine csr_print_d
 
 !!
-!! @sub
+!! @sub csr_print_z
 !!
+!! prints a row-stored sparse matrix.
 !!
-!!
-  subroutine csr_print_z()
+  subroutine csr_print_z(nrows, ncols, nnz, ia, ja, a)
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in) :: ncols
+
+     ! maximum number of nonzero elements allowed.
+     integer, intent(in) :: nnz
+
 !! local variables
 
 !! [body
@@ -665,11 +671,11 @@
   end subroutine csr_print_z
 
 !!
-!! @sub
+!! @sub csr_print_d_t
 !!
+!! prints a row-stored sparse matrix.
 !!
-!!
-  subroutine csr_print_d_t()
+  subroutine csr_print_d_t(csr)
      implicit none
 
 !! external arguments
@@ -682,11 +688,11 @@
   end subroutine csr_print_d_t
 
 !!
-!! @sub
+!! @sub csr_print_z_t
 !!
+!! prints a row-stored sparse matrix.
 !!
-!!
-  subroutine csr_print_z_t()
+  subroutine csr_print_z_t(csr)
      implicit none
 
 !! external arguments
@@ -697,6 +703,15 @@
 
      return
   end subroutine csr_print_z_t
+
+
+
+
+
+
+
+
+
 
 !!
 !! @sub csr_dns_d
