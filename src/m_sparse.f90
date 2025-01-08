@@ -1394,7 +1394,7 @@
      type (csr_d), intent(in) :: csra
 
      ! csrb, a input/output matrix in compressed sparse row format
-     type (csr_d), intent(in) :: csrb
+     type (csr_d), intent(inout) :: csrb
 
 !! local variables
      ! loop index
@@ -1410,17 +1410,17 @@
          STOP
      endif ! back if block
 
-     do i=1,nrows+1
-         ib(i) = ia(i)
-     enddo ! over i={1,nrows+1} loop
+     do i=1,csra%nrows+1
+         csrb%rowptr(i) = csra%rowptr(i)
+     enddo ! over i={1,csra%nrows+1} loop
 
-     do i=ia(1),ia(nrows+1)-1
-         jb(i) = ja(i)
-     enddo ! over i={ia(1),ia(nrows+1)-1} loop
+     do i=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%colptr(i) = csra%colptr(i)
+     enddo ! over i={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
-     do i=ia(1),ia(nrows+1)-1
-         b(i) = a(i)
-     enddo ! over i={ia(1),ia(nrows+1)-1} loop
+     do i=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%V(i) = csra%V(i)
+     enddo ! over i={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
 !! body]
 
