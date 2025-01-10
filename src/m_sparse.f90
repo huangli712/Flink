@@ -4,7 +4,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/08/2025 by li huang (last modified)
+!!!           01/10/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -840,7 +840,7 @@
 !!
 !! converts a row-stored sparse matrix into a densely stored one.
 !!
-  subroutine csr_dns_d(nrows, ncols, nnz, a, ja, ia, dns)
+  subroutine csr_dns_d(nrows, ncols, nnz, ia, ja, a, dns)
      implicit none
 
 !! external arguments
@@ -894,7 +894,7 @@
 !!
 !! converts a row-stored sparse matrix into a densely stored one.
 !!
-  subroutine csr_dns_z(nrows, ncols, nnz, a, ja, ia, dns)
+  subroutine csr_dns_z(nrows, ncols, nnz, ia, ja, a, dns)
      implicit none
 
 !! external arguments
@@ -1039,7 +1039,7 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_d(nrows, ncols, nnz, dns, a, ja, ia)
+  subroutine dns_csr_d(nrows, ncols, nnz, dns, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -1100,7 +1100,7 @@
 !! converts a densely stored matrix into a row orientied compactly
 !! sparse matrix.
 !!
-  subroutine dns_csr_z(nrows, ncols, nnz, dns, a, ja, ia)
+  subroutine dns_csr_z(nrows, ncols, nnz, dns, ia, ja, a)
      implicit none
 
 !! external arguments
@@ -1290,7 +1290,7 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_d(nrows, nnz, a, ja, ia, b, jb, ib)
+  subroutine csr_csr_d(nrows, nnz, ia, ja, a, ib, jb, b)
      implicit none
 
 !! external arguments
@@ -1338,7 +1338,7 @@
 !!
 !! copy data between two row orientied compactly sparse matrices.
 !!
-  subroutine csr_csr_z(nrows, nnz, a, ja, ia, b, jb, ib)
+  subroutine csr_csr_z(nrows, nnz, ia, ja, a, ib, jb, b)
      implicit none
 
 !! external arguments
@@ -1480,10 +1480,11 @@
 !!
 !! @fun get_csr_d
 !!
-!! this function returns the element a(i,j) of matrix a.
+!! this function returns the element a(i,j) of matrix a, which is stored
+!! in compressed sparse row format.
 !!
   real(dp) &
-  function get_csr_d(i, j, nrows, nnz, a, ja, ia) result(elm)
+  function get_csr_d(i, j, nrows, nnz, ia, ja, a) result(elm)
      implicit none
 
 !! external arguments
@@ -1499,7 +1500,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)  :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)  :: ia(nrows+1)
      integer, intent(in)  :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
@@ -1538,10 +1539,11 @@
 !!
 !! @fun get_csr_z
 !!
-!! this function returns the element a(i,j) of matrix a.
+!! this function returns the element a(i,j) of matrix a, which is stored
+!! in compressed sparse row format.
 !!
   complex(dp) &
-  function get_csr_z(i, j, nrows, nnz, a, ja, ia) result(elm)
+  function get_csr_z(i, j, nrows, nnz, ia, ja, a) result(elm)
      implicit none
 
 !! external arguments
@@ -1557,7 +1559,6 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)     :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)     :: ia(nrows+1)
      integer, intent(in)     :: ja(nnz)
      complex(dp), intent(in) :: a(nnz)
@@ -1631,7 +1632,7 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_d(nrows, ncols, nnz, a, ja, ia, x, y)
+  subroutine csr_mv_d(nrows, ncols, nnz, ia, ja, a, x, y)
      implicit none
 
 !! external arguments
@@ -1644,7 +1645,6 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
@@ -1682,7 +1682,7 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_z(nrows, ncols, nnz, a, ja, ia, sx, sy)
+  subroutine csr_mv_z(nrows, ncols, nnz, ia, ja, a, sx, sy)
      implicit none
 
 !! external arguments
@@ -1695,7 +1695,6 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
-     ! a, ja, ia, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
      complex(dp), intent(in)  :: a(nnz)
@@ -1741,7 +1740,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_d(nrows, ndims, ncols, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
+  subroutine csr_mm_d(nrows, ndims, ncols, nnz, ia, ja, a, ib, jb, b, ic, jc, c)
      implicit none
 
 !! external arguments
@@ -1760,17 +1759,14 @@
      ! elements that exceeds nnz.
      integer, intent(in)   :: nnz
 
-     ! a, ja, ia, matrix A in compressed sparse row format
      integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
 
-     ! b, jb, ib, matrix B in compressed sparse row format
      integer, intent(in)   :: ib(ndims+1)
      integer, intent(in)   :: jb(nnz)
      real(dp), intent(in)  :: b(nnz)
 
-     ! c, jc, ic, resulting matrix C in compressed sparse row format
      integer, intent(out)  :: ic(nrows+1)
      integer, intent(out)  :: jc(nnz)
      real(dp), intent(out) :: c(nnz)
@@ -1847,7 +1843,7 @@
 !!
 !! performs the matrix by matrix product C = A * B.
 !!
-  subroutine csr_mm_z(nrows, ndims, ncols, nnz, a, ja, ia, b, jb, ib, c, jc, ic)
+  subroutine csr_mm_z(nrows, ndims, ncols, nnz, ia, ja, a, ib, jb, b, ic, jc, c)
      implicit none
 
 !! external arguments
@@ -1961,7 +1957,7 @@
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_d(nrows, nnz, a, ja, ia, diag, b, jb, ib)
+  subroutine csr_md_d(nrows, nnz, ia, ja, a, diag, ib, jb, b)
      implicit none
 
 !! external arguments
@@ -2027,7 +2023,7 @@
 !!
 !! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_z(nrows, nnz, a, ja, ia, diag, b, jb, ib)
+  subroutine csr_md_z(nrows, nnz, ia, ja, a, diag, ib, jb, b)
      implicit none
 
 !! external arguments
@@ -2101,7 +2097,7 @@
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine csr_dm_d(nrows, nnz, diag, a, ja, ia, b, jb, ib)
+  subroutine csr_dm_d(nrows, nnz, diag, ia, ja, a, ib, jb, b)
      implicit none
 
 !! external arguments
@@ -2167,7 +2163,7 @@
 !!
 !! performs the matrix by matrix product B = Diag * A.
 !!
-  subroutine csr_dm_z(nrows, nnz, diag, a, ja, ia, b, jb, ib)
+  subroutine csr_dm_z(nrows, nnz, diag, ia, ja, a, ib, jb, b)
      implicit none
 
 !! external arguments
