@@ -1749,6 +1749,12 @@
      implicit none
 
 !! external arguments
+     ! the row index of the element sought
+     integer, intent(in)  :: i
+
+     ! the column index of the element sought
+     integer, intent(in)  :: j
+
 !! local variables
 
 !! [body
@@ -1761,6 +1767,12 @@
      implicit none
 
 !! external arguments
+     ! the row index of the element sought
+     integer, intent(in)  :: i
+
+     ! the column index of the element sought
+     integer, intent(in)  :: j
+
 !! local variables
 
 !! [body
