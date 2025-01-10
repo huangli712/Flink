@@ -1612,6 +1612,7 @@
      ! the column index of the element sought
      integer, intent(in) :: j
 
+     ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
 !! local variables
@@ -1628,16 +1629,16 @@
      elm = 0.0_dp
 
      ! scan the row - exit as soon as a(i,j) is found
-     do k=ia(i),ia(i+1)-1
-         if ( ja(k) == j ) then
+     do k=csr%rowptr(i),csr%rowptr(i+1)-1
+         if ( csr%colptr(k) == j ) then
              addr = k
              EXIT
-         endif ! back if ( ja(k) == j ) block
-     enddo ! over k={ia(i),ia(i+1)-1} loop
+         endif ! back if ( csr%colptr(k) == j ) block
+     enddo ! over k={csr%rowptr(i),csr%rowptr(i+1)-1} loop
 
      ! the required element is contained in sparse matrix
      if ( addr /= 0 ) then
-         elm = a(addr)
+         elm = csr%V(addr)
      endif ! back if ( addr /= 0 ) block
 
 !! body]
