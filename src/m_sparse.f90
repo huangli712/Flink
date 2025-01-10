@@ -1698,15 +1698,51 @@
   end function get_csr_z_t
 
   subroutine set_csr_d(i, j, nrows, nnz, ia, ja, a, elm)
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine set_csr_d
 
   subroutine set_csr_z(i, j, nrows, nnz, ia, ja, a, elm)
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine set_csr_z
 
   subroutine set_csr_d_t(i, j, csr, elm)
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine set_csr_d_t
 
   subroutine set_csr_z_t(i, j, csr, elm)
+     implicit none
+
+!! external arguments
+!! local variables
+
+!! [body
+!! body]
+
+     return
   end subroutine set_csr_z_t
 
 !!========================================================================
