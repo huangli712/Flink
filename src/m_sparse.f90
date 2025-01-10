@@ -1697,17 +1697,6 @@
      return
   end function get_csr_z_t
 
-
-
-
-
-
-
-
-
-
-
-
   subroutine set_csr_d()
   end subroutine set_csr_d
 
@@ -1728,6 +1717,10 @@
      j = 0
      k = 0
   end subroutine set_csr_z_t
+
+!!========================================================================
+!!>>> sparse matrix-vector multiplication                              <<<
+!!========================================================================
 
 !!
 !! @sub csr_mv_d
@@ -1836,6 +1829,10 @@
      integer :: i
      i = 0
   end subroutine csr_mv_z_t
+
+!!========================================================================
+!!>>> sparse matrix-matrix multiplication                              <<<
+!!========================================================================
 
 !!
 !! @sub csr_mm_d
