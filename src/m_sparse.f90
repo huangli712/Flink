@@ -1697,25 +1697,16 @@
      return
   end function get_csr_z_t
 
-  subroutine set_csr_d()
+  subroutine set_csr_d(i, j, nrows, nnz, ia, ja, a, elm)
   end subroutine set_csr_d
 
-  subroutine set_csr_z(i)
-     integer :: i
-     i = 0
+  subroutine set_csr_z(i, j, nrows, nnz, ia, ja, a, elm)
   end subroutine set_csr_z
 
-  subroutine set_csr_d_t(i, j)
-     integer :: i, j
-     i = 0
-     j = 0
+  subroutine set_csr_d_t(i, j, csr, elm)
   end subroutine set_csr_d_t
 
-  subroutine set_csr_z_t(i, j, k)
-     integer :: i, j, k
-     i = 0
-     j = 0
-     k = 0
+  subroutine set_csr_z_t(i, j, csr, elm)
   end subroutine set_csr_z_t
 
 !!========================================================================
