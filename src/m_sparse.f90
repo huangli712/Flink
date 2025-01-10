@@ -1701,6 +1701,18 @@
      implicit none
 
 !! external arguments
+     ! the row index of the element sought
+     integer, intent(in)  :: i
+
+     ! the column index of the element sought
+     integer, intent(in)  :: j
+
+     ! row dimension of dense matrix
+     integer, intent(in)  :: nrows
+
+     ! maximum number of nonzero elements allowed
+     integer, intent(in)  :: nnz
+
 !! local variables
 
 !! [body
