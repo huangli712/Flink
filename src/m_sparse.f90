@@ -1595,17 +1595,89 @@
      return
   end function get_csr_z
 
+!!
+!! @fun get_csr_d
+!!
+!! this function returns the element a(i,j) of matrix a, which is stored
+!! in compressed sparse row format.
+!!
   real(dp) &
-  function get_csr_d_t() result(elm)
+  function get_csr_d_t(i, j, csr) result(elm)
+     implicit none
+
+!! external arguments
+     ! the row index of the element sought
+     integer, intent(in) :: i
+
+     ! the column index of the element sought
+     integer, intent(in) :: j
+
+     type (csr_d), intent(in) :: csr
+
+!! local variables
+     ! loop index
+     integer :: k
+
+     ! memory address of a(i,j)
+     integer :: addr
+
+!! [body
+
+     ! initialization
+     addr = 0
      elm = 0.0_dp
+
+     ! scan the row - exit as soon as a(i,j) is found
+     do k=ia(i),ia(i+1)-1
+         if ( ja(k) == j ) then
+             addr = k
+             EXIT
+         endif ! back if ( ja(k) == j ) block
+     enddo ! over k={ia(i),ia(i+1)-1} loop
+
+     ! the required element is contained in sparse matrix
+     if ( addr /= 0 ) then
+         elm = a(addr)
+     endif ! back if ( addr /= 0 ) block
+
+!! body]
+
+     return
   end function get_csr_d_t
 
   complex(dp) &
-  function get_csr_z_t(i) result(elm)
-     integer :: i
-     i = 0
-     elm = dcmplx(0.0_dp, 0.0_dp)
+  function get_csr_z_t(i, j, csr) result(elm)
+     implicit none
+
+!! external arguments
+     ! the row index of the element sought
+     integer, intent(in) :: i
+
+     ! the column index of the element sought
+     integer, intent(in) :: j
+
+     type (csr_z), intent(in) :: csr
+
+!! local variables
+     ! loop index
+     integer :: k
+
+     ! memory address of a(i,j)
+     integer :: addr
+
+     return
   end function get_csr_z_t
+
+
+
+
+
+
+
+
+
+
+
 
   subroutine set_csr_d()
   end subroutine set_csr_d
