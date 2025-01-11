@@ -1015,15 +1015,21 @@
 !!
 !! converts a row-stored sparse matrix into a densely stored one.
 !!
-  subroutine csr_dns_z_t(csr, dns)
+  subroutine csr_dns_z_t(nrows, ncols, csr, dns)
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncols
+
      ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
      ! array where to store dense matrix
-     complex(dp), intent(out) :: dns(csr%nrows,csr%ncols)
+     complex(dp), intent(out) :: dns(nrows,ncols)
 
 !! local variables
      ! loop index
@@ -1032,6 +1038,12 @@
      integer :: k
 
 !! [body
+
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      ! init dns matrix
      dns = dcmplx(0.0_dp, 0.0_dp)
