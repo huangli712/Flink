@@ -869,6 +869,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init dns matrix
      dns = 0.0_dp
 
@@ -923,6 +929,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init dns matrix
      dns = dcmplx(0.0_dp, 0.0_dp)
 
@@ -948,15 +960,21 @@
 !!
 !! converts a row-stored sparse matrix into a densely stored one.
 !!
-  subroutine csr_dns_d_t(csr, dns)
+  subroutine csr_dns_d_t(nrows, ncols, csr, dns)
      implicit none
 
 !! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncols
+
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! array where to store dense matrix
-     real(dp), intent(out) :: dns(csr%nrows,csr%ncols)
+     real(dp), intent(out)    :: dns(nrows,ncols)
 
 !! local variables
      ! loop index
@@ -965,6 +983,12 @@
      integer :: k
 
 !! [body
+
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      ! init dns matrix
      dns = 0.0_dp
