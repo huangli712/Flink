@@ -1963,6 +1963,31 @@
      ! vector, complex(dp) array of length nrows, containing the product y = A . x
      complex(dp), intent(out) :: y(nrows)
 
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: k
+
+!! [body
+
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! zero out output vector
+     y = dcmplx(0.0_dp, 0.0_dp)
+
+     ! compute the inner product of row i with vector sx
+     do i=1,nrows
+         do k=csr%rowptr(i),csr%rowptr(i+1)-1
+             y(i) = y(i) + csr%V(k) * x( csr%colptr(k) )
+         enddo ! over k={csr%rowptr(i),csr%rowptr(i+1)-1} loop
+     enddo ! over i={1,nrows} loop
+
+!! body]
+
      return
   end subroutine csr_mv_z_t
 
