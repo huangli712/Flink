@@ -4,7 +4,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/10/2025 by li huang (last modified)
+!!!           01/11/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -114,13 +114,6 @@
      private :: get_csr_d_t
      private :: get_csr_z_t
 
-     ! CSR -> setter
-     private :: set_csr_d   ! real(dp) version
-     private :: set_csr_z   ! complex(dp) version
-     !
-     private :: set_csr_d_t
-     private :: set_csr_z_t
-
      ! CSR X VEC
      private :: csr_mv_d    ! real(dp) version
      private :: csr_mv_z    ! complex(dp) version
@@ -208,14 +201,6 @@
          module procedure get_csr_d_t
          module procedure get_csr_z_t
      end interface get_csr
-
-     public :: set_csr
-     interface set_csr
-         module procedure set_csr_d
-         module procedure set_csr_z
-         module procedure set_csr_d_t
-         module procedure set_csr_z_t
-     end interface set_csr
 
      public :: csr_mv
      interface csr_mv
@@ -1696,90 +1681,6 @@
 
      return
   end function get_csr_z_t
-
-  subroutine set_csr_d(i, j, nrows, nnz, ia, ja, a, elm)
-     implicit none
-
-!! external arguments
-     ! the row index of the element sought
-     integer, intent(in)  :: i
-
-     ! the column index of the element sought
-     integer, intent(in)  :: j
-
-     ! row dimension of dense matrix
-     integer, intent(in)  :: nrows
-
-     ! maximum number of nonzero elements allowed
-     integer, intent(in)  :: nnz
-
-!! local variables
-
-!! [body
-!! body]
-
-     return
-  end subroutine set_csr_d
-
-  subroutine set_csr_z(i, j, nrows, nnz, ia, ja, a, elm)
-     implicit none
-
-!! external arguments
-     ! the row index of the element sought
-     integer, intent(in)  :: i
-
-     ! the column index of the element sought
-     integer, intent(in)  :: j
-
-     ! row dimension of dense matrix
-     integer, intent(in)  :: nrows
-
-     ! maximum number of nonzero elements allowed
-     integer, intent(in)  :: nnz
-
-!! local variables
-
-!! [body
-!! body]
-
-     return
-  end subroutine set_csr_z
-
-  subroutine set_csr_d_t(i, j, csr, elm)
-     implicit none
-
-!! external arguments
-     ! the row index of the element sought
-     integer, intent(in)  :: i
-
-     ! the column index of the element sought
-     integer, intent(in)  :: j
-
-!! local variables
-
-!! [body
-!! body]
-
-     return
-  end subroutine set_csr_d_t
-
-  subroutine set_csr_z_t(i, j, csr, elm)
-     implicit none
-
-!! external arguments
-     ! the row index of the element sought
-     integer, intent(in)  :: i
-
-     ! the column index of the element sought
-     integer, intent(in)  :: j
-
-!! local variables
-
-!! [body
-!! body]
-
-     return
-  end subroutine set_csr_z_t
 
 !!========================================================================
 !!>>> sparse matrix-vector multiplication                              <<<
