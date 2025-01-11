@@ -1679,10 +1679,10 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in) :: i
+     integer, intent(in)      :: i
 
      ! the column index of the element sought
-     integer, intent(in) :: j
+     integer, intent(in)      :: j
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
@@ -1730,10 +1730,10 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in) :: i
+     integer, intent(in)      :: i
 
      ! the column index of the element sought
-     integer, intent(in) :: j
+     integer, intent(in)      :: j
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
@@ -1809,6 +1809,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! zero out output vector
      y = 0.0_dp
 
@@ -1859,6 +1865,12 @@
      integer :: k
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      ! zero out output vector
      y = dcmplx(0.0_dp, 0.0_dp)
