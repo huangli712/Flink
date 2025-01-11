@@ -1719,6 +1719,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)   :: nnz
 
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
@@ -1756,7 +1757,7 @@
 !!
 !! multiplies a matrix by a vector using the dot product form.
 !!
-  subroutine csr_mv_z(nrows, ncols, nnz, ia, ja, a, sx, sy)
+  subroutine csr_mv_z(nrows, ncols, nnz, ia, ja, a, x, y)
      implicit none
 
 !! external arguments
@@ -1769,15 +1770,16 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in)      :: nnz
 
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)      :: ia(nrows+1)
      integer, intent(in)      :: ja(nnz)
      complex(dp), intent(in)  :: a(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
-     complex(dp), intent(in)  :: sx(ncols)
+     complex(dp), intent(in)  :: x(ncols)
 
      ! vector, complex(dp) array of length nrows, containing the product y = A . x
-     complex(dp), intent(out) :: sy(nrows)
+     complex(dp), intent(out) :: y(nrows)
 
 !! local variables
      ! loop index
@@ -1787,12 +1789,12 @@
 !! [body
 
      ! zero out output vector
-     sy = dcmplx(0.0_dp, 0.0_dp)
+     y = dcmplx(0.0_dp, 0.0_dp)
 
      ! compute the inner product of row i with vector sx
      do i=1,nrows
          do k=ia(i),ia(i+1)-1
-             sy(i) = sy(i) + a(k) * sx( ja(k) )
+             y(i) = y(i) + a(k) * x( ja(k) )
          enddo ! over k={ia(i),ia(i+1)-1} loop
      enddo ! over i={1,nrows} loop
 
