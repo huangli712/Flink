@@ -1364,6 +1364,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      do i=1,nrows+1
          ib(i) = ia(i)
      enddo ! over i={1,nrows+1} loop
@@ -1412,6 +1418,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      do i=1,nrows+1
          ib(i) = ia(i)
      enddo ! over i={1,nrows+1} loop
@@ -1439,7 +1451,7 @@
 
 !! external arguments
      ! csra, a input matrix in compressed sparse row format
-     type (csr_d), intent(in) :: csra
+     type (csr_d), intent(in)    :: csra
 
      ! csrb, a input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
@@ -1485,7 +1497,7 @@
 
 !! external arguments
      ! csra, a input matrix in compressed sparse row format
-     type (csr_z), intent(in) :: csra
+     type (csr_z), intent(in)    :: csra
 
      ! csrb, a input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
@@ -1561,6 +1573,12 @@
      integer :: addr
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      ! initialization
      addr = 0
