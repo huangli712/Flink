@@ -1104,6 +1104,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init sparse matrix
      a = 0.0_dp
      ia = 0
@@ -1164,6 +1170,12 @@
      integer :: k
 
 !! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
 
      ! init sparse matrix
      a = dcmplx(0.0_dp, 0.0_dp)
