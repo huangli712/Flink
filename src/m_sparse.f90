@@ -4,7 +4,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/11/2025 by li huang (last modified)
+!!!           01/12/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -1803,12 +1803,83 @@
      return
   end subroutine csr_mv_z
 
-  subroutine csr_mv_d_t()
+!!
+!! @sub csr_mv_d_t
+!!
+!! multiplies a matrix by a vector using the dot product form.
+!!
+  subroutine csr_mv_d_t(nrows, ncols, csr, x, y)
+     implicit none
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncols
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csr
+
+     ! vector, length equal to the column dimension of the dense matrix
+     real(dp), intent(in)     :: x(ncols)
+
+     ! vector, real array of length nrows, containing the product y = A . x
+     real(dp), intent(out)    :: y(nrows)
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: k
+
+!! [body
+
+     ! check dimensions
+     if ( csr%nrows /= nrows .or. csr%ncols /= ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! zero out output vector
+     y = 0.0_dp
+
+     ! compute the inner product of row i with vector x
+     do i=1,nrows
+         do k=csr%rowptr(i),csr%rowptr(i+1)-1
+             y(i) = y(i) + csr%V(k) * x( csr%colptr(k) )
+         enddo ! over k={csr%rowptr(i),csr%rowptr(i+1)-1} loop
+     enddo ! over i={1,nrows} loop
+
+!! body]
+
+     return
   end subroutine csr_mv_d_t
 
-  subroutine csr_mv_z_t(i)
-     integer :: i
-     i = 0
+!!
+!! @sub csr_mv_z_t
+!!
+!! multiplies a matrix by a vector using the dot product form.
+!!
+  subroutine csr_mv_z_t(nrows, ncols, csr, x, y)
+     implicit none
+
+!! external arguments
+     ! row dimension of dense matrix
+     integer, intent(in)      :: nrows
+
+     ! column dimension of dense matrix
+     integer, intent(in)      :: ncols
+
+     ! csr, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csr
+
+     ! vector, length equal to the column dimension of the dense matrix
+     complex(dp), intent(in)  :: x(ncols)
+
+     ! vector, complex(dp) array of length nrows, containing the product y = A . x
+     complex(dp), intent(out) :: y(nrows)
+
+     return
   end subroutine csr_mv_z_t
 
 !!========================================================================
