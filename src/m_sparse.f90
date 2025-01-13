@@ -2397,7 +2397,7 @@
 
      q = 0
      do i=1,csrc%nrows
-         do ka=ia(i),ia(i+1)-1
+         do ka=csra%rowptr(i),csra%rowptr(i+1)-1
              j = ja(ka)
              atmp = a(ka)
              do kb=ib(j),ib(j+1)-1
