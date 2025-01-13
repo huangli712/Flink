@@ -2275,7 +2275,14 @@
 !! [body
 
      ! check dimensions
-     if ( nrows <= 0 .or. ndims <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+     if ( csra%nrows /= csrc%nrows .or.
+          csra%ncols /= csrb%nrows .or.
+          csrb%ncols /= csrc%ncols ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+     !
+     if ( csra%nnz /= csrb%nnz .or. csra%nnz /= csrc%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
