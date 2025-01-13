@@ -1688,10 +1688,10 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in)      :: i
+     integer, intent(in) :: i
 
      ! the column index of the element sought
-     integer, intent(in)      :: j
+     integer, intent(in) :: j
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
@@ -1739,10 +1739,10 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in)      :: i
+     integer, intent(in) :: i
 
      ! the column index of the element sought
-     integer, intent(in)      :: j
+     integer, intent(in) :: j
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
@@ -1792,21 +1792,21 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)   :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)   :: ia(nrows+1)
-     integer, intent(in)   :: ja(nnz)
-     real(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
-     real(dp), intent(in)  :: x(ncols)
+     real(dp), intent(in) :: x(ncols)
 
      ! vector, real array of length nrows, containing the product y = A . x
      real(dp), intent(out) :: y(nrows)
@@ -1849,21 +1849,21 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
      ! vector, length equal to the column dimension of the dense matrix
-     complex(dp), intent(in)  :: x(ncols)
+     complex(dp), intent(in) :: x(ncols)
 
      ! vector, complex(dp) array of length nrows, containing the product y = A . x
      complex(dp), intent(out) :: y(nrows)
@@ -1906,19 +1906,19 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! vector, length equal to the column dimension of the dense matrix
-     real(dp), intent(in)     :: x(ncols)
+     real(dp), intent(in) :: x(ncols)
 
      ! vector, real array of length nrows, containing the product y = A . x
-     real(dp), intent(out)    :: y(nrows)
+     real(dp), intent(out) :: y(nrows)
 
 !! local variables
      ! loop index
@@ -1958,16 +1958,16 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
      ! vector, length equal to the column dimension of the dense matrix
-     complex(dp), intent(in)  :: x(ncols)
+     complex(dp), intent(in) :: x(ncols)
 
      ! vector, complex(dp) array of length nrows, containing the product y = A . x
      complex(dp), intent(out) :: y(nrows)
