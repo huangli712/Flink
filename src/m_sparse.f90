@@ -2591,6 +2591,9 @@
      implicit none
 
 !! external arguments
+     ! diagonal matrix stored as a vector diag
+     real(dp), intent(in) :: diag(nrows)
+
 !! local variables
      ! loop index
      integer :: i
@@ -2616,6 +2619,9 @@
      implicit none
 
 !! external arguments
+     ! diagonal matrix stored as a vector diag
+     complex(dp), intent(in) :: diag(nrows)
+
 !! local variables
      ! loop index
      integer :: i
