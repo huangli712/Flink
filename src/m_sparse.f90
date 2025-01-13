@@ -2234,13 +2234,79 @@
      return
   end subroutine csr_mm_z
 
-  subroutine csr_mm_d_t()
+!!
+!! @sub csr_mm_d_t
+!!
+!! performs the matrix by matrix product C = A * B.
+!!
+  subroutine csr_mm_d_t(csra, csrb, csrc)
+     implicit none
+
+!! external arguments
+!! local variables
+     ! loop index
+     integer :: i, j, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in
+     ! matrix B, which is an array that has nonzero value if the column
+     ! index already exist, in which case the value is the index of
+     ! that column.
+     integer :: iw(ncols)
+
+     ! dummy real(dp) variables, used to improve the ratio of floating
+     ! point operations to memory accesses.
+     real(dp) :: atmp, btmp
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_mm_d_t
 
-  subroutine csr_mm_z_t(i)
-     integer :: i
-     i = 0
+  subroutine csr_mm_z_t(csra, csrb, csrc)
+     implicit none
+
+!! external arguments
+!! local variables
+     ! loop index
+     integer :: i, j, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in
+     ! matrix B, which is an array that has nonzero value if the column
+     ! index already exist, in which case the value is the index of
+     ! that column.
+     integer :: iw(ncols)
+
+     ! dummy real(dp) variables, used to improve the ratio of floating
+     ! point operations to memory accesses.
+     real(dp) :: atmp, btmp
+
+!! [body
+!! body]
+
+     return
   end subroutine csr_mm_z_t
+
+
+
+
+
+
+
+
+
 
 !!
 !! @sub csr_md_d
@@ -2392,7 +2458,9 @@
 !! @sub csr_md_z_t
 !!
 !!
-  subroutine csr_md_z_t()
+  subroutine csr_md_z_t(i)
+     integer :: i
+     i = 0
   end subroutine csr_md_z_t
 
 !!
