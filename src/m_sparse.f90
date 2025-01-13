@@ -2520,22 +2520,22 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
-     ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     ! ia, ja, a, input matrix in compressed sparse row format
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
      ! diagonal matrix stored as a vector diag
-     complex(dp), intent(in)  :: diag(nrows)
+     complex(dp), intent(in) :: diag(nrows)
 
-     ! b, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)     :: ib(nrows+1)
-     integer, intent(out)     :: jb(nnz)
+     ! ib, jb, b, output matrix in compressed sparse row format
+     integer, intent(out) :: ib(nrows+1)
+     integer, intent(out) :: jb(nnz)
      complex(dp), intent(out) :: b(nnz)
 
 !! local variables
@@ -2549,7 +2549,13 @@
 
 !! [body
 
-     ! init B sparse matrix
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix B
      b = dcmplx(0.0_dp, 0.0_dp)
      ib = 0
      jb = 0
