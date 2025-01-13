@@ -2673,6 +2673,34 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix B
+     b = dcmplx(0.0_dp, 0.0_dp)
+     ib = 0
+     jb = 0
+
+     ! scale each element
+     do i=1,nrows
+         k1 = ia(i)
+         k2 = ia(i+1) - 1
+         do k=k1,k2
+             b(k) = a(k) * diag( ja(k) )
+         enddo ! over k={k1,k2} loop
+     enddo ! over i={1,nrows} loop
+
+     do i=1,nrows+1
+         ib(i) = ia(i)
+     enddo ! over i={1,nrows+1} loop
+
+     do k=ia(1),ia(nrows+1)-1
+         jb(k) = ja(k)
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
+
 !! body]
 
      return
