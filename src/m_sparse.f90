@@ -2595,7 +2595,7 @@
      type (csr_d), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
-     real(dp), intent(in) :: diag(nrows)
+     real(dp), intent(in) :: diag(csra%nrows)
 
      ! csrb, a output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
@@ -2629,7 +2629,7 @@
      type (csr_z), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
-     complex(dp), intent(in) :: diag(nrows)
+     complex(dp), intent(in) :: diag(csra%nrows)
 
      ! csrb, a output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
