@@ -2978,7 +2978,7 @@
      enddo ! over i={1,csra%nrows+1} loop
 
      do k=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
-         csrb%colptr(k) = csrb%colptr(k)
+         csrb%colptr(k) = csra%colptr(k)
      enddo ! over k={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
 !! body]
