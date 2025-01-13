@@ -43,15 +43,16 @@
          ! nnz: number of non-zero values
          integer :: nnz   = 0
 
+     end type sparse_t
+
+     type, private, extends(sparse_t) :: csr_t
+
          ! rowptr: matrix row pointer
          integer, allocatable :: rowptr(:)
 
          ! colptr: matrix column pointer
          integer, allocatable :: colptr(:)
 
-     end type sparse_t
-
-     type, private, extends(sparse_t) :: csr_t
      end type csr_t
 
      ! csr_d: compressed sparse row format, real(dp) version
@@ -60,7 +61,7 @@
      end type csr_d
 
      ! csr_z: compressed sparse row format, complex(dp) version
-     type, public, extends(sparse_t) :: csr_z
+     type, public, extends(csr_t) :: csr_z
          complex(dp), allocatable :: V(:)
      end type csr_z
 
