@@ -2268,8 +2268,8 @@
      ! that column.
      integer :: iw(csrb%ncols)
 
-     ! dummy real(dp) variables, used to improve the ratio of floating
-     ! point operations to memory accesses.
+     ! dummy real(dp) variables, used to improve the ratio of
+     ! floating point operations to memory accesses.
      real(dp) :: atmp, btmp
 
 !! [body
@@ -2368,9 +2368,9 @@
      ! that column.
      integer :: iw(csrb%ncols)
 
-     ! dummy real(dp) variables, used to improve the ratio of floating
-     ! point operations to memory accesses.
-     real(dp) :: atmp, btmp
+     ! dummy complex(dp) variables, used to improve the ratio of
+     ! floating point operations to memory accesses.
+     complex(dp) :: atmp, btmp
 
 !! [body
 !! body]
