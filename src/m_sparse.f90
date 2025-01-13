@@ -2965,21 +2965,21 @@
      csrb%colptr = 0
 
      ! normalize each row
-     do i=1,nrows
-         k1 = ia(i)
-         k2 = ia(i+1) - 1
+     do i=1,csra%nrows
+         k1 = csra%rowptr(i)
+         k2 = csra%rowptr(i+1) - 1
          do k=k1,k2
-             b(k) = a(k) * diag(i)
+             csrb%V(k) = csra%V(k) * diag(i)
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrows} loop
+     enddo ! over i={1,csra%nrows} loop
 
-     do i=1,nrows+1
-         ib(i) = ia(i)
-     enddo ! over i={1,nrows+1} loop
+     do i=1,csra%nrows+1
+         csrb%rowptr(i) = csra%rowptr(i)
+     enddo ! over i={1,csra%nrows+1} loop
 
-     do k=ia(1),ia(nrows+1)-1
-         jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrows+1)-1} loop
+     do k=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%colptr(k) = csrb%colptr(k)
+     enddo ! over k={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
 !! body]
 
