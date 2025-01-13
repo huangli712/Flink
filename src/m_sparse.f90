@@ -2014,13 +2014,13 @@
 
 !! external arguments
      ! the row dimension of matrix A = row dimension of matrix C
-     integer, intent(in)   :: nrows
+     integer, intent(in) :: nrows
 
      ! the column dimension of matrix A = row dimension of matrix B
-     integer, intent(in)   :: ndims
+     integer, intent(in) :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
-     integer, intent(in)   :: ncols
+     integer, intent(in) :: ncols
 
      ! the length of the arrays c and jc.
      !
@@ -2028,14 +2028,17 @@
      ! elements that exceeds nnz.
      integer, intent(in)   :: nnz
 
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in)   :: ia(nrows+1)
      integer, intent(in)   :: ja(nnz)
      real(dp), intent(in)  :: a(nnz)
 
+     ! ib, jb, b, input matrix in compressed sparse row format
      integer, intent(in)   :: ib(ndims+1)
      integer, intent(in)   :: jb(nnz)
      real(dp), intent(in)  :: b(nnz)
 
+     ! ic, jc, c, input matrix in compressed sparse row format
      integer, intent(out)  :: ic(nrows+1)
      integer, intent(out)  :: jc(nnz)
      real(dp), intent(out) :: c(nnz)
