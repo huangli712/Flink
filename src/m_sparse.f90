@@ -2986,11 +2986,143 @@
      return
   end subroutine csr_dm_z_t
 
+!!========================================================================
+!!>>> sparse matrix-matrix addition                                    <<<
+!!========================================================================
 
+  subroutine csr_plus_d(nrow, ncol, job, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw, ierr)
+     implicit none
 
+!*****************************************************************************80
+!
+!! APLB performs the CSR matrix sum C = A + B.
+!
+!  Parameters:
+!
+!    Input, integer ( kind = 4 ) NROW, the row dimension of A and B.
+!
+!    Input, integer ( kind = 4 ) NCOL, the column dimension of A and B.
+!
+!    Input, integer ( kind = 4 ) JOB.  When JOB = 0, only the structure
+!    (i.e. the arrays jc, ic) is computed and the
+!    real values are ignored.
+!
+!    Input, real A(*), integer ( kind = 4 ) JA(*), IA(NROW+1), the matrix in CSR
+!    Compressed Sparse Row format.
+!
+! b,
+! jb,
+! ib      =  Matrix B in compressed sparse row format.
+!
+! nzmax      = integer ( kind = 4 ). The  length of the arrays c and jc.
+!         amub will stop if the result matrix C  has a number
+!         of elements that exceeds exceeds nzmax. See ierr.
+!
+! on return:
+!
+! c,
+! jc,
+! ic      = resulting matrix C in compressed sparse row sparse format.
+!
+! ierr      = integer ( kind = 4 ). serving as error message.
+!         ierr = 0 means normal return,
+!         ierr > 0 means that amub stopped while computing the
+!         i-th row  of C with i = ierr, because the number
+!         of elements in C exceeds nzmax.
+!
+! work arrays:
+!
+! iw      = integer ( kind = 4 ) work array of length equal to the number of
+!         columns in A.
+!
 
+  integer ( kind = 4 ) ncol
+  integer ( kind = 4 ) nrow
 
-  subroutine csr_plus_d()
+  real ( kind = 8 ) a(*)
+  real ( kind = 8 ) b(*)
+  real ( kind = 8 ) c(*)
+  integer ( kind = 4 ) ia(nrow+1)
+  integer ( kind = 4 ) ib(nrow+1)
+  integer ( kind = 4 ) ic(nrow+1)
+  integer ( kind = 4 ) ierr
+  integer ( kind = 4 ) ii
+  integer ( kind = 4 ) iw(ncol)
+  integer ( kind = 4 ) ja(*)
+  integer ( kind = 4 ) jb(*)
+  integer ( kind = 4 ) jc(*)
+  integer ( kind = 4 ) jcol
+  integer ( kind = 4 ) job
+  integer ( kind = 4 ) jpos
+  integer ( kind = 4 ) k
+  integer ( kind = 4 ) ka
+  integer ( kind = 4 ) kb
+  integer ( kind = 4 ) len
+  integer ( kind = 4 ) nzmax
+  logical values
+
+  values = ( job /= 0 )
+  ierr = 0
+  len = 0
+  ic(1) = 1
+  iw(1:ncol) = 0
+
+  do ii = 1, nrow
+!
+!  Row I.
+!
+     do ka = ia(ii), ia(ii+1)-1
+
+        len = len + 1
+        jcol = ja(ka)
+
+        if ( nzmax < len ) then
+          ierr = ii
+          return
+        end if
+
+        jc(len) = jcol
+        if ( values ) then
+          c(len) = a(ka)
+        end if
+        iw(jcol) = len
+     end do
+
+     do kb = ib(ii), ib(ii+1)-1
+
+        jcol = jb(kb)
+        jpos = iw(jcol)
+
+        if ( jpos == 0 ) then
+
+           len = len + 1
+
+           if ( nzmax < len ) then
+             ierr = ii
+             return
+           end if
+
+           jc(len) = jcol
+           if ( values ) then
+             c(len) = b(kb)
+           end if
+           iw(jcol)= len
+        else
+           if ( values ) then
+             c(jpos) = c(jpos) + b(kb)
+           end if
+        end if
+
+     end do
+
+     do k = ic(ii), len
+       iw(jc(k)) = 0
+     end do
+
+     ic(ii+1) = len+1
+  end do
+
+     return
   end subroutine csr_plus_d
 
   subroutine csr_plus_z(i)
