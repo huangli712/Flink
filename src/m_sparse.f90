@@ -2398,23 +2398,23 @@
      q = 0
      do i=1,csrc%nrows
          do ka=csra%rowptr(i),csra%rowptr(i+1)-1
-             j = ja(ka)
-             atmp = a(ka)
-             do kb=ib(j),ib(j+1)-1
-                 k = jb(kb)
-                 btmp = b(kb)
+             j = csra%colptr(ka)
+             atmp = csra%V(ka)
+             do kb=csrb%rowptr(j),csrb%rowptr(j+1)-1
+                 k = csrb%colptr(kb)
+                 btmp = csrb%V(kb)
 
                  p = iw(k)
                  if ( p == 0 ) then
                      q = q + 1
                      iw(k) = q
-                     jc(q) = k
-                     c(q) = atmp * btmp
+                     csrc%colptr(q) = k
+                     csrc%V(q) = atmp * btmp
                  else
-                     c(p) = c(p) + atmp * btmp
+                     csrc%V(p) = csrc%V(p) + atmp * btmp
                  endif ! back if ( p == 0 ) block
-             enddo ! over kb={ib(j),ib(j+1)-1} loop
-         enddo ! over ka={ia(i),ia(i+1)-1} loop
+             enddo ! over kb={csrb%rowptr(j),csrb%rowptr(j+1)-1} loop
+         enddo ! over ka={csra%rowptr(i),csra%rowptr(i+1)-1} loop
 
          ! done this row i, so set work array to zero again
          do k=ic(i),q
