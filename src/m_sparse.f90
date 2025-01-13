@@ -2795,23 +2795,23 @@
      implicit none
 
 !! external arguments
-     ! the row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     ! row dimension of dense matrix
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
      ! diagonal matrix stored as a vector diag
-     complex(dp), intent(in)  :: diag(nrows)
+     complex(dp), intent(in) :: diag(nrows)
 
-     ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     ! ia, ja, a, input matrix in compressed sparse row format
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
-     ! b, jb, ib, resulting matrix B in compressed sparse row format
-     integer, intent(out)     :: ib(nrows+1)
-     integer, intent(out)     :: jb(nnz)
+     ! ib, jb, b, output matrix in compressed sparse row format
+     integer, intent(out) :: ib(nrows+1)
+     integer, intent(out) :: jb(nnz)
      complex(dp), intent(out) :: b(nnz)
 
 !! local variables
