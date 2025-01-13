@@ -2585,9 +2585,20 @@
 !!
 !! @sub csr_md_d_t
 !!
+!! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_d_t()
+  subroutine csr_md_d_t(csra, diag, csrb)
      implicit none
+
+!! external arguments
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: k
+
+     ! loop index
+     integer :: k1
+     integer :: k2
 
 !! [body
 
@@ -2599,11 +2610,31 @@
 !!
 !! @sub csr_md_z_t
 !!
+!! performs the matrix by matrix product B = A * Diag.
 !!
-  subroutine csr_md_z_t(i)
+  subroutine csr_md_z_t(csra, diag, csrb)
+     implicit none
+
+!! external arguments
+!! local variables
+     ! loop index
      integer :: i
-     i = 0
+     integer :: k
+
+     ! loop index
+     integer :: k1
+     integer :: k2
+
+!! [body
+
+!! body]
+
+     return
   end subroutine csr_md_z_t
+
+
+
+
 
 !!
 !! @sub csr_dm_d
