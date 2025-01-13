@@ -4,7 +4,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/12/2025 by li huang (last modified)
+!!!           01/13/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -2492,4 +2492,24 @@
      i = 0
   end subroutine csr_dm_z_t
 
+  subroutine csr_plus_d()
+  end subroutine csr_plus_d
+
+  subroutine csr_plus_z(i)
+     integer :: i
+     i = 0
+  end subroutine csr_plus_z
+
+  subroutine csr_plus_d_t(i,j)
+     integer :: i, j
+     i = 0
+     j = 0
+  end subroutine csr_plus_d_t
+
+  subroutine csr_plus_z_t(i,j,k)
+     integer :: i, j, k
+     i = 0
+     j = 0
+     k = 0
+  end subroutine csr_plus_z_t
   end module sparse
