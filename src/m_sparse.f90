@@ -2952,15 +2952,17 @@
 !! [body
 
      ! check dimensions
-     if ( nrows <= 0 .or. nnz <= 0 ) then
+     if ( csra%nrows /= csrb%nrows .or. &
+          csra%ncols /= csrb%ncols .or. &
+          csra%nnz   /= csrb%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
      ! init sparse matrix B
-     b = dcmplx(0.0_dp, 0.0_dp)
-     ib = 0
-     jb = 0
+     csrb%V = dcmplx(0.0_dp, 0.0_dp)
+     csrb%rowptr = 0
+     csrb%colptr = 0
 
      ! normalize each row
      do i=1,nrows
