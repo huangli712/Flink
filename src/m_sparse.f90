@@ -2858,13 +2858,76 @@
      return
   end subroutine csr_dm_z
 
-  subroutine csr_dm_d_t()
+!!
+!! @sub csr_dm_d_t
+!!
+!! performs the matrix by matrix product B = Diag * A.
+!!
+  subroutine csr_dm_d_t(diag, csra, csrb)
+     implicit none
+
+!! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csra
+
+     ! diagonal matrix stored as a vector diag
+     real(dp), intent(in) :: diag(csra%nrows)
+
+     ! csrb, a output matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csrb
+
+!! local variables
+     ! loop index
+     integer :: i
+     integer :: k
+
+     ! loop index
+     integer :: k1
+     integer :: k2
+
+!! [body
+
+     ! check dimensions
+     if ( csra%nrows /= csrb%nrows .or. &
+          csra%ncols /= csrb%ncols .or. &
+          csra%nnz   /= csrb%nnz ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix B
+     csrb%V = 0.0_dp
+     csrb%rowptr = 0
+     csrb%colptr = 0
+
+     ! normalize each row
+     do i=1,nrows
+         k1 = ia(i)
+         k2 = ia(i+1) - 1
+         do k=k1,k2
+             b(k) = a(k) * diag(i)
+         enddo ! over k={k1,k2} loop
+     enddo ! over i={1,nrows} loop
+
+     do i=1,nrows+1
+         ib(i) = ia(i)
+     enddo ! over i={1,nrows+1} loop
+
+     do k=ia(1),ia(nrows+1)-1
+         jb(k) = ja(k)
+     enddo ! over k={ia(1),ia(nrows+1)-1} loop
+
+!! body]
+
+     return
   end subroutine csr_dm_d_t
 
-  subroutine csr_dm_z_t(i)
-     integer :: i
-     i = 0
+  subroutine csr_dm_z_t(diag, csra, csrb)
   end subroutine csr_dm_z_t
+
+
+
+
 
   subroutine csr_plus_d()
   end subroutine csr_plus_d
