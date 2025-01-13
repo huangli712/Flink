@@ -2393,10 +2393,10 @@
      iw = 0
 
      ! init sparse matrix C
-     ic(1) = 1
+     csrc%rowptr(1) = 1
 
      q = 0
-     do i=1,nrows
+     do i=1,csrc%nrows
          do ka=ia(i),ia(i+1)-1
              j = ja(ka)
              atmp = a(ka)
