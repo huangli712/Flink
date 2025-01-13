@@ -2266,7 +2266,7 @@
      ! matrix B, which is an array that has nonzero value if the column
      ! index already exist, in which case the value is the index of
      ! that column.
-     integer :: iw(ncols)
+     integer :: iw(csrb%ncols)
 
      ! dummy real(dp) variables, used to improve the ratio of floating
      ! point operations to memory accesses.
@@ -2278,10 +2278,24 @@
      return
   end subroutine csr_mm_d_t
 
+!!
+!! @sub csr_mm_z_t
+!!
+!! performs the matrix by matrix product C = A * B.
+!!
   subroutine csr_mm_z_t(csra, csrb, csrc)
      implicit none
 
 !! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csra
+
+     ! csrb, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csrb
+
+     ! csrc, a output matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csrc
+
 !! local variables
      ! loop index
      integer :: i, j, k
@@ -2296,7 +2310,7 @@
      ! matrix B, which is an array that has nonzero value if the column
      ! index already exist, in which case the value is the index of
      ! that column.
-     integer :: iw(ncols)
+     integer :: iw(csrb%ncols)
 
      ! dummy real(dp) variables, used to improve the ratio of floating
      ! point operations to memory accesses.
