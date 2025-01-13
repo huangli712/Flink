@@ -2703,7 +2703,7 @@
 
      do k=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
          csrb%colptr(k) = csra%colptr(k)
-     enddo ! over k={ia(1),ia(csra%nrows+1)-1} loop
+     enddo ! over k={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
 !! body]
 
