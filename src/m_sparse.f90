@@ -2417,11 +2417,11 @@
          enddo ! over ka={csra%rowptr(i),csra%rowptr(i+1)-1} loop
 
          ! done this row i, so set work array to zero again
-         do k=ic(i),q
-             iw( jc( k ) ) = 0
-         enddo ! over k={ic(i),q} loop
-         ic(i+1) = q + 1
-     enddo ! over i={1,nrows} loop
+         do k=csrc%rowptr(i),q
+             iw( csrc%colptr( k ) ) = 0
+         enddo ! over k={csrc%rowptr(i),q} loop
+         csrc%rowptr(i+1) = q + 1
+     enddo ! over i={1,csrc%nrows} loop
 
      ! check the number of nonzero elements
      if ( q > csrc%nnz ) then
