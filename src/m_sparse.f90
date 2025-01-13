@@ -1460,7 +1460,7 @@
 
 !! external arguments
      ! csra, a input matrix in compressed sparse row format
-     type (csr_d), intent(in)    :: csra
+     type (csr_d), intent(in) :: csra
 
      ! csrb, a input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
@@ -1506,7 +1506,7 @@
 
 !! external arguments
      ! csra, a input matrix in compressed sparse row format
-     type (csr_z), intent(in)    :: csra
+     type (csr_z), intent(in) :: csra
 
      ! csrb, a input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
@@ -1558,20 +1558,20 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in)  :: i
+     integer, intent(in) :: i
 
      ! the column index of the element sought
-     integer, intent(in)  :: j
+     integer, intent(in) :: j
 
      ! row dimension of dense matrix
-     integer, intent(in)  :: nrows
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)  :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)  :: ia(nrows+1)
-     integer, intent(in)  :: ja(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
 
 !! local variables
@@ -1623,20 +1623,20 @@
 
 !! external arguments
      ! the row index of the element sought
-     integer, intent(in)     :: i
+     integer, intent(in) :: i
 
      ! the column index of the element sought
-     integer, intent(in)     :: j
+     integer, intent(in) :: j
 
      ! row dimension of dense matrix
-     integer, intent(in)     :: nrows
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)     :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)     :: ia(nrows+1)
-     integer, intent(in)     :: ja(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
      complex(dp), intent(in) :: a(nnz)
 
 !! local variables
