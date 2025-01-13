@@ -2753,7 +2753,13 @@
 
 !! [body
 
-     ! init B sparse matrix
+     ! check dimensions
+     if ( nrows <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init sparse matrix B
      b = 0.0_dp
      ib = 0
      jb = 0
