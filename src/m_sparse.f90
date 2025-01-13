@@ -2243,6 +2243,15 @@
      implicit none
 
 !! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csra
+
+     ! csrb, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csrb
+
+     ! csrc, a output matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csrc
+
 !! local variables
      ! loop index
      integer :: i, j, k
