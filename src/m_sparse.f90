@@ -2612,32 +2612,34 @@
 !! [body
 
      ! check dimensions
-     if ( nrows <= 0 .or. nnz <= 0 ) then
+     if ( csra%nrows /= csrb%nrows .or. & 
+          csra%ncols /= csrb%ncols .or. &
+          csra%nnz   /= csrb%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
          STOP
      endif ! back if block
 
      ! init sparse matrix B
-     b = 0.0_dp
-     ib = 0
-     jb = 0
+     csrb%V = 0.0_dp
+     csrb%rowptr = 0
+     csrb%colptr = 0
 
      ! scale each element
-     do i=1,nrows
-         k1 = ia(i)
-         k2 = ia(i+1) - 1
+     do i=1,csra%nrows
+         k1 = csra%rowptr(i)
+         k2 = csra%rowptr(i+1) - 1
          do k=k1,k2
-             b(k) = a(k) * diag( ja(k) )
+             csrb%V(k) = csra%V(k) * diag( csra%colptr(k) )
          enddo ! over k={k1,k2} loop
-     enddo ! over i={1,nrows} loop
+     enddo ! over i={1,csra%nrows} loop
 
-     do i=1,nrows+1
-         ib(i) = ia(i)
-     enddo ! over i={1,nrows+1} loop
+     do i=1,csra%nrows+1
+         csrb%rowptr(i) = csra%rowptr(i)
+     enddo ! over i={1,csra%nrows+1} loop
 
-     do k=ia(1),ia(nrows+1)-1
-         jb(k) = ja(k)
-     enddo ! over k={ia(1),ia(nrows+1)-1} loop
+     do k=csra%rowptr(1),csra%rowptr(csra%nrows+1)-1
+         csrb%colptr(k) = csra%colptr(k)
+     enddo ! over k={csra%rowptr(1),csra%rowptr(csra%nrows+1)-1} loop
 
 !! body]
 
