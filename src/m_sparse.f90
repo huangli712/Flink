@@ -2029,16 +2029,19 @@
      integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
+     ! matrix A -> shape(nrows,ndims)
      integer, intent(in) :: ia(nrows+1)
      integer, intent(in) :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
 
      ! ib, jb, b, input matrix in compressed sparse row format
+     ! matrix B -> shape(ndims,ncols)
      integer, intent(in) :: ib(ndims+1)
      integer, intent(in) :: jb(nnz)
      real(dp), intent(in) :: b(nnz)
 
-     ! ic, jc, c, input matrix in compressed sparse row format
+     ! ic, jc, c, output matrix in compressed sparse row format
+     ! matrix C -> shape(nrows,ncols)
      integer, intent(out) :: ic(nrows+1)
      integer, intent(out) :: jc(nnz)
      real(dp), intent(out) :: c(nnz)
@@ -2065,10 +2068,16 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ndims <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init work array
      iw = 0
 
-     ! init C sparse matrix
+     ! init sparse matrix C
      ic(1) = 1
 
      q = 0
@@ -2120,33 +2129,36 @@
 
 !! external arguments
      ! the row dimension of matrix A = row dimension of matrix C
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! the column dimension of matrix A = row dimension of matrix B
-     integer, intent(in)      :: ndims
+     integer, intent(in) :: ndims
 
      ! the column dimension of matrix B = column dimension of matrix C
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! the length of the arrays c and jc.
      !
      ! this subroutine will stop if the result matrix C has a number of
      ! elements that exceeds nnz.
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
-     ! a, ja, ia, matrix A in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     ! ia, ja, a, input matrix in compressed sparse row format
+     ! matrix A -> shape(nrows,ndims)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
-     ! b, jb, ib, matrix B in compressed sparse row format
-     integer, intent(in)      :: ib(ndims+1)
-     integer, intent(in)      :: jb(nnz)
-     complex(dp), intent(in)  :: b(nnz)
+     ! ib, jb, b, input matrix in compressed sparse row format
+     ! matrix B -> shape(ndims,ncols)
+     integer, intent(in) :: ib(ndims+1)
+     integer, intent(in) :: jb(nnz)
+     complex(dp), intent(in) :: b(nnz)
 
-     ! c, jc, ic, resulting matrix C in compressed sparse row format
-     integer, intent(out)     :: ic(nrows+1)
-     integer, intent(out)     :: jc(nnz)
+     ! ic, jc, c, output matrix in compressed sparse row format
+     ! matrix C -> shape(nrows,ncols)
+     integer, intent(out) :: ic(nrows+1)
+     integer, intent(out) :: jc(nnz)
      complex(dp), intent(out) :: c(nnz)
 
 !! local variables
@@ -2171,10 +2183,16 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ndims <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init work array
      iw = 0
 
-     ! init C sparse matrix
+     ! init sparse matrix C
      ic(1) = 1
 
      q = 0
