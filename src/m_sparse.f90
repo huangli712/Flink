@@ -21,7 +21,7 @@
 !!========================================================================
 
 !! module parameters
-     ! dp: number precision, double precision for real and complex number
+     ! dp: double precision for real and complex number
      integer, private, parameter :: dp    = kind(1.0d0)
 
      ! mystd: device descriptor, console output
@@ -51,8 +51,11 @@
 
      end type sparse_t
 
+     type, private, extends(sparse_t) :: csr_t
+     end type csr_t
+
      ! csr_d: compressed sparse row format, real(dp) version
-     type, public, extends(sparse_t) :: csr_d
+     type, public, extends(csr_t) :: csr_d
          real(dp), allocatable :: V(:)
      end type csr_d
 
