@@ -2591,8 +2591,14 @@
      implicit none
 
 !! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csra
+
      ! diagonal matrix stored as a vector diag
      real(dp), intent(in) :: diag(nrows)
+
+     ! csrb, a output matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csrb
 
 !! local variables
      ! loop index
@@ -2619,8 +2625,14 @@
      implicit none
 
 !! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csra
+
      ! diagonal matrix stored as a vector diag
      complex(dp), intent(in) :: diag(nrows)
+
+     ! csrb, a output matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csrb
 
 !! local variables
      ! loop index
