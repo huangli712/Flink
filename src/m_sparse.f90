@@ -1156,20 +1156,20 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
      ! input densely stored matrix
-     complex(dp), intent(in)  :: dns(nrows,ncols)
+     complex(dp), intent(in) :: dns(nrows,ncols)
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(out)     :: ia(nrows+1)
-     integer, intent(out)     :: ja(nnz)
+     integer, intent(out) :: ia(nrows+1)
+     integer, intent(out) :: ja(nnz)
      complex(dp), intent(out) :: a(nnz)
 
 !! local variables
@@ -1224,10 +1224,10 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)  :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)  :: ncols
+     integer, intent(in) :: ncols
 
      ! input densely stored matrix
      real(dp), intent(in) :: dns(nrows,ncols)
@@ -1286,10 +1286,10 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)     :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)     :: ncols
+     integer, intent(in) :: ncols
 
      ! input densely stored matrix
      complex(dp), intent(in) :: dns(nrows,ncols)
@@ -1352,19 +1352,19 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)   :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)   :: ia(nrows+1)
-     integer, intent(in)   :: ja(nnz)
-     real(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
 
      ! ib, jb, b, input matrix in compressed sparse row format
-     integer, intent(out)  :: ib(nrows+1)
-     integer, intent(out)  :: jb(nnz)
+     integer, intent(out) :: ib(nrows+1)
+     integer, intent(out) :: jb(nnz)
      real(dp), intent(out) :: b(nnz)
 
 !! local variables
@@ -1406,19 +1406,19 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
      ! ib, jb, b, input matrix in compressed sparse row format
-     integer, intent(out)     :: ib(nrows+1)
-     integer, intent(out)     :: jb(nnz)
+     integer, intent(out) :: ib(nrows+1)
+     integer, intent(out) :: jb(nnz)
      complex(dp), intent(out) :: b(nnz)
 
 !! local variables
