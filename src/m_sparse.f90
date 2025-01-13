@@ -45,6 +45,7 @@
 
      end type sparse_t
 
+     ! csr_t: sparse matrix in compressed sparse row format
      type, private, extends(sparse_t) :: csr_t
 
          ! rowptr: matrix row pointer
@@ -57,12 +58,16 @@
 
      ! csr_d: compressed sparse row format, real(dp) version
      type, public, extends(csr_t) :: csr_d
+         !
          real(dp), allocatable :: V(:)
+         !
      end type csr_d
 
      ! csr_z: compressed sparse row format, complex(dp) version
      type, public, extends(csr_t) :: csr_z
+         !
          complex(dp), allocatable :: V(:)
+         !
      end type csr_z
 
 !!========================================================================
@@ -849,18 +854,18 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)   :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)   :: ia(nrows+1)
-     integer, intent(in)   :: ja(nnz)
-     real(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
 
      ! array where to store dense matrix
      real(dp), intent(out) :: dns(nrows,ncols)
@@ -909,18 +914,18 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)      :: nnz
+     integer, intent(in) :: nnz
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(in)      :: ia(nrows+1)
-     integer, intent(in)      :: ja(nnz)
-     complex(dp), intent(in)  :: a(nnz)
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     complex(dp), intent(in) :: a(nnz)
 
      ! array where to store dense matrix
      complex(dp), intent(out) :: dns(nrows,ncols)
@@ -969,16 +974,16 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! array where to store dense matrix
-     real(dp), intent(out)    :: dns(nrows,ncols)
+     real(dp), intent(out) :: dns(nrows,ncols)
 
 !! local variables
      ! loop index
@@ -1024,10 +1029,10 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)      :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)      :: ncols
+     integer, intent(in) :: ncols
 
      ! csr, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
@@ -1084,20 +1089,20 @@
 
 !! external arguments
      ! row dimension of dense matrix
-     integer, intent(in)   :: nrows
+     integer, intent(in) :: nrows
 
      ! column dimension of dense matrix
-     integer, intent(in)   :: ncols
+     integer, intent(in) :: ncols
 
      ! maximum number of nonzero elements allowed
-     integer, intent(in)   :: nnz
+     integer, intent(in) :: nnz
 
      ! input densely stored matrix
-     real(dp), intent(in)  :: dns(nrows,ncols)
+     real(dp), intent(in) :: dns(nrows,ncols)
 
      ! ia, ja, a, input matrix in compressed sparse row format
-     integer, intent(out)  :: ia(nrows+1)
-     integer, intent(out)  :: ja(nnz)
+     integer, intent(out) :: ia(nrows+1)
+     integer, intent(out) :: ja(nnz)
      real(dp), intent(out) :: a(nnz)
 
 !! local variables
