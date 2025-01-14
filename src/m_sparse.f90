@@ -3218,6 +3218,19 @@
      ! csrc, a output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrc
 
+!! local variables
+     ! loop index
+     integer :: i, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in A
+     integer :: iw(ncols)
+
   end subroutine csr_plus_d_t
 
 !!
@@ -3237,6 +3250,19 @@
 
      ! csrc, a output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrc
+
+!! local variables
+     ! loop index
+     integer :: i, k
+
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in A
+     integer :: iw(ncols)
 
   end subroutine csr_plus_z_t
 
