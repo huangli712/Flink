@@ -3231,6 +3231,60 @@
      ! integer work array of length equal to the number of columns in A
      integer :: iw(ncols)
 
+!! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init work array
+     iw = 0
+
+     ! init sparse matrix C
+     ic(1) = 1
+
+     q = 0
+     do i=1,nrows
+         do ka=ia(i),ia(i+1)-1
+             q = q + 1
+             k = ja(ka)
+             iw(k) = q
+             jc(q) = k
+             c(q) = a(ka)
+         enddo ! over ka={ia(i),ia(i+1)-1} loop
+         !
+         do kb=ib(i),ib(i+1)-1
+             k = jb(kb)
+
+             p = iw(k)
+             if ( p == 0 ) then
+                 q = q + 1
+                 iw(k) = q
+                 jc(q) = k
+                 c(q) = b(kb)
+             else
+                 c(p) = c(p) + b(kb)
+             endif ! back if ( p == 0 ) block
+         enddo ! over kb={ib(j),ib(j+1)-1} loop
+
+         ! done this row i, so set work array to zero again
+         do k=ic(i),q
+             iw( jc(k) ) = 0
+         enddo ! over k={ic(i),q} loop
+         ic(i+1) = q + 1
+     enddo ! over i={1,nrows} loop
+
+     ! check the number of nonzero elements
+     if ( q > nnz ) then
+         write(mystd,'(a)') 'sparse: error in csr_plus_d_t'
+         STOP
+     endif ! back if ( q > nnz ) block
+
+!! body]
+
+     return
   end subroutine csr_plus_d_t
 
 !!
@@ -3264,6 +3318,60 @@
      ! integer work array of length equal to the number of columns in A
      integer :: iw(ncols)
 
+!! [body
+
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
+     ! init work array
+     iw = 0
+
+     ! init sparse matrix C
+     ic(1) = 1
+
+     q = 0
+     do i=1,nrows
+         do ka=ia(i),ia(i+1)-1
+             q = q + 1
+             k = ja(ka)
+             iw(k) = q
+             jc(q) = k
+             c(q) = a(ka)
+         enddo ! over ka={ia(i),ia(i+1)-1} loop
+         !
+         do kb=ib(i),ib(i+1)-1
+             k = jb(kb)
+
+             p = iw(k)
+             if ( p == 0 ) then
+                 q = q + 1
+                 iw(k) = q
+                 jc(q) = k
+                 c(q) = b(kb)
+             else
+                 c(p) = c(p) + b(kb)
+             endif ! back if ( p == 0 ) block
+         enddo ! over kb={ib(j),ib(j+1)-1} loop
+
+         ! done this row i, so set work array to zero again
+         do k=ic(i),q
+             iw( jc(k) ) = 0
+         enddo ! over k={ic(i),q} loop
+         ic(i+1) = q + 1
+     enddo ! over i={1,nrows} loop
+
+     ! check the number of nonzero elements
+     if ( q > nnz ) then
+         write(mystd,'(a)') 'sparse: error in csr_plus_z_t'
+         STOP
+     endif ! back if ( q > nnz ) block
+
+!! body]
+
+     return
   end subroutine csr_plus_z_t
 
   end module sparse
