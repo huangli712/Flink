@@ -3041,6 +3041,12 @@
 
 !! [body
 
+     ! check dimensions
+     if ( nrows <= 0 .or. ncols <= 0 .or. nnz <= 0 ) then
+         write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
+         STOP
+     endif ! back if block
+
      ! init work array
      iw = 0
 
