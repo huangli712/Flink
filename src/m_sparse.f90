@@ -3027,14 +3027,10 @@
      real(dp), intent(out) :: c(nnz)
 
 !! local variables
-  integer ( kind = 4 ) i
-  integer ( kind = 4 ) p
-  integer ( kind = 4 ) k
-  integer ( kind = 4 ) ka
-  integer ( kind = 4 ) kb
-  integer ( kind = 4 ) q
-
-  integer ( kind = 4 ) iw(ncols)
+     integer ( kind = 4 ) i, k
+     integer ( kind = 4 ) ka, kb
+     integer ( kind = 4 ) p, q
+     integer ( kind = 4 ) iw(ncols)
 
   q = 0
   ic(1) = 1
