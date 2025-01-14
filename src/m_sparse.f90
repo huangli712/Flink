@@ -3019,9 +3019,9 @@
      integer, intent(in) :: jb(nnz)
      real(dp), intent(in) :: b(nnz)
 
-     integer ( kind = 4 ) ic(nrows+1)
-     integer ( kind = 4 ) jc(*)
-     real ( kind = 8 ) c(*)
+     integer, intent(out) :: ic(nrows+1)
+     integer, intent(out) :: jc(nnz)
+     real(dp), intent(out) :: c(nnz)
 
 ! iw      = integer ( kind = 4 ) work array of length equal to the number of
 !         columns in A.
