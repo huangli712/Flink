@@ -2990,7 +2990,7 @@
 !!>>> sparse matrix-matrix addition                                    <<<
 !!========================================================================
 
-  subroutine csr_plus_d(nrow, ncol, job, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw, ierr)
+  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw, ierr)
      implicit none
 
 !*****************************************************************************80
@@ -3052,16 +3052,13 @@
   integer ( kind = 4 ) jb(*)
   integer ( kind = 4 ) jc(*)
   integer ( kind = 4 ) jcol
-  integer ( kind = 4 ) job
   integer ( kind = 4 ) jpos
   integer ( kind = 4 ) k
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
   integer ( kind = 4 ) len
   integer ( kind = 4 ) nzmax
-  logical values
 
-  values = ( job /= 0 )
   ierr = 0
   len = 0
   ic(1) = 1
@@ -3082,9 +3079,7 @@
         end if
 
         jc(len) = jcol
-        if ( values ) then
-          c(len) = a(ka)
-        end if
+        c(len) = a(ka)
         iw(jcol) = len
      end do
 
@@ -3100,27 +3095,23 @@
            if ( nzmax < len ) then
              ierr = ii
              return
-           end if
+           endif
 
            jc(len) = jcol
-           if ( values ) then
-             c(len) = b(kb)
-           end if
+           c(len) = b(kb)
            iw(jcol)= len
         else
-           if ( values ) then
-             c(jpos) = c(jpos) + b(kb)
-           end if
-        end if
+           c(jpos) = c(jpos) + b(kb)
+        endif
 
-     end do
+     enddo
 
      do k = ic(ii), len
        iw(jc(k)) = 0
-     end do
+     enddo
 
      ic(ii+1) = len+1
-  end do
+  enddo
 
      return
   end subroutine csr_plus_d
