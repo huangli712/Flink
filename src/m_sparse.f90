@@ -2282,7 +2282,7 @@
          STOP
      endif ! back if block
      !
-     if ( csra%nnz /= csrb%nnz .or. & 
+     if ( csra%nnz /= csrb%nnz .or. &
           csra%nnz /= csrc%nnz .or. &
           csrb%nnz /= csrc%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
@@ -2382,7 +2382,7 @@
          STOP
      endif ! back if block
      !
-     if ( csra%nnz /= csrb%nnz .or. & 
+     if ( csra%nnz /= csrb%nnz .or. &
           csra%nnz /= csrc%nnz .or. &
           csrb%nnz /= csrc%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
@@ -2612,7 +2612,7 @@
 !! [body
 
      ! check dimensions
-     if ( csra%nrows /= csrb%nrows .or. & 
+     if ( csra%nrows /= csrb%nrows .or. &
           csra%ncols /= csrb%ncols .or. &
           csra%nnz   /= csrb%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
@@ -2676,7 +2676,7 @@
 !! [body
 
      ! check dimensions
-     if ( csra%nrows /= csrb%nrows .or. & 
+     if ( csra%nrows /= csrb%nrows .or. &
           csra%ncols /= csrb%ncols .or. &
           csra%nnz   /= csrb%nnz ) then
          write(mystd,'(a)') 'sparse: wrong dimensions for sparse matrix'
@@ -2990,22 +2990,27 @@
 !!>>> sparse matrix-matrix addition                                    <<<
 !!========================================================================
 
-  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nnz, iw)
+!!
+!! @sub csr_plus_d
+!!
+!! performs the CSR matrix sum C = A + B.
+!!
+  subroutine csr_plus_d(nrows, ncols, nnz, ia, ja, a, ib, jb, b, ic, jc, c)
      implicit none
 
-!*****************************************************************************80
-!
-!! APLB performs the CSR matrix sum C = A + B.
-!
-!  Parameters:
-!
-!    Input, integer ( kind = 4 ) NROW, the row dimension of A and B.
-!
-!    Input, integer ( kind = 4 ) NCOL, the column dimension of A and B.
-!
-!    Input, integer ( kind = 4 ) JOB.  When JOB = 0, only the structure
-!    (i.e. the arrays jc, ic) is computed and the
-!    real values are ignored.
+!! external arguments
+     ! row dimension of A and B.
+     integer, intent(in) :: nrows
+
+     ! column dimension of A and B.
+     integer, intent(in) :: ncols
+
+     ! the length of the arrays c and jc.
+     !
+     ! this subroutine will stop if the result matrix C has a number of
+     ! elements that exceeds nnz.
+     integer, intent(in) :: nnz
+
 !
 !    Input, real A(*), integer ( kind = 4 ) JA(*), IA(NROW+1), the matrix in CSR
 !    Compressed Sparse Row format.
@@ -3014,9 +3019,6 @@
 ! jb,
 ! ib      =  Matrix B in compressed sparse row format.
 !
-! nnz      = integer ( kind = 4 ). The  length of the arrays c and jc.
-!         amub will stop if the result matrix C  has a number
-!         of elements that exceeds exceeds nnz. See ierr.
 !
 ! on return:
 !
@@ -3030,17 +3032,14 @@
 !         columns in A.
 !
 
-  integer ( kind = 4 ) ncol
-  integer ( kind = 4 ) nrow
-
   real ( kind = 8 ) a(*)
   real ( kind = 8 ) b(*)
   real ( kind = 8 ) c(*)
-  integer ( kind = 4 ) ia(nrow+1)
-  integer ( kind = 4 ) ib(nrow+1)
-  integer ( kind = 4 ) ic(nrow+1)
+  integer ( kind = 4 ) ia(nrows+1)
+  integer ( kind = 4 ) ib(nrows+1)
+  integer ( kind = 4 ) ic(nrows+1)
   integer ( kind = 4 ) ii
-  integer ( kind = 4 ) iw(ncol)
+  integer ( kind = 4 ) iw(ncols)
   integer ( kind = 4 ) ja(*)
   integer ( kind = 4 ) jb(*)
   integer ( kind = 4 ) jc(*)
@@ -3050,16 +3049,12 @@
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
   integer ( kind = 4 ) len
-  integer ( kind = 4 ) nnz
 
   len = 0
   ic(1) = 1
-  iw(1:ncol) = 0
+  iw = 0
 
-  do ii = 1, nrow
-!
-!  Row I.
-!
+  do ii = 1, nrows
      do ka = ia(ii), ia(ii+1)-1
 
         len = len + 1
