@@ -3032,53 +3032,52 @@
      integer ( kind = 4 ) p, q
      integer ( kind = 4 ) iw(ncols)
 
-  q = 0
-  ic(1) = 1
-  iw = 0
+     q = 0
+     ic(1) = 1
+     iw = 0
 
-  do i = 1, nrows
-     do ka = ia(i), ia(i+1)-1
+     do i = 1, nrows
+         do ka = ia(i), ia(i+1)-1
+             q = q + 1
+             k = ja(ka)
 
-        q = q + 1
-        k = ja(ka)
+             if ( nnz < q ) then
+                 return
+             endif
 
-        if ( nnz < q ) then
-          return
-        end if
+             jc(q) = k
+             c(q) = a(ka)
+             iw(k) = q
+         enddo
 
-        jc(q) = k
-        c(q) = a(ka)
-        iw(k) = q
-     end do
+         do kb = ib(i), ib(i+1)-1
 
-     do kb = ib(i), ib(i+1)-1
+             k = jb(kb)
+             p = iw(k)
 
-        k = jb(kb)
-        p = iw(k)
+             if ( p == 0 ) then
 
-        if ( p == 0 ) then
+                 q = q + 1
 
-           q = q + 1
+                 if ( nnz < q ) then
+                     return
+                 endif
 
-           if ( nnz < q ) then
-             return
-           endif
+                 jc(q) = k
+                 c(q) = b(kb)
+                 iw(k)= q
+             else
+                 c(p) = c(p) + b(kb)
+             endif
 
-           jc(q) = k
-           c(q) = b(kb)
-           iw(k)= q
-        else
-           c(p) = c(p) + b(kb)
-        endif
+         enddo
 
+         do k = ic(i), q
+             iw(jc(k)) = 0
+         enddo
+
+         ic(i+1) = q+1
      enddo
-
-     do k = ic(i), q
-       iw(jc(k)) = 0
-     enddo
-
-     ic(i+1) = q+1
-  enddo
 
      return
   end subroutine csr_plus_d
