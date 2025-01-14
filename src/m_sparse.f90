@@ -3027,62 +3027,61 @@
      real(dp), intent(out) :: c(nnz)
 
 !! local variables
-  integer ( kind = 4 ) ii
-  integer ( kind = 4 ) jcol
+  integer ( kind = 4 ) i
   integer ( kind = 4 ) p
   integer ( kind = 4 ) k
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
-  integer ( kind = 4 ) len
+  integer ( kind = 4 ) q
 
   integer ( kind = 4 ) iw(ncols)
 
-  len = 0
+  q = 0
   ic(1) = 1
   iw = 0
 
-  do ii = 1, nrows
-     do ka = ia(ii), ia(ii+1)-1
+  do i = 1, nrows
+     do ka = ia(i), ia(i+1)-1
 
-        len = len + 1
-        jcol = ja(ka)
+        q = q + 1
+        k = ja(ka)
 
-        if ( nnz < len ) then
+        if ( nnz < q ) then
           return
         end if
 
-        jc(len) = jcol
-        c(len) = a(ka)
-        iw(jcol) = len
+        jc(q) = k
+        c(q) = a(ka)
+        iw(k) = q
      end do
 
-     do kb = ib(ii), ib(ii+1)-1
+     do kb = ib(i), ib(i+1)-1
 
-        jcol = jb(kb)
-        p = iw(jcol)
+        k = jb(kb)
+        p = iw(k)
 
         if ( p == 0 ) then
 
-           len = len + 1
+           q = q + 1
 
-           if ( nnz < len ) then
+           if ( nnz < q ) then
              return
            endif
 
-           jc(len) = jcol
-           c(len) = b(kb)
-           iw(jcol)= len
+           jc(q) = k
+           c(q) = b(kb)
+           iw(k)= q
         else
            c(p) = c(p) + b(kb)
         endif
 
      enddo
 
-     do k = ic(ii), len
+     do k = ic(i), q
        iw(jc(k)) = 0
      enddo
 
-     ic(ii+1) = len+1
+     ic(i+1) = q+1
   enddo
 
      return
