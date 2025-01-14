@@ -3027,57 +3027,64 @@
      real(dp), intent(out) :: c(nnz)
 
 !! local variables
-     integer ( kind = 4 ) i, k
-     integer ( kind = 4 ) ka, kb
-     integer ( kind = 4 ) p, q
-     integer ( kind = 4 ) iw(ncols)
+     ! loop index
+     integer :: i, k
 
-     q = 0
-     ic(1) = 1
+     ! loop index
+     integer :: ka, kb
+
+     ! dummy integer variables
+     integer :: p, q
+
+     ! integer work array of length equal to the number of columns in A
+     integer :: iw(ncols)
+
+!! [body
+
+     ! init work array
      iw = 0
 
-     do i = 1, nrows
-         do ka = ia(i), ia(i+1)-1
+     ! init sparse matrix C
+     ic(1) = 1
+
+     q = 0
+     do i=1,nrows
+         do ka=ia(i),ia(i+1)-1
              q = q + 1
              k = ja(ka)
-
-             if ( nnz < q ) then
-                 return
-             endif
-
+             iw(k) = q
              jc(q) = k
              c(q) = a(ka)
-             iw(k) = q
-         enddo
-
-         do kb = ib(i), ib(i+1)-1
-
+         enddo ! over ka={ia(i),ia(i+1)-1} loop
+         !
+         do kb=ib(i),ib(i+1)-1
              k = jb(kb)
+
              p = iw(k)
-
              if ( p == 0 ) then
-
                  q = q + 1
-
-                 if ( nnz < q ) then
-                     return
-                 endif
-
+                 iw(k) = q
                  jc(q) = k
                  c(q) = b(kb)
-                 iw(k)= q
              else
                  c(p) = c(p) + b(kb)
-             endif
+             endif ! back if ( p == 0 ) block
+         enddo ! over kb={ib(j),ib(j+1)-1} loop
 
-         enddo
+         ! done this row i, so set work array to zero again
+         do k=ic(i),q
+             iw( jc(k) ) = 0
+         enddo ! over k={ic(i),q} loop
+         ic(i+1) = q + 1
+     enddo ! over i={1,nrows} loop
 
-         do k = ic(i), q
-             iw(jc(k)) = 0
-         enddo
+     ! check the number of nonzero elements
+     if ( q > nnz ) then
+         write(mystd,'(a)') 'sparse: error in csr_plus_d'
+         STOP
+     endif ! back if ( q > nnz ) block
 
-         ic(i+1) = q+1
-     enddo
+!! body]
 
      return
   end subroutine csr_plus_d
