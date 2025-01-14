@@ -3200,16 +3200,44 @@
      return
   end subroutine csr_plus_z
 
-  subroutine csr_plus_d_t(i,j)
-     integer :: i, j
-     i = 0
-     j = 0
+!!
+!! @sub csr_plus_d_t
+!!
+!! performs the CSR matrix sum C = A + B.
+!!
+  subroutine csr_plus_d_t(csra, csrb, csrc)
+     implicit none
+
+!! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csra
+
+     ! csrb, a input matrix in compressed sparse row format
+     type (csr_d), intent(in) :: csrb
+
+     ! csrc, a output matrix in compressed sparse row format
+     type (csr_d), intent(inout) :: csrc
+
   end subroutine csr_plus_d_t
 
-  subroutine csr_plus_z_t(i,j,k)
-     integer :: i, j, k
-     i = 0
-     j = 0
-     k = 0
+!!
+!! @sub csr_plus_z_t
+!!
+!! performs the CSR matrix sum C = A + B.
+!!
+  subroutine csr_plus_z_t(csra, csrb, csrc)
+     implicit none
+
+!! external arguments
+     ! csra, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csra
+
+     ! csrb, a input matrix in compressed sparse row format
+     type (csr_z), intent(in) :: csrb
+
+     ! csrc, a output matrix in compressed sparse row format
+     type (csr_z), intent(inout) :: csrc
+
   end subroutine csr_plus_z_t
+
   end module sparse
