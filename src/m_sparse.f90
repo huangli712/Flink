@@ -3191,7 +3191,7 @@
 
      ! check the number of nonzero elements
      if ( q > nnz ) then
-         write(mystd,'(a)') 'sparse: error in csr_plus_d'
+         write(mystd,'(a)') 'sparse: error in csr_plus_z'
          STOP
      endif ! back if ( q > nnz ) block
 
