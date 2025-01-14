@@ -3011,25 +3011,25 @@
      ! elements that exceeds nnz.
      integer, intent(in) :: nnz
 
+     ! ia, ja, a, input matrix in compressed sparse row format
      integer, intent(in) :: ia(nrows+1)
      integer, intent(in) :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
 
+     ! ib, jb, b, input matrix in compressed sparse row format
      integer, intent(in) :: ib(nrows+1)
      integer, intent(in) :: jb(nnz)
      real(dp), intent(in) :: b(nnz)
 
+     ! ic, jc, c, output matrix in compressed sparse row format
      integer, intent(out) :: ic(nrows+1)
      integer, intent(out) :: jc(nnz)
      real(dp), intent(out) :: c(nnz)
 
-! iw      = integer ( kind = 4 ) work array of length equal to the number of
-!         columns in A.
-!
-
+!! local variables
   integer ( kind = 4 ) ii
   integer ( kind = 4 ) jcol
-  integer ( kind = 4 ) jpos
+  integer ( kind = 4 ) p
   integer ( kind = 4 ) k
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
@@ -3059,9 +3059,9 @@
      do kb = ib(ii), ib(ii+1)-1
 
         jcol = jb(kb)
-        jpos = iw(jcol)
+        p = iw(jcol)
 
-        if ( jpos == 0 ) then
+        if ( p == 0 ) then
 
            len = len + 1
 
@@ -3073,7 +3073,7 @@
            c(len) = b(kb)
            iw(jcol)= len
         else
-           c(jpos) = c(jpos) + b(kb)
+           c(p) = c(p) + b(kb)
         endif
 
      enddo
