@@ -3011,44 +3011,31 @@
      ! elements that exceeds nnz.
      integer, intent(in) :: nnz
 
-!
-!    Input, real A(*), integer ( kind = 4 ) JA(*), IA(NROW+1), the matrix in CSR
-!    Compressed Sparse Row format.
-!
-! b,
-! jb,
-! ib      =  Matrix B in compressed sparse row format.
-!
-!
-! on return:
-!
-! c,
-! jc,
-! ic      = resulting matrix C in compressed sparse row sparse format.
-!
-! work arrays:
-!
+     integer, intent(in) :: ia(nrows+1)
+     integer, intent(in) :: ja(nnz)
+     real(dp), intent(in) :: a(nnz)
+
+     integer ( kind = 4 ) ib(nrows+1)
+     integer ( kind = 4 ) jb(*)
+     real ( kind = 8 ) b(*)
+
+     integer ( kind = 4 ) ic(nrows+1)
+     integer ( kind = 4 ) jc(*)
+     real ( kind = 8 ) c(*)
+
 ! iw      = integer ( kind = 4 ) work array of length equal to the number of
 !         columns in A.
 !
 
-  real ( kind = 8 ) a(*)
-  real ( kind = 8 ) b(*)
-  real ( kind = 8 ) c(*)
-  integer ( kind = 4 ) ia(nrows+1)
-  integer ( kind = 4 ) ib(nrows+1)
-  integer ( kind = 4 ) ic(nrows+1)
   integer ( kind = 4 ) ii
-  integer ( kind = 4 ) iw(ncols)
-  integer ( kind = 4 ) ja(*)
-  integer ( kind = 4 ) jb(*)
-  integer ( kind = 4 ) jc(*)
   integer ( kind = 4 ) jcol
   integer ( kind = 4 ) jpos
   integer ( kind = 4 ) k
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
   integer ( kind = 4 ) len
+
+  integer ( kind = 4 ) iw(ncols)
 
   len = 0
   ic(1) = 1
