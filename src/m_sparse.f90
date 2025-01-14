@@ -2990,7 +2990,7 @@
 !!>>> sparse matrix-matrix addition                                    <<<
 !!========================================================================
 
-  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw, ierr)
+  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw)
      implicit none
 
 !*****************************************************************************80
@@ -3024,12 +3024,6 @@
 ! jc,
 ! ic      = resulting matrix C in compressed sparse row sparse format.
 !
-! ierr      = integer ( kind = 4 ). serving as error message.
-!         ierr = 0 means normal return,
-!         ierr > 0 means that amub stopped while computing the
-!         i-th row  of C with i = ierr, because the number
-!         of elements in C exceeds nzmax.
-!
 ! work arrays:
 !
 ! iw      = integer ( kind = 4 ) work array of length equal to the number of
@@ -3045,7 +3039,6 @@
   integer ( kind = 4 ) ia(nrow+1)
   integer ( kind = 4 ) ib(nrow+1)
   integer ( kind = 4 ) ic(nrow+1)
-  integer ( kind = 4 ) ierr
   integer ( kind = 4 ) ii
   integer ( kind = 4 ) iw(ncol)
   integer ( kind = 4 ) ja(*)
@@ -3059,7 +3052,6 @@
   integer ( kind = 4 ) len
   integer ( kind = 4 ) nzmax
 
-  ierr = 0
   len = 0
   ic(1) = 1
   iw(1:ncol) = 0
@@ -3074,7 +3066,6 @@
         jcol = ja(ka)
 
         if ( nzmax < len ) then
-          ierr = ii
           return
         end if
 
@@ -3093,7 +3084,6 @@
            len = len + 1
 
            if ( nzmax < len ) then
-             ierr = ii
              return
            endif
 
