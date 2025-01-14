@@ -3015,9 +3015,9 @@
      integer, intent(in) :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
 
-     integer ( kind = 4 ) ib(nrows+1)
-     integer ( kind = 4 ) jb(*)
-     real ( kind = 8 ) b(*)
+     integer, intent(in) :: ib(nrows+1)
+     integer, intent(in) :: jb(nnz)
+     real(dp), intent(in) :: b(nnz)
 
      integer ( kind = 4 ) ic(nrows+1)
      integer ( kind = 4 ) jc(*)
