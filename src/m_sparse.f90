@@ -2990,7 +2990,7 @@
 !!>>> sparse matrix-matrix addition                                    <<<
 !!========================================================================
 
-  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nzmax, iw)
+  subroutine csr_plus_d(nrow, ncol, a, ja, ia, b, jb, ib, c, jc, ic, nnz, iw)
      implicit none
 
 !*****************************************************************************80
@@ -3014,9 +3014,9 @@
 ! jb,
 ! ib      =  Matrix B in compressed sparse row format.
 !
-! nzmax      = integer ( kind = 4 ). The  length of the arrays c and jc.
+! nnz      = integer ( kind = 4 ). The  length of the arrays c and jc.
 !         amub will stop if the result matrix C  has a number
-!         of elements that exceeds exceeds nzmax. See ierr.
+!         of elements that exceeds exceeds nnz. See ierr.
 !
 ! on return:
 !
@@ -3050,7 +3050,7 @@
   integer ( kind = 4 ) ka
   integer ( kind = 4 ) kb
   integer ( kind = 4 ) len
-  integer ( kind = 4 ) nzmax
+  integer ( kind = 4 ) nnz
 
   len = 0
   ic(1) = 1
@@ -3065,7 +3065,7 @@
         len = len + 1
         jcol = ja(ka)
 
-        if ( nzmax < len ) then
+        if ( nnz < len ) then
           return
         end if
 
@@ -3083,7 +3083,7 @@
 
            len = len + 1
 
-           if ( nzmax < len ) then
+           if ( nnz < len ) then
              return
            endif
 
