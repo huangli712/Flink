@@ -4,7 +4,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 02/01/2010 by li huang (created)
-!!!           01/13/2025 by li huang (last modified)
+!!!           01/14/2025 by li huang (last modified)
 !!! purpose : the purpose of this module is to implement important sparse
 !!!           matrix/vector operations, including matrix multiplication,
 !!!           format conversion, etc. the internal format of sparse matrix
@@ -37,7 +37,7 @@
          ! nrows: number of rows
          integer :: nrows = 0
 
-         ! ncols: ! number of columns
+         ! ncols: number of columns
          integer :: ncols = 0
 
          ! nnz: number of non-zero values
@@ -1100,7 +1100,7 @@
      ! input densely stored matrix
      real(dp), intent(in) :: dns(nrows,ncols)
 
-     ! ia, ja, a, input matrix in compressed sparse row format
+     ! ia, ja, a, output matrix in compressed sparse row format
      integer, intent(out) :: ia(nrows+1)
      integer, intent(out) :: ja(nnz)
      real(dp), intent(out) :: a(nnz)
@@ -1167,7 +1167,7 @@
      ! input densely stored matrix
      complex(dp), intent(in) :: dns(nrows,ncols)
 
-     ! ia, ja, a, input matrix in compressed sparse row format
+     ! ia, ja, a, output matrix in compressed sparse row format
      integer, intent(out) :: ia(nrows+1)
      integer, intent(out) :: ja(nnz)
      complex(dp), intent(out) :: a(nnz)
@@ -1362,7 +1362,7 @@
      integer, intent(in) :: ja(nnz)
      real(dp), intent(in) :: a(nnz)
 
-     ! ib, jb, b, input matrix in compressed sparse row format
+     ! ib, jb, b, output matrix in compressed sparse row format
      integer, intent(out) :: ib(nrows+1)
      integer, intent(out) :: jb(nnz)
      real(dp), intent(out) :: b(nnz)
@@ -1416,7 +1416,7 @@
      integer, intent(in) :: ja(nnz)
      complex(dp), intent(in) :: a(nnz)
 
-     ! ib, jb, b, input matrix in compressed sparse row format
+     ! ib, jb, b, output matrix in compressed sparse row format
      integer, intent(out) :: ib(nrows+1)
      integer, intent(out) :: jb(nnz)
      complex(dp), intent(out) :: b(nnz)
@@ -1462,7 +1462,7 @@
      ! csra, a input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
-     ! csrb, a input/output matrix in compressed sparse row format
+     ! csrb, a output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
 
 !! local variables
@@ -1508,7 +1508,7 @@
      ! csra, a input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
-     ! csrb, a input/output matrix in compressed sparse row format
+     ! csrb, a output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
 
 !! local variables
