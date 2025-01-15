@@ -392,7 +392,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! local variables
@@ -449,7 +449,7 @@
      ! maximum number of nonzero elements allowed
      integer, intent(in) :: nnz
 
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! local variables
@@ -577,7 +577,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! [body
@@ -604,7 +604,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! [body
@@ -753,7 +753,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
 !! local variables
@@ -801,7 +801,7 @@
      implicit none
 
 !! external arguments
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
 !! local variables
@@ -979,7 +979,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! array where to store dense matrix
@@ -1034,7 +1034,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
      ! array where to store dense matrix
@@ -1232,7 +1232,7 @@
      ! input densely stored matrix
      real(dp), intent(in) :: dns(nrows,ncols)
 
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csr
 
 !! local variables
@@ -1294,7 +1294,7 @@
      ! input densely stored matrix
      complex(dp), intent(in) :: dns(nrows,ncols)
 
-     ! csr, a input/output matrix in compressed sparse row format
+     ! csr, an input/output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csr
 
 !! local variables
@@ -1459,10 +1459,10 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
 
 !! local variables
@@ -1505,10 +1505,10 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
 
 !! local variables
@@ -1693,7 +1693,7 @@
      ! the column index of the element sought
      integer, intent(in) :: j
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
 !! local variables
@@ -1744,7 +1744,7 @@
      ! the column index of the element sought
      integer, intent(in) :: j
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
 !! local variables
@@ -1911,7 +1911,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csr
 
      ! vector, length equal to the column dimension of the dense matrix
@@ -1963,7 +1963,7 @@
      ! column dimension of dense matrix
      integer, intent(in) :: ncols
 
-     ! csr, a input matrix in compressed sparse row format
+     ! csr, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csr
 
      ! vector, length equal to the column dimension of the dense matrix
@@ -2243,13 +2243,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
-     ! csrb, a input matrix in compressed sparse row format
+     ! csrb, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csrb
 
-     ! csrc, a output matrix in compressed sparse row format
+     ! csrc, an output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrc
 
 !! local variables
@@ -2343,13 +2343,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
-     ! csrb, a input matrix in compressed sparse row format
+     ! csrb, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csrb
 
-     ! csrc, a output matrix in compressed sparse row format
+     ! csrc, an output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrc
 
 !! local variables
@@ -2591,13 +2591,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
      real(dp), intent(in) :: diag(csra%nrows)
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
 
 !! local variables
@@ -2655,13 +2655,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
      complex(dp), intent(in) :: diag(csra%nrows)
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
 
 !! local variables
@@ -2867,13 +2867,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
      real(dp), intent(in) :: diag(csra%nrows)
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrb
 
 !! local variables
@@ -2931,13 +2931,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
      ! diagonal matrix stored as a vector diag
      complex(dp), intent(in) :: diag(csra%nrows)
 
-     ! csrb, a output matrix in compressed sparse row format
+     ! csrb, an output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrb
 
 !! local variables
@@ -3209,13 +3209,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csra
 
-     ! csrb, a input matrix in compressed sparse row format
+     ! csrb, an input matrix in compressed sparse row format
      type (csr_d), intent(in) :: csrb
 
-     ! csrc, a output matrix in compressed sparse row format
+     ! csrc, an output matrix in compressed sparse row format
      type (csr_d), intent(inout) :: csrc
 
 !! local variables
@@ -3308,13 +3308,13 @@
      implicit none
 
 !! external arguments
-     ! csra, a input matrix in compressed sparse row format
+     ! csra, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csra
 
-     ! csrb, a input matrix in compressed sparse row format
+     ! csrb, an input matrix in compressed sparse row format
      type (csr_z), intent(in) :: csrb
 
-     ! csrc, a output matrix in compressed sparse row format
+     ! csrc, an output matrix in compressed sparse row format
      type (csr_z), intent(inout) :: csrc
 
 !! local variables
