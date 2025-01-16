@@ -14,11 +14,12 @@
 
 * Modules
     * Physical and numerical constants (**src/m_constants.f90**)
+    * Colorful terminal output (**src/m_face.f90**)
     * Data structure: linked list (**src/m_linkedlist.f90**)
     * Message passing interface (**src/m_mpi.f90**)
     * Sparse matrix (**src/m_sparse.f90**)
     * Configuration file (**src/m_parser.f90**)
-    * Pseudo random number generator (**src/m_spring.f90**)
+    * Pseudorandom number generator (**src/m_spring.f90**)
     * Data structure: stack (**src/m_stack.f90**)
     * Analytical tetrahedron method (**src/m_tetra.f90**)
 
