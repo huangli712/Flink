@@ -116,7 +116,7 @@ call p_parse(file_name)
 
 !!! warning
 
-    In the mpi environment, only the master node can execute this command. You should broadcast the data manually.
+    In the MPI environment, only the master node can execute this command. You should broadcast the data manually.
 
 **(4)** Extract parameters.
 
@@ -135,7 +135,7 @@ call p_get_vec('symm', symm, 2) ! get array
 
     That if the desired parameter is not contained in the config file, then the default value will not be changed.
 
-    In the mpi environment, only the master node can execute these commands.
+    In the MPI environment, only the master node can execute these commands.
 
     The parser **DO NOT** check the correctness (including number of values, key's name, and datatype of value) of the input file. So, please always monitor the output of ctqmc code which use this parser to parse the input file.
 
