@@ -7,6 +7,7 @@ makedocs(
     format = Documenter.HTML(
         prettyurls = false,
         ansicolor = true,
+        inventory_version = "1.2.0",
     ),
     pages = [
         "Home" => "index.md",
