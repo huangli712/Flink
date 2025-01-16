@@ -106,14 +106,23 @@
 
      public :: smearing_gauss
      interface smearing_gauss
+         module procedure smearing_gauss_weight1
+         module procedure smearing_gauss_weight2
+         module procedure smearing_gauss_weight3
      end interface smearing_gauss
 
      public :: smearing_fermi
      interface smearing_fermi
+         module procedure smearing_fermi_weight1
+         module procedure smearing_fermi_weight2
+         module procedure smearing_fermi_weight3
      end interface smearing_fermi
 
      public :: smearing_marzari
      interface smearing_marzari
+         module procedure smearing_marzari_weight1
+         module procedure smearing_marzari_weight2
+         module procedure smearing_marzari_weight3
      end interface smearing_marzari
 
   contains ! encapsulated functionality
