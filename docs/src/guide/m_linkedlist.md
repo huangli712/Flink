@@ -1,4 +1,4 @@
-## Introduction
+# Linked list
 
 !!! note
 

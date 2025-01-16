@@ -1,4 +1,4 @@
-## Introduction
+# Sparse matrix
 
 In this module, we implement some basic sparse matrix algebra. Now it supports both double precision real and complex numbers. The internal format of sparse matrix used in this module is CSR (compressed sparse row) format.
 

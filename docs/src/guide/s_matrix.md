@@ -1,4 +1,4 @@
-## Introduction
+# Matrix
 
 It provides a lot of subroutines to manipulate the matrix and implement the linear algebra.
 

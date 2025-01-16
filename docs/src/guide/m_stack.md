@@ -1,4 +1,4 @@
-## Introduction
+# Stack
 
 In this module, we implement two types of stack, `istack` and `gstack`. The istack type was designed to deal with integer numbers only. However, gstack is a generic type stack. More specifically, it supports the following four data types:
 

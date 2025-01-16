@@ -1,4 +1,4 @@
-## Introduction
+# Pseudorandom number generator
 
 The following two random number generators (generates a random number between 0 and 1, real double precision) are supported by now.
 

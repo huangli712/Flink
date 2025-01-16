@@ -1,4 +1,4 @@
-## Introduction
+# Error and exception
 
 To deal with the error and exception.
 

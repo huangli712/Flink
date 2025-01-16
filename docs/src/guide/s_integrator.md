@@ -1,4 +1,4 @@
-## Introduction
+# Integration
 
 This module is used to perform simple numerical integration.
 

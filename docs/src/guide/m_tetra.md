@@ -1,4 +1,4 @@
-## Introduction
+# Analytic tetrahedron algorithm
 
 In this module, two tetrahedron integration algorithms are implemented. They are:
 

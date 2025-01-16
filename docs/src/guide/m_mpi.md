@@ -1,4 +1,4 @@
-## Introduction
+# Message passing interface
 
 This module wraps the most useful mpi calls by using generic programming techniques. It supports most of the collective operations (such as BCAST, GATHER, REDUCE, etc.). These subroutines are
 
