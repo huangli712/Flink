@@ -16,6 +16,7 @@ makedocs(
         "Basic usage" => "usage.md",
         "User's guide" => Any[
             "Constants" => "guide/m_constants.md",
+            "Colorful terminal output" => "guide/m_face.md",
             "Linked list" => "guide/m_linkedlist.md",
             "Message passing interface" => "guide/m_mpi.md",
             "Configuration parser" => "guide/m_parser.md",
