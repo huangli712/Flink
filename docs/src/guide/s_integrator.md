@@ -1,6 +1,6 @@
 # Integration
 
-This module is used to perform simple numerical integration.
+It provides two subroutines to perform simple numerical integration.
 
 ## Type
 
