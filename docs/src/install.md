@@ -2,15 +2,25 @@
 
 As mentioned before, almost all of my Fortran codes depend on the *Flink* library. So, if you want to try my codes, perhaps you have to compile and install *Flink* at first. Do not be nervous. It is quite easy.
 
-**Step 1**
+## Step 1
 
 At first, you have to download the latest source codes from the official repository of [*Flink*](https://github.com/huangli712/Flink). If every thing is OK, you will have a compressed file, such as `flink.zip` or `flink.tar.gz`.
 
-**Step 2**
+## Step 2
 
 And then you need to decompress it with `unzip` or `tar`.
 
-**Step 3**
+```shell
+$ unzip flink.zip
+```
+
+or
+
+```shell
+$ tar xvfz flink.tar.gz
+```
+
+## Step 3
 
 The next step is to compile *Flink*. Please execute the following three commands in your terminal.
 
