@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 12/31/2024 by li huang (created)
-!!!           01/07/2025 by li huang (last modified)
+!!!           01/16/2025 by li huang (last modified)
 !!! purpose : to support colorful outputs via ascii escape sequences.
 !!! status  : unstable
 !!! comment :
@@ -35,10 +35,10 @@
      ! general codes
      !
      ! "\" character
-     character(1), private, parameter :: ESCAPE=achar(27)
+     character(1), private, parameter :: C_ESCAPE=achar(27)
      !
      ! start ansi code, "\["
-     character(2), private, parameter :: C_START=ESCAPE//'['
+     character(2), private, parameter :: C_START=C_ESCAPE//'['
      !
      ! end ansi code, "m"
      character(1), private, parameter :: C_END='m'
@@ -160,6 +160,7 @@
 
      cstr = string
      !
+     ! if foreground color is specified
      if ( present(fg) ) then
          i = color_index(upper(fg))
          if ( i > 0 ) then
@@ -167,6 +168,7 @@
          endif
      endif
      !
+     ! if background color is specified
      if ( present(bg) ) then
          i = color_index(upper(bg))
          if ( i > 0 ) then
@@ -174,6 +176,7 @@
          endif
      endif
      !
+     ! if terminal style is specified
      if ( present(style) ) then
          i = style_index(upper(style))
          if ( i > 0 ) then

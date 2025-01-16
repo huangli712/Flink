@@ -24,7 +24,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           12/31/2024 by li huang (last modified)
+!!!           01/16/2025 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful features,
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
@@ -103,7 +103,7 @@
      implicit none
 
 !! external arguments
-     ! values to compare
+     ! values to be compared
      real(dp), intent(in) :: a
      real(dp), intent(in) :: b
 
@@ -276,6 +276,7 @@
                  int_aux = list(j)
                  list(j) = list(j+1)
                  list(j+1) = int_aux
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(j+1)
                  indx(j+1) = int_tmp
@@ -329,6 +330,7 @@
                  real_tmp = list(j)
                  list(j) = list(j+1)
                  list(j+1) = real_tmp
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(j+1)
                  indx(j+1) = int_tmp
@@ -376,7 +378,7 @@
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={1,nsize} loop
 
      do i = nsize, 1, -1
          swap = list(i)
@@ -394,7 +396,7 @@
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={nsize,1} loop
 
 !! body]
 
@@ -438,7 +440,7 @@
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={1,nsize} loop
 
      do i = nsize, 1, -1
          swap = list(i)
@@ -456,7 +458,7 @@
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={nsize,1} loop
 
 !! body]
 
@@ -503,18 +505,20 @@
                  int_aux = list(j)
                  list(j) = list(k)
                  list(k) = int_aux
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(k)
                  indx(k) = int_tmp
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={1,nsize} loop
 
      do i = nsize, 1, -1
          int_aux = list(i)
          list(i) = list(1)
          list(1) = int_aux
+         !
          int_tmp = indx(i)
          indx(i) = indx(1)
          indx(1) = int_tmp
@@ -527,13 +531,14 @@
                  int_aux = list(j)
                  list(j) = list(k)
                  list(k) = int_aux
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(k)
                  indx(k) = int_tmp
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={nsize,1} loop
 
 !! body]
 
@@ -582,18 +587,20 @@
                  real_aux = list(j)
                  list(j) = list(k)
                  list(k) = real_aux
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(k)
                  indx(k) = int_tmp
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={1,nsize} loop
 
      do i = nsize, 1, -1
          real_aux = list(i)
          list(i) = list(1)
          list(1) = real_aux
+         !
          int_tmp = indx(i)
          indx(i) = indx(1)
          indx(1) = int_tmp
@@ -606,13 +613,14 @@
                  real_aux = list(j)
                  list(j) = list(k)
                  list(k) = real_aux
+                 !
                  int_tmp = indx(j)
                  indx(j) = indx(k)
                  indx(k) = int_tmp
              endif
              j = k
          enddo
-     enddo
+     enddo ! over i={nsize,1} loop
 
 !! body]
 
