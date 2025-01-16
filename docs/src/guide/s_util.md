@@ -28,13 +28,17 @@ subroutine s_sorter1_i(nsize, list)
 subroutine s_sorter1_d(nsize, list)
 subroutine s_sorter2_i(nsize, list, indx)
 subroutine s_sorter2_d(nsize, list, indx)
+subroutine s_sorter3_i(nsize, list)
+subroutine s_sorter3_d(nsize, list)
+subroutine s_sorter4_i(nsize, list, indx)
+subroutine s_sorter4_d(nsize, list, indx)
 subroutine s_qsorter(nsize, list)
 subroutine s_qscorer(pstart, pend, nsize, list)
 ```
 
-The `s_sorter1()` and `s_sorter2()` subroutines implement the bubble algorithm, and the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
+The `s_sorter1()` and `s_sorter2()` subroutines implement the bubble algorithm. The `s_sorter3()` and `s_sorter4()` subroutines implement the heap algorithm. And the `s_qsorter()` subroutine implements the quick sort algorithm. The `s_qscorer()` subroutine is called by the `s_qsorter()` internally. DO NOT call it directly!
 
-Here, `nsize` is size of the list, `list` is the dataset to be sorted. In `s_sorter2()`, the index of the dataset (`indx`) is also sorted.
+Here, `nsize` is size of the list, `list` is the dataset to be sorted. In `s_sorter2()` and `s_sorter4()`, the index of the dataset (`indx`) is also sorted.
 
 !!! note
 
