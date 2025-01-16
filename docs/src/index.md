@@ -7,7 +7,7 @@
 * [Introduction](intro.md)
 * [Installation](install.md)
 * [Basic usage](usage.md)
-* User's guide
+* Modules
   * [Constants](guide/m_constants.md)
   * [Linked list](guide/m_linkedlist.md)
   * [Message passing interface](guide/m_mpi.md)
@@ -16,6 +16,7 @@
   * [Pseudorandom number generator](guide/m_spring.md)
   * [Stack](guide/m_stack.md)
   * [Analytical tetrahedron algorithm](guide/m_tetra.md)
+* Subroutines
   * [Error and exception](guide/s_error.md)
   * [Fourier transformation](guide/s_fourier.md)
   * [Special functions](guide/s_function.md)
@@ -26,4 +27,3 @@
   * [Vector](guide/s_vector.md)
 * Appendix
   * [make.inc](appendix/make.md)
-* FAQ
