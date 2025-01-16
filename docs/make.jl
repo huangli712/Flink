@@ -11,9 +11,11 @@ makedocs(
     ),
     pages = [
         "Home" => "index.md",
-        "Introduction" => "intro.md",
-        "Installation" => "install.md",
-        "Basic usage" => "usage.md",
+        "Introduction" => [
+            "Welcome" => "intro.md",
+            "Installation" => "install.md",
+            "Basic usage" => "usage.md",
+        ],
         "Modules" => Any[
             "Constants" => "guide/m_constants.md",
             "Colorful terminal output" => "guide/m_face.md",
