@@ -100,7 +100,10 @@
      public :: tetra_weight
      interface tetra_weight
          module procedure tetra_blochl_weight1
+         module procedure tetra_blochl_weight2
+         module procedure tetra_lambin_weight
      end interface tetra_weight
+
 
   contains ! encapsulated functionality
 
