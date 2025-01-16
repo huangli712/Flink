@@ -103,3 +103,47 @@ end type csr_z
 ```
 
 Note that only the `csr_d` and `csr_z` structs are public. The `csr_d` struct is for real sparse matrix, while `csr_z` struct is for complex sparse matrix.
+
+**(5)** Sample code
+
+```fortran
+program test
+    use constants, only : dp
+    use sparse
+
+    implicit none
+
+    ! dimensional parameters
+    integer, parameter :: nrows = 5
+    integer, parameter :: ncols = 5
+    integer, parameter :: nnz = 10
+
+    ! dense matrix
+    real(dp) :: AA(nrows,ncols)
+
+    ! sparse matrix
+    type (csr_d) :: TA
+
+    ! initialize dense matrix
+    AA = 0.0_dp
+    AA(1,1) = 0.31_dp
+    AA(1,4) = 4.07_dp
+    AA(2,2) = 0.84_dp
+    AA(2,5) = 2.60_dp
+    AA(3,1) = 6.18_dp
+    AA(3,2) = 7.12_dp
+    AA(4,4) = 0.82_dp
+    AA(5,3) = 1.12_dp
+
+    ! allocate memory for sparse matrix
+    call csr_alloc(nrows, ncols, nnz, TA)
+    call csr_print(TA)
+
+    ! convert dense matrix to sparse matrix
+    call dns_csr(nrows, ncols, AA, TA)
+    call csr_print(TA)
+
+    ! deallocate memory for sparse matrix
+    call csr_free(TA)
+end program test
+```
