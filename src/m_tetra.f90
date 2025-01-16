@@ -104,6 +104,17 @@
          module procedure tetra_lambin_weight
      end interface tetra_weight
 
+     public :: smearing_gauss
+     interface smearing_gauss
+     end interface smearing_gauss
+
+     public :: smearing_fermi
+     interface smearing_fermi
+     end interface smearing_fermi
+
+     public :: smearing_marzari
+     interface smearing_marzari
+     end interface smearing_marzari
 
   contains ! encapsulated functionality
 
