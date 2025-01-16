@@ -37,6 +37,10 @@ call tetra_blochl_weight2(z, e, ddd, ttt)
 
 For the external energy `z` and the one-particle energies at the corners of the tetrahedron `e`, the subroutine `tetra_blochl_weight1()` returns total contributions of the given tetrahedron to the density of states `dos` and integrated density of states `tos`, the subroutine `tetra_blochl_weight2()` returns corner-dependent contributions of the given tetrahedron to the density of states `ddd` and integrated density of states `ttt`.
 
+!!! warning
+
+    The subroutines `tetra_blochl_weight1()` and `tetra_blochl_weight2()` are private. So, please call the public interface `tetra_weight()`.
+
 **(2)** Lambin-Vigneron tetrahedron integration algorithm.
 
 ```fortran
@@ -44,6 +48,10 @@ call tetra_lambin_weight(z, e, weights)
 ```
 
 For the external energy `z` and the energy eigenvalues for four corners at given tetrahedron, the subroutine `tetra_lambin_weight()` returns corner-dependent integration weights `weights` for lattice Green's function. Note that now `z`, `e`, and `weights` are all complex.
+
+!!! warning
+
+    The subroutine `tetra_lambin_weight()` is private. So, please call the public interface `tetra_weight()`.
 
 **(3)** Gaussian smearing algorithm.
 
