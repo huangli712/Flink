@@ -4,7 +4,7 @@ The *Flink* library is a collection of Fortran modules and subroutines for scien
 
 ## Version
 
-v1.1.3-devel.20241230
+v1.2.0-devel.20250116
 
 ## License
 
