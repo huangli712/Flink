@@ -14,7 +14,7 @@ makedocs(
         "Introduction" => "intro.md",
         "Installation" => "install.md",
         "Basic usage" => "usage.md",
-        "User's guide" => Any[
+        "Modules" => Any[
             "Constants" => "guide/m_constants.md",
             "Colorful terminal output" => "guide/m_face.md",
             "Linked list" => "guide/m_linkedlist.md",
@@ -24,6 +24,8 @@ makedocs(
             "Pseudorandom number generator" => "guide/m_spring.md",
             "Stack" => "guide/m_stack.md",
             "Analytical tetrahedron algorithm" => "guide/m_tetra.md",
+        ],
+        "Subroutines" => Any[
             "Error and exception" => "guide/s_error.md",
             "Fourier transformation" => "guide/s_fourier.md",
             "Special functions" => "guide/s_function.md",
