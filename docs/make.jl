@@ -7,8 +7,11 @@ makedocs(
     format = Documenter.HTML(
         prettyurls = false,
         ansicolor = true,
+        repolink = "https://github.com/huangli712/Flink",
         inventory_version = "1.2.0",
+        assets = ["assets/flink.css"],
     ),
+    remotes = nothing,
     pages = [
         "Home" => "index.md",
         "Introduction" => [
