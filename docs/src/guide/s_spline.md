@@ -1,4 +1,4 @@
-# Spline interpolation
+# Spline Interpolation
 
 These subroutines are used to perform spline interpolation.
 

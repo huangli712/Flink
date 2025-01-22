@@ -1,4 +1,4 @@
-# Special functions
+# Special Functions
 
 Provide some subroutines to calculate the special functions.
 
