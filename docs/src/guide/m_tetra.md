@@ -39,7 +39,10 @@ For the external energy `z` and the one-particle energies at the corners of the 
 
 !!! warning
 
-    The subroutines `tetra_blochl_weight1()` and `tetra_blochl_weight2()` are private. So, please call the public interface `tetra_weight()`.
+    The subroutines
+    * `tetra_blochl_weight1()`
+    * `tetra_blochl_weight2()`
+    are private. So, please call the public interface `tetra_weight()`.
 
 **(2)** Lambin-Vigneron tetrahedron integration algorithm.
 
@@ -75,7 +78,11 @@ Here, `z` means external energy, `e` means energy at given k-point and band in `
 
 !!! warning
 
-    The subroutines `smearing_gauss_weight1()`, `smearing_gauss_weight2()`, and `smearing_gauss_weight3()` are private. So, please call the public interface `smearing_gauss()`.
+    The subroutines
+    * `smearing_gauss_weight1()`
+    * `smearing_gauss_weight2()`
+    * `smearing_gauss_weight3()`
+    are private. So, please call the public interface `smearing_gauss()`.
 
 **(4)** Fermi-Dirac smearing algorithm.
 
@@ -99,7 +106,11 @@ Here, `z` means external energy, `e` means energy at given k-point and band in `
 
 !!! warning
 
-    The subroutines `smearing_fermi_weight1()`, `smearing_fermi_weight2()`, and `smearing_fermi_weight3()` are private. So, please call the public interface `smearing_fermi()`.
+    The subroutines
+    * `smearing_fermi_weight1()`
+    * `smearing_fermi_weight2()`
+    * `smearing_fermi_weight3()`
+    are private. So, please call the public interface `smearing_fermi()`.
 
 **(5)** Marzari-Vanderbilt cold smearing algorithm.
 
@@ -123,7 +134,11 @@ Here, `z` means external energy, `e` means energy at given k-point and band in `
 
 !!! warning
 
-    The subroutines `smearing_marzari_weight1()`, `smearing_marzari_weight2()`, and `smearing_marzari_weight3()` are private. So, please call the public interface `smearing_marzari()`.
+    The subroutines
+    * `smearing_marzari_weight1()`
+    * `smearing_marzari_weight2()`
+    * `smearing_marzari_weight3()`
+    are private. So, please call the public interface `smearing_marzari()`.
 
 ## Theory
 
