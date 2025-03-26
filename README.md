@@ -12,4 +12,6 @@ GNU General Public License Version 3
 
 ## Documentation
 
-The reference guide is placed in the `docs` folder.
+Source: See `flink/docs`.
+
+Online: https://huangli712.github.io/projects/flink/index.html
