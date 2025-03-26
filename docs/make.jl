@@ -3,13 +3,14 @@ using Documenter
 makedocs(
     sitename="Flink",
     clean = false,
-    authors = "Li Huang",
+    authors = "Li Huang <huangli@caep.cn> and contributors",
     format = Documenter.HTML(
         prettyurls = false,
         ansicolor = true,
         repolink = "https://github.com/huangli712/Flink",
         inventory_version = "1.2.0",
         assets = ["assets/flink.css"],
+        collapselevel = 1,
     ),
     remotes = nothing,
     pages = [

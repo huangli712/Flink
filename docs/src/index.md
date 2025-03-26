@@ -1,6 +1,6 @@
 # Flink
 
-*A collection of Fortran modules and subroutines for scientific computing*.
+*A collection of Fortran modules and subroutines for scientific computing*
 
 !!! info
 
