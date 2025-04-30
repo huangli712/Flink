@@ -28,14 +28,15 @@
 .SUFFIXES: .f90
 
 define searchfile
-    $(eval INC_FILE=$(wildcard $(1)/$(2)))
-    $(if $(INC_FILE), 
+    $(eval INC_DIR=$(patsubst %/,%,$(1)))
+    $(eval INC_FILE=$(wildcard $(INC_DIR)/$(2)))
+    $(info searchfile scanned: $(INC_DIR))
+    $(if $(INC_FILE),
 	     $(info searchfile found: $(INC_FILE)),
-	     $(call searchfile,$(dir $(1))/..,$(2))
-	)
+		 $(call searchfile,$(dir $(INC_DIR)),$(2)))
 endef
 
-$(eval $(call searchfile,.,build/make.inc))
+$(eval $(call searchfile,$(CURDIR),build/make.inc))
 
 include $(INC_FILE)
 
