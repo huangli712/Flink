@@ -21,13 +21,23 @@
 ## =======
 ##
 ## 09/18/2014 by li huang (created)
-## 12/30/2024 by li huang (last modified)
+## 04/30/2025 by li huang (last modified)
 ##
 ##
 
 .SUFFIXES: .f90
 
-include ../build/make.inc
+define searchfile
+    $(eval INC_FILE=$(wildcard $(1)/$(2)))
+    $(if $(INC_FILE), 
+	     $(info searchfile found: $(INC_FILE)),
+	     $(call searchfile,$(dir $(1))/..,$(2))
+	)
+endef
+
+$(eval $(call searchfile,.,build/make.inc))
+
+include $(INC_FILE)
 
 mods1 = m_constants.o
 mods2 = m_linkedlist.o m_stack.o
