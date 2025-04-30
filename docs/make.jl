@@ -10,7 +10,7 @@ makedocs(
         repolink = "https://github.com/huangli712/Flink",
         assets = ["assets/flink.css"],
         collapselevel = 1,
-        inventory_version = "1.2.0",
+        inventory_version = "1.2.1",
     ),
     remotes = nothing,
     pages = [
