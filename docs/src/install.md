@@ -37,3 +37,22 @@ Once the compilation is finished (It takes about a few seconds usually), we can 
     In order to compile *Flink*, you have to ensure that a MPI-enabled Fortran compiler (which is compatibe with Fortran 2018 standard), and a numerical library which implements the BLAS and LAPACK interfaces (such as Intel MKL), are installed and configured correctly in your system. You can setup your compiling environment via editing the `build/make.inc` file.
 
     See [make.inc](appendix/make.md) for more details.
+
+## Step 4
+
+This step is optional. To build the documentation for the *Flink* library, please execute the following commands:
+
+```shell
+$ cd flink/docs
+$ julia make.jl
+```
+
+Then after a few seconds, the documentation will be ready in the *iqist/docs/build* directory. Of course, an online documentation is available in:
+
+```text
+https://huangli712.github.io/projects/flink/index.html
+```
+
+!!! tip
+
+    To generate the documentation, the Julia interpreter must be available in your system. See [Julia language](https://julialang.org/) for more details.
