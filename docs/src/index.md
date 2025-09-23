@@ -1,5 +1,5 @@
 ```@raw html
-<img src="./assets/logo.png" alt="logo.png" width="20%" class="center"/>
+<img src="./assets/logo.png" alt="logo.png" width="25%" class="center"/>
 ```
 
 *A collection of Fortran modules and subroutines for scientific computing*

@@ -1,26 +1,24 @@
-# make.inc
-
 The make.inc file is the key component of the building system. You have to modify it to fulfill your requirements. If it is not configured correctly, the building system won't work correctly as well. So in the following we would like to provide a detailed explanations for it.
 
 ## Prerequisites
 
-### Operation system
+### Operation System
 * Linux
 * macOS
 
-### Fortran compiler
+### Fortran Compiler
 * Intel Fortran Compiler
 
-### Linear algebra library
+### Linear Algebra Library
 * Apple Accelerate framework
 * Reference implementations for BLAS and LAPACK at Netlib
 * Intel Math Kernel Library
 
-### MPI environment
+### MPI Environment
 * MPICH
 * Openmpi
 
-### OpenMP environment
+### OpenMP Environment
 * (Optional)
 
 Though it is not mandatory, we still strongly recommend to update the above software components on your systems to the latest versions. The OpenMP environment is optional.
@@ -33,9 +31,11 @@ The Fortran compiler. Both the parallel and sequential Fortran compilers are sup
 
 **Possible options**:
 
+* mpiifx
 * mpif90
 * mpifort
 * mpiifort
+* ifx
 * ifort
 
 ### LINKER
@@ -52,7 +52,7 @@ Archiver. It is used to pack the binary objects into a library. Do not modify it
 
 **Possible options**:
 
-* ar -ruv
+* ar -rv
 
 ### MPI
 

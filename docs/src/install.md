@@ -18,7 +18,7 @@ or
 $ tar xvfz flink.tar.gz
 ```
 
-## Build
+## Build Library
 
 The next step is to compile *Flink*. Please execute the following three commands in your terminal.
 
