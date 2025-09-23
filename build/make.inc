@@ -19,13 +19,13 @@
 ## =======
 ##
 ## 05/11/2015 by li huang (created)
-## 06/22/2024 by li huang (last modified)
+## 09/23/2025 by li huang (last modified)
 ##
 ##
 
 # Fortran compiler, linker, and archiver
 #-------------------------------------------------------------------------
-F90    = mpifort
+F90    = mpiifx
 LINKER = $(F90)
 ARCHIVER = ar -ruv
 
