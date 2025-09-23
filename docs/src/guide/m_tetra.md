@@ -1,5 +1,3 @@
-# Analytic Tetrahedron Algorithm
-
 In this module, two tetrahedron integration algorithms are implemented. They are:
 
 * P. E. Blochl tetrahedron integration algorithm,

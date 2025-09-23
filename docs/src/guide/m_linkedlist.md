@@ -1,5 +1,3 @@
-# Linked List
-
 !!! note
 
     This implementation of generic linked list in Fortran 90 was taken from

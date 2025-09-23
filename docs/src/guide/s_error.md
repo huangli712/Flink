@@ -1,5 +1,3 @@
-# Error and Exception
-
 To deal with the error and exception.
 
 ## Type

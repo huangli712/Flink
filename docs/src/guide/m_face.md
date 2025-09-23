@@ -1,6 +1,4 @@
-# Colorful Terminal Output
-
-Support terminal escape sequences to produce styled and colored terminal output.
+It supports terminal escape sequences to produce styled and colored terminal output.
 
 ## Type
 
