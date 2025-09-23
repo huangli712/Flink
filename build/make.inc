@@ -27,7 +27,7 @@
 #-------------------------------------------------------------------------
 F90    = mpiifx
 LINKER = $(F90)
-ARCHIVER = ar -ruv
+ARCHIVER = ar -rv
 
 # Fortran preprocessor options
 #-------------------------------------------------------------------------
@@ -38,7 +38,7 @@ CPP    = $(FPP) $(MPI) $(OMP)
 
 # Machine tuning options
 #-------------------------------------------------------------------------
-CHECK  = -nogen-interfaces -warn all #-check all -traceback -g
+CHECK  = -nogen-interfaces -warn all,noexternal #-check all -traceback -g
 MTUNE  = -O3 -xHost
 
 # Flags for fortran compiler and linker
