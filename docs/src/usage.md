@@ -1,5 +1,3 @@
-# Basic Usage
-
 It is quite easy to use the *Flink* library.
 
 ## Step 1

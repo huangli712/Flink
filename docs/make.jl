@@ -18,7 +18,7 @@ makedocs(
     pages = [
         "Welcome" => "index.md",
         "Introduction" => [
-            "Welcome" => "intro.md",
+            "About Flink" => "intro.md",
             "Installation" => "install.md",
             "Basic Usage" => "usage.md",
         ],
