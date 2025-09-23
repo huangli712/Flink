@@ -147,23 +147,18 @@ Here, `z` means external energy, `e` means energy at given k-point and band in `
 Here we list the expressions for the integrated density of states or number of states function $n(\epsilon)$ from a given tetrahedron. The number of states function is used to determine the Fermi level. The expressions shown are similar to those given in previous papers. For the sake of simplicity we have omitted all band indices. The one-particle energies at the corners of the tetrahedron are $\epsilon_1$, $\epsilon_2$, $\epsilon_3$, $\epsilon_4$, which are ordered according to increasing values. $\epsilon_{ij}$ is a shorthand notation for $\epsilon_i - \epsilon_j$. $V_T$ is the reciprocal-space volume of the tetrahedron, and $V_G$ is the volume of the reciprocal unit cell.
 
 ```math
-\begin{equation}
 n(\epsilon) = 0
-\end{equation}
 ```
 
 for $\epsilon < \epsilon_1$,
 
 ```math
-\begin{equation}
 n(\epsilon) = \frac{V_T}{V_G} \frac{(\epsilon - \epsilon_1)^3}{\epsilon_{21}\epsilon_{31}\epsilon_{41}}
-\end{equation}
 ```
 
 for $\epsilon_1 < \epsilon < \epsilon_2$,
 
 ```math
-\begin{equation}
 n(\epsilon) = \frac{V_T}{V_G}
 \frac{1}{\epsilon_{31}\epsilon_{41}}
 \left[
@@ -172,26 +167,21 @@ n(\epsilon) = \frac{V_T}{V_G}
 3(\epsilon - \epsilon_2)^2 -
 \frac{\epsilon_{31} + \epsilon_{42}}{\epsilon_{32}\epsilon_{42}}(\epsilon - \epsilon_2)^3
 \right]
-\end{equation}
 ```
 
 for $\epsilon_2 < \epsilon < \epsilon_3$,
 
 ```math
-\begin{equation}
 n(\epsilon) = \frac{V_T}{V_G}
 \left(
 1 - \frac{(\epsilon_4 - \epsilon)^3}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}
 \right)
-\end{equation}
 ```
 
 for $\epsilon_3 < \epsilon < \epsilon_4$, and
 
 ```math
-\begin{equation}
 n(\epsilon) = \frac{V_T}{V_G}
-\end{equation}
 ```
 
 for $\epsilon > \epsilon_4$.
@@ -203,155 +193,115 @@ Here we give the expressions that result in the integration weights $w_{nj}$. By
 For a fully tetrahedron, i.e., $\epsilon_F < \epsilon_1$, the contributions vanish:
 
 ```math
-\begin{equation}
 w_1 = w_2 = w_3 = w_4 = 0.
-\end{equation}
 ```
 
 For $\epsilon_1 < \epsilon_F < \epsilon_2$, we obtain
 
 ```math
-\begin{equation}
 w_1 = C
 \left[
 4 - (\epsilon_F - \epsilon_1)
 \left(\frac{1}{\epsilon_{21}} + \frac{1}{\epsilon_{31}} + \frac{1}{\epsilon_{41}}\right)
 \right],
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_2 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{21}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_3 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{31}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_4 = C \frac{\epsilon_F - \epsilon_1}{\epsilon_{41}},
-\end{equation}
 ```
 
 with
 
 ```math
-\begin{equation}
 C = \frac{V_T}{4V_G} \frac{(\epsilon_F - \epsilon_1)^3}{\epsilon_{21}\epsilon_{31}\epsilon_{41}}.
-\end{equation}
 ```
 
 For $\epsilon_2 < \epsilon_F < \epsilon_3$, we obtain
 
 ```math
-\begin{equation}
 w_1 = C_1 +
 (C_1 + C_2) \frac{\epsilon_3 - \epsilon_F}{\epsilon_{31}} +
 (C_1 + C_2 + C_3)\frac{\epsilon_4 - \epsilon_F}{\epsilon_{41}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_2 = C_1 + C_2 + C_3 +
 (C_2 + C_3) \frac{\epsilon_3 - \epsilon_F}{\epsilon_{32}} +
 C_3 \frac{\epsilon_4 - \epsilon_F}{\epsilon_{42}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_3 = (C_1 + C_2) \frac{\epsilon_F - \epsilon_1}{\epsilon_{31}} +
 (C_2 + C_3) \frac{\epsilon_F - \epsilon_2}{\epsilon_{32}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_4 = (C_1 + C_2 + C_3)\frac{\epsilon_F - \epsilon_1}{\epsilon_{41}} +
 C_3 \frac{\epsilon_F - \epsilon_2}{\epsilon_{42}},
-\end{equation}
 ```
 
 with
 
 ```math
-\begin{equation}
 C_1 = \frac{V_T}{4V_G} \frac{(\epsilon_F - \epsilon_1)^2}{\epsilon_{41}\epsilon_{31}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 C_2 = \frac{V_T}{4V_G}
 \frac{(\epsilon_F - \epsilon_1)(\epsilon_F - \epsilon_2)(\epsilon_3 - \epsilon_F)}{\epsilon_{41}\epsilon_{32}\epsilon_{31}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 C_3 = \frac{V_T}{4V_G}
 \frac{(\epsilon_F - \epsilon_2)^2(\epsilon_4 - \epsilon_F)}{\epsilon_{42}\epsilon_{32}\epsilon_{41}}.
-\end{equation}
 ```
 
 For $\epsilon_3 < \epsilon_F < \epsilon_4$, the weights are
 
 ```math
-\begin{equation}
 w_1 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{41}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_2 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{42}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_3 = \frac{V_T}{4V_G} - C \frac{\epsilon_4 - \epsilon_F}{\epsilon_{43}},
-\end{equation}
 ```
 
 ```math
-\begin{equation}
 w_4 = \frac{V_T}{4V_G} - C
 \left[
 4 - \left(\frac{1}{\epsilon_{41}} + \frac{1}{\epsilon_{42}} + \frac{1}{\epsilon_{43}}\right)
 (\epsilon_4 - \epsilon_F)
 \right],
-\end{equation}
 ```
 
 with
 
 ```math
-\begin{equation}
 C = \frac{V_T}{4V_G} \frac{(\epsilon_4 - \epsilon_F)^3}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}.
-\end{equation}
 ```
 
 For a fully occupied tetrahedron the contribution for each corner is identical:
 
 ```math
-\begin{equation}
 w_1 = w_2 = w_3 = w_4 = \frac{V_T}{4V_G}.
-\end{equation}
 ```
 
 The corresponding correction $dw_i$ to the integration weights has an extremely simple form:
 
 ```math
-\begin{equation}
 dw_i = \sum_T \frac{1}{40} D_T (\epsilon_F) \sum^4_{j=1} (\epsilon_j - \epsilon_i).
-\end{equation}
 ```
 
 **Density of states**
@@ -359,40 +309,32 @@ dw_i = \sum_T \frac{1}{40} D_T (\epsilon_F) \sum^4_{j=1} (\epsilon_j - \epsilon_
 The contribution of one tetrahedron to the density of states at energy $\epsilon$ is given by
 
 ```math
-\begin{equation}
 D_T(\epsilon) = 0
-\end{equation}
 ```
 
 for $\epsilon < \epsilon_1$ and for $\epsilon_4 < \epsilon$,
 
 ```math
-\begin{equation}
 D_T(\epsilon) = \frac{V_T}{V_G}
 \frac{3(\epsilon-\epsilon_1)^2}{\epsilon_{21}\epsilon_{31}\epsilon_{41}}
-\end{equation}
 ```
 
 for $\epsilon_1 < \epsilon < \epsilon_2$,
 
 ```math
-\begin{equation}
 D_T(\epsilon) = \frac{V_T}{V_G}
 \frac{1}{\epsilon_{31}\epsilon_{41}}
 \left[
 3\epsilon_{21} + 6(\epsilon - \epsilon_2)
 - 3\frac{(\epsilon_{31} + \epsilon_{42})(\epsilon - \epsilon_2)^2}{\epsilon_{32}\epsilon_{42}}
 \right]
-\end{equation}
 ```
 
 for $\epsilon_2 < \epsilon < \epsilon_3$, and
 
 ```math
-\begin{equation}
 D_T(\epsilon) = \frac{V_T}{V_G}
 \frac{3(\epsilon_4 - \epsilon)^2}{\epsilon_{41}\epsilon_{42}\epsilon_{43}}
-\end{equation}
 ```
 
 for $\epsilon_3 < \epsilon < \epsilon_4$.
@@ -411,7 +353,7 @@ Before we start writing out the equations let us define a few symbols. The exter
 In the general case when all the tetrahedron corners have different energies the equation for the weight factor at corner $i$ is according to LV
 
 ```math
-\begin{align}
+\begin{align*}
 r_i
 &\equiv
 6\int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
@@ -421,22 +363,20 @@ r_i
 \frac{z_i^2}{\prod_{k\neq i}\epsilon_{ki}}+\sum_{j\neq i}
 \frac{z_j^3}{\prod_{k\neq j}\epsilon_{kj}}
 \frac{\log\left(\frac{z_j}{z_i}\right)}{\epsilon_{ij}}.
-\end{align}
+\end{align*}
 ```
 
 If we now use the identity:
 
 ```math
-\begin{equation}
-  0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} =
-  \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}\epsilon_{ji}}
-\end{equation}
+0 = \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}(z_i-z_j)} =
+  \sum_{i=1}^{4}\frac{z_i^2}{\prod_{j\neq i}\epsilon_{ji}}.
 ```
 
 the equation for the weight factor can be written as
 
 ```math
-\begin{align}
+\begin{align*}
 r_i
 &=
 \sum_{j \neq i}
@@ -454,127 +394,119 @@ r_i
 &=
 \sum_{j \neq i}
 \frac{z_j}{\prod_{k \neq i,j}\epsilon_{kj}}lv\left(\frac{z_j}{\epsilon_{ji}}\right).
-\end{align}
+\end{align*}
 ```
 
 Here we have defined the so called Lambin-Vigneron function as:
 
 ```math
-\begin{equation}
 lv(x) = x\left(1-x\log\left[1+\frac{1}{x}\right]\right).
-\end{equation}
 ```
 
 This is a simple function which is easy to compute and also has the added benefit of having nice asymptotic limits, i.e.
 
 ```math
-\begin{equation}
-  \lim_{x\rightarrow 0}lv(x) = 0
-\end{equation}
+\lim_{x\rightarrow 0}lv(x) = 0,
 ```
 
 and
 
 ```math
-\begin{equation}
-  \lim_{x\rightarrow \infty}lv(x) = \frac{1}{2}.
-\end{equation}
+\lim_{x\rightarrow \infty}lv(x) = \frac{1}{2}.
 ```
 
 For considering the cases where the some of the corner energies are identical it is useful to write out the equations above explicitly for each corner:
 
 ```math
-\begin{align}
+\begin{align*}
 r_1 &=
  \frac{z_2}{\epsilon_{32}\epsilon_{42}}lv\left(\frac{z_2}{\epsilon_{21}}\right)
 +\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{31}}\right)
-+\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{41}}\right)
++\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{41}}\right),
  \\
 r_2 &=
  \frac{z_1}{\epsilon_{31}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{12}}\right)
 +\frac{z_3}{\epsilon_{13}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
-+\frac{z_4}{\epsilon_{14}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
++\frac{z_4}{\epsilon_{14}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right),
  \\
 r_3 &=
  \frac{z_1}{\epsilon_{21}\epsilon_{41}}lv\left(\frac{z_1}{\epsilon_{13}}\right)
 +\frac{z_2}{\epsilon_{12}\epsilon_{42}}lv\left(\frac{z_2}{\epsilon_{23}}\right)
-+\frac{z_4}{\epsilon_{14}\epsilon_{24}}lv\left(\frac{z_4}{\epsilon_{43}}\right)
++\frac{z_4}{\epsilon_{14}\epsilon_{24}}lv\left(\frac{z_4}{\epsilon_{43}}\right),
  \\
 r_4 &=
  \frac{z_1}{\epsilon_{21}\epsilon_{31}}lv\left(\frac{z_1}{\epsilon_{14}}\right)
 +\frac{z_2}{\epsilon_{12}\epsilon_{32}}lv\left(\frac{z_2}{\epsilon_{24}}\right)
-+\frac{z_3}{\epsilon_{13}\epsilon_{23}}lv\left(\frac{z_3}{\epsilon_{34}}\right)
-\end{align}
++\frac{z_3}{\epsilon_{13}\epsilon_{23}}lv\left(\frac{z_3}{\epsilon_{34}}\right).
+\end{align*}
 ```
 
 The next case we consider is when two corners have equal energies and we assume here that the corners have been ordered in such as way that $\epsilon_1 = \epsilon_2$.  Looking at the formulas above we see that the limit $\epsilon_1 \rightarrow \epsilon_2$ is trivial take for the weight factors for corners 1 and 2 but for corners 3 and 4 two terms must be taken together and using Mathematica we get:
 
 ```math
-\begin{align}
+\begin{align*}
 r_2 &=
  \frac{1}{2}\frac{z_2}{\epsilon_{32}\epsilon_{42}}
 +\frac{z_3}{\epsilon_{23}\epsilon_{43}}lv\left(\frac{z_3}{\epsilon_{32}}\right)
-+\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right)
++\frac{z_4}{\epsilon_{24}\epsilon_{34}}lv\left(\frac{z_4}{\epsilon_{42}}\right),
  \\
 r_3 &=
  \frac{z_2}{\epsilon_{23}\epsilon_{24}}
  -\left[\frac{2z_3}{\epsilon_{23}\epsilon_{24}}+\frac{z_4}{\epsilon_{24}^2}\right]
  lv\left(\frac{z_2}{\epsilon_{23}}\right)
-+\frac{z_4}{\epsilon_{24}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right)
++\frac{z_4}{\epsilon_{24}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right),
  \\
 r_4 &=
  \frac{z_2}{\epsilon_{23}\epsilon_{24}}
  -\left[\frac{2z_4}{\epsilon_{23}\epsilon_{24}}+\frac{z_3}{\epsilon_{23}^2}\right]
  lv\left(\frac{z_2}{\epsilon_{24}}\right)
-+\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_3}{\epsilon_{34}}\right)
-\end{align}
++\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_3}{\epsilon_{34}}\right).
+\end{align*}
 ```
 
 The next case we consider is $\epsilon_1 = \epsilon_2$ and $\epsilon_4 = \epsilon_3$ and we see from the formulas in equation (see above) that the limit $\epsilon_4 \rightarrow \epsilon_3$ is trivial for corners 3 and 4 and the weight factor for corner 2 follows from symmetry. Hence we get:
 
 ```math
-\begin{align}
+\begin{align*}
 r_2 &=
  \frac{z_3}{\epsilon_{32}^2}+\frac{1}{2}\frac{z_2}{\epsilon_{32}^2}
- -3\frac{z_2}{\epsilon_{32}^2}lv\left(\frac{z_3}{\epsilon_{32}}\right)
+ -3\frac{z_2}{\epsilon_{32}^2}lv\left(\frac{z_3}{\epsilon_{32}}\right),
  \\
 r_3 &=
  \frac{z_2}{\epsilon_{23}^2}+\frac{1}{2}\frac{z_3}{\epsilon_{23}^2}
- -3\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_2}{\epsilon_{23}}\right)
-\end{align}
+ -3\frac{z_3}{\epsilon_{23}^2}lv\left(\frac{z_2}{\epsilon_{23}}\right).
+\end{align*}
 ```
 
 Next case is $\epsilon_1 = \epsilon_2 = \epsilon_3$ and this case we can either obtain from the formulas in equation (44) or simply do the corresponding integral which is simple in this case since we have:
 
 ```math
-\begin{align}
+\begin{align*}
   r_3 &= \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
-  \frac{b}{z_3-c\epsilon_{43}}
+  \frac{b}{z_3-c\epsilon_{43}},
   \\
   r_4 &= \int_{0}^{1}dc\int_{0}^{1-c}db\int_{0}^{1-b-c}da
   \frac{c}{z_3-c\epsilon_{43}}.
-\end{align}
+\end{align*}
 ```
 
 Performing these integrals we obtain:
 
 ```math
-\begin{align}
+\begin{align*}
 r_3 &=
  \frac{2z_3-5z_4}{6\epsilon_{34}^2}+
- \frac{z_4}{\epsilon_{34}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right) \\
+ \frac{z_4}{\epsilon_{34}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right), \\
 r_4 &=
  \frac{z_4}{\epsilon_{43}^2}+\frac{1}{2}\frac{z_3}{\epsilon_{43}^2}
- -3\frac{z_3}{\epsilon_{43}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right)
-\end{align}
+ -3\frac{z_3}{\epsilon_{43}^2}lv\left(\frac{z_4}{\epsilon_{43}}\right).
+\end{align*}
 ```
 
 The final case is of course the simplest one where all the corners have the same energy and in that case we obtain:
 
 ```math
-\begin{equation}
-r_4 = \frac{1}{4}\frac{1}{z_4}
-\end{equation}
+r_4 = \frac{1}{4}\frac{1}{z_4}.
 ```
 
 **References:**
@@ -588,15 +520,11 @@ r_4 = \frac{1}{4}\frac{1}{z_4}
 **Gaussian smearing**
 
 ```math
-\begin{equation}
-n(x) = \frac{1 - \text{erfc}{(-x)}} {8}
-\end{equation}
+n(x) = \frac{1 - \text{erfc}{(-x)}} {8},
 ```
 
 ```math
-\begin{equation}
-D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma}
-\end{equation}
+D(x) = \frac{1}{4} \frac{\exp(-x^2/2)}{\sqrt{\pi}\gamma},
 ```
 
 where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
@@ -604,15 +532,11 @@ where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the ext
 **Fermi-Dirac smearing**
 
 ```math
-\begin{equation}
-n(x) = \frac{1}{1 + \exp{(-x)}}
-\end{equation}
+n(x) = \frac{1}{1 + \exp{(-x)}},
 ```
 
 ```math
-\begin{equation}
-D(x) = \frac{1}{2} \frac{1}{1 + \cosh{(x)}}
-\end{equation}
+D(x) = \frac{1}{2} \frac{1}{1 + \cosh{(x)}},
 ```
 
 where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
@@ -620,17 +544,13 @@ where $x = (z - e) / \gamma$. $\gamma$ is a adjustable parameter, $z$ is the ext
 **Marzari-Vanderbilt cold smearing**
 
 ```math
-\begin{equation}
 n(x) = \frac{\text{erf}(\tilde{x})}{2} + \frac{1}{\sqrt{2\pi}}
-\exp(-\tilde{x}^2) + \frac{1}{2}
-\end{equation}
+\exp(-\tilde{x}^2) + \frac{1}{2},
 ```
 
 ```math
-\begin{equation}
 D(x) = \frac{2}{\sqrt{\pi}}
-\exp{(-\tilde{x}^2)}( 2 - \sqrt{2}x )
-\end{equation}
+\exp{(-\tilde{x}^2)}( 2 - \sqrt{2}x ).
 ```
 
 where $x = (z - e) / \gamma$ and $\tilde{x} = x - \frac{1}{\sqrt{2}}$. $\gamma$ is a adjustable parameter, $z$ is the external energy, $e$ is the energy at given $k$-point and band or corner energies at given tetrahedron.
