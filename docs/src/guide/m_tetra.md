@@ -515,7 +515,7 @@ r_4 = \frac{1}{4}\frac{1}{z_4}.
 
 [2] P. Lambin and J. P. Vigneron, *Phys. Rev. B* **29**, 3430 (1984)
 
-### Smearning algorithm
+### Smearning Algorithm
 
 **Gaussian smearing**
 

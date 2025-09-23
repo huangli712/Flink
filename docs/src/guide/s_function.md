@@ -62,21 +62,15 @@ They are used to calculate fermionic or bosonic kernel functions. `tau` means $\
 The Legendre orthogonal polynomials obey the three term recurrence relation, known as Bonnet’s recursion formula:
 
 ```math
-\begin{equation}
-P_0(x) = 1
-\end{equation}
+P_0(x) = 1,
 ```
 
 ```math
-\begin{equation}
-P_1(x) = x
-\end{equation}
+P_1(x) = x,
 ```
 
 ```math
-\begin{equation}
-(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x)
-\end{equation}
+(n+1) P_{n+1}(x) = (2n+1) P_n(x) - n P_{n-1}(x).
 ```
 
 **Chebyshev orthogonal polynomial**
@@ -84,21 +78,15 @@ P_1(x) = x
 The Chebyshev orthogonal polynomials of the second kind can be defined by the following recurrence relation:
 
 ```math
-\begin{equation}
-U_0(x) = 1
-\end{equation}
+U_0(x) = 1,
 ```
 
 ```math
-\begin{equation}
-U_1(x) = 2x
-\end{equation}
+U_1(x) = 2x,
 ```
 
 ```math
-\begin{equation}
-U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)
-\end{equation}
+U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x).
 ```
 
 **SVD orthogonal polynomial**
@@ -106,42 +94,34 @@ U_{n+1}(x) = 2xU_n(x) - U_{n-1}(x)
 In the imaginary-frequency domain, the Lehmann representation reads,
 
 ```math
-\begin{equation}
 G(i\nu) = \int_{-\infty}^\infty d\omega
 \underbrace{\frac{1}{i\nu - \omega}}_{\equiv K(i\nu, \omega)}
 A(\omega),
-\end{equation}
 ```
 
 where $A(\omega)$ is a spectral function. $K(i\nu,\omega)$ is the so-called analytic continuation kernel. The Lehmann representation can be transformed to the imaginary-time domain as
 
 ```math
-\begin{equation}
 G(\tau) = -\int_{-\infty}^\infty
 d\omega K(\tau,\omega) A(\omega),
-\end{equation}
 ```
 
 where $0 < \tau < \beta$ and
 
 ```math
-\begin{equation}
 K(\tau,\omega) \equiv
 -\frac{1}{\beta} \sum_{i\nu} e^{-i\nu \tau} K(i\nu,\omega)=
 \begin{cases}
     \frac{e^{-\tau\omega}}{1+e^{-\beta\omega}} & (\mathrm{fermion}),\\
     \frac{e^{-\tau\omega}}{1-e^{-\beta\omega}} & (\mathrm{boson}).
 \end{cases}
-\end{equation}
 ```
 
 The minus sign originates from our convention $K(\tau, \omega) > 0$. To avoid the divergence of the bosonic kernel at $\omega=0$, we reformulate Equation of $G(\tau)$ as
 
 ```math
-\begin{equation}
 G(\tau)= -\int_{-\infty}^\infty d{\omega}
 K^\mathrm{L}(\tau,\omega) \rho(\omega),
-\end{equation}
 ```
 
 where $K^\mathrm{L}(\tau,\omega)$ is the *logistic kernel* defined as
@@ -154,21 +134,17 @@ K^\mathrm{L}(\tau,\omega) =
 and $\rho(\omega)$ is the modified spectral function
 
 ```math
-\begin{equation}
 \rho(\omega) \equiv
 \begin{cases}
     A(\omega) & (\mathrm{fermion}),\\
     \frac{A(\omega)}{\tanh(\beta \omega/2)} & (\mathrm{boson}).
 \end{cases}
-\end{equation}
 ```
 
 The singular value expnasion of the kernel reads
 
 ```math
-\begin{equation}
-K^\mathrm{L}(\tau, \omega) = \sum_{l=0}^\infty U_l(\tau) S_l V_l(\omega)
-\end{equation}
+K^\mathrm{L}(\tau, \omega) = \sum_{l=0}^\infty U_l(\tau) S_l V_l(\omega),
 ```
 
 for $\omega \in [-\omega_{max}, \omega_{max}]$ with $\omega_{max}$ ($> 0$) being a cut-off frequency. $U_l(\tau)$ and $V_l(\omega)$ are left and right singular functions and $S_l$ is the singular values (with $S_0>S_1>S_2>...>0$). The two sets of singular functions $U$ and $V$ make up the basis functions of the so-called Intermediate Representation (IR), which depends on $\beta$ and the cutoff $\omega_{max}$. For the peculiar choice of the regularization for the bosonic kernel using $K^\mathrm{L}$, these basis functions do not depend on statistical properties. The basis functions $U_l(\tau)$ are transformed to the imaginary-frequency axis as
@@ -186,17 +162,13 @@ The decay of the singular values depends on $\beta$ and $\omega_{max}$ only thro
 The following recursion relation
 
 ```math
-\begin{equation}
-j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x)
-\end{equation}
+j_{l+1}(x)=\frac{2l+1}{x}j_l(x)-j_{l-1}(x),
 ```
 
 is used either downwards for $x < l$ or upwards for $x \ge l$. For $x \ll 1$, the following asymtotic form is used:
 
 ```math
-\begin{equation}
 j_l(x) \approx \frac{x^l}{(2l+1)!!}.
-\end{equation}
 ```
 
 This procedure is numerically stable and accurate to near this machine precision for $l \le 50$.
@@ -206,9 +178,7 @@ This procedure is numerically stable and accurate to near this machine precision
 The bernstein polynomials are assumed to be based on [0,1]. The formula reads:
 
 ```math
-\begin{equation}
-B(N,I)(X) = \frac{N!}{I!(N-I)!} (1-X)^{(N-I)} X^I
-\end{equation}
+B(N,I)(X) = \frac{N!}{I!(N-I)!} (1-X)^{(N-I)} X^I.
 ```
 
 First values:
@@ -236,11 +206,11 @@ Special values:
 * For X = 1/2,
 
 ```math
-B(N,I)(1/2) = \frac{C(N,K)}{2^N}
+B(N,I)(1/2) = \frac{C(N,K)}{2^N}.
 ```
 
 * For a fixed X and N, the polynomials add up to 1:
 
 ```math
-\sum_{I=0}^{N} B(N,I)(X) = 1
+\sum_{I=0}^{N} B(N,I)(X) = 1.
 ```
