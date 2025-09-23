@@ -1,5 +1,3 @@
-# Vector
-
 It provides a lot of subroutines to manupulate the vectors.
 
 ## Type

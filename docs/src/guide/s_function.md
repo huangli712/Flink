@@ -1,6 +1,4 @@
-# Special Functions
-
-Provide some subroutines to calculate the special functions.
+It provides some subroutines to calculate the special functions.
 
 ## Type
 

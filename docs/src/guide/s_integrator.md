@@ -1,5 +1,3 @@
-# Integration
-
 It provides two subroutines to perform simple numerical integration.
 
 ## Type

@@ -1,5 +1,3 @@
-# Utility
-
 It provides some utility subroutines and functions.
 
 ## Type

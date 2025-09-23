@@ -1,4 +1,4 @@
-To deal with the error and exception.
+It deals with the error and exception.
 
 ## Type
 

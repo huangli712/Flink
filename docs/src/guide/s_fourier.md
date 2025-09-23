@@ -1,6 +1,4 @@
-# Fourier Transformation
-
-Support forward and backward fourier transformation. We usually use the following subroutines to perform fourier transformation for the Green's function.
+It supports forward and backward fourier transformation. We usually use the following subroutines to perform fourier transformation for the Green's function.
 
 ## Type
 
