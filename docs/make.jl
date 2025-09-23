@@ -2,7 +2,7 @@ using Documenter
 
 makedocs(
     sitename="Flink",
-    clean = false,
+    clean = true,
     authors = "Li Huang <huangli@caep.cn> and contributors",
     format = Documenter.HTML(
         prettyurls = false,
