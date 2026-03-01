@@ -1148,7 +1148,7 @@
      enddo
      mean = sum_val / real(n, dp)
 
-     ! compute standard deviation (based on magnitude)
+     ! compute standard deviation (root mean square distance from mean)
      if (n == 1) then
          stddev = zero
      else
@@ -1163,3 +1163,140 @@
 
      return
   end subroutine s_stats_z
+
+!!========================================================================
+!!>>> outer product operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_outer_i
+!!
+!! compute outer product of two integer vectors: a(i,j) = x(i) * y(j)
+!!
+  subroutine s_outer_i(n, m, ix, iy, ia)
+     implicit none
+
+!! external arguments
+     ! size of input vector x
+     integer, intent(in)  :: n
+
+     ! size of input vector y
+     integer, intent(in)  :: m
+
+     ! input integer vector x
+     integer, intent(in)  :: ix(n)
+
+     ! input integer vector y
+     integer, intent(in)  :: iy(m)
+
+     ! output matrix: outer product a = x * y^T
+     integer, intent(out) :: ia(n,m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) return
+     !
+     do i=1,n
+         do j=1,m
+             ia(i,j) = ix(i) * iy(j)
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_outer_i
+
+!!
+!! @sub s_outer_d
+!!
+!! compute outer product of two real(dp) vectors: a(i,j) = x(i) * y(j)
+!!
+  subroutine s_outer_d(n, m, dx, dy, da)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of input vector x
+     integer, intent(in)   :: n
+
+     ! size of input vector y
+     integer, intent(in)   :: m
+
+     ! input real(dp) vector x
+     real(dp), intent(in)  :: dx(n)
+
+     ! input real(dp) vector y
+     real(dp), intent(in)  :: dy(m)
+
+     ! output matrix: outer product a = x * y^T
+     real(dp), intent(out) :: da(n,m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) return
+     !
+     do i=1,n
+         do j=1,m
+             da(i,j) = dx(i) * dy(j)
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_outer_d
+
+!!
+!! @sub s_outer_z
+!!
+!! compute outer product of two complex(dp) vectors: a(i,j) = x(i) * y(j)
+!!
+  subroutine s_outer_z(n, m, zx, zy, za)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of input vector x
+     integer, intent(in)      :: n
+
+     ! size of input vector y
+     integer, intent(in)      :: m
+
+     ! input complex(dp) vector x
+     complex(dp), intent(in)  :: zx(n)
+
+     ! input complex(dp) vector y
+     complex(dp), intent(in)  :: zy(m)
+
+     ! output matrix: outer product a = x * y^T
+     complex(dp), intent(out) :: za(n,m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) return
+     !
+     do i=1,n
+         do j=1,m
+             za(i,j) = zx(i) * zy(j)
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_outer_z
