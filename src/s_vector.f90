@@ -18,11 +18,14 @@
 !!!           s_vecadd_i
 !!!           s_vecadd_d
 !!!           s_vecadd_z
+!!!           s_dot_i
+!!!           s_dot_d
+!!!           s_dot_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           12/30/2024 by li huang (last modified)
+!!!           03/01/2026 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
@@ -700,3 +703,127 @@
 
      return
   end subroutine s_vecadd_z
+ 
+!!========================================================================
+!!>>> vector dot operations                                            <<<
+!!========================================================================
+
+!!
+!! @sub s_dot_i
+!!
+!! compute dot product of two integer vectors.
+!!
+  subroutine s_dot_i(n, ix, iy, val)
+     implicit none
+
+!! external arguments
+     ! dimension of integer vectors
+     integer, intent(in)  :: n
+
+     ! integer vector X
+     integer, intent(in)  :: ix(n)
+
+     ! integer vector Y
+     integer, intent(in)  :: iy(n)
+
+     ! dot product result
+     integer, intent(out) :: val
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     val = 0
+     !
+     do i=1,n
+         val = val + ix(i) * iy(i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_dot_i
+
+!!
+!! @sub s_dot_d
+!!
+!! compute dot product of two real(dp) vectors.
+!!
+  subroutine s_dot_d(n, dx, dy, val)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! dimension of real(dp) vectors
+     integer, intent(in)   :: n
+
+     ! real(dp) vector X
+     real(dp), intent(in)  :: dx(n)
+
+     ! real(dp) vector Y
+     real(dp), intent(in)  :: dy(n)
+
+     ! dot product result
+     real(dp), intent(out) :: val
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     val = zero
+     !
+     do i=1,n
+         val = val + dx(i) * dy(i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_dot_d
+
+!!
+!! @sub s_dot_z
+!!
+!! compute dot product of two complex(dp) vectors.
+!!
+  subroutine s_dot_z(n, zx, zy, val)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! dimension of complex(dp) vectors
+     integer, intent(in)      :: n
+
+     ! complex(dp) vector X
+     complex(dp), intent(in)  :: zx(n)
+
+     ! complex(dp) vector Y
+     complex(dp), intent(in)  :: zy(n)
+
+     ! dot product result
+     complex(dp), intent(out) :: val
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     val = czero
+     !
+     do i=1,n
+         val = val + conjg(zx(i)) * zy(i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_dot_z
