@@ -21,6 +21,12 @@
 !!!           s_dot_i
 !!!           s_dot_d
 !!!           s_dot_z
+!!!           s_diff_i
+!!!           s_diff_d
+!!!           s_diff_z
+!!!           s_stats_i
+!!!           s_stats_d
+!!!           s_stats_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -703,7 +709,7 @@
 
      return
   end subroutine s_vecadd_z
- 
+
 !!========================================================================
 !!>>> vector dot operations                                            <<<
 !!========================================================================
@@ -735,6 +741,11 @@
 
 !! [body
 
+     if (n <= 0) then
+         val = 0
+         return
+     endif
+     !
      val = 0
      !
      do i=1,n
@@ -776,6 +787,11 @@
 
 !! [body
 
+     if (n <= 0) then
+         val = zero
+         return
+     endif
+     !
      val = zero
      !
      do i=1,n
@@ -817,6 +833,11 @@
 
 !! [body
 
+     if (n <= 0) then
+         val = czero
+         return
+     endif
+     !
      val = czero
      !
      do i=1,n
@@ -827,3 +848,318 @@
 
      return
   end subroutine s_dot_z
+
+!!========================================================================
+!!>>> vector diff operations                                           <<<
+!!========================================================================
+
+!!
+!! @sub s_diff_i
+!!
+!! compute finite differences of an integer vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
+!!
+  subroutine s_diff_i(n, iv, diff)
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)  :: n
+
+     ! input integer array
+     integer, intent(in)  :: iv(n)
+
+     ! finite differences, size n-1
+     integer, intent(out) :: diff(n-1)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+!!
+     if (n < 2) return
+     !
+     do i=1,n-1
+         diff(i) = iv(i+1) - iv(i)
+     enddo ! over i={1,n-1} loop
+
+!! body]
+
+     return
+  end subroutine s_diff_i
+
+!!
+!! @sub s_diff_d
+!!
+!! compute finite differences of a real(dp) vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
+!!
+  subroutine s_diff_d(n, dv, diff)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! finite differences, size n-1
+     real(dp), intent(out) :: diff(n-1)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+!!
+     if (n < 2) return
+     !
+     do i=1,n-1
+         diff(i) = dv(i+1) - dv(i)
+     enddo ! over i={1,n-1} loop
+
+!! body]
+
+     return
+  end subroutine s_diff_d
+
+!!
+!! @sub s_diff_z
+!!
+!! compute finite differences of a complex(dp) vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
+!!
+  subroutine s_diff_z(n, zv, diff)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! finite differences, size n-1
+     complex(dp), intent(out) :: diff(n-1)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+!!
+     if (n < 2) return
+     !
+     do i=1,n-1
+         diff(i) = zv(i+1) - zv(i)
+     enddo ! over i={1,n-1} loop
+
+!! body]
+
+     return
+  end subroutine s_diff_z
+
+!!========================================================================
+!!>>> statistics operations                                            <<<
+!!========================================================================
+
+!!
+!! @sub s_stats_i
+!!
+!! compute mean and standard deviation of an integer vector.
+!!
+  subroutine s_stats_i(n, iv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input integer array
+     integer, intent(in)   :: iv(n)
+
+     ! mean value
+     real(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out) :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = zero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + real(iv(i), dp)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + (real(iv(i), dp) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_i
+
+!!
+!! @sub s_stats_d
+!!
+!! compute mean and standard deviation of a real(dp) vector.
+!!
+  subroutine s_stats_d(n, dv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! mean value
+     real(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out) :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = zero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + dv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + (dv(i) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_d
+
+!!
+!! @sub s_stats_z
+!!
+!! compute mean and standard deviation of a complex(dp) vector.
+!!
+  subroutine s_stats_z(n, zv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! mean value
+     complex(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out)    :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = czero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = czero
+     do i=1,n
+         sum_val = sum_val + zv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation (based on magnitude)
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + abs(zv(i) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_z
