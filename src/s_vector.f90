@@ -1,44 +1,20 @@
 !!!-----------------------------------------------------------------------
 !!! project : flink @ sakura
-!!! program : s_linspace_i
-!!!           s_linspace_d
-!!!           s_linspace_z
-!!!           s_cumsum_i
-!!!           s_cumsum_d
-!!!           s_cumsum_z
-!!!           s_cumprod_i
-!!!           s_cumprod_d
-!!!           s_cumprod_z
-!!!           s_swap_i
-!!!           s_swap_d
-!!!           s_swap_z
-!!!           s_mix_i
-!!!           s_mix_d
-!!!           s_mix_z
-!!!           s_vecadd_i
-!!!           s_vecadd_d
-!!!           s_vecadd_z
-!!!           s_dot_i
-!!!           s_dot_d
-!!!           s_dot_z
-!!!           s_diff_i
-!!!           s_diff_d
-!!!           s_diff_z
-!!!           s_stats_i
-!!!           s_stats_d
-!!!           s_stats_z
-!!!           s_cross_i
-!!!           s_cross_d
-!!!           s_cross_z
-!!!           s_distance_i
-!!!           s_distance_d
-!!!           s_distance_z
-!!!           s_unique_i
-!!!           s_unique_d
-!!!           s_unique_z
-!!!           s_intersect_i
-!!!           s_intersect_d
-!!!           s_intersect_z
+!!! program : s_linspace
+!!!           s_cumsum
+!!!           s_cumprod
+!!!           s_swap
+!!!           s_mix
+!!!           s_vecadd
+!!!           s_dot
+!!!           s_diff
+!!!           s_stats
+!!!           s_cross
+!!!           s_distance
+!!!           s_unique
+!!!           s_intersect
+!!!           s_union
+!!!           s_moment
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -2218,3 +2194,190 @@
 
      return
   end subroutine s_union_z
+
+!!========================================================================
+!!>>> vector moment operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_moment_i
+!!
+!! compute k-th moment about the mean of an integer vector.
+!! moment = sum_i (x(i) - mean)^k / n
+!!
+  subroutine s_moment_i(n, iv, order, moment)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input integer array
+     integer, intent(in)   :: iv(n)
+
+     ! order of moment (1=mean, 2=variance, 3=skewness related, etc.)
+     integer, intent(in)   :: order
+
+     ! k-th moment value
+     real(dp), intent(out) :: moment
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         moment = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + real(iv(i), dp)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute k-th moment
+     moment = zero
+     do i=1,n
+         moment = moment + (real(iv(i), dp) - mean)**order
+     enddo
+     moment = moment / real(n, dp)
+
+!! body]
+
+     return
+  end subroutine s_moment_i
+
+!!
+!! @sub s_moment_d
+!!
+!! compute k-th moment about the mean of a real(dp) vector.
+!! moment = sum_i (x(i) - mean)^k / n
+!!
+  subroutine s_moment_d(n, dv, order, moment)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! order of moment (1=mean, 2=variance, 3=skewness related, etc.)
+     integer, intent(in)   :: order
+
+     ! k-th moment value
+     real(dp), intent(out) :: moment
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         moment = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + dv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute k-th moment
+     moment = zero
+     do i=1,n
+         moment = moment + (dv(i) - mean)**order
+     enddo
+     moment = moment / real(n, dp)
+
+!! body]
+
+     return
+  end subroutine s_moment_d
+
+!!
+!! @sub s_moment_z
+!!
+!! compute k-th moment about the mean of a complex(dp) vector.
+!! moment = sum_i |z(i) - mean|^k / n
+!!
+  subroutine s_moment_z(n, zv, order, moment)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! order of moment (1=mean, 2=variance, 3=skewness related, etc.)
+     integer, intent(in)      :: order
+
+     ! k-th moment value
+     real(dp), intent(out)    :: moment
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     complex(dp) :: mean
+
+     ! sum of values
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         moment = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = czero
+     do i=1,n
+         sum_val = sum_val + zv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute k-th moment (based on magnitude)
+     moment = zero
+     do i=1,n
+         moment = moment + abs(zv(i) - mean)**order
+     enddo
+     moment = moment / real(n, dp)
+
+!! body]
+
+     return
+  end subroutine s_moment_z
