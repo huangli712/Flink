@@ -15,6 +15,9 @@
 !!!           s_intersect
 !!!           s_union
 !!!           s_moment
+!!!           s_skewness
+!!!           s_kurtosis
+!!!           s_reverse
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -2381,3 +2384,622 @@
 
      return
   end subroutine s_moment_z
+
+!!========================================================================
+!!>>> vector skewness operations                                       <<<
+!!========================================================================
+
+!!
+!! @sub s_skewness_i
+!!
+!! compute skewness of an integer vector.
+!! skewness = (1/n * sum_i (x(i) - mean)^3) / std^3
+!!
+  subroutine s_skewness_i(n, iv, skewness)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input integer array
+     integer, intent(in)   :: iv(n)
+
+     ! skewness value
+     real(dp), intent(out) :: skewness
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of cubed deviations
+     real(dp) :: sum_cu
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + real(iv(i), dp)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation
+     if (n == 1) then
+         skewness = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (real(iv(i), dp) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute skewness
+     sum_cu = zero
+     do i=1,n
+         sum_cu = sum_cu + (real(iv(i), dp) - mean)**3
+     enddo
+     skewness = (sum_cu / real(n, dp)) / (stddev**3)
+
+!! body]
+
+     return
+  end subroutine s_skewness_i
+
+!!
+!! @sub s_skewness_d
+!!
+!! compute skewness of a real(dp) vector.
+!! skewness = (1/n * sum_i (x(i) - mean)^3) / std^3
+!!
+  subroutine s_skewness_d(n, dv, skewness)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! skewness value
+     real(dp), intent(out) :: skewness
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of cubed deviations
+     real(dp) :: sum_cu
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + dv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation
+     if (n == 1) then
+         skewness = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (dv(i) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute skewness
+     sum_cu = zero
+     do i=1,n
+         sum_cu = sum_cu + (dv(i) - mean)**3
+     enddo
+     skewness = (sum_cu / real(n, dp)) / (stddev**3)
+
+!! body]
+
+     return
+  end subroutine s_skewness_d
+
+!!
+!! @sub s_skewness_z
+!!
+!! compute skewness of a complex(dp) vector.
+!! skewness = (1/n * sum_i |z(i) - mean|^3) / std^3
+!!
+  subroutine s_skewness_z(n, zv, skewness)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! skewness value
+     real(dp), intent(out)    :: skewness
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     complex(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of cubed deviations
+     real(dp) :: sum_cu
+
+     ! sum of values
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = czero
+     do i=1,n
+         sum_val = sum_val + zv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation (based on magnitude)
+     if (n == 1) then
+         skewness = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + abs(zv(i) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         skewness = zero
+         return
+     endif
+     !
+     ! compute skewness (based on magnitude)
+     sum_cu = zero
+     do i=1,n
+         sum_cu = sum_cu + abs(zv(i) - mean)**3
+     enddo
+     skewness = (sum_cu / real(n, dp)) / (stddev**3)
+
+!! body]
+
+     return
+  end subroutine s_skewness_z
+
+!!========================================================================
+!!>>> vector kurtosis operations                                       <<<
+!!========================================================================
+
+!!
+!! @sub s_kurtosis_i
+!!
+!! compute kurtosis of an integer vector.
+!! kurtosis = (1/n * sum_i (x(i) - mean)^4) / std^4
+!!
+  subroutine s_kurtosis_i(n, iv, kurtosis)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input integer array
+     integer, intent(in)   :: iv(n)
+
+     ! kurtosis value
+     real(dp), intent(out) :: kurtosis
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of fourth power deviations
+     real(dp) :: sum_qu
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + real(iv(i), dp)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation
+     if (n == 1) then
+         kurtosis = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (real(iv(i), dp) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute kurtosis
+     sum_qu = zero
+     do i=1,n
+         sum_qu = sum_qu + (real(iv(i), dp) - mean)**4
+     enddo
+     kurtosis = (sum_qu / real(n, dp)) / (stddev**4)
+
+!! body]
+
+     return
+  end subroutine s_kurtosis_i
+
+!!
+!! @sub s_kurtosis_d
+!!
+!! compute kurtosis of a real(dp) vector.
+!! kurtosis = (1/n * sum_i (x(i) - mean)^4) / std^4
+!!
+  subroutine s_kurtosis_d(n, dv, kurtosis)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! kurtosis value
+     real(dp), intent(out) :: kurtosis
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     real(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of fourth power deviations
+     real(dp) :: sum_qu
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + dv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation
+     if (n == 1) then
+         kurtosis = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (dv(i) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute kurtosis
+     sum_qu = zero
+     do i=1,n
+         sum_qu = sum_qu + (dv(i) - mean)**4
+     enddo
+     kurtosis = (sum_qu / real(n, dp)) / (stddev**4)
+
+!! body]
+
+     return
+  end subroutine s_kurtosis_d
+
+!!
+!! @sub s_kurtosis_z
+!!
+!! compute kurtosis of a complex(dp) vector.
+!! kurtosis = (1/n * sum_i |z(i) - mean|^4) / std^4
+!!
+  subroutine s_kurtosis_z(n, zv, kurtosis)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! kurtosis value
+     real(dp), intent(out)    :: kurtosis
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! mean value
+     complex(dp) :: mean
+
+     ! standard deviation
+     real(dp) :: stddev
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of fourth power deviations
+     real(dp) :: sum_qu
+
+     ! sum of values
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute mean
+     sum_val = czero
+     do i=1,n
+         sum_val = sum_val + zv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+     !
+     ! compute standard deviation (based on magnitude)
+     if (n == 1) then
+         kurtosis = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + abs(zv(i) - mean)**2
+     enddo
+     stddev = sqrt(sum_sq / real(n - 1, dp))
+     !
+     if (stddev == zero) then
+         kurtosis = zero
+         return
+     endif
+     !
+     ! compute kurtosis (based on magnitude)
+     sum_qu = zero
+     do i=1,n
+         sum_qu = sum_qu + abs(zv(i) - mean)**4
+     enddo
+     kurtosis = (sum_qu / real(n, dp)) / (stddev**4)
+
+!! body]
+
+     return
+  end subroutine s_kurtosis_z
+
+  !!========================================================================
+!!>>> vector reverse operations                                        <<<
+!!========================================================================
+
+!!
+!! @sub s_reverse_i
+!!
+!! reverse an integer array: y(i) = x(n+1-i)
+!!
+  subroutine s_reverse_i(n, ix, iy)
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)  :: n
+
+     ! input integer array
+     integer, intent(in)  :: ix(n)
+
+     ! reversed integer array
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         iy(i) = ix(n + 1 - i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_reverse_i
+
+!!
+!! @sub s_reverse_d
+!!
+!! reverse a real(dp) array: y(i) = x(n+1-i)
+!!
+  subroutine s_reverse_d(n, dx, dy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)    :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)   :: dx(n)
+
+     ! reversed real(dp) array
+     real(dp), intent(out)  :: dy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         dy(i) = dx(n + 1 - i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_reverse_d
+
+!!
+!! @sub s_reverse_z
+!!
+!! reverse a complex(dp) array: y(i) = x(n+1-i)
+!!
+  subroutine s_reverse_z(n, zx, zy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zx(n)
+
+     ! reversed complex(dp) array
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         zy(i) = zx(n + 1 - i)
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_reverse_z
