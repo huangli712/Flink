@@ -33,6 +33,9 @@
 !!!           s_distance_i
 !!!           s_distance_d
 !!!           s_distance_z
+!!!           s_unique_i
+!!!           s_unique_d
+!!!           s_unique_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -1564,3 +1567,181 @@
 
      return
   end subroutine s_distance_z
+
+!!========================================================================
+!!>>> unique operations                                               <<<
+!!========================================================================
+
+!!
+!! @sub s_unique_i
+!!
+!! return unique elements from an integer array, preserving order.
+!! returns the number of unique elements in m.
+!!
+  subroutine s_unique_i(n, ix, m, iy)
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)  :: n
+
+     ! input integer array
+     integer, intent(in)  :: ix(n)
+
+     ! number of unique elements (output)
+     integer, intent(out) :: m
+
+     ! unique elements (output, size n, but only m elements are valid)
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     if (n <= 0) then
+         m = 0
+         return
+     endif
+     !
+     m = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,m
+             if (ix(i) == iy(j)) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         if (is_unique) then
+             m = m + 1
+             iy(m) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_unique_i
+
+!!
+!! @sub s_unique_d
+!!
+!! return unique elements from a real(dp) array, preserving order.
+!! returns the number of unique elements in m.
+!!
+  subroutine s_unique_d(n, dx, m, dy)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dx(n)
+
+     ! number of unique elements (output)
+     integer, intent(out)  :: m
+
+     ! unique elements (output, size n, but only m elements are valid)
+     real(dp), intent(out) :: dy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     if (n <= 0) then
+         m = 0
+         return
+     endif
+     !
+     m = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,m
+             if (abs(dx(i) - dy(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         if (is_unique) then
+             m = m + 1
+             dy(m) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_unique_d
+
+!!
+!! @sub s_unique_z
+!!
+!! return unique elements from a complex(dp) array, preserving order.
+!! returns the number of unique elements in m.
+!!
+  subroutine s_unique_z(n, zx, m, zy)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of input array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zx(n)
+
+     ! number of unique elements (output)
+     integer, intent(out)     :: m
+
+     ! unique elements (output, size n, but only m elements are valid)
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     if (n <= 0) then
+         m = 0
+         return
+     endif
+     !
+     m = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,m
+             if (abs(zx(i) - zy(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         if (is_unique) then
+             m = m + 1
+             zy(m) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_unique_z
