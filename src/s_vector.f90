@@ -1986,3 +1986,235 @@
 
      return
   end subroutine s_intersect_z
+
+!!========================================================================
+!!>>> vector union operations                                          <<<
+!!========================================================================
+
+!!
+!! @sub s_union_i
+!!
+!! compute union of two integer vectors.
+!! returns all unique elements from both vectors in iz, with k elements total.
+!! elements from first vector x appear first, then new elements from y.
+!!
+  subroutine s_union_i(n, ix, m, iy, k, iz)
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)  :: n
+
+     ! first input integer vector x
+     integer, intent(in)  :: ix(n)
+
+     ! size of second vector
+     integer, intent(in)  :: m
+
+     ! second input integer vector y
+     integer, intent(in)  :: iy(m)
+
+     ! number of union elements (output)
+     integer, intent(out) :: k
+
+     ! union elements (output, size n+m)
+     integer, intent(out) :: iz(n+m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     ! first, add all unique elements from x
+     k = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,k
+             if (ix(i) == iz(j)) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             iz(k) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+     !
+     ! then, add unique elements from y that are not in x
+     do i=1,m
+         is_unique = .true.
+         do j=1,k
+             if (iy(i) == iz(j)) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             iz(k) = iy(i)
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_union_i
+
+!!
+!! @sub s_union_d
+!!
+!! compute union of two real(dp) vectors.
+!! returns all unique elements from both vectors in dz, with k elements total.
+!! elements from first vector x appear first, then new elements from y.
+!!
+  subroutine s_union_d(n, dx, m, dy, k, dz)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)   :: n
+
+     ! first input real(dp) vector x
+     real(dp), intent(in)  :: dx(n)
+
+     ! size of second vector
+     integer, intent(in)   :: m
+
+     ! second input real(dp) vector y
+     real(dp), intent(in)  :: dy(m)
+
+     ! number of union elements (output)
+     integer, intent(out)  :: k
+
+     ! union elements (output, size n+m)
+     real(dp), intent(out) :: dz(n+m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     ! first, add all unique elements from x
+     k = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,k
+             if (abs(dx(i) - dz(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             dz(k) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+     !
+     ! then, add unique elements from y that are not in x
+     do i=1,m
+         is_unique = .true.
+         do j=1,k
+             if (abs(dy(i) - dz(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             dz(k) = dy(i)
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_union_d
+
+!!
+!! @sub s_union_z
+!!
+!! compute union of two complex(dp) vectors.
+!! returns all unique elements from both vectors in zz, with k elements total.
+!! elements from first vector x appear first, then new elements from y.
+!!
+  subroutine s_union_z(n, zx, m, zy, k, zz)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)      :: n
+
+     ! first input complex(dp) vector x
+     complex(dp), intent(in)  :: zx(n)
+
+     ! size of second vector
+     integer, intent(in)      :: m
+
+     ! second input complex(dp) vector y
+     complex(dp), intent(in)  :: zy(m)
+
+     ! number of union elements (output)
+     integer, intent(out)     :: k
+
+     ! union elements (output, size n+m)
+     complex(dp), intent(out) :: zz(n+m)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag for uniqueness
+     logical :: is_unique
+
+!! [body
+
+     ! first, add all unique elements from x
+     k = 0
+     do i=1,n
+         is_unique = .true.
+         do j=1,k
+             if (abs(zx(i) - zz(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             zz(k) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+     !
+     ! then, add unique elements from y that are not in x
+     do i=1,m
+         is_unique = .true.
+         do j=1,k
+             if (abs(zy(i) - zz(j)) < eps8) then
+                 is_unique = .false.
+                 exit
+             endif
+         enddo ! over j={1,k} loop
+         if (is_unique) then
+             k = k + 1
+             zz(k) = zy(i)
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_union_z
