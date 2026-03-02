@@ -27,11 +27,14 @@
 !!!           s_stats_i
 !!!           s_stats_d
 !!!           s_stats_z
+!!!           s_cross_i
+!!!           s_cross_d
+!!!           s_cross_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/01/2026 by li huang (last modified)
+!!!           03/02/2026 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
@@ -1300,3 +1303,107 @@
 
      return
   end subroutine s_outer_z
+
+!!========================================================================
+!!>>> cross product operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_cross_i
+!!
+!! compute cross product of two 3d integer vectors.
+!! c = a x b, where c(1) = a(2)*b(3) - a(3)*b(2)
+!!                    c(2) = a(3)*b(1) - a(1)*b(3)
+!!                    c(3) = a(1)*b(2) - a(2)*b(1)
+!!
+  subroutine s_cross_i(ix, iy, iz)
+     implicit none
+
+!! external arguments
+     ! input 3d integer vector a
+     integer, intent(in)  :: ix(3)
+
+     ! input 3d integer vector b
+     integer, intent(in)  :: iy(3)
+
+     ! output 3d integer vector: cross product
+     integer, intent(out) :: iz(3)
+
+!! [body
+
+     iz(1) = ix(2) * iy(3) - ix(3) * iy(2)
+     iz(2) = ix(3) * iy(1) - ix(1) * iy(3)
+     iz(3) = ix(1) * iy(2) - ix(2) * iy(1)
+
+!! body]
+
+     return
+  end subroutine s_cross_i
+
+!!
+!! @sub s_cross_d
+!!
+!! compute cross product of two 3d real(dp) vectors.
+!! c = a x b, where c(1) = a(2)*b(3) - a(3)*b(2)
+!!                    c(2) = a(3)*b(1) - a(1)*b(3)
+!!                    c(3) = a(1)*b(2) - a(2)*b(1)
+!!
+  subroutine s_cross_d(dx, dy, dz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! input 3d real(dp) vector a
+     real(dp), intent(in)  :: dx(3)
+
+     ! input 3d real(dp) vector b
+     real(dp), intent(in)  :: dy(3)
+
+     ! output 3d real(dp) vector: cross product
+     real(dp), intent(out) :: dz(3)
+
+!! [body
+
+     dz(1) = dx(2) * dy(3) - dx(3) * dy(2)
+     dz(2) = dx(3) * dy(1) - dx(1) * dy(3)
+     dz(3) = dx(1) * dy(2) - dx(2) * dy(1)
+
+!! body]
+
+     return
+  end subroutine s_cross_d
+
+!!
+!! @sub s_cross_z
+!!
+!! compute cross product of two 3d complex(dp) vectors.
+!! c = a x b, where c(1) = a(2)*b(3) - a(3)*b(2)
+!!                    c(2) = a(3)*b(1) - a(1)*b(3)
+!!                    c(3) = a(1)*b(2) - a(2)*b(1)
+!!
+  subroutine s_cross_z(zx, zy, zz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! input 3d complex(dp) vector a
+     complex(dp), intent(in)  :: zx(3)
+
+     ! input 3d complex(dp) vector b
+     complex(dp), intent(in)  :: zy(3)
+
+     ! output 3d complex(dp) vector: cross product
+     complex(dp), intent(out) :: zz(3)
+
+!! [body
+
+     zz(1) = zx(2) * zy(3) - zx(3) * zy(2)
+     zz(2) = zx(3) * zy(1) - zx(1) * zy(3)
+     zz(3) = zx(1) * zy(2) - zx(2) * zy(1)
+
+!! body]
+
+     return
+  end subroutine s_cross_z
