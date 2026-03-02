@@ -18,6 +18,7 @@
 !!!           s_skewness
 !!!           s_kurtosis
 !!!           s_reverse
+!!!           s_clip
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -3003,3 +3004,159 @@
 
      return
   end subroutine s_reverse_z
+
+!!========================================================================
+!!>>> clip operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_clip_i
+!!
+!! clip an integer array to range [vmin, vmax].
+!! y(i) = max(min(x(i), vmax), vmin)
+!!
+  subroutine s_clip_i(n, ix, vmin, vmax, iy)
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)  :: n
+
+     ! input integer array
+     integer, intent(in)  :: ix(n)
+
+     ! minimum clip value
+     integer, intent(in)  :: vmin
+
+     ! maximum clip value
+     integer, intent(in)  :: vmax
+
+     ! clipped integer array
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         if (ix(i) < vmin) then
+             iy(i) = vmin
+         elseif (ix(i) > vmax) then
+             iy(i) = vmax
+         else
+             iy(i) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_i
+
+!!
+!! @sub s_clip_d
+!!
+!! clip a real(dp) array to range [vmin, vmax].
+!! y(i) = max(min(x(i), vmax), vmin)
+!!
+  subroutine s_clip_d(n, dx, vmin, vmax, dy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)    :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)   :: dx(n)
+
+     ! minimum clip value
+     real(dp), intent(in)   :: vmin
+
+     ! maximum clip value
+     real(dp), intent(in)   :: vmax
+
+     ! clipped real(dp) array
+     real(dp), intent(out)  :: dy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         if (dx(i) < vmin) then
+             dy(i) = vmin
+         elseif (dx(i) > vmax) then
+             dy(i) = vmax
+         else
+             dy(i) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_d
+
+!!
+!! @sub s_clip_z
+!!
+!! clip a complex(dp) array to range [vmin, vmax].
+!! clip based on magnitude: |y(i)| = max(min(|x(i)|, vmax), vmin)
+!! preserve original phase for complex values.
+!!
+  subroutine s_clip_z(n, zx, vmin, vmax, zy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zx(n)
+
+     ! minimum clip value (magnitude)
+     real(dp), intent(in)     :: vmin
+
+     ! maximum clip value (magnitude)
+     real(dp), intent(in)     :: vmax
+
+     ! clipped complex(dp) array
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! clipped magnitude
+     real(dp) :: mag
+
+     ! original phase
+     real(dp) :: phase
+
+!! [body
+
+     do i=1,n
+         mag = abs(zx(i))
+         if (mag < vmin) then
+             phase = atan2(aimag(zx(i)), real(zx(i)))
+             zy(i) = cmplx(vmin * cos(phase), vmin * sin(phase), dp)
+         elseif (mag > vmax) then
+             phase = atan2(aimag(zx(i)), real(zx(i)))
+             zy(i) = cmplx(vmax * cos(phase), vmax * sin(phase), dp)
+         else
+             zy(i) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_z
