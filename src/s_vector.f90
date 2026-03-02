@@ -36,6 +36,9 @@
 !!!           s_unique_i
 !!!           s_unique_d
 !!!           s_unique_z
+!!!           s_intersect_i
+!!!           s_intersect_d
+!!!           s_intersect_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -1569,7 +1572,7 @@
   end subroutine s_distance_z
 
 !!========================================================================
-!!>>> unique operations                                               <<<
+!!>>> vector unique operations                                         <<<
 !!========================================================================
 
 !!
@@ -1745,3 +1748,241 @@
 
      return
   end subroutine s_unique_z
+
+!!========================================================================
+!!>>> vector intersect operations                                      <<<
+!!========================================================================
+
+!!
+!! @sub s_intersect_i
+!!
+!! compute intersection of two integer vectors.
+!! returns common elements in iz, with k elements total.
+!! each element appears only once (unique).
+!!
+  subroutine s_intersect_i(n, ix, m, iy, k, iz)
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)  :: n
+
+     ! first input integer vector x
+     integer, intent(in)  :: ix(n)
+
+     ! size of second vector
+     integer, intent(in)  :: m
+
+     ! second input integer vector y
+     integer, intent(in)  :: iy(m)
+
+     ! number of intersection elements (output)
+     integer, intent(out) :: k
+
+     ! intersection elements (output, size n, but only k valid)
+     integer, intent(out) :: iz(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, l
+
+     ! flag for membership
+     logical :: in_y
+     logical :: already_added
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         k = 0
+         return
+     endif
+     !
+     k = 0
+     do i=1,n
+         ! check if ix(i) is in iy
+         in_y = .false.
+         do j=1,m
+             if (ix(i) == iy(j)) then
+                 in_y = .true.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         !
+         if (in_y) then
+             ! check if already added to result
+             already_added = .false.
+             do l=1,k
+                 if (ix(i) == iz(l)) then
+                     already_added = .true.
+                     exit
+                 endif
+             enddo ! over l={1,k} loop
+             if (.not. already_added) then
+                 k = k + 1
+                 iz(k) = ix(i)
+             endif
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_intersect_i
+
+!!
+!! @sub s_intersect_d
+!!
+!! compute intersection of two real(dp) vectors.
+!! returns common elements in dz, with k elements total.
+!! each element appears only once (unique).
+!!
+  subroutine s_intersect_d(n, dx, m, dy, k, dz)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)   :: n
+
+     ! first input real(dp) vector x
+     real(dp), intent(in)  :: dx(n)
+
+     ! size of second vector
+     integer, intent(in)   :: m
+
+     ! second input real(dp) vector y
+     real(dp), intent(in)  :: dy(m)
+
+     ! number of intersection elements (output)
+     integer, intent(out)  :: k
+
+     ! intersection elements (output, size n, but only k valid)
+     real(dp), intent(out) :: dz(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, l
+
+     ! flag for membership
+     logical :: in_y
+     logical :: already_added
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         k = 0
+         return
+     endif
+     !
+     k = 0
+     do i=1,n
+         ! check if dx(i) is in dy
+         in_y = .false.
+         do j=1,m
+             if (abs(dx(i) - dy(j)) < eps8) then
+                 in_y = .true.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         !
+         if (in_y) then
+             ! check if already added to result
+             already_added = .false.
+             do l=1,k
+                 if (abs(dx(i) - dz(l)) < eps8) then
+                     already_added = .true.
+                     exit
+                 endif
+             enddo ! over l={1,k} loop
+             if (.not. already_added) then
+                 k = k + 1
+                 dz(k) = dx(i)
+             endif
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_intersect_d
+
+!!
+!! @sub s_intersect_z
+!!
+!! compute intersection of two complex(dp) vectors.
+!! returns common elements in zz, with k elements total.
+!! each element appears only once (unique).
+!!
+  subroutine s_intersect_z(n, zx, m, zy, k, zz)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)      :: n
+
+     ! first input complex(dp) vector x
+     complex(dp), intent(in)  :: zx(n)
+
+     ! size of second vector
+     integer, intent(in)      :: m
+
+     ! second input complex(dp) vector y
+     complex(dp), intent(in)  :: zy(m)
+
+     ! number of intersection elements (output)
+     integer, intent(out)     :: k
+
+     ! intersection elements (output, size n, but only k valid)
+     complex(dp), intent(out) :: zz(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, l
+
+     ! flag for membership
+     logical :: in_y
+     logical :: already_added
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         k = 0
+         return
+     endif
+     !
+     k = 0
+     do i=1,n
+         ! check if zx(i) is in zy
+         in_y = .false.
+         do j=1,m
+             if (abs(zx(i) - zy(j)) < eps8) then
+                 in_y = .true.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         !
+         if (in_y) then
+             ! check if already added to result
+             already_added = .false.
+             do l=1,k
+                 if (abs(zx(i) - zz(l)) < eps8) then
+                     already_added = .true.
+                     exit
+                 endif
+             enddo ! over l={1,k} loop
+             if (.not. already_added) then
+                 k = k + 1
+                 zz(k) = zx(i)
+             endif
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_intersect_z
