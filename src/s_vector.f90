@@ -30,6 +30,9 @@
 !!!           s_cross_i
 !!!           s_cross_d
 !!!           s_cross_z
+!!!           s_distance_i
+!!!           s_distance_d
+!!!           s_distance_z
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -969,7 +972,7 @@
   end subroutine s_diff_z
 
 !!========================================================================
-!!>>> statistics operations                                            <<<
+!!>>> vector statistics operation                                      <<<
 !!========================================================================
 
 !!
@@ -1168,7 +1171,7 @@
   end subroutine s_stats_z
 
 !!========================================================================
-!!>>> outer product operations                                         <<<
+!!>>> vector outer product operations                                  <<<
 !!========================================================================
 
 !!
@@ -1305,7 +1308,7 @@
   end subroutine s_outer_z
 
 !!========================================================================
-!!>>> cross product operations                                         <<<
+!!>>> vector cross product operations                                  <<<
 !!========================================================================
 
 !!
@@ -1407,3 +1410,157 @@
 
      return
   end subroutine s_cross_z
+
+!!========================================================================
+!!>>> vector distance operations                                       <<<
+!!========================================================================
+
+!!
+!! @sub s_distance_i
+!!
+!! compute euclidean distance between two integer vectors.
+!! dist = sqrt( sum_i (x(i) - y(i))^2 )
+!!
+  subroutine s_distance_i(n, ix, iy, dist)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vectors
+     integer, intent(in)   :: n
+
+     ! input integer vector x
+     integer, intent(in)   :: ix(n)
+
+     ! input integer vector y
+     integer, intent(in)   :: iy(n)
+
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out) :: dist
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! squared differences sum
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + real(ix(i) - iy(i), dp)**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_distance_i
+
+!!
+!! @sub s_distance_d
+!!
+!! compute euclidean distance between two real(dp) vectors.
+!! dist = sqrt( sum_i (x(i) - y(i))^2 )
+!!
+  subroutine s_distance_d(n, dx, dy, dist)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vectors
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector x
+     real(dp), intent(in)  :: dx(n)
+
+     ! input real(dp) vector y
+     real(dp), intent(in)  :: dy(n)
+
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out) :: dist
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! squared differences sum
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (dx(i) - dy(i))**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_distance_d
+
+!!
+!! @sub s_distance_z
+!!
+!! compute euclidean distance between two complex(dp) vectors.
+!! dist = sqrt( sum_i |x(i) - y(i)|^2 )
+!!
+  subroutine s_distance_z(n, zx, zy, dist)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vectors
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector x
+     complex(dp), intent(in)  :: zx(n)
+
+     ! input complex(dp) vector y
+     complex(dp), intent(in)  :: zy(n)
+
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out)    :: dist
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! squared differences sum
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + abs(zx(i) - zy(i))**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_distance_z
