@@ -3582,3 +3582,144 @@
 
      return
   end subroutine s_norm2_z
+!!========================================================================
+!!>>> norminf operations                                              <<<
+!!========================================================================
+
+!!
+!! @sub s_norminf_i
+!!
+!! compute L-infinity norm of an integer vector: ||x||_inf = max |x(i)|
+!!
+  subroutine s_norminf_i(n, ix, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input integer vector
+     integer, intent(in)   :: ix(n)
+
+     ! L-infinity norm: max |x(i)|
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! maximum absolute value
+     real(dp) :: max_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     max_abs = abs(real(ix(1), dp))
+     do i=2,n
+         max_abs = max(max_abs, abs(real(ix(i), dp)))
+     enddo ! over i={2,n} loop
+     norm = max_abs
+
+!! body]
+
+     return
+  end subroutine s_norminf_i
+
+!!
+!! @sub s_norminf_d
+!!
+!! compute L-infinity norm of a real(dp) vector: ||x||_inf = max |x(i)|
+!!
+  subroutine s_norminf_d(n, dx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! L-infinity norm: max |x(i)|
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! maximum absolute value
+     real(dp) :: max_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     max_abs = abs(dx(1))
+     do i=2,n
+         max_abs = max(max_abs, abs(dx(i)))
+     enddo ! over i={2,n} loop
+     norm = max_abs
+
+!! body]
+
+     return
+  end subroutine s_norminf_d
+
+!!
+!! @sub s_norminf_z
+!!
+!! compute L-infinity norm of a complex(dp) vector: ||x||_inf = max |x(i)|
+!!
+  subroutine s_norminf_z(n, zx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! L-infinity norm: max |x(i)|
+     real(dp), intent(out)    :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! maximum absolute value
+     real(dp) :: max_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     max_abs = abs(zx(1))
+     do i=2,n
+         max_abs = max(max_abs, abs(zx(i)))
+     enddo ! over i={2,n} loop
+     norm = max_abs
+
+!! body]
+
+     return
+  end subroutine s_norminf_z
