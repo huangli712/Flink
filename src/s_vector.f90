@@ -3440,3 +3440,145 @@
 
      return
   end subroutine s_norm1_z
+
+!!========================================================================
+!!>>> vector norm2 operations                                          <<<
+!!========================================================================
+
+!!
+!! @sub s_norm2_i
+!!
+!! compute L2 norm of an integer vector: ||x||_2 = sqrt(sum x(i)^2)
+!!
+  subroutine s_norm2_i(n, ix, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input integer vector
+     integer, intent(in)   :: ix(n)
+
+     ! L2 norm: sqrt(sum x(i)^2)
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of squared values
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + real(ix(i), dp)**2
+     enddo ! over i={1,n} loop
+     norm = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_norm2_i
+
+!!
+!! @sub s_norm2_d
+!!
+!! compute L2 norm of a real(dp) vector: ||x||_2 = sqrt(sum x(i)^2)
+!!
+  subroutine s_norm2_d(n, dx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! L2 norm: sqrt(sum x(i)^2)
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of squared values
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + dx(i)**2
+     enddo ! over i={1,n} loop
+     norm = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_norm2_d
+
+!!
+!! @sub s_norm2_z
+!!
+!! compute L2 norm of a complex(dp) vector: ||x||_2 = sqrt(sum |z(i)|^2)
+!!
+  subroutine s_norm2_z(n, zx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! L2 norm: sqrt(sum |z(i)|^2)
+     real(dp), intent(out)    :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of squared absolute values
+     real(dp) :: sum_sq
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + abs(zx(i))**2
+     enddo ! over i={1,n} loop
+     norm = sqrt(sum_sq)
+
+!! body]
+
+     return
+  end subroutine s_norm2_z
