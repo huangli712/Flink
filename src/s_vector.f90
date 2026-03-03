@@ -3723,3 +3723,157 @@
 
      return
   end subroutine s_norminf_z
+
+!!========================================================================
+!!>>> vector shuffle operations                                        <<<
+!!========================================================================
+
+!!
+!! @sub s_shuffle_i
+!!
+!! shuffle an integer vector in-place using Fisher-Yates algorithm.
+!!
+  subroutine s_shuffle_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be shuffled (in-place)
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     integer :: temp
+
+     ! random number
+     real(dp) :: r
+
+!! [body
+
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = ix(i)
+         ix(i) = ix(j)
+         ix(j) = temp
+     enddo ! over i={n,2,-1} loop
+
+!! body]
+
+     return
+  end subroutine s_shuffle_i
+
+!!
+!! @sub s_shuffle_d
+!!
+!! shuffle a real(dp) vector in-place using Fisher-Yates algorithm.
+!!
+  subroutine s_shuffle_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be shuffled (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     real(dp) :: temp
+
+     ! random number
+     real(dp) :: r
+
+!! [body
+
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = dx(i)
+         dx(i) = dx(j)
+         dx(j) = temp
+     enddo ! over i={n,2,-1} loop
+
+!! body]
+
+     return
+  end subroutine s_shuffle_d
+
+!!
+!! @sub s_shuffle_z
+!!
+!! shuffle a complex(dp) vector in-place using Fisher-Yates algorithm.
+!!
+  subroutine s_shuffle_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be shuffled (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     complex(dp) :: temp
+
+     ! random number
+     real(dp) :: r
+
+!! [body
+
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = zx(i)
+         zx(i) = zx(j)
+         zx(j) = temp
+     enddo ! over i={n,2,-1} loop
+
+!! body]
+
+     return
+  end subroutine s_shuffle_z
