@@ -3160,3 +3160,141 @@
 
      return
   end subroutine s_clip_z
+
+
+!!========================================================================
+!!>>> concat operations                                               <<<
+!!========================================================================
+
+!!
+!! @sub s_concat_i
+!!
+!! concatenate two integer vectors: z = [x, y]
+!!
+  subroutine s_concat_i(n, m, ix, iy, iz)
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)  :: n
+
+     ! size of second vector
+     integer, intent(in)  :: m
+
+     ! first integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! second integer vector
+     integer, intent(in)  :: iy(m)
+
+     ! concatenated vector: [ix, iy]
+     integer, intent(out) :: iz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         iz(i) = ix(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         iz(n+i) = iy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_i
+
+!!
+!! @sub s_concat_d
+!!
+!! concatenate two real(dp) vectors: z = [x, y]
+!!
+  subroutine s_concat_d(n, m, dx, dy, dz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)     :: n
+
+     ! size of second vector
+     integer, intent(in)     :: m
+
+     ! first real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! second real(dp) vector
+     real(dp), intent(in)  :: dy(m)
+
+     ! concatenated vector: [dx, dy]
+     real(dp), intent(out) :: dz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         dz(i) = dx(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         dz(n+i) = dy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_d
+
+!!
+!! @sub s_concat_z
+!!
+!! concatenate two complex(dp) vectors: z = [x, y]
+!!
+  subroutine s_concat_z(n, m, zx, zy, zz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)      :: n
+
+     ! size of second vector
+     integer, intent(in)      :: m
+
+     ! first complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! second complex(dp) vector
+     complex(dp), intent(in)  :: zy(m)
+
+     ! concatenated vector: [zx, zy]
+     complex(dp), intent(out) :: zz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         zz(i) = zx(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         zz(n+i) = zy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_z
