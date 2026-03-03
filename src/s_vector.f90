@@ -3163,7 +3163,7 @@
 
 
 !!========================================================================
-!!>>> concat operations                                               <<<
+!!>>> vector concat operations                                         <<<
 !!========================================================================
 
 !!
@@ -3298,3 +3298,145 @@
 
      return
   end subroutine s_concat_z
+
+!!========================================================================
+!!>>> vector norm1 operations                                          <<<
+!!========================================================================
+
+!!
+!! @sub s_norm1_i
+!!
+!! compute L1 norm of an integer vector: ||x||_1 = sum |x(i)|
+!!
+  subroutine s_norm1_i(n, ix, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input integer vector
+     integer, intent(in)   :: ix(n)
+
+     ! L1 norm: sum |x(i)|
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of absolute values
+     real(dp) :: sum_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_abs = zero
+     do i=1,n
+         sum_abs = sum_abs + abs(real(ix(i), dp))
+     enddo ! over i={1,n} loop
+     norm = sum_abs
+
+!! body]
+
+     return
+  end subroutine s_norm1_i
+
+!!
+!! @sub s_norm1_d
+!!
+!! compute L1 norm of a real(dp) vector: ||x||_1 = sum |x(i)|
+!!
+  subroutine s_norm1_d(n, dx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! L1 norm: sum |x(i)|
+     real(dp), intent(out) :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of absolute values
+     real(dp) :: sum_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_abs = zero
+     do i=1,n
+         sum_abs = sum_abs + abs(dx(i))
+     enddo ! over i={1,n} loop
+     norm = sum_abs
+
+!! body]
+
+     return
+  end subroutine s_norm1_d
+
+!!
+!! @sub s_norm1_z
+!!
+!! compute L1 norm of a complex(dp) vector: ||x||_1 = sum |x(i)|
+!!
+  subroutine s_norm1_z(n, zx, norm)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! L1 norm: sum |x(i)|
+     real(dp), intent(out)    :: norm
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! sum of absolute values
+     real(dp) :: sum_abs
+
+!! [body
+
+     if (n <= 0) then
+         norm = zero
+         return
+     endif
+     !
+     sum_abs = zero
+     do i=1,n
+         sum_abs = sum_abs + abs(zx(i))
+     enddo ! over i={1,n} loop
+     norm = sum_abs
+
+!! body]
+
+     return
+  end subroutine s_norm1_z
