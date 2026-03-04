@@ -4940,3 +4940,696 @@
 
      return
   end subroutine s_tan_z
+
+!!========================================================================
+!!>>> moving average operations                                        <<<
+!!========================================================================
+
+!!
+!! @sub s_moving_average_i
+!!
+!! compute moving average of an integer vector.
+!! window_size is the number of elements to average (must be odd).
+!!
+  subroutine s_moving_average_i(n, ix, window_size, iy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! window size (must be odd)
+     integer, intent(in)  :: window_size
+
+     ! output smoothed vector
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         iy = ix
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = zero
+         count = 0
+         ! sum elements in window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + real(ix(j), dp)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average and cast to integer
+         if (count > 0) then
+             iy(i) = int(sum_val / real(count, dp))
+         else
+             iy(i) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_moving_average_i
+
+!!
+!! @sub s_moving_average_d
+!!
+!! compute moving average of a real(dp) vector.
+!! window_size is the number of elements to average (must be odd).
+!!
+  subroutine s_moving_average_d(n, dx, window_size, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! window size (must be odd)
+     integer, intent(in)   :: window_size
+
+     ! output smoothed vector
+     real(dp), intent(out) :: dy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         dy = dx
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = zero
+         count = 0
+         ! sum elements in window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + dx(j)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average
+         if (count > 0) then
+             dy(i) = sum_val / real(count, dp)
+         else
+             dy(i) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_moving_average_d
+
+!!
+!! @sub s_moving_average_z
+!!
+!! compute moving average of a complex(dp) vector.
+!! window_size is the number of elements to average (must be odd).
+!!
+  subroutine s_moving_average_z(n, zx, window_size, zy)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! window size (must be odd)
+     integer, intent(in)      :: window_size
+
+     ! output smoothed vector
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         zy = zx
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = czero
+         count = 0
+         ! sum elements in window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + zx(j)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average
+         if (count > 0) then
+             zy(i) = sum_val / real(count, dp)
+         else
+             zy(i) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_moving_average_z
+
+!!========================================================================
+!!>>> box smooth operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_smooth_box_i
+!!
+!! compute box smoothing (uniform kernel) of an integer vector.
+!! window_size is the width of the box (must be odd).
+!!
+  subroutine s_smooth_box_i(n, ix, window_size, iy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! window size (must be odd)
+     integer, intent(in)  :: window_size
+
+     ! output smoothed vector
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         iy = ix
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = zero
+         count = 0
+         ! sum elements in box window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + real(ix(j), dp)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average and cast to integer
+         if (count > 0) then
+             iy(i) = int(sum_val / real(count, dp))
+         else
+             iy(i) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_box_i
+
+!!
+!! @sub s_smooth_box_d
+!!
+!! compute box smoothing (uniform kernel) of a real(dp) vector.
+!! window_size is the width of the box (must be odd).
+!!
+  subroutine s_smooth_box_d(n, dx, window_size, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! window size (must be odd)
+     integer, intent(in)   :: window_size
+
+     ! output smoothed vector
+     real(dp), intent(out) :: dy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         dy = dx
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = zero
+         count = 0
+         ! sum elements in box window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + dx(j)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average
+         if (count > 0) then
+             dy(i) = sum_val / real(count, dp)
+         else
+             dy(i) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_box_d
+
+!!
+!! @sub s_smooth_box_z
+!!
+!! compute box smoothing (uniform kernel) of a complex(dp) vector.
+!! window_size is the width of the box (must be odd).
+!!
+  subroutine s_smooth_box_z(n, zx, window_size, zy)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! window size (must be odd)
+     integer, intent(in)      :: window_size
+
+     ! output smoothed vector
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! half window size
+     integer :: half_win
+
+     ! count of valid elements in window
+     integer :: count
+
+     ! sum of elements in window
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (window_size < 1 .or. mod(window_size, 2) == 0) then
+         ! invalid window size, just copy input to output
+         zy = zx
+         return
+     endif
+     !
+     half_win = window_size / 2
+     !
+     do i=1,n
+         sum_val = czero
+         count = 0
+         ! sum elements in box window
+         do j=max(1, i-half_win), min(n, i+half_win)
+             sum_val = sum_val + zx(j)
+             count = count + 1
+         enddo ! over j loop
+         ! compute average
+         if (count > 0) then
+             zy(i) = sum_val / real(count, dp)
+         else
+             zy(i) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_box_z
+
+!!========================================================================
+!!>>> gaussian smooth operations                                     <<<
+!!========================================================================
+
+!!
+!! @sub s_smooth_gaussian_i
+!!
+!! compute gaussian smoothing of an integer vector.
+!! sigma is the standard deviation of gaussian kernel.
+!!
+  subroutine s_smooth_gaussian_i(n, ix, sigma, iy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! standard deviation of gaussian kernel (window width = 3*sigma)
+     real(dp), intent(in) :: sigma
+
+     ! output smoothed vector
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! gaussian window radius
+     integer :: radius
+
+     ! gaussian weight and sum of weights
+     real(dp) :: weight, sum_weights, weighted_sum
+
+     ! distance squared
+     real(dp) :: dist_sq
+
+     ! two times sigma squared
+     real(dp) :: two_sigma_sq
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (sigma <= 0.0_dp) then
+         ! invalid sigma, just copy input to output
+         iy = ix
+         return
+     endif
+     !
+     two_sigma_sq = 2.0_dp * sigma**2
+     radius = int(3.0_dp * sigma)  ! 3 sigma rule
+     if (radius < 1) radius = 1
+     !
+     do i=1,n
+         weighted_sum = zero
+         sum_weights = zero
+         ! compute weighted sum with gaussian kernel
+         do j=max(1, i-radius), min(n, i+radius)
+             dist_sq = real(i-j, dp)**2
+             weight = exp(-dist_sq / two_sigma_sq)
+             weighted_sum = weighted_sum + weight * real(ix(j), dp)
+             sum_weights = sum_weights + weight
+         enddo ! over j loop
+         ! compute weighted average and cast to integer
+         if (sum_weights > 0.0_dp) then
+             iy(i) = int(weighted_sum / sum_weights)
+         else
+             iy(i) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_gaussian_i
+
+!!
+!! @sub s_smooth_gaussian_d
+!!
+!! compute gaussian smoothing of a real(dp) vector.
+!! sigma is the standard deviation of gaussian kernel.
+!!
+  subroutine s_smooth_gaussian_d(n, dx, sigma, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! standard deviation of gaussian kernel (window width = 3*sigma)
+     real(dp), intent(in)  :: sigma
+
+     ! output smoothed vector
+     real(dp), intent(out) :: dy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! gaussian window radius
+     integer :: radius
+
+     ! gaussian weight and sum of weights
+     real(dp) :: weight, sum_weights, weighted_sum
+
+     ! distance squared
+     real(dp) :: dist_sq
+
+     ! two times sigma squared
+     real(dp) :: two_sigma_sq
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (sigma <= 0.0_dp) then
+         ! invalid sigma, just copy input to output
+         dy = dx
+         return
+     endif
+     !
+     two_sigma_sq = 2.0_dp * sigma**2
+     radius = int(3.0_dp * sigma)  ! 3 sigma rule
+     if (radius < 1) radius = 1
+     !
+     do i=1,n
+         weighted_sum = zero
+         sum_weights = zero
+         ! compute weighted sum with gaussian kernel
+         do j=max(1, i-radius), min(n, i+radius)
+             dist_sq = real(i-j, dp)**2
+             weight = exp(-dist_sq / two_sigma_sq)
+             weighted_sum = weighted_sum + weight * dx(j)
+             sum_weights = sum_weights + weight
+         enddo ! over j loop
+         ! compute weighted average
+         if (sum_weights > 0.0_dp) then
+             dy(i) = weighted_sum / sum_weights
+         else
+             dy(i) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_gaussian_d
+
+!!
+!! @sub s_smooth_gaussian_z
+!!
+!! compute gaussian smoothing of a complex(dp) vector.
+!! sigma is the standard deviation of gaussian kernel.
+!!
+  subroutine s_smooth_gaussian_z(n, zx, sigma, zy)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! standard deviation of gaussian kernel (window width = 3*sigma)
+     real(dp), intent(in)     :: sigma
+
+     ! output smoothed vector
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! gaussian window radius
+     integer :: radius
+
+     ! gaussian weight and sum of weights
+     real(dp) :: weight, sum_weights
+
+     ! weighted sum
+     complex(dp) :: weighted_sum
+
+     ! distance squared
+     real(dp) :: dist_sq
+
+     ! two times sigma squared
+     real(dp) :: two_sigma_sq
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     if (sigma <= 0.0_dp) then
+         ! invalid sigma, just copy input to output
+         zy = zx
+         return
+     endif
+     !
+     two_sigma_sq = 2.0_dp * sigma**2
+     radius = int(3.0_dp * sigma)  ! 3 sigma rule
+     if (radius < 1) radius = 1
+     !
+     do i=1,n
+         weighted_sum = czero
+         sum_weights = zero
+         ! compute weighted sum with gaussian kernel
+         do j=max(1, i-radius), min(n, i+radius)
+             dist_sq = real(i-j, dp)**2
+             weight = exp(-dist_sq / two_sigma_sq)
+             weighted_sum = weighted_sum + weight * zx(j)
+             sum_weights = sum_weights + weight
+         enddo ! over j loop
+         ! compute weighted average
+         if (sum_weights > 0.0_dp) then
+             zy(i) = weighted_sum / sum_weights
+         else
+             zy(i) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_smooth_gaussian_z
