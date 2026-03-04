@@ -5165,7 +5165,7 @@
   end subroutine s_moving_average_z
 
 !!========================================================================
-!!>>> box smooth operations                                         <<<
+!!>>> box smooth operations                                            <<<
 !!========================================================================
 
 !!
@@ -5388,7 +5388,7 @@
   end subroutine s_smooth_box_z
 
 !!========================================================================
-!!>>> gaussian smooth operations                                     <<<
+!!>>> gaussian smooth operations                                       <<<
 !!========================================================================
 
 !!
@@ -5633,3 +5633,202 @@
 
      return
   end subroutine s_smooth_gaussian_z
+
+!!========================================================================
+!!>>> slice operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_slice_i
+!!
+!! extract a sub-vector from an integer vector.
+!! start_idx is the starting index (1-based), count is number of elements.
+!!
+  subroutine s_slice_i(n, ix, start_idx, count, iy)
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! starting index (1-based)
+     integer, intent(in)  :: start_idx
+
+     ! number of elements to extract
+     integer, intent(in)  :: count
+
+     ! output sub-vector
+     integer, intent(out) :: iy(count)
+
+!! local variables
+     ! loop indices
+     integer :: i
+
+     ! actual start and end indices
+     integer :: actual_start, actual_end
+
+     ! actual number of elements to extract
+     integer :: actual_count
+
+!! [body
+
+     if (n <= 0 .or. count <= 0) then
+         return
+     endif
+     !
+     iy = 0
+     !
+     ! calculate actual start index (clamp to valid range)
+     actual_start = max(1, min(start_idx, n))
+     !
+     ! calculate actual end index
+     actual_end = actual_start + count - 1
+     actual_end = min(actual_end, n)
+     !
+     ! calculate actual count
+     actual_count = actual_end - actual_start + 1
+     !
+     ! copy elements
+     do i=1,actual_count
+         iy(i) = ix(actual_start + i - 1)
+     enddo ! over i={1,actual_count} loop
+
+!! body]
+
+     return
+  end subroutine s_slice_i
+
+!!
+!! @sub s_slice_d
+!!
+!! extract a sub-vector from a real(dp) vector.
+!! start_idx is the starting index (1-based), count is number of elements.
+!!
+  subroutine s_slice_d(n, dx, start_idx, count, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! starting index (1-based)
+     integer, intent(in)   :: start_idx
+
+     ! number of elements to extract
+     integer, intent(in)   :: count
+
+     ! output sub-vector
+     real(dp), intent(out) :: dy(count)
+
+!! local variables
+     ! loop indices
+     integer :: i
+
+     ! actual start and end indices
+     integer :: actual_start, actual_end
+
+     ! actual number of elements to extract
+     integer :: actual_count
+
+!! [body
+
+     if (n <= 0 .or. count <= 0) then
+         return
+     endif
+     !
+     dy = zero
+     !
+     ! calculate actual start index (clamp to valid range)
+     actual_start = max(1, min(start_idx, n))
+     !
+     ! calculate actual end index
+     actual_end = actual_start + count - 1
+     actual_end = min(actual_end, n)
+     !
+     ! calculate actual count
+     actual_count = actual_end - actual_start + 1
+     !
+     ! copy elements
+     do i=1,actual_count
+         dy(i) = dx(actual_start + i - 1)
+     enddo ! over i={1,actual_count} loop
+
+!! body]
+
+     return
+  end subroutine s_slice_d
+
+!!
+!! @sub s_slice_z
+!!
+!! extract a sub-vector from a complex(dp) vector.
+!! start_idx is the starting index (1-based), count is number of elements.
+!!
+  subroutine s_slice_z(n, zx, start_idx, count, zy)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! starting index (1-based)
+     integer, intent(in)      :: start_idx
+
+     ! number of elements to extract
+     integer, intent(in)      :: count
+
+     ! output sub-vector
+     complex(dp), intent(out) :: zy(count)
+
+!! local variables
+     ! loop indices
+     integer :: i
+
+     ! actual start and end indices
+     integer :: actual_start, actual_end
+
+     ! actual number of elements to extract
+     integer :: actual_count
+
+!! [body
+
+     if (n <= 0 .or. count <= 0) then
+         return
+     endif
+     !
+     zy = czero
+     !
+     ! calculate actual start index (clamp to valid range)
+     actual_start = max(1, min(start_idx, n))
+     !
+     ! calculate actual end index
+     actual_end = actual_start + count - 1
+     actual_end = min(actual_end, n)
+     !
+     ! calculate actual count
+     actual_count = actual_end - actual_start + 1
+     !
+     ! copy elements
+     do i=1,actual_count
+         zy(i) = zx(actual_start + i - 1)
+     enddo ! over i={1,actual_count} loop
+
+!! body]
+
+     return
+  end subroutine s_slice_z
