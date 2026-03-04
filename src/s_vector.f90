@@ -4601,3 +4601,342 @@
 
      return
   end subroutine s_log10_z
+
+!!========================================================================
+!!>>> sin operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_sin_i
+!!
+!! compute sine of an integer vector in-place: x = sin(x)
+!!
+  subroutine s_sin_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = int(sin(real(ix(i), dp)))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sin_i
+
+!!
+!! @sub s_sin_d
+!!
+!! compute sine of a real(dp) vector in-place: x = sin(x)
+!!
+  subroutine s_sin_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = sin(dx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sin_d
+
+!!
+!! @sub s_sin_z
+!!
+!! compute sine of a complex(dp) vector in-place: z = sin(z)
+!!
+  subroutine s_sin_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = sin(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sin_z
+
+!!========================================================================
+!!>>> cos operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_cos_i
+!!
+!! compute cosine of an integer vector in-place: x = cos(x)
+!!
+  subroutine s_cos_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = int(cos(real(ix(i), dp)))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_cos_i
+
+!!
+!! @sub s_cos_d
+!!
+!! compute cosine of a real(dp) vector in-place: x = cos(x)
+!!
+  subroutine s_cos_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = cos(dx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_cos_d
+
+!!
+!! @sub s_cos_z
+!!
+!! compute cosine of a complex(dp) vector in-place: z = cos(z)
+!!
+  subroutine s_cos_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = cos(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_cos_z
+
+!!========================================================================
+!!>>> tan operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_tan_i
+!!
+!! compute tangent of an integer vector in-place: x = tan(x)
+!!
+  subroutine s_tan_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = int(tan(real(ix(i), dp)))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_tan_i
+
+!!
+!! @sub s_tan_d
+!!
+!! compute tangent of a real(dp) vector in-place: x = tan(x)
+!!
+  subroutine s_tan_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = tan(dx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_tan_d
+
+!!
+!! @sub s_tan_z
+!!
+!! compute tangent of a complex(dp) vector in-place: z = tan(z)
+!!
+  subroutine s_tan_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = tan(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_tan_z
