@@ -5832,3 +5832,160 @@
 
      return
   end subroutine s_slice_z
+
+!!========================================================================
+!!>>> take operations                                                 <<<
+!!========================================================================
+
+!!
+!! @sub s_take_i
+!!
+!! extract elements from an integer vector by indices.
+!! idx is a 1-based index array, elements with indices
+!! out of range are set to 0.
+!!
+  subroutine s_take_i(n, ix, m, idx, iy)
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! size of index array
+     integer, intent(in)  :: m
+
+     ! index array (1-based)
+     integer, intent(in)  :: idx(m)
+
+     ! output elements at specified indices
+     integer, intent(out) :: iy(m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         return
+     endif
+     !
+     do i=1,m
+         if (idx(i) >= 1 .and. idx(i) <= n) then
+             iy(i) = ix(idx(i))
+         else
+             iy(i) = 0
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_take_i
+
+!!
+!! @sub s_take_d
+!!
+!! extract elements from a real(dp) vector by indices.
+!! idx is a 1-based index array, elements with indices
+!! out of range are set to 0.
+!!
+  subroutine s_take_d(n, dx, m, idx, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! size of index array
+     integer, intent(in)   :: m
+
+     ! index array (1-based)
+     integer, intent(in)   :: idx(m)
+
+     ! output elements at specified indices
+     real(dp), intent(out) :: dy(m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         return
+     endif
+     !
+     do i=1,m
+         if (idx(i) >= 1 .and. idx(i) <= n) then
+             dy(i) = dx(idx(i))
+         else
+             dy(i) = zero
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_take_d
+
+!!
+!! @sub s_take_z
+!!
+!! extract elements from a complex(dp) vector by indices.
+!! idx is a 1-based index array, elements with indices
+!! out of range are set to 0.
+!!
+  subroutine s_take_z(n, zx, m, idx, zy)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! size of index array
+     integer, intent(in)      :: m
+
+     ! index array (1-based)
+     integer, intent(in)      :: idx(m)
+
+     ! output elements at specified indices
+     complex(dp), intent(out) :: zy(m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         return
+     endif
+     !
+     do i=1,m
+         if (idx(i) >= 1 .and. idx(i) <= n) then
+             zy(i) = zx(idx(i))
+         else
+             zy(i) = czero
+         endif
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_take_z
