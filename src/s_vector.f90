@@ -3884,3 +3884,468 @@
 
      return
   end subroutine s_shuffle_z
+
+!!========================================================================
+!!>>> pow operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_pow_i
+!!
+!! compute power of an integer vector in-place: x = x^power
+!!
+  subroutine s_pow_i(n, ix, power)
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     integer, intent(inout) :: ix(n)
+
+     ! power exponent
+     integer, intent(in)    :: power
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = ix(i)**power
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_pow_i
+
+!!
+!! @sub s_pow_d
+!!
+!! compute power of a real(dp) vector in-place: x = x^power
+!!
+  subroutine s_pow_d(n, dx, power)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+     ! power exponent
+     real(dp), intent(in)    :: power
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = dx(i)**power
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_pow_d
+
+!!
+!! @sub s_pow_z
+!!
+!! compute power of a complex(dp) vector in-place: z = z^power
+!!
+  subroutine s_pow_z(n, zx, power)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+     ! power exponent
+     real(dp), intent(in)       :: power
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = zx(i)**power
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_pow_z
+
+!!========================================================================
+!!>>> square operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_square_i
+!!
+!! compute square of an integer vector in-place: x = x^2
+!!
+  subroutine s_square_i(n, ix)
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = ix(i)**2
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_square_i
+
+!!
+!! @sub s_square_d
+!!
+!! compute square of a real(dp) vector in-place: x = x^2
+!!
+  subroutine s_square_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = dx(i)**2
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_square_d
+
+!!
+!! @sub s_square_z
+!!
+!! compute square of a complex(dp) vector in-place: z = z^2
+!!
+  subroutine s_square_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)      :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = zx(i)**2
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_square_z
+
+!!========================================================================
+!!>>> sqrt operations                                                  <<<
+!!========================================================================
+
+!!
+!! @sub s_sqrt_i
+!!
+!! compute square root of an integer vector in-place: x = sqrt(x)
+!!
+  subroutine s_sqrt_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (ix(i) >= 0) then
+             ix(i) = int(sqrt(real(ix(i), dp)))
+         else
+             ix(i) = 0
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sqrt_i
+
+!!
+!! @sub s_sqrt_d
+!!
+!! compute square root of a real(dp) vector in-place: x = sqrt(x)
+!!
+  subroutine s_sqrt_d(n, dx)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     ! note: negative values are set to 0
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (dx(i) >= 0.0_dp) then
+             dx(i) = sqrt(dx(i))
+         else
+             dx(i) = zero
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sqrt_d
+
+!!
+!! @sub s_sqrt_z
+!!
+!! compute square root of a complex(dp) vector in-place: z = sqrt(z)
+!!
+  subroutine s_sqrt_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = sqrt(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_sqrt_z
+
+!!========================================================================
+!!>>> exp operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_exp_i
+!!
+!! compute exponential of an integer vector in-place: x = exp(x)
+!!
+  subroutine s_exp_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         ix(i) = int(exp(real(ix(i), dp)))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_exp_i
+
+!!
+!! @sub s_exp_d
+!!
+!! compute exponential of a real(dp) vector in-place: x = exp(x)
+!!
+  subroutine s_exp_d(n, dx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         dx(i) = exp(dx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_exp_d
+
+!!
+!! @sub s_exp_z
+!!
+!! compute exponential of a complex(dp) vector in-place: z = exp(z)
+!!
+  subroutine s_exp_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = exp(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_exp_z
