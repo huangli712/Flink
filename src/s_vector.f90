@@ -5989,3 +5989,203 @@
 
      return
   end subroutine s_take_z
+
+!!========================================================================
+!!>>> drop operations                                                 <<<
+!!========================================================================
+
+!!
+!! @sub s_drop_i
+!!
+!! drop elements from an integer vector by indices.
+!! idx is a 1-based index array, the output contains
+!! elements NOT in the index list.
+!!
+  subroutine s_drop_i(n, ix, m, idx, iy)
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)  :: n
+
+     ! input integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! size of index array
+     integer, intent(in)  :: m
+
+     ! index array (1-based)
+     integer, intent(in)  :: idx(m)
+
+     ! output vector without specified indices
+     ! size is max(0, n - m) but we don't know overlap
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag to keep current element
+     logical :: keep
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         iy = ix
+         return
+     endif
+     !
+     ! copy elements not in index list
+     do i=1,n
+         keep = .true.
+         ! check if current index is in drop list
+         do j=1,m
+             if (idx(j) == i) then
+                 keep = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         ! copy if not in drop list
+         if (keep) then
+             iy(i) = ix(i)
+         else
+             iy(i) = 0
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_drop_i
+
+!!
+!! @sub s_drop_d
+!!
+!! drop elements from a real(dp) vector by indices.
+!! idx is a 1-based index array, the output contains
+!! elements NOT in the index list.
+!!
+  subroutine s_drop_d(n, dx, m, idx, dy)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)   :: n
+
+     ! input real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! size of index array
+     integer, intent(in)   :: m
+
+     ! index array (1-based)
+     integer, intent(in)   :: idx(m)
+
+     ! output vector without specified indices
+     real(dp), intent(out) :: dy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag to keep current element
+     logical :: keep
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         dy = dx
+         return
+     endif
+     !
+     ! copy elements not in index list
+     do i=1,n
+         keep = .true.
+         ! check if current index is in drop list
+         do j=1,m
+             if (idx(j) == i) then
+                 keep = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         ! copy if not in drop list
+         if (keep) then
+             dy(i) = dx(i)
+         else
+             dy(i) = zero
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_drop_d
+
+!!
+!! @sub s_drop_z
+!!
+!! drop elements from a complex(dp) vector by indices.
+!! idx is a 1-based index array, the output contains
+!! elements NOT in the index list.
+!!
+  subroutine s_drop_z(n, zx, m, idx, zy)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of input vector
+     integer, intent(in)      :: n
+
+     ! input complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! size of index array
+     integer, intent(in)      :: m
+
+     ! index array (1-based)
+     integer, intent(in)      :: idx(m)
+
+     ! output vector without specified indices
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! flag to keep current element
+     logical :: keep
+
+!! [body
+
+     if (n <= 0 .or. m <= 0) then
+         zy = zx
+         return
+     endif
+     !
+     ! copy elements not in index list
+     do i=1,n
+         keep = .true.
+         ! check if current index is in drop list
+         do j=1,m
+             if (idx(j) == i) then
+                 keep = .false.
+                 exit
+             endif
+         enddo ! over j={1,m} loop
+         ! copy if not in drop list
+         if (keep) then
+             zy(i) = zx(i)
+         else
+             zy(i) = czero
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_drop_z
