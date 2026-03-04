@@ -31,11 +31,20 @@
 !!!           s_exp
 !!!           s_log
 !!!           s_log10
+!!!           s_sin
+!!!           s_cos
+!!!           s_tan
+!!!           s_moving_average
+!!!           s_smooth_box
+!!!           s_smooth_gaussian
+!!!           s_slice
+!!!           s_take
+!!!           s_drop
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/02/2026 by li huang (last modified)
+!!!           03/04/2026 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
