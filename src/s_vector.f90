@@ -25,6 +25,12 @@
 !!!           s_norm2
 !!!           s_norminf
 !!!           s_shuffle
+!!!           s_pow
+!!!           s_square
+!!!           s_sqrt
+!!!           s_exp
+!!!           s_log
+!!!           s_log10
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -4189,7 +4195,7 @@
      endif
      !
      do i=1,n
-         if (dx(i) >= 0.0_dp) then
+         if (dx(i) >= zero) then
              dx(i) = sqrt(dx(i))
          else
              dx(i) = zero
@@ -4349,3 +4355,249 @@
 
      return
   end subroutine s_exp_z
+
+!!========================================================================
+!!>>> log operations                                                   <<<
+!!========================================================================
+
+!!
+!! @sub s_log_i
+!!
+!! compute natural logarithm of an integer vector in-place: x = log(x)
+!!
+  subroutine s_log_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (ix(i) > 0) then
+             ix(i) = int(log(real(ix(i), dp)))
+         else
+             ix(i) = 0
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log_i
+
+!!
+!! @sub s_log_d
+!!
+!! compute natural logarithm of a real(dp) vector in-place: x = log(x)
+!!
+  subroutine s_log_d(n, dx)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     ! note: non-positive values are set to 0
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (dx(i) > zero) then
+             dx(i) = log(dx(i))
+         else
+             dx(i) = zero
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log_d
+
+!!
+!! @sub s_log_z
+!!
+!! compute natural logarithm of a complex(dp) vector in-place: z = log(z)
+!!
+  subroutine s_log_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = log(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log_z
+
+!!========================================================================
+!!>>> log10 operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_log10_i
+!!
+!! compute base-10 logarithm of an integer vector in-place: x = log10(x)
+!!
+  subroutine s_log10_i(n, ix)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)    :: n
+
+     ! integer vector to be modified (in-place)
+     ! note: result is cast back to integer
+     integer, intent(inout) :: ix(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (ix(i) > 0) then
+             ix(i) = int(log10(real(ix(i), dp)))
+         else
+             ix(i) = 0
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log10_i
+
+!!
+!! @sub s_log10_d
+!!
+!! compute base-10 logarithm of a real(dp) vector in-place: x = log10(x)
+!!
+  subroutine s_log10_d(n, dx)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector to be modified (in-place)
+     ! note: non-positive values are set to 0
+     real(dp), intent(inout) :: dx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         if (dx(i) > zero) then
+             dx(i) = log10(dx(i))
+         else
+             dx(i) = zero
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log10_d
+
+!!
+!! @sub s_log10_z
+!!
+!! compute base-10 logarithm of a complex(dp) vector in-place: z = log10(z)
+!!
+  subroutine s_log10_z(n, zx)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector to be modified (in-place)
+     complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     if (n <= 0) then
+         return
+     endif
+     !
+     do i=1,n
+         zx(i) = log10(zx(i))
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_log10_z
