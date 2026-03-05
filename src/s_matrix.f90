@@ -3813,3 +3813,323 @@
 
       return
    end subroutine s_concat_horiz_z
+
+!!
+!! @sub s_concat_vert_d
+!!
+!! concatenate two real(dp) matrices vertically: C = [A; B].
+!! matrices A and B must have the same number of columns.
+!!
+   subroutine s_concat_vert_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+      use constants, only : dp
+
+      implicit none
+
+ !! external arguments
+      ! number of rows of matrix A
+      integer, intent(in)   :: m_A
+
+      ! number of columns of matrix A
+      integer, intent(in)   :: n_A
+
+      ! first input matrix
+      real(dp), intent(in)  :: A(m_A,n_A)
+
+      ! number of rows of matrix B
+      integer, intent(in)   :: m_B
+
+      ! number of columns of matrix B
+      integer, intent(in)   :: n_B
+
+      ! second input matrix
+      real(dp), intent(in)  :: B(m_B,n_B)
+
+      ! number of rows of concatenated matrix C
+      integer, intent(in)   :: m_C
+
+      ! number of columns of concatenated matrix C
+      integer, intent(in)   :: n_C
+
+      ! concatenated matrix [A; B]
+      real(dp), intent(out) :: C(m_C,n_C)
+
+ !! local variables
+      ! loop indices
+      integer :: i, j
+
+ !! [body
+
+      ! copy matrix A to upper part of C
+      do i=1,m_A
+          do j=1,n_A
+              C(i,j) = A(i,j)
+          enddo ! over j={1,n_A} loop
+      enddo ! over i={1,m_A} loop
+
+      ! copy matrix B to lower part of C
+      do i=1,m_B
+          do j=1,n_B
+              C(m_A + i, j) = B(i,j)
+          enddo ! over j={1,n_B} loop
+      enddo ! over i={1,m_B} loop
+
+ !! body]
+
+      return
+   end subroutine s_concat_vert_d
+
+!!
+!! @sub s_concat_vert_z
+!!
+!! concatenate two complex(dp) matrices vertically: C = [A; B].
+!! matrices A and B must have the same number of columns.
+!!
+   subroutine s_concat_vert_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+      use constants, only : dp
+
+      implicit none
+
+ !! external arguments
+      ! number of rows of matrix A
+      integer, intent(in)      :: m_A
+
+      ! number of columns of matrix A
+      integer, intent(in)      :: n_A
+
+      ! first input matrix
+      complex(dp), intent(in)  :: A(m_A,n_A)
+
+      ! number of rows of matrix B
+      integer, intent(in)      :: m_B
+
+      ! number of columns of matrix B
+      integer, intent(in)      :: n_B
+
+      ! second input matrix
+      complex(dp), intent(in)  :: B(m_B,n_B)
+
+      ! number of rows of concatenated matrix C
+      integer, intent(in)      :: m_C
+
+      ! number of columns of concatenated matrix C
+      integer, intent(in)      :: n_C
+
+      ! concatenated matrix [A; B]
+      complex(dp), intent(out) :: C(m_C,n_C)
+
+ !! local variables
+      ! loop indices
+      integer :: i, j
+
+ !! [body
+
+      ! copy matrix A to upper part of C
+      do i=1,m_A
+          do j=1,n_A
+              C(i,j) = A(i,j)
+          enddo ! over j={1,n_A} loop
+      enddo ! over i={1,m_A} loop
+
+      ! copy matrix B to lower part of C
+      do i=1,m_B
+          do j=1,n_B
+              C(m_A + i, j) = B(i,j)
+          enddo ! over j={1,n_B} loop
+      enddo ! over i={1,m_B} loop
+
+ !! body]
+
+      return
+   end subroutine s_concat_vert_z
+
+!!
+!! @sub s_geig_sy
+!!
+!! solve generalized eigenvalue problem A*x = lambda*B*x,
+!! where A and B are real(dp) symmetric matrices.
+!! returns eigenvalues and eigenvectors.
+!!
+   subroutine s_geig_sy(ldim, n, A, B, eval, evec)
+      use constants, only : dp
+      use constants, only : zero
+
+      implicit none
+
+ !! external arguments
+      ! leading dimension of matrices A and B
+      integer, intent(in)   :: ldim
+
+      ! the order of the matrices A and B
+      integer, intent(in)   :: n
+
+      ! original matrix A, symmetric
+      real(dp), intent(in)  :: A(ldim,n)
+
+      ! original matrix B, symmetric positive-definite
+      real(dp), intent(in)  :: B(ldim,n)
+
+      ! output: eigenvalues in ascending order
+      real(dp), intent(out) :: eval(n)
+
+      ! output: orthonormal eigenvectors
+      real(dp), intent(out) :: evec(ldim,n)
+
+ !! local variables
+      ! status flag
+      integer :: istat
+
+      ! return information from subroutine dsygv
+      integer :: info
+
+      ! length of the array work
+      integer :: lwork
+
+      ! workspace array
+      real(dp), allocatable :: work(:)
+
+      ! auxiliary matrix for LAPACK: will be destroyed
+      real(dp), allocatable :: amat(:,:)
+      real(dp), allocatable :: bmat(:,:)
+
+ !! [body
+
+      ! initialize lwork: lwork >= max(1,3*n)
+      lwork = 3 * n
+
+      ! allocate memory
+      allocate(work(lwork),    stat=istat)
+      allocate(amat(ldim,n),   stat=istat)
+      allocate(bmat(ldim,n),   stat=istat)
+      !
+      if ( istat /= 0 ) then
+          call s_print_error('s_geig_sy','can not allocate enough memory')
+      endif ! back if ( istat /= 0 ) block
+
+      ! copy A and B to work matrices
+      amat = A
+      bmat = B
+
+      ! initialize output arrays
+      eval = zero
+      evec = amat
+
+      ! call LAPACK subroutine: dsygv
+      ! ITYPE=1: solve A*x = lambda*B*x
+      ! JOBZ='V': compute eigenvalues and eigenvectors
+      ! UPLO='U': use upper triangle
+      call DSYGV(1, 'V', 'U', n, amat, ldim, bmat, ldim, eval, work, lwork, info)
+
+      ! check the status
+      if ( info /= 0 ) then
+          call s_print_error('s_geig_sy','error in lapack subroutine dsygv')
+      endif ! back if ( info /= 0 ) block
+
+      ! copy eigenvectors from amat to output
+      evec = amat
+
+      ! deallocate memory for workspace array
+      if ( allocated(work) ) deallocate(work)
+      if ( allocated(amat) ) deallocate(amat)
+      if ( allocated(bmat) ) deallocate(bmat)
+
+ !! body]
+
+      return
+   end subroutine s_geig_sy
+
+!!
+!! @sub s_geig_he
+!!
+!! solve generalized eigenvalue problem A*x = lambda*B*x,
+!! where A and B are complex(dp) Hermitian matrices.
+!! returns eigenvalues and unitary eigenvectors.
+!!
+   subroutine s_geig_he(ldim, n, A, B, eval, evec)
+      use constants, only : dp
+
+      implicit none
+
+ !! external arguments
+      ! leading dimension of matrices A and B
+      integer, intent(in)        :: ldim
+
+      ! order of the matrices A and B
+      integer, intent(in)        :: n
+
+      ! original matrix A, Hermitian
+      complex(dp), intent(in)  :: A(ldim,n)
+
+      ! original matrix B, Hermitian positive-definite
+      complex(dp), intent(in)  :: B(ldim,n)
+
+      ! output: eigenvalues in ascending order
+      real(dp), intent(out)      :: eval(n)
+
+      ! output: unitary eigenvectors
+      complex(dp), intent(out)  :: evec(ldim,n)
+
+ !! local variables
+      ! status flag
+      integer :: istat
+
+      ! return information from subroutine zhegv
+      integer :: info
+
+      ! length of the array work
+      integer :: lwork
+
+      ! workspace array
+      real(dp), allocatable    :: rwork(:)
+      complex(dp), allocatable :: work(:)
+
+      ! auxiliary matrices for LAPACK: will be destroyed
+      complex(dp), allocatable :: amat(:,:)
+      complex(dp), allocatable :: bmat(:,:)
+
+ !! [body
+
+      ! initialize lwork: lwork >= max(1,2*n)
+      lwork = 2 * n
+
+      ! allocate memory
+      allocate(rwork(3*n),      stat=istat)
+      allocate(work(lwork),       stat=istat)
+      allocate(amat(ldim,n),    stat=istat)
+      allocate(bmat(ldim,n),    stat=istat)
+      !
+      if ( istat /= 0 ) then
+          call s_print_error('s_geig_he','can not allocate enough memory')
+      endif ! back if ( istat /= 0 ) block
+
+      ! copy A and B to work matrices
+      amat = A
+      bmat = B
+
+      ! initialize output arrays
+      eval = 0.0_dp
+      evec = amat
+
+      ! call LAPACK subroutine: zhegv
+      ! ITYPE=1: solve A*x = lambda*B*x
+      ! JOBZ='V': compute eigenvalues and eigenvectors
+      ! UPLO='U': use upper triangle
+      call ZHEGV(1, 'V', 'U', n, amat, ldim, bmat, ldim, eval, work, lwork, rwork, info)
+
+      ! check the status
+      if ( info /= 0 ) then
+          call s_print_error('s_geig_he','error in lapack subroutine zhegv')
+      endif ! back if ( info /= 0 ) block
+
+      ! copy eigenvectors from amat to output
+      evec = amat
+
+      ! deallocate memory for workspace arrays
+      if ( allocated(work ) ) deallocate(work )
+      if ( allocated(rwork) ) deallocate(rwork)
+      if ( allocated(amat) ) deallocate(amat)
+      if ( allocated(bmat) ) deallocate(bmat)
+
+ !! body]
+
+      return
+   end subroutine s_geig_he
