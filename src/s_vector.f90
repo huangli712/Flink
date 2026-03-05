@@ -3,28 +3,23 @@
 !!! program : s_linspace
 !!!           s_cumsum
 !!!           s_cumprod
-!!!           s_swap
 !!!           s_mix
 !!!           s_vecadd
 !!!           s_dot
-!!!           s_diff
-!!!           s_stats
 !!!           s_outer
 !!!           s_cross
-!!!           s_distance
+!!!           s_diff
 !!!           s_unique
 !!!           s_intersect
 !!!           s_union
+!!!           s_stats
 !!!           s_moment
 !!!           s_skewness
 !!!           s_kurtosis
-!!!           s_reverse
-!!!           s_clip
-!!!           s_concat
+!!!           s_distance
 !!!           s_norm1
 !!!           s_norm2
 !!!           s_norminf
-!!!           s_shuffle
 !!!           s_pow
 !!!           s_square
 !!!           s_sqrt
@@ -34,17 +29,25 @@
 !!!           s_sin
 !!!           s_cos
 !!!           s_tan
+!!!           s_sinh
+!!!           s_cosh
+!!!           s_tanh
 !!!           s_moving_average
 !!!           s_smooth_box
 !!!           s_smooth_gaussian
+!!!           s_swap
+!!!           s_clip
 !!!           s_slice
 !!!           s_take
 !!!           s_drop
+!!!           s_shuffle
+!!!           s_reverse
+!!!           s_concat
 !!! source  : s_vector.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/04/2026 by li huang (last modified)
+!!!           03/05/2026 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
@@ -394,113 +397,6 @@
 
      return
   end subroutine s_cumprod_z
-
-!!========================================================================
-!!>>> swap operations                                                  <<<
-!!========================================================================
-
-!!
-!! @sub s_swap_i
-!!
-!! exchange two integer vectors.
-!!
-  subroutine s_swap_i(n, ix, iy)
-     implicit none
-
-!! external arguments
-     ! dimension of integer vector
-     integer, intent(in)    :: n
-
-     ! integer vector X
-     integer, intent(inout) :: ix(n)
-
-     ! integer vector Y
-     integer, intent(inout) :: iy(n)
-
-!! local variables
-     ! dummy integer vector
-     integer :: it(n)
-
-!! [body
-
-     it = ix
-     ix = iy
-     iy = it
-
-!! body]
-
-     return
-  end subroutine s_swap_i
-
-!!
-!! @sub s_swap_d
-!!
-!! exchange two real(dp) vectors.
-!!
-  subroutine s_swap_d(n, dx, dy)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! dimension of real(dp) vector
-     integer, intent(in)     :: n
-
-     ! real(dp) vector X
-     real(dp), intent(inout) :: dx(n)
-
-     ! real(dp) vector Y
-     real(dp), intent(inout) :: dy(n)
-
-!! local variables
-     ! dummy real(dp) vector
-     real(dp) :: dt(n)
-
-!! [body
-
-     dt = dx
-     dx = dy
-     dy = dt
-
-!! body]
-
-     return
-  end subroutine s_swap_d
-
-!!
-!! @sub s_swap_z
-!!
-!! exchange two complex(dp) vectors.
-!!
-  subroutine s_swap_z(n, zx, zy)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! dimension of complex(dp) vector
-     integer, intent(in)        :: n
-
-     ! complex(dp) vector X
-     complex(dp), intent(inout) :: zx(n)
-
-     ! complex(dp) vector Y
-     complex(dp), intent(inout) :: zy(n)
-
-!! local variables
-     ! dummy complex(dp) vector
-     complex(dp) :: zt(n)
-
-!! [body
-
-     zt = zx
-     zx = zy
-     zy = zt
-
-!! body]
-
-     return
-  end subroutine s_swap_z
 
 !!========================================================================
 !!>>> mix operations                                                   <<<
@@ -863,321 +759,6 @@
   end subroutine s_dot_z
 
 !!========================================================================
-!!>>> diff operations                                                  <<<
-!!========================================================================
-
-!!
-!! @sub s_diff_i
-!!
-!! compute finite differences of an integer vector.
-!! result size is n-1: diff(i) = v(i+1) - v(i)
-!!
-  subroutine s_diff_i(n, iv, diff)
-     implicit none
-
-!! external arguments
-     ! size of input array
-     integer, intent(in)  :: n
-
-     ! input integer array
-     integer, intent(in)  :: iv(n)
-
-     ! finite differences, size n-1
-     integer, intent(out) :: diff(n-1)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-!!
-     if (n < 2) return
-     !
-     do i=1,n-1
-         diff(i) = iv(i+1) - iv(i)
-     enddo ! over i={1,n-1} loop
-
-!! body]
-
-     return
-  end subroutine s_diff_i
-
-!!
-!! @sub s_diff_d
-!!
-!! compute finite differences of a real(dp) vector.
-!! result size is n-1: diff(i) = v(i+1) - v(i)
-!!
-  subroutine s_diff_d(n, dv, diff)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of input array
-     integer, intent(in)   :: n
-
-     ! input real(dp) array
-     real(dp), intent(in)  :: dv(n)
-
-     ! finite differences, size n-1
-     real(dp), intent(out) :: diff(n-1)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-!!
-     if (n < 2) return
-     !
-     do i=1,n-1
-         diff(i) = dv(i+1) - dv(i)
-     enddo ! over i={1,n-1} loop
-
-!! body]
-
-     return
-  end subroutine s_diff_d
-
-!!
-!! @sub s_diff_z
-!!
-!! compute finite differences of a complex(dp) vector.
-!! result size is n-1: diff(i) = v(i+1) - v(i)
-!!
-  subroutine s_diff_z(n, zv, diff)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of input array
-     integer, intent(in)      :: n
-
-     ! input complex(dp) array
-     complex(dp), intent(in)  :: zv(n)
-
-     ! finite differences, size n-1
-     complex(dp), intent(out) :: diff(n-1)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-!!
-     if (n < 2) return
-     !
-     do i=1,n-1
-         diff(i) = zv(i+1) - zv(i)
-     enddo ! over i={1,n-1} loop
-
-!! body]
-
-     return
-  end subroutine s_diff_z
-
-!!========================================================================
-!!>>> statistics operation                                             <<<
-!!========================================================================
-
-!!
-!! @sub s_stats_i
-!!
-!! compute mean and standard deviation of an integer vector.
-!!
-  subroutine s_stats_i(n, iv, mean, stddev)
-     use constants, only : dp
-     use constants, only : zero
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)   :: n
-
-     ! input integer array
-     integer, intent(in)   :: iv(n)
-
-     ! mean value
-     real(dp), intent(out) :: mean
-
-     ! standard deviation
-     real(dp), intent(out) :: stddev
-
-!! local variables
-     ! loop index
-     integer  :: i
-
-     ! sum of squared deviations
-     real(dp) :: sum_sq
-
-     ! sum of values
-     real(dp) :: sum_val
-
-!! [body
-
-     if (n <= 0) then
-         mean = zero
-         stddev = zero
-         return
-     endif
-
-     ! compute mean
-     sum_val = zero
-     do i=1,n
-         sum_val = sum_val + real(iv(i), dp)
-     enddo
-     mean = sum_val / real(n, dp)
-
-     ! compute standard deviation
-     if (n == 1) then
-         stddev = zero
-     else
-         sum_sq = zero
-         do i=1,n
-             sum_sq = sum_sq + (real(iv(i), dp) - mean)**2
-         enddo
-         stddev = sqrt(sum_sq / real(n - 1, dp))
-     endif
-
-!! body]
-
-     return
-  end subroutine s_stats_i
-
-!!
-!! @sub s_stats_d
-!!
-!! compute mean and standard deviation of a real(dp) vector.
-!!
-  subroutine s_stats_d(n, dv, mean, stddev)
-     use constants, only : dp
-     use constants, only : zero
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)   :: n
-
-     ! input real(dp) array
-     real(dp), intent(in)  :: dv(n)
-
-     ! mean value
-     real(dp), intent(out) :: mean
-
-     ! standard deviation
-     real(dp), intent(out) :: stddev
-
-!! local variables
-     ! loop index
-     integer  :: i
-
-     ! sum of squared deviations
-     real(dp) :: sum_sq
-
-     ! sum of values
-     real(dp) :: sum_val
-
-!! [body
-
-     if (n <= 0) then
-         mean = zero
-         stddev = zero
-         return
-     endif
-
-     ! compute mean
-     sum_val = zero
-     do i=1,n
-         sum_val = sum_val + dv(i)
-     enddo
-     mean = sum_val / real(n, dp)
-
-     ! compute standard deviation
-     if (n == 1) then
-         stddev = zero
-     else
-         sum_sq = zero
-         do i=1,n
-             sum_sq = sum_sq + (dv(i) - mean)**2
-         enddo
-         stddev = sqrt(sum_sq / real(n - 1, dp))
-     endif
-
-!! body]
-
-     return
-  end subroutine s_stats_d
-
-!!
-!! @sub s_stats_z
-!!
-!! compute mean and standard deviation of a complex(dp) vector.
-!!
-  subroutine s_stats_z(n, zv, mean, stddev)
-     use constants, only : dp
-     use constants, only : zero, czero
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)      :: n
-
-     ! input complex(dp) array
-     complex(dp), intent(in)  :: zv(n)
-
-     ! mean value
-     complex(dp), intent(out) :: mean
-
-     ! standard deviation
-     real(dp), intent(out)    :: stddev
-
-!! local variables
-     ! loop index
-     integer  :: i
-
-     ! sum of squared deviations
-     real(dp) :: sum_sq
-
-     ! sum of values
-     complex(dp) :: sum_val
-
-!! [body
-
-     if (n <= 0) then
-         mean = czero
-         stddev = zero
-         return
-     endif
-
-     ! compute mean
-     sum_val = czero
-     do i=1,n
-         sum_val = sum_val + zv(i)
-     enddo
-     mean = sum_val / real(n, dp)
-
-     ! compute standard deviation (root mean square distance from mean)
-     if (n == 1) then
-         stddev = zero
-     else
-         sum_sq = zero
-         do i=1,n
-             sum_sq = sum_sq + abs(zv(i) - mean)**2
-         enddo
-         stddev = sqrt(sum_sq / real(n - 1, dp))
-     endif
-
-!! body]
-
-     return
-  end subroutine s_stats_z
-
-!!========================================================================
 !!>>> outer product operations                                         <<<
 !!========================================================================
 
@@ -1419,158 +1000,120 @@
   end subroutine s_cross_z
 
 !!========================================================================
-!!>>> distance operations                                              <<<
+!!>>> diff operations                                                  <<<
 !!========================================================================
 
 !!
-!! @sub s_distance_i
+!! @sub s_diff_i
 !!
-!! compute euclidean distance between two integer vectors.
-!! dist = sqrt( sum_i (x(i) - y(i))^2 )
+!! compute finite differences of an integer vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
 !!
-  subroutine s_distance_i(n, ix, iy, dist)
-     use constants, only : dp
-     use constants, only : zero
-
+  subroutine s_diff_i(n, iv, diff)
      implicit none
 
 !! external arguments
-     ! size of vectors
-     integer, intent(in)   :: n
+     ! size of input array
+     integer, intent(in)  :: n
 
-     ! input integer vector x
-     integer, intent(in)   :: ix(n)
+     ! input integer array
+     integer, intent(in)  :: iv(n)
 
-     ! input integer vector y
-     integer, intent(in)   :: iy(n)
-
-     ! euclidean distance: ||x - y||
-     real(dp), intent(out) :: dist
+     ! finite differences, size n-1
+     integer, intent(out) :: diff(n-1)
 
 !! local variables
      ! loop index
      integer :: i
 
-     ! squared differences sum
-     real(dp) :: sum_sq
-
 !! [body
-
-     if (n <= 0) then
-         dist = zero
-         return
-     endif
+!!
+     if (n < 2) return
      !
-     sum_sq = zero
-     do i=1,n
-         sum_sq = sum_sq + real(ix(i) - iy(i), dp)**2
-     enddo ! over i={1,n} loop
-     dist = sqrt(sum_sq)
+     do i=1,n-1
+         diff(i) = iv(i+1) - iv(i)
+     enddo ! over i={1,n-1} loop
 
 !! body]
 
      return
-  end subroutine s_distance_i
+  end subroutine s_diff_i
 
 !!
-!! @sub s_distance_d
+!! @sub s_diff_d
 !!
-!! compute euclidean distance between two real(dp) vectors.
-!! dist = sqrt( sum_i (x(i) - y(i))^2 )
+!! compute finite differences of a real(dp) vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
 !!
-  subroutine s_distance_d(n, dx, dy, dist)
+  subroutine s_diff_d(n, dv, diff)
      use constants, only : dp
-     use constants, only : zero
 
      implicit none
 
 !! external arguments
-     ! size of vectors
+     ! size of input array
      integer, intent(in)   :: n
 
-     ! input real(dp) vector x
-     real(dp), intent(in)  :: dx(n)
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
 
-     ! input real(dp) vector y
-     real(dp), intent(in)  :: dy(n)
-
-     ! euclidean distance: ||x - y||
-     real(dp), intent(out) :: dist
+     ! finite differences, size n-1
+     real(dp), intent(out) :: diff(n-1)
 
 !! local variables
      ! loop index
      integer :: i
 
-     ! squared differences sum
-     real(dp) :: sum_sq
-
 !! [body
-
-     if (n <= 0) then
-         dist = zero
-         return
-     endif
+!!
+     if (n < 2) return
      !
-     sum_sq = zero
-     do i=1,n
-         sum_sq = sum_sq + (dx(i) - dy(i))**2
-     enddo ! over i={1,n} loop
-     dist = sqrt(sum_sq)
+     do i=1,n-1
+         diff(i) = dv(i+1) - dv(i)
+     enddo ! over i={1,n-1} loop
 
 !! body]
 
      return
-  end subroutine s_distance_d
+  end subroutine s_diff_d
 
 !!
-!! @sub s_distance_z
+!! @sub s_diff_z
 !!
-!! compute euclidean distance between two complex(dp) vectors.
-!! dist = sqrt( sum_i |x(i) - y(i)|^2 )
+!! compute finite differences of a complex(dp) vector.
+!! result size is n-1: diff(i) = v(i+1) - v(i)
 !!
-  subroutine s_distance_z(n, zx, zy, dist)
+  subroutine s_diff_z(n, zv, diff)
      use constants, only : dp
-     use constants, only : zero
 
      implicit none
 
 !! external arguments
-     ! size of vectors
+     ! size of input array
      integer, intent(in)      :: n
 
-     ! input complex(dp) vector x
-     complex(dp), intent(in)  :: zx(n)
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
 
-     ! input complex(dp) vector y
-     complex(dp), intent(in)  :: zy(n)
-
-     ! euclidean distance: ||x - y||
-     real(dp), intent(out)    :: dist
+     ! finite differences, size n-1
+     complex(dp), intent(out) :: diff(n-1)
 
 !! local variables
      ! loop index
      integer :: i
 
-     ! squared differences sum
-     real(dp) :: sum_sq
-
 !! [body
-
-     if (n <= 0) then
-         dist = zero
-         return
-     endif
+!!
+     if (n < 2) return
      !
-     sum_sq = zero
-     do i=1,n
-         sum_sq = sum_sq + abs(zx(i) - zy(i))**2
-     enddo ! over i={1,n} loop
-     dist = sqrt(sum_sq)
+     do i=1,n-1
+         diff(i) = zv(i+1) - zv(i)
+     enddo ! over i={1,n-1} loop
 
 !! body]
 
      return
-  end subroutine s_distance_z
+  end subroutine s_diff_z
 
 !!========================================================================
 !!>>> unique operations                                                <<<
@@ -2219,6 +1762,205 @@
 
      return
   end subroutine s_union_z
+
+!!========================================================================
+!!>>> statistics operation                                             <<<
+!!========================================================================
+
+!!
+!! @sub s_stats_i
+!!
+!! compute mean and standard deviation of an integer vector.
+!!
+  subroutine s_stats_i(n, iv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input integer array
+     integer, intent(in)   :: iv(n)
+
+     ! mean value
+     real(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out) :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = zero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + real(iv(i), dp)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + (real(iv(i), dp) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_i
+
+!!
+!! @sub s_stats_d
+!!
+!! compute mean and standard deviation of a real(dp) vector.
+!!
+  subroutine s_stats_d(n, dv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)   :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)  :: dv(n)
+
+     ! mean value
+     real(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out) :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     real(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = zero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = zero
+     do i=1,n
+         sum_val = sum_val + dv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + (dv(i) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_d
+
+!!
+!! @sub s_stats_z
+!!
+!! compute mean and standard deviation of a complex(dp) vector.
+!!
+  subroutine s_stats_z(n, zv, mean, stddev)
+     use constants, only : dp
+     use constants, only : zero, czero
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zv(n)
+
+     ! mean value
+     complex(dp), intent(out) :: mean
+
+     ! standard deviation
+     real(dp), intent(out)    :: stddev
+
+!! local variables
+     ! loop index
+     integer  :: i
+
+     ! sum of squared deviations
+     real(dp) :: sum_sq
+
+     ! sum of values
+     complex(dp) :: sum_val
+
+!! [body
+
+     if (n <= 0) then
+         mean = czero
+         stddev = zero
+         return
+     endif
+
+     ! compute mean
+     sum_val = czero
+     do i=1,n
+         sum_val = sum_val + zv(i)
+     enddo
+     mean = sum_val / real(n, dp)
+
+     ! compute standard deviation (root mean square distance from mean)
+     if (n == 1) then
+         stddev = zero
+     else
+         sum_sq = zero
+         do i=1,n
+             sum_sq = sum_sq + abs(zv(i) - mean)**2
+         enddo
+         stddev = sqrt(sum_sq / real(n - 1, dp))
+     endif
+
+!! body]
+
+     return
+  end subroutine s_stats_z
 
 !!========================================================================
 !!>>> moment operations                                                <<<
@@ -2920,405 +2662,158 @@
   end subroutine s_kurtosis_z
 
 !!========================================================================
-!!>>> reverse operations                                               <<<
+!!>>> distance operations                                              <<<
 !!========================================================================
 
 !!
-!! @sub s_reverse_i
+!! @sub s_distance_i
 !!
-!! reverse an integer array: y(i) = x(n+1-i)
+!! compute euclidean distance between two integer vectors.
+!! dist = sqrt( sum_i (x(i) - y(i))^2 )
 !!
-  subroutine s_reverse_i(n, ix, iy)
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)  :: n
-
-     ! input integer array
-     integer, intent(in)  :: ix(n)
-
-     ! reversed integer array
-     integer, intent(out) :: iy(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     do i=1,n
-         iy(i) = ix(n + 1 - i)
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_reverse_i
-
-!!
-!! @sub s_reverse_d
-!!
-!! reverse a real(dp) array: y(i) = x(n+1-i)
-!!
-  subroutine s_reverse_d(n, dx, dy)
+  subroutine s_distance_i(n, ix, iy, dist)
      use constants, only : dp
+     use constants, only : zero
 
      implicit none
 
 !! external arguments
-     ! size of array
-     integer, intent(in)    :: n
+     ! size of vectors
+     integer, intent(in)   :: n
 
-     ! input real(dp) array
-     real(dp), intent(in)   :: dx(n)
+     ! input integer vector x
+     integer, intent(in)   :: ix(n)
 
-     ! reversed real(dp) array
-     real(dp), intent(out)  :: dy(n)
+     ! input integer vector y
+     integer, intent(in)   :: iy(n)
+
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out) :: dist
 
 !! local variables
      ! loop index
      integer :: i
 
-!! [body
-
-     do i=1,n
-         dy(i) = dx(n + 1 - i)
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_reverse_d
-
-!!
-!! @sub s_reverse_z
-!!
-!! reverse a complex(dp) array: y(i) = x(n+1-i)
-!!
-  subroutine s_reverse_z(n, zx, zy)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)      :: n
-
-     ! input complex(dp) array
-     complex(dp), intent(in)  :: zx(n)
-
-     ! reversed complex(dp) array
-     complex(dp), intent(out) :: zy(n)
-
-!! local variables
-     ! loop index
-     integer :: i
+     ! squared differences sum
+     real(dp) :: sum_sq
 
 !! [body
 
-     do i=1,n
-         zy(i) = zx(n + 1 - i)
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_reverse_z
-
-!!========================================================================
-!!>>> clip operations                                                <<<
-!!========================================================================
-
-!!
-!! @sub s_clip_i
-!!
-!! clip an integer array to range [vmin, vmax].
-!! y(i) = max(min(x(i), vmax), vmin)
-!!
-  subroutine s_clip_i(n, ix, vmin, vmax, iy)
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)  :: n
-
-     ! input integer array
-     integer, intent(in)  :: ix(n)
-
-     ! minimum clip value
-     integer, intent(in)  :: vmin
-
-     ! maximum clip value
-     integer, intent(in)  :: vmax
-
-     ! clipped integer array
-     integer, intent(out) :: iy(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     do i=1,n
-         if (ix(i) < vmin) then
-             iy(i) = vmin
-         elseif (ix(i) > vmax) then
-             iy(i) = vmax
-         else
-             iy(i) = ix(i)
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_clip_i
-
-!!
-!! @sub s_clip_d
-!!
-!! clip a real(dp) array to range [vmin, vmax].
-!! y(i) = max(min(x(i), vmax), vmin)
-!!
-  subroutine s_clip_d(n, dx, vmin, vmax, dy)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)    :: n
-
-     ! input real(dp) array
-     real(dp), intent(in)   :: dx(n)
-
-     ! minimum clip value
-     real(dp), intent(in)   :: vmin
-
-     ! maximum clip value
-     real(dp), intent(in)   :: vmax
-
-     ! clipped real(dp) array
-     real(dp), intent(out)  :: dy(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     do i=1,n
-         if (dx(i) < vmin) then
-             dy(i) = vmin
-         elseif (dx(i) > vmax) then
-             dy(i) = vmax
-         else
-             dy(i) = dx(i)
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_clip_d
-
-!!
-!! @sub s_clip_z
-!!
-!! clip a complex(dp) array to range [vmin, vmax].
-!! clip based on magnitude: |y(i)| = max(min(|x(i)|, vmax), vmin)
-!! preserve original phase for complex values.
-!!
-  subroutine s_clip_z(n, zx, vmin, vmax, zy)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of array
-     integer, intent(in)      :: n
-
-     ! input complex(dp) array
-     complex(dp), intent(in)  :: zx(n)
-
-     ! minimum clip value (magnitude)
-     real(dp), intent(in)     :: vmin
-
-     ! maximum clip value (magnitude)
-     real(dp), intent(in)     :: vmax
-
-     ! clipped complex(dp) array
-     complex(dp), intent(out) :: zy(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-     ! clipped magnitude
-     real(dp) :: mag
-
-     ! original phase
-     real(dp) :: phase
-
-!! [body
-
-     do i=1,n
-         mag = abs(zx(i))
-         if (mag < vmin) then
-             phase = atan2(aimag(zx(i)), real(zx(i)))
-             zy(i) = cmplx(vmin * cos(phase), vmin * sin(phase), dp)
-         elseif (mag > vmax) then
-             phase = atan2(aimag(zx(i)), real(zx(i)))
-             zy(i) = cmplx(vmax * cos(phase), vmax * sin(phase), dp)
-         else
-             zy(i) = zx(i)
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_clip_z
-
-
-!!========================================================================
-!!>>> concat operations                                                <<<
-!!========================================================================
-
-!!
-!! @sub s_concat_i
-!!
-!! concatenate two integer vectors: z = [x, y]
-!!
-  subroutine s_concat_i(n, m, ix, iy, iz)
-     implicit none
-
-!! external arguments
-     ! size of first vector
-     integer, intent(in)  :: n
-
-     ! size of second vector
-     integer, intent(in)  :: m
-
-     ! first integer vector
-     integer, intent(in)  :: ix(n)
-
-     ! second integer vector
-     integer, intent(in)  :: iy(m)
-
-     ! concatenated vector: [ix, iy]
-     integer, intent(out) :: iz(n+m)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     do i=1,n
-         iz(i) = ix(i)
-     enddo ! over i={1,n} loop
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
      !
-     do i=1,m
-         iz(n+i) = iy(i)
-     enddo ! over i={1,m} loop
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + real(ix(i) - iy(i), dp)**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
 
 !! body]
 
      return
-  end subroutine s_concat_i
+  end subroutine s_distance_i
 
 !!
-!! @sub s_concat_d
+!! @sub s_distance_d
 !!
-!! concatenate two real(dp) vectors: z = [x, y]
+!! compute euclidean distance between two real(dp) vectors.
+!! dist = sqrt( sum_i (x(i) - y(i))^2 )
 !!
-  subroutine s_concat_d(n, m, dx, dy, dz)
+  subroutine s_distance_d(n, dx, dy, dist)
      use constants, only : dp
+     use constants, only : zero
 
      implicit none
 
 !! external arguments
-     ! size of first vector
-     integer, intent(in)     :: n
+     ! size of vectors
+     integer, intent(in)   :: n
 
-     ! size of second vector
-     integer, intent(in)     :: m
-
-     ! first real(dp) vector
+     ! input real(dp) vector x
      real(dp), intent(in)  :: dx(n)
 
-     ! second real(dp) vector
-     real(dp), intent(in)  :: dy(m)
+     ! input real(dp) vector y
+     real(dp), intent(in)  :: dy(n)
 
-     ! concatenated vector: [dx, dy]
-     real(dp), intent(out) :: dz(n+m)
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out) :: dist
 
 !! local variables
      ! loop index
      integer :: i
 
+     ! squared differences sum
+     real(dp) :: sum_sq
+
 !! [body
 
-     do i=1,n
-         dz(i) = dx(i)
-     enddo ! over i={1,n} loop
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
      !
-     do i=1,m
-         dz(n+i) = dy(i)
-     enddo ! over i={1,m} loop
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + (dx(i) - dy(i))**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
 
 !! body]
 
      return
-  end subroutine s_concat_d
+  end subroutine s_distance_d
 
 !!
-!! @sub s_concat_z
+!! @sub s_distance_z
 !!
-!! concatenate two complex(dp) vectors: z = [x, y]
+!! compute euclidean distance between two complex(dp) vectors.
+!! dist = sqrt( sum_i |x(i) - y(i)|^2 )
 !!
-  subroutine s_concat_z(n, m, zx, zy, zz)
+  subroutine s_distance_z(n, zx, zy, dist)
      use constants, only : dp
+     use constants, only : zero
 
      implicit none
 
 !! external arguments
-     ! size of first vector
+     ! size of vectors
      integer, intent(in)      :: n
 
-     ! size of second vector
-     integer, intent(in)      :: m
-
-     ! first complex(dp) vector
+     ! input complex(dp) vector x
      complex(dp), intent(in)  :: zx(n)
 
-     ! second complex(dp) vector
-     complex(dp), intent(in)  :: zy(m)
+     ! input complex(dp) vector y
+     complex(dp), intent(in)  :: zy(n)
 
-     ! concatenated vector: [zx, zy]
-     complex(dp), intent(out) :: zz(n+m)
+     ! euclidean distance: ||x - y||
+     real(dp), intent(out)    :: dist
 
 !! local variables
      ! loop index
      integer :: i
 
+     ! squared differences sum
+     real(dp) :: sum_sq
+
 !! [body
 
-     do i=1,n
-         zz(i) = zx(i)
-     enddo ! over i={1,n} loop
+     if (n <= 0) then
+         dist = zero
+         return
+     endif
      !
-     do i=1,m
-         zz(n+i) = zy(i)
-     enddo ! over i={1,m} loop
+     sum_sq = zero
+     do i=1,n
+         sum_sq = sum_sq + abs(zx(i) - zy(i))**2
+     enddo ! over i={1,n} loop
+     dist = sqrt(sum_sq)
 
 !! body]
 
      return
-  end subroutine s_concat_z
+  end subroutine s_distance_z
 
 !!========================================================================
 !!>>> norm1 operations                                                 <<<
@@ -3745,160 +3240,6 @@
 
      return
   end subroutine s_norminf_z
-
-!!========================================================================
-!!>>> shuffle operations                                               <<<
-!!========================================================================
-
-!!
-!! @sub s_shuffle_i
-!!
-!! shuffle an integer vector in-place using Fisher-Yates algorithm.
-!!
-  subroutine s_shuffle_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be shuffled (in-place)
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-     ! random index
-     integer :: j
-
-     ! temporary variable for swapping
-     integer :: temp
-
-     ! random number
-     real(dp) :: r
-
-!! [body
-
-     if (n < 2) then
-         return
-     endif
-     !
-     ! Fisher-Yates shuffle algorithm
-     do i=n,2,-1
-         call random_number(r)
-         j = int(r * real(i-1, dp)) + 1
-         temp = ix(i)
-         ix(i) = ix(j)
-         ix(j) = temp
-     enddo ! over i={n,2,-1} loop
-
-!! body]
-
-     return
-  end subroutine s_shuffle_i
-
-!!
-!! @sub s_shuffle_d
-!!
-!! shuffle a real(dp) vector in-place using Fisher-Yates algorithm.
-!!
-  subroutine s_shuffle_d(n, dx)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)     :: n
-
-     ! real(dp) vector to be shuffled (in-place)
-     real(dp), intent(inout) :: dx(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-     ! random index
-     integer :: j
-
-     ! temporary variable for swapping
-     real(dp) :: temp
-
-     ! random number
-     real(dp) :: r
-
-!! [body
-
-     if (n < 2) then
-         return
-     endif
-     !
-     ! Fisher-Yates shuffle algorithm
-     do i=n,2,-1
-         call random_number(r)
-         j = int(r * real(i-1, dp)) + 1
-         temp = dx(i)
-         dx(i) = dx(j)
-         dx(j) = temp
-     enddo ! over i={n,2,-1} loop
-
-!! body]
-
-     return
-  end subroutine s_shuffle_d
-
-!!
-!! @sub s_shuffle_z
-!!
-!! shuffle a complex(dp) vector in-place using Fisher-Yates algorithm.
-!!
-  subroutine s_shuffle_z(n, zx)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)        :: n
-
-     ! complex(dp) vector to be shuffled (in-place)
-     complex(dp), intent(inout) :: zx(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-     ! random index
-     integer :: j
-
-     ! temporary variable for swapping
-     complex(dp) :: temp
-
-     ! random number
-     real(dp) :: r
-
-!! [body
-
-     if (n < 2) then
-         return
-     endif
-     !
-     ! Fisher-Yates shuffle algorithm
-     do i=n,2,-1
-         call random_number(r)
-         j = int(r * real(i-1, dp)) + 1
-         temp = zx(i)
-         zx(i) = zx(j)
-         zx(j) = temp
-     enddo ! over i={n,2,-1} loop
-
-!! body]
-
-     return
-  end subroutine s_shuffle_z
 
 !!========================================================================
 !!>>> pow operations                                                   <<<
@@ -4951,6 +4292,348 @@
   end subroutine s_tan_z
 
 !!========================================================================
+!!>>> hyperbolic sine operations                                       <<<
+!!========================================================================
+
+!!
+!! @sub s_sinh_i
+!!
+!! compute hyperbolic sine of an integer vector in-place: x = sinh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_sinh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(sinh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_i
+
+!!
+!! @sub s_sinh_d
+!!
+!! compute hyperbolic sine of a real(dp) vector in-place: x = sinh(x)
+!!
+   subroutine s_sinh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = sinh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_d
+
+!!
+!! @sub s_sinh_z
+!!
+!! compute hyperbolic sine of a complex(dp) vector in-place: z = sinh(z)
+!!
+   subroutine s_sinh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = sinh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_z
+
+!!========================================================================
+!!>>> hyperbolic cosine operations                                     <<<
+!!========================================================================
+
+!!
+!! @sub s_cosh_i
+!!
+!! compute hyperbolic cosine of an integer vector in-place: x = cosh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_cosh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(cosh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_i
+
+!!
+!! @sub s_cosh_d
+!!
+!! compute hyperbolic cosine of a real(dp) vector in-place: x = cosh(x)
+!!
+   subroutine s_cosh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = cosh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_d
+
+!!
+!! @sub s_cosh_z
+!!
+!! compute hyperbolic cosine of a complex(dp) vector in-place: z = cosh(z)
+!!
+   subroutine s_cosh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = cosh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_z
+
+!!========================================================================
+!!>>> hyperbolic tangent operations                                    <<<
+!!========================================================================
+
+!!
+!! @sub s_tanh_i
+!!
+!! compute hyperbolic tangent of an integer vector in-place: x = tanh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_tanh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(tanh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_i
+
+!!
+!! @sub s_tanh_d
+!!
+!! compute hyperbolic tangent of a real(dp) vector in-place: x = tanh(x)
+!!
+   subroutine s_tanh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = tanh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_d
+
+!!
+!! @sub s_tanh_z
+!!
+!! compute hyperbolic tangent of a complex(dp) vector in-place: z = tanh(z)
+!!
+   subroutine s_tanh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = tanh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_z
+
+!!========================================================================
 !!>>> moving average operations                                        <<<
 !!========================================================================
 
@@ -5643,6 +5326,271 @@
      return
   end subroutine s_smooth_gaussian_z
 
+
+
+!!========================================================================
+!!>>> swap operations                                                  <<<
+!!========================================================================
+
+!!
+!! @sub s_swap_i
+!!
+!! exchange two integer vectors.
+!!
+  subroutine s_swap_i(n, ix, iy)
+     implicit none
+
+!! external arguments
+     ! dimension of integer vector
+     integer, intent(in)    :: n
+
+     ! integer vector X
+     integer, intent(inout) :: ix(n)
+
+     ! integer vector Y
+     integer, intent(inout) :: iy(n)
+
+!! local variables
+     ! dummy integer vector
+     integer :: it(n)
+
+!! [body
+
+     it = ix
+     ix = iy
+     iy = it
+
+!! body]
+
+     return
+  end subroutine s_swap_i
+
+!!
+!! @sub s_swap_d
+!!
+!! exchange two real(dp) vectors.
+!!
+  subroutine s_swap_d(n, dx, dy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! dimension of real(dp) vector
+     integer, intent(in)     :: n
+
+     ! real(dp) vector X
+     real(dp), intent(inout) :: dx(n)
+
+     ! real(dp) vector Y
+     real(dp), intent(inout) :: dy(n)
+
+!! local variables
+     ! dummy real(dp) vector
+     real(dp) :: dt(n)
+
+!! [body
+
+     dt = dx
+     dx = dy
+     dy = dt
+
+!! body]
+
+     return
+  end subroutine s_swap_d
+
+!!
+!! @sub s_swap_z
+!!
+!! exchange two complex(dp) vectors.
+!!
+  subroutine s_swap_z(n, zx, zy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! dimension of complex(dp) vector
+     integer, intent(in)        :: n
+
+     ! complex(dp) vector X
+     complex(dp), intent(inout) :: zx(n)
+
+     ! complex(dp) vector Y
+     complex(dp), intent(inout) :: zy(n)
+
+!! local variables
+     ! dummy complex(dp) vector
+     complex(dp) :: zt(n)
+
+!! [body
+
+     zt = zx
+     zx = zy
+     zy = zt
+
+!! body]
+
+     return
+  end subroutine s_swap_z
+
+!!========================================================================
+!!>>> clip operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_clip_i
+!!
+!! clip an integer array to range [vmin, vmax].
+!! y(i) = max(min(x(i), vmax), vmin)
+!!
+  subroutine s_clip_i(n, ix, vmin, vmax, iy)
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)  :: n
+
+     ! input integer array
+     integer, intent(in)  :: ix(n)
+
+     ! minimum clip value
+     integer, intent(in)  :: vmin
+
+     ! maximum clip value
+     integer, intent(in)  :: vmax
+
+     ! clipped integer array
+     integer, intent(out) :: iy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         if (ix(i) < vmin) then
+             iy(i) = vmin
+         elseif (ix(i) > vmax) then
+             iy(i) = vmax
+         else
+             iy(i) = ix(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_i
+
+!!
+!! @sub s_clip_d
+!!
+!! clip a real(dp) array to range [vmin, vmax].
+!! y(i) = max(min(x(i), vmax), vmin)
+!!
+  subroutine s_clip_d(n, dx, vmin, vmax, dy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)    :: n
+
+     ! input real(dp) array
+     real(dp), intent(in)   :: dx(n)
+
+     ! minimum clip value
+     real(dp), intent(in)   :: vmin
+
+     ! maximum clip value
+     real(dp), intent(in)   :: vmax
+
+     ! clipped real(dp) array
+     real(dp), intent(out)  :: dy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         if (dx(i) < vmin) then
+             dy(i) = vmin
+         elseif (dx(i) > vmax) then
+             dy(i) = vmax
+         else
+             dy(i) = dx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_d
+
+!!
+!! @sub s_clip_z
+!!
+!! clip a complex(dp) array to range [vmin, vmax].
+!! clip based on magnitude: |y(i)| = max(min(|x(i)|, vmax), vmin)
+!! preserve original phase for complex values.
+!!
+  subroutine s_clip_z(n, zx, vmin, vmax, zy)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of array
+     integer, intent(in)      :: n
+
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zx(n)
+
+     ! minimum clip value (magnitude)
+     real(dp), intent(in)     :: vmin
+
+     ! maximum clip value (magnitude)
+     real(dp), intent(in)     :: vmax
+
+     ! clipped complex(dp) array
+     complex(dp), intent(out) :: zy(n)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+     ! clipped magnitude
+     real(dp) :: mag
+
+     ! original phase
+     real(dp) :: phase
+
+!! [body
+
+     do i=1,n
+         mag = abs(zx(i))
+         if (mag < vmin) then
+             phase = atan2(aimag(zx(i)), real(zx(i)))
+             zy(i) = cmplx(vmin * cos(phase), vmin * sin(phase), dp)
+         elseif (mag > vmax) then
+             phase = atan2(aimag(zx(i)), real(zx(i)))
+             zy(i) = cmplx(vmax * cos(phase), vmax * sin(phase), dp)
+         else
+             zy(i) = zx(i)
+         endif
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_clip_z
+
 !!========================================================================
 !!>>> slice operations                                                <<<
 !!========================================================================
@@ -6200,343 +6148,399 @@
    end subroutine s_drop_z
 
 !!========================================================================
-!!>>> hyperbolic sine operations                                         <<<
+!!>>> shuffle operations                                               <<<
 !!========================================================================
 
 !!
-!! @sub s_sinh_i
+!! @sub s_shuffle_i
 !!
-!! compute hyperbolic sine of an integer vector in-place: x = sinh(x)
-!! note: result is cast back to integer
+!! shuffle an integer vector in-place using Fisher-Yates algorithm.
 !!
-   subroutine s_sinh_i(n, ix)
-      use constants, only : dp
+  subroutine s_shuffle_i(n, ix)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
+     ! size of vector
+     integer, intent(in)    :: n
 
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
+     ! integer vector to be shuffled (in-place)
+     integer, intent(inout) :: ix(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     integer :: temp
+
+     ! random number
+     real(dp) :: r
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(sinh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = ix(i)
+         ix(i) = ix(j)
+         ix(j) = temp
+     enddo ! over i={n,2,-1} loop
 
 !! body]
 
-      return
-   end subroutine s_sinh_i
+     return
+  end subroutine s_shuffle_i
 
 !!
-!! @sub s_sinh_d
+!! @sub s_shuffle_d
 !!
-!! compute hyperbolic sine of a real(dp) vector in-place: x = sinh(x)
+!! shuffle a real(dp) vector in-place using Fisher-Yates algorithm.
 !!
-   subroutine s_sinh_d(n, dx)
-      use constants, only : dp
+  subroutine s_shuffle_d(n, dx)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)     :: n
+     ! size of vector
+     integer, intent(in)     :: n
 
-      ! real(dp) vector to be modified (in-place)
-      real(dp), intent(inout) :: dx(n)
+     ! real(dp) vector to be shuffled (in-place)
+     real(dp), intent(inout) :: dx(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     real(dp) :: temp
+
+     ! random number
+     real(dp) :: r
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          dx(i) = sinh(dx(i))
-      enddo ! over i={1,n} loop
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = dx(i)
+         dx(i) = dx(j)
+         dx(j) = temp
+     enddo ! over i={n,2,-1} loop
 
 !! body]
 
-      return
-   end subroutine s_sinh_d
+     return
+  end subroutine s_shuffle_d
 
 !!
-!! @sub s_sinh_z
+!! @sub s_shuffle_z
 !!
-!! compute hyperbolic sine of a complex(dp) vector in-place: z = sinh(z)
+!! shuffle a complex(dp) vector in-place using Fisher-Yates algorithm.
 !!
-   subroutine s_sinh_z(n, zx)
-      use constants, only : dp
+  subroutine s_shuffle_z(n, zx)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)        :: n
+     ! size of vector
+     integer, intent(in)        :: n
 
-      ! complex(dp) vector to be modified (in-place)
-      complex(dp), intent(inout) :: zx(n)
+     ! complex(dp) vector to be shuffled (in-place)
+     complex(dp), intent(inout) :: zx(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
+
+     ! random index
+     integer :: j
+
+     ! temporary variable for swapping
+     complex(dp) :: temp
+
+     ! random number
+     real(dp) :: r
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          zx(i) = sinh(zx(i))
-      enddo ! over i={1,n} loop
+     if (n < 2) then
+         return
+     endif
+     !
+     ! Fisher-Yates shuffle algorithm
+     do i=n,2,-1
+         call random_number(r)
+         j = int(r * real(i-1, dp)) + 1
+         temp = zx(i)
+         zx(i) = zx(j)
+         zx(j) = temp
+     enddo ! over i={n,2,-1} loop
 
 !! body]
 
-      return
-   end subroutine s_sinh_z
+     return
+  end subroutine s_shuffle_z
 
 !!========================================================================
-!!>>> hyperbolic cosine operations                                         <<<
-!!========================================================================
-
-!!
-!! @sub s_cosh_i
-!!
-!! compute hyperbolic cosine of an integer vector in-place: x = cosh(x)
-!! note: result is cast back to integer
-!!
-   subroutine s_cosh_i(n, ix)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
-
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(cosh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_cosh_i
-
-!!
-!! @sub s_cosh_d
-!!
-!! compute hyperbolic cosine of a real(dp) vector in-place: x = cosh(x)
-!!
-   subroutine s_cosh_d(n, dx)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)     :: n
-
-      ! real(dp) vector to be modified (in-place)
-      real(dp), intent(inout) :: dx(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          dx(i) = cosh(dx(i))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_cosh_d
-
-!!
-!! @sub s_cosh_z
-!!
-!! compute hyperbolic cosine of a complex(dp) vector in-place: z = cosh(z)
-!!
-   subroutine s_cosh_z(n, zx)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)        :: n
-
-      ! complex(dp) vector to be modified (in-place)
-      complex(dp), intent(inout) :: zx(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          zx(i) = cosh(zx(i))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_cosh_z
-
-!!========================================================================
-!!>>> hyperbolic tangent operations                                        <<<
+!!>>> reverse operations                                               <<<
 !!========================================================================
 
 !!
-!! @sub s_tanh_i
+!! @sub s_reverse_i
 !!
-!! compute hyperbolic tangent of an integer vector in-place: x = tanh(x)
-!! note: result is cast back to integer
+!! reverse an integer array: y(i) = x(n+1-i)
 !!
-   subroutine s_tanh_i(n, ix)
-      use constants, only : dp
-
-      implicit none
+  subroutine s_reverse_i(n, ix, iy)
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
+     ! size of array
+     integer, intent(in)  :: n
 
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
+     ! input integer array
+     integer, intent(in)  :: ix(n)
+
+     ! reversed integer array
+     integer, intent(out) :: iy(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(tanh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
+     do i=1,n
+         iy(i) = ix(n + 1 - i)
+     enddo ! over i={1,n} loop
 
 !! body]
 
-      return
-   end subroutine s_tanh_i
+     return
+  end subroutine s_reverse_i
 
 !!
-!! @sub s_tanh_d
+!! @sub s_reverse_d
 !!
-!! compute hyperbolic tangent of a real(dp) vector in-place: x = tanh(x)
+!! reverse a real(dp) array: y(i) = x(n+1-i)
 !!
-   subroutine s_tanh_d(n, dx)
-      use constants, only : dp
+  subroutine s_reverse_d(n, dx, dy)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)     :: n
+     ! size of array
+     integer, intent(in)    :: n
 
-      ! real(dp) vector to be modified (in-place)
-      real(dp), intent(inout) :: dx(n)
+     ! input real(dp) array
+     real(dp), intent(in)   :: dx(n)
+
+     ! reversed real(dp) array
+     real(dp), intent(out)  :: dy(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          dx(i) = tanh(dx(i))
-      enddo ! over i={1,n} loop
+     do i=1,n
+         dy(i) = dx(n + 1 - i)
+     enddo ! over i={1,n} loop
 
 !! body]
 
-      return
-   end subroutine s_tanh_d
+     return
+  end subroutine s_reverse_d
 
 !!
-!! @sub s_tanh_z
+!! @sub s_reverse_z
 !!
-!! compute hyperbolic tangent of a complex(dp) vector in-place: z = tanh(z)
+!! reverse a complex(dp) array: y(i) = x(n+1-i)
 !!
-   subroutine s_tanh_z(n, zx)
-      use constants, only : dp
+  subroutine s_reverse_z(n, zx, zy)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of vector
-      integer, intent(in)        :: n
+     ! size of array
+     integer, intent(in)      :: n
 
-      ! complex(dp) vector to be modified (in-place)
-      complex(dp), intent(inout) :: zx(n)
+     ! input complex(dp) array
+     complex(dp), intent(in)  :: zx(n)
+
+     ! reversed complex(dp) array
+     complex(dp), intent(out) :: zy(n)
 
 !! local variables
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
 
 !! [body
 
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          zx(i) = tanh(zx(i))
-      enddo ! over i={1,n} loop
+     do i=1,n
+         zy(i) = zx(n + 1 - i)
+     enddo ! over i={1,n} loop
 
 !! body]
 
-      return
-   end subroutine s_tanh_z
+     return
+  end subroutine s_reverse_z
+
+!!========================================================================
+!!>>> concat operations                                                <<<
+!!========================================================================
+
+!!
+!! @sub s_concat_i
+!!
+!! concatenate two integer vectors: z = [x, y]
+!!
+  subroutine s_concat_i(n, m, ix, iy, iz)
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)  :: n
+
+     ! size of second vector
+     integer, intent(in)  :: m
+
+     ! first integer vector
+     integer, intent(in)  :: ix(n)
+
+     ! second integer vector
+     integer, intent(in)  :: iy(m)
+
+     ! concatenated vector: [ix, iy]
+     integer, intent(out) :: iz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         iz(i) = ix(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         iz(n+i) = iy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_i
+
+!!
+!! @sub s_concat_d
+!!
+!! concatenate two real(dp) vectors: z = [x, y]
+!!
+  subroutine s_concat_d(n, m, dx, dy, dz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)     :: n
+
+     ! size of second vector
+     integer, intent(in)     :: m
+
+     ! first real(dp) vector
+     real(dp), intent(in)  :: dx(n)
+
+     ! second real(dp) vector
+     real(dp), intent(in)  :: dy(m)
+
+     ! concatenated vector: [dx, dy]
+     real(dp), intent(out) :: dz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         dz(i) = dx(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         dz(n+i) = dy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_d
+
+!!
+!! @sub s_concat_z
+!!
+!! concatenate two complex(dp) vectors: z = [x, y]
+!!
+  subroutine s_concat_z(n, m, zx, zy, zz)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! size of first vector
+     integer, intent(in)      :: n
+
+     ! size of second vector
+     integer, intent(in)      :: m
+
+     ! first complex(dp) vector
+     complex(dp), intent(in)  :: zx(n)
+
+     ! second complex(dp) vector
+     complex(dp), intent(in)  :: zy(m)
+
+     ! concatenated vector: [zx, zy]
+     complex(dp), intent(out) :: zz(n+m)
+
+!! local variables
+     ! loop index
+     integer :: i
+
+!! [body
+
+     do i=1,n
+         zz(i) = zx(i)
+     enddo ! over i={1,n} loop
+     !
+     do i=1,m
+         zz(n+i) = zy(i)
+     enddo ! over i={1,m} loop
+
+!! body]
+
+     return
+  end subroutine s_concat_z
