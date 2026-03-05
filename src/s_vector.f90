@@ -6196,5 +6196,119 @@
 
 !! body]
 
-     return
-  end subroutine s_drop_z
+   return
+   end subroutine s_drop_z
+
+!!========================================================================
+!!>>> hyperbolic sine operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_sinh_i
+!!
+!! compute hyperbolic sine of an integer vector in-place: x = sinh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_sinh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(sinh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_i
+
+!!
+!! @sub s_sinh_d
+!!
+!! compute hyperbolic sine of a real(dp) vector in-place: x = sinh(x)
+!!
+   subroutine s_sinh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = sinh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_d
+
+!!
+!! @sub s_sinh_z
+!!
+!! compute hyperbolic sine of a complex(dp) vector in-place: z = sinh(z)
+!!
+   subroutine s_sinh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = sinh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_sinh_z
