@@ -200,16 +200,18 @@
 
 !! [body
 
-     vsum(1) = v(1)
-     !
-     do i=2,n
-         vsum(i) = vsum(i-1) + v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vsum(1) = v(1)
+      !
+      do i=2,n
+          vsum(i) = vsum(i-1) + v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumsum_i
+      return
+   end subroutine s_cumsum_i
 
 !!
 !! @sub s_cumsum_d
@@ -237,16 +239,18 @@
 
 !! [body
 
-     vsum(1) = v(1)
-     !
-     do i=2,n
-         vsum(i) = vsum(i-1) + v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vsum(1) = v(1)
+      !
+      do i=2,n
+          vsum(i) = vsum(i-1) + v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumsum_d
+      return
+   end subroutine s_cumsum_d
 
 !!
 !! @sub s_cumsum_z
@@ -274,16 +278,18 @@
 
 !! [body
 
-     vsum(1) = v(1)
-     !
-     do i=2,n
-         vsum(i) = vsum(i-1) + v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vsum(1) = v(1)
+      !
+      do i=2,n
+          vsum(i) = vsum(i-1) + v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumsum_z
+      return
+   end subroutine s_cumsum_z
 
 !!========================================================================
 !!>>> prod operations                                                  <<<
@@ -313,16 +319,18 @@
 
 !! [body
 
-     vprod(1) = v(1)
-     !
-     do i=2,n
-         vprod(i) = vprod(i-1) * v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vprod(1) = v(1)
+      !
+      do i=2,n
+          vprod(i) = vprod(i-1) * v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumprod_i
+      return
+   end subroutine s_cumprod_i
 
 !!
 !! @sub s_cumprod_d
@@ -350,16 +358,18 @@
 
 !! [body
 
-     vprod(1) = v(1)
-     !
-     do i=2,n
-         vprod(i) = vprod(i-1) * v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vprod(1) = v(1)
+      !
+      do i=2,n
+          vprod(i) = vprod(i-1) * v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumprod_d
+      return
+   end subroutine s_cumprod_d
 
 !!
 !! @sub s_cumprod_z
@@ -387,16 +397,18 @@
 
 !! [body
 
-     vprod(1) = v(1)
-     !
-     do i=2,n
-         vprod(i) = vprod(i-1) * v(i)
-     enddo ! over i={2,n} loop
+      if (n <= 0) return
+      !
+      vprod(1) = v(1)
+      !
+      do i=2,n
+          vprod(i) = vprod(i-1) * v(i)
+      enddo ! over i={2,n} loop
 
 !! body]
 
-     return
-  end subroutine s_cumprod_z
+      return
+   end subroutine s_cumprod_z
 
 !!========================================================================
 !!>>> mix operations                                                   <<<
@@ -2161,7 +2173,7 @@
 !!
   subroutine s_skewness_i(n, iv, skewness)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, epst
 
      implicit none
 
@@ -2220,7 +2232,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          skewness = zero
          return
      endif
@@ -2245,7 +2257,7 @@
 !!
   subroutine s_skewness_d(n, dv, skewness)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, epst
 
      implicit none
 
@@ -2304,7 +2316,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          skewness = zero
          return
      endif
@@ -2329,7 +2341,7 @@
 !!
   subroutine s_skewness_z(n, zv, skewness)
      use constants, only : dp
-     use constants, only : zero, czero
+     use constants, only : zero, czero, epst
 
      implicit none
 
@@ -2388,7 +2400,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          skewness = zero
          return
      endif
@@ -2417,7 +2429,7 @@
 !!
   subroutine s_kurtosis_i(n, iv, kurtosis)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, epst
 
      implicit none
 
@@ -2476,7 +2488,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          kurtosis = zero
          return
      endif
@@ -2501,7 +2513,7 @@
 !!
   subroutine s_kurtosis_d(n, dv, kurtosis)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, epst
 
      implicit none
 
@@ -2560,7 +2572,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          kurtosis = zero
          return
      endif
@@ -2585,7 +2597,7 @@
 !!
   subroutine s_kurtosis_z(n, zv, kurtosis)
      use constants, only : dp
-     use constants, only : zero, czero
+     use constants, only : zero, czero, epst
 
      implicit none
 
@@ -2644,7 +2656,7 @@
      enddo
      stddev = sqrt(sum_sq / real(n - 1, dp))
      !
-     if (stddev == zero) then
+     if (abs(stddev) <= epst) then
          kurtosis = zero
          return
      endif
@@ -6188,6 +6200,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
+     call random_seed()
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -6238,6 +6251,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
+     call random_seed()
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -6288,6 +6302,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
+     call random_seed()
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
