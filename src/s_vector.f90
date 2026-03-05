@@ -6426,3 +6426,117 @@
 
       return
    end subroutine s_cosh_z
+
+!!========================================================================
+!!>>> hyperbolic tangent operations                                        <<<
+!!========================================================================
+
+!!
+!! @sub s_tanh_i
+!!
+!! compute hyperbolic tangent of an integer vector in-place: x = tanh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_tanh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(tanh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_i
+
+!!
+!! @sub s_tanh_d
+!!
+!! compute hyperbolic tangent of a real(dp) vector in-place: x = tanh(x)
+!!
+   subroutine s_tanh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = tanh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_d
+
+!!
+!! @sub s_tanh_z
+!!
+!! compute hyperbolic tangent of a complex(dp) vector in-place: z = tanh(z)
+!!
+   subroutine s_tanh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = tanh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_tanh_z
