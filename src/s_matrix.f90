@@ -4362,3 +4362,247 @@
 
       return
    end subroutine s_pinv_z
+
+!!
+!! @sub s_is_skew_symmetric_d
+!!
+!! check if a real(dp) matrix is skew-symmetric (A = -A^T).
+!!
+   subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! size of matrix (must be square)
+      integer, intent(in)   :: n
+
+      ! input matrix
+      real(dp), intent(in)  :: A(n,n)
+
+      ! output: .true. if matrix is skew-symmetric, .false. otherwise
+      logical, intent(out) :: is_skew_symmetric
+
+      ! tolerance for floating point comparison (optional, default 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop indices
+      integer :: i, j
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! initialize
+      is_skew_symmetric = .true.
+
+      ! compare upper triangular part with lower triangular part
+      ! skew-symmetric condition: A(i,j) = -A(j,i)
+      ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+      outer_loop: do i=2,n
+          inner_loop: do j=1,i-1
+              ! check skew-symmetric condition with tolerance
+              if ( abs( A(i,j) + A(j,i) ) > actual_tol ) then
+                  is_skew_symmetric = .false.
+                  exit outer_loop
+              endif ! back if ( abs( A(i,j) + A(j,i) ) > actual_tol ) block
+          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+      enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+ !! body]
+
+      return
+   end subroutine s_is_skew_symmetric_d
+
+!!
+!! @sub s_is_skew_hermitian_z
+!!
+!! check if a complex(dp) matrix is skew-Hermitian (A = -A^H).
+!!
+   subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! size of matrix (must be square)
+      integer, intent(in)      :: n
+
+      ! input matrix
+      complex(dp), intent(in)  :: A(n,n)
+
+      ! output: .true. if matrix is skew-Hermitian, .false. otherwise
+      logical, intent(out)       :: is_skew_hermitian
+
+      ! tolerance for floating point comparison (optional, default 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop indices
+      integer :: i, j
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! initialize
+      is_skew_hermitian = .true.
+
+      ! compare upper triangular part with lower triangular part
+      ! skew-Hermitian condition: A(i,j) = -conj(A(j,i))
+      ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+      outer_loop: do i=2,n
+          inner_loop: do j=1,i-1
+              ! check skew-Hermitian condition with tolerance
+              if ( abs( A(i,j) + conjg( A(j,i) ) ) > actual_tol ) then
+                  is_skew_hermitian = .false.
+                  exit outer_loop
+              endif ! back if ( abs( A(i,j) + conj( A(j,i) ) ) > actual_tol ) block
+          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+      enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+ !! body]
+
+      return
+   end subroutine s_is_skew_hermitian_z
+
+!!
+!! @sub s_is_positive_definite_d
+!!
+!! check if a real(dp) symmetric matrix is positive-definite
+!! using Cholesky decomposition (A = L * L^T).
+!!
+   subroutine s_is_positive_definite_d(n, A, is_positive_definite)
+      use constants, only : dp
+
+      implicit none
+
+ !! external arguments
+      ! dimension of matrix (must be square)
+      integer, intent(in)  :: n
+
+      ! input matrix (must be symmetric)
+      real(dp), intent(in) :: A(n,n)
+
+      ! output: .true. if matrix is symmetric positive-definite, .false. otherwise
+      logical, intent(out) :: is_positive_definite
+
+ !! local variables
+      ! error flag
+      integer :: ierror
+
+      ! Cholesky factor (temporary)
+      real(dp), allocatable :: L(:,:)
+
+ !! [body
+
+      ! allocate temporary matrix for Cholesky factorization
+      allocate(L(n,n), stat=ierror)
+      !
+      if ( ierror /= 0 ) then
+          call s_print_error('s_is_positive_definite_d','can not allocate enough memory')
+      endif ! back if ( ierror /= 0 ) block
+
+      ! copy A to L
+      L = A
+
+      ! attempt Cholesky decomposition using LAPACK subroutine dpotrf
+      ! on exit, lower triangle of L contains Cholesky factor
+      call DPOTRF('L', n, L, n, ierror)
+      !
+      if ( ierror == 0 ) then
+          ! Cholesky decomposition succeeded: matrix is positive-definite
+          is_positive_definite = .true.
+      else
+          ! Cholesky decomposition failed: matrix is not positive-definite
+          ! (either not symmetric, not positive-definite, or numerically singular)
+          is_positive_definite = .false.
+      endif ! back if ( ierror == 0 ) block
+
+      ! deallocate temporary matrix
+      if ( allocated(L) ) deallocate(L)
+
+ !! body]
+
+      return
+   end subroutine s_is_positive_definite_d
+
+!!
+!! @sub s_is_positive_definite_z
+!!
+!! check if a complex(dp) Hermitian matrix is positive-definite
+!! using Cholesky decomposition (A = L * L^H).
+!!
+   subroutine s_is_positive_definite_z(n, A, is_positive_definite)
+      use constants, only : dp
+
+      implicit none
+
+ !! external arguments
+      ! dimension of matrix (must be square)
+      integer, intent(in)     :: n
+
+      ! input matrix (must be Hermitian)
+      complex(dp), intent(in) :: A(n,n)
+
+      ! output: .true. if matrix is Hermitian positive-definite, .false. otherwise
+      logical, intent(out)    :: is_positive_definite
+
+ !! local variables
+      ! error flag
+      integer :: ierror
+
+      ! Cholesky factor (temporary)
+      complex(dp), allocatable :: L(:,:)
+
+ !! [body
+
+      ! allocate temporary matrix for Cholesky factorization
+      allocate(L(n,n), stat=ierror)
+      !
+      if ( ierror /= 0 ) then
+          call s_print_error('s_is_positive_definite_z','can not allocate enough memory')
+      endif ! back if ( ierror /= 0 ) block
+
+      ! copy A to L
+      L = A
+
+      ! attempt Cholesky decomposition using LAPACK subroutine zpotrf
+      ! on exit, lower triangle of L contains Cholesky factor
+      call ZPOTRF('L', n, L, n, ierror)
+      !
+      if ( ierror == 0 ) then
+          ! Cholesky decomposition succeeded: matrix is positive-definite
+          is_positive_definite = .true.
+      else
+          ! Cholesky decomposition failed: matrix is not positive-definite
+          ! (either not Hermitian, not positive-definite, or numerically singular)
+          is_positive_definite = .false.
+      endif ! back if ( ierror == 0 ) block
+
+      ! deallocate temporary matrix
+      if ( allocated(L) ) deallocate(L)
+
+ !! body]
+
+      return
+   end subroutine s_is_positive_definite_z
