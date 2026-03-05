@@ -6312,3 +6312,117 @@
 
       return
    end subroutine s_sinh_z
+
+!!========================================================================
+!!>>> hyperbolic cosine operations                                         <<<
+!!========================================================================
+
+!!
+!! @sub s_cosh_i
+!!
+!! compute hyperbolic cosine of an integer vector in-place: x = cosh(x)
+!! note: result is cast back to integer
+!!
+   subroutine s_cosh_i(n, ix)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)    :: n
+
+      ! integer vector to be modified (in-place)
+      ! note: result is cast back to integer
+      integer, intent(inout) :: ix(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          ix(i) = int(cosh(real(ix(i), dp)))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_i
+
+!!
+!! @sub s_cosh_d
+!!
+!! compute hyperbolic cosine of a real(dp) vector in-place: x = cosh(x)
+!!
+   subroutine s_cosh_d(n, dx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)     :: n
+
+      ! real(dp) vector to be modified (in-place)
+      real(dp), intent(inout) :: dx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          dx(i) = cosh(dx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_d
+
+!!
+!! @sub s_cosh_z
+!!
+!! compute hyperbolic cosine of a complex(dp) vector in-place: z = cosh(z)
+!!
+   subroutine s_cosh_z(n, zx)
+      use constants, only : dp
+
+      implicit none
+
+!! external arguments
+      ! size of vector
+      integer, intent(in)        :: n
+
+      ! complex(dp) vector to be modified (in-place)
+      complex(dp), intent(inout) :: zx(n)
+
+!! local variables
+      ! loop index
+      integer :: i
+
+!! [body
+
+      if (n <= 0) then
+          return
+      endif
+      !
+      do i=1,n
+          zx(i) = cosh(zx(i))
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_cosh_z
