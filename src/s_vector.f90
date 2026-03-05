@@ -397,18 +397,18 @@
 
 !! [body
 
-      if (n <= 0) return
-      !
-      vprod(1) = v(1)
-      !
-      do i=2,n
-          vprod(i) = vprod(i-1) * v(i)
-      enddo ! over i={2,n} loop
+     if (n <= 0) return
+     !
+     vprod(1) = v(1)
+     !
+     do i=2,n
+         vprod(i) = vprod(i-1) * v(i)
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_cumprod_z
+     return
+  end subroutine s_cumprod_z
 
 !!========================================================================
 !!>>> mix operations                                                   <<<
