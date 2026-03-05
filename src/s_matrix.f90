@@ -4752,3 +4752,125 @@
 
       return
    end subroutine s_is_positive_semidefinite_z
+
+!!
+!! @sub s_is_upper_triangular_d
+!!
+!! check if a real(dp) matrix is upper triangular
+!! (all elements below main diagonal are zero).
+!!
+   subroutine s_is_upper_triangular_d(n, A, is_upper_triangular, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! size of matrix (must be square)
+      integer, intent(in)  :: n
+
+      ! input matrix
+      real(dp), intent(in) :: A(n,n)
+
+      ! output: .true. if matrix is upper triangular, .false. otherwise
+      logical, intent(out) :: is_upper_triangular
+
+      ! tolerance for floating point comparison (optional, default 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop indices
+      integer  :: i, j
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! initialize
+      is_upper_triangular = .true.
+
+      ! check all elements below main diagonal
+      ! upper triangular condition: A(i,j) = 0 for i > j
+      outer_loop: do i=2,n
+          inner_loop: do j=1,i-1
+              ! check if element below diagonal is zero
+              if ( abs( A(i,j) ) > actual_tol ) then
+                  is_upper_triangular = .false.
+                  exit outer_loop
+              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+      enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+ !! body]
+
+      return
+   end subroutine s_is_upper_triangular_d
+
+!!
+!! @sub s_is_upper_triangular_z
+!!
+!! check if a complex(dp) matrix is upper triangular
+!! (all elements below main diagonal are zero).
+!!
+   subroutine s_is_upper_triangular_z(n, A, is_upper_triangular, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! size of matrix (must be square)
+      integer, intent(in)     :: n
+
+      ! input matrix
+      complex(dp), intent(in) :: A(n,n)
+
+      ! output: .true. if matrix is upper triangular, .false. otherwise
+      logical, intent(out)    :: is_upper_triangular
+
+      ! tolerance for floating point comparison (optional, default 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop indices
+      integer  :: i, j
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! initialize
+      is_upper_triangular = .true.
+
+      ! check all elements below main diagonal
+      ! upper triangular condition: A(i,j) = 0 for i > j
+      outer_loop: do i=2,n
+          inner_loop: do j=1,i-1
+              ! check if element below diagonal is zero
+              if ( abs( A(i,j) ) > actual_tol ) then
+                  is_upper_triangular = .false.
+                  exit outer_loop
+              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+      enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+ !! body]
+
+      return
+   end subroutine s_is_upper_triangular_z
