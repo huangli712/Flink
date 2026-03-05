@@ -4606,3 +4606,149 @@
 
       return
    end subroutine s_is_positive_definite_z
+
+!!
+!! @sub s_is_positive_semidefinite_d
+!!
+!! check if a real(dp) symmetric matrix is positive-semidefinite.
+!! all eigenvalues >= 0 (with tolerance).
+!!
+   subroutine s_is_positive_semidefinite_d(ldim, n, A, is_positive_semidefinite, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! leading dimension of matrix A
+      integer, intent(in)  :: ldim
+
+      ! order of the matrix A
+      integer, intent(in)  :: n
+
+      ! input matrix (must be symmetric)
+      real(dp), intent(in) :: A(ldim,n)
+
+      ! output: .true. if matrix is positive-semidefinite, .false. otherwise
+      logical, intent(out) :: is_positive_semidefinite
+
+      ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop index
+      integer  :: i
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+      ! eigenvalues
+      real(dp), allocatable :: eval(:)
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! allocate eigenvalue array
+      allocate(eval(n), stat=i)
+      if ( i /= 0 ) then
+          call s_print_error('s_is_positive_semidefinite_d','can not allocate enough memory')
+      endif ! back if ( i /= 0 ) block
+
+      ! compute eigenvalues
+      call s_eigvals_sy(ldim, n, A, eval)
+
+      ! check if all eigenvalues >= -tol
+      is_positive_semidefinite = .true.
+      do i=1,n
+          if ( eval(i) < -actual_tol ) then
+              is_positive_semidefinite = .false.
+              exit
+          endif ! back if ( eval(i) < -actual_tol ) block
+      enddo ! over i={1,n} loop
+
+      ! deallocate eigenvalue array
+      if ( allocated(eval) ) deallocate(eval)
+
+ !! body]
+
+      return
+   end subroutine s_is_positive_semidefinite_d
+
+!!
+!! @sub s_is_positive_semidefinite_z
+!!
+!! check if a complex(dp) Hermitian matrix is positive-semidefinite.
+!! all eigenvalues >= 0 (with tolerance).
+!!
+   subroutine s_is_positive_semidefinite_z(ldim, n, A, is_positive_semidefinite, tol)
+      use constants, only : dp
+      use constants, only : eps8
+
+      implicit none
+
+ !! external arguments
+      ! leading dimension of matrix A
+      integer, intent(in)     :: ldim
+
+      ! order of the matrix A
+      integer, intent(in)     :: n
+
+      ! input matrix (must be Hermitian)
+      complex(dp), intent(in) :: A(ldim,n)
+
+      ! output: .true. if matrix is positive-semidefinite, .false. otherwise
+      logical, intent(out)    :: is_positive_semidefinite
+
+      ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+ !! local variables
+      ! loop index
+      integer  :: i
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+      ! eigenvalues
+      real(dp), allocatable :: eval(:)
+
+ !! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = eps8
+      endif ! back if ( present(tol) ) block
+
+      ! allocate eigenvalue array
+      allocate(eval(n), stat=i)
+      if ( i /= 0 ) then
+          call s_print_error('s_is_positive_semidefinite_z','can not allocate enough memory')
+      endif ! back if ( i /= 0 ) block
+
+      ! compute eigenvalues
+      call s_eigvals_he(ldim, n, A, eval)
+
+      ! check if all eigenvalues >= -tol
+      is_positive_semidefinite = .true.
+      do i=1,n
+          if ( eval(i) < -actual_tol ) then
+              is_positive_semidefinite = .false.
+              exit
+          endif ! back if ( eval(i) < -actual_tol ) block
+      enddo ! over i={1,n} loop
+
+      ! deallocate eigenvalue array
+      if ( allocated(eval) ) deallocate(eval)
+
+ !! body]
+
+      return
+   end subroutine s_is_positive_semidefinite_z
