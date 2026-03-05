@@ -2209,5 +2209,66 @@
 
  !! body]
 
+      return
+   end subroutine s_is_symmetric_d
+
+!!
+!! @sub s_is_hermitian_z
+!!
+!! check if a complex(dp) matrix is Hermitian (A = A^H).
+!!
+  subroutine s_is_hermitian_z(n, A, is_hermitian, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)        :: n
+
+     ! input matrix
+     complex(dp), intent(in)   :: A(n,n)
+
+     ! output: .true. if matrix is Hermitian, .false. otherwise
+     logical, intent(out)       :: is_hermitian
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_hermitian = .true.
+
+     ! compare upper triangular part with lower triangular part
+     ! Hermitian condition: A(i,j) = conj(A(j,i))
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check Hermitian condition with tolerance
+             if ( abs( A(i,j) - conj( A(j,i) ) ) > actual_tol ) then
+                 is_hermitian = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) - conj( A(j,i) ) ) > actual_tol ) block
+         enddo ! over j={1,i-1} loop (inner_loop)
+     enddo ! over i={2,n} loop (outer_loop)
+
+!! body]
+
      return
-  end subroutine s_is_symmetric_d
+  end subroutine s_is_hermitian_z
