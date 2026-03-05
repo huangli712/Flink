@@ -278,18 +278,18 @@
 
 !! [body
 
-      if (n <= 0) return
-      !
-      vsum(1) = v(1)
-      !
-      do i=2,n
-          vsum(i) = vsum(i-1) + v(i)
-      enddo ! over i={2,n} loop
+     if (n <= 0) return
+     !
+     vsum(1) = v(1)
+     !
+     do i=2,n
+         vsum(i) = vsum(i-1) + v(i)
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_cumsum_z
+     return
+  end subroutine s_cumsum_z
 
 !!========================================================================
 !!>>> prod operations                                                  <<<
