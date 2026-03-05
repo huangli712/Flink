@@ -319,18 +319,18 @@
 
 !! [body
 
-      if (n <= 0) return
-      !
-      vprod(1) = v(1)
-      !
-      do i=2,n
-          vprod(i) = vprod(i-1) * v(i)
-      enddo ! over i={2,n} loop
+     if (n <= 0) return
+     !
+     vprod(1) = v(1)
+     !
+     do i=2,n
+         vprod(i) = vprod(i-1) * v(i)
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_cumprod_i
+     return
+  end subroutine s_cumprod_i
 
 !!
 !! @sub s_cumprod_d
@@ -358,18 +358,18 @@
 
 !! [body
 
-      if (n <= 0) return
-      !
-      vprod(1) = v(1)
-      !
-      do i=2,n
-          vprod(i) = vprod(i-1) * v(i)
-      enddo ! over i={2,n} loop
+     if (n <= 0) return
+     !
+     vprod(1) = v(1)
+     !
+     do i=2,n
+         vprod(i) = vprod(i-1) * v(i)
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_cumprod_d
+     return
+  end subroutine s_cumprod_d
 
 !!
 !! @sub s_cumprod_z
