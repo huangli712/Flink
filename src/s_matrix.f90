@@ -2147,3 +2147,71 @@
 
      return
   end subroutine s_svd_zg
+ 
+!!========================================================================
+!!>>> matrix properties: check if matrix is symmetric                  <<<
+!!========================================================================
+
+!!
+!! @sub s_is_symmetric_d
+!!
+!! check if a real(dp) matrix is symmetric (A = A^T).
+!!
+   subroutine s_is_symmetric_d(n, A, is_symmetric, tol)
+      use constants, only : dp
+      use constants, only : zero, epst
+
+      implicit none
+
+!! external arguments
+      ! size of matrix (must be square)
+      integer, intent(in)   :: n
+
+      ! input matrix
+      real(dp), intent(in)  :: A(n,n)
+
+      ! output: .true. if matrix is symmetric, .false. otherwise
+      logical, intent(out) :: is_symmetric
+
+      ! tolerance for floating point comparison (optional, default 1.0e-8)
+      real(dp), intent(in), optional :: tol
+
+!! local variables
+      ! loop indices
+      integer :: i, j
+
+      ! actual tolerance value
+      real(dp) :: actual_tol
+
+      ! maximum absolute difference
+      real(dp) :: max_diff
+
+!! [body
+
+      ! set tolerance (use default if not provided)
+      if ( present(tol) ) then
+          actual_tol = tol
+      else
+          actual_tol = epst
+      endif ! back if ( present(tol) ) block
+
+      ! initialize
+      is_symmetric = .true.
+      max_diff = zero
+
+      ! compare upper triangular part with lower triangular part
+      ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+      outer_loop: do i=2,n
+          inner_loop: do j=1,i-1
+              ! check symmetry with tolerance
+              if ( abs( A(i,j) - A(j,i) ) > actual_tol ) then
+                  is_symmetric = .false.
+                  exit outer_loop
+              endif ! back if ( abs( A(i,j) - A(j,i) ) > actual_tol ) block
+          enddo ! over j={1,i-1} loop (inner_loop)
+      enddo ! over i={2,n} loop (outer_loop)
+
+!! body]
+
+      return
+   end subroutine s_is_symmetric_d

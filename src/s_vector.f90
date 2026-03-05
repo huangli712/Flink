@@ -87,6 +87,8 @@
 
 !! [body
 
+     if (n < 2) return
+     !
      do i=1,n
          x(i) = ( xmax - xmin ) * real(i - 1, dp) / real(n - 1, dp) + xmin
      enddo ! over i={1,n} loop
@@ -125,6 +127,8 @@
 
 !! [body
 
+     if (n < 2) return
+     !
      do i=1,n
          x(i) = ( xmax - xmin ) * real(i - 1, dp) / real(n - 1, dp) + xmin
      enddo ! over i={1,n} loop
@@ -163,6 +167,8 @@
 
 !! [body
 
+     if (n < 2) return
+     !
      do i=1,n
          x(i) = ( xmax - xmin ) * real(i - 1, dp) / real(n - 1, dp) + xmin
      enddo ! over i={1,n} loop
