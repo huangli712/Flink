@@ -6078,41 +6078,26 @@
 
 !! local variables
      ! loop indices
-     integer  :: i, j, k
-
-     ! auxiliary indices
-     integer  :: ij, im1
-
-     ! computed value
-     real(dp) :: val
+     integer  :: i, j
 
 !! [body
 
-     ! build Pascal matrix: P(i,j) = C(i+j-2, j-1)
-     ! using multiplicative formula for combinations
-     do i=1,n
-         do j=1,n
-             ij = i + j - 2
-             im1 = i - 1
+     ! build Pascal matrix using recurrence relation:
+     ! P(i,j) = P(i-1,j) + P(i,j-1)
+     ! with boundary conditions: P(1,j) = 1, P(i,1) = 1
 
-             ! compute C(i+j-2, j-1) = (i+j-2)!/(j-1)!/(i-1)!
-             if ( ij >= j-1 .and. ij >= im1 ) then
-                 val = one
-                 do k=1, ij
-                     val = val * real(k, dp)
-                 enddo
-                 do k=1, j-1
-                     val = val / real(k, dp)
-                 enddo
-                 do k=1, im1
-                     val = val / real(k, dp)
-                 enddo
-                 A(i,j) = val
-             else
-                 A(i,j) = zero
-             endif ! back if ( ij >= j-1 .and. ij >= im1 ) block
-         enddo ! over j={1,n} loop
+     ! set first row and first column to 1
+     do i=1,n
+         A(i,1) = one
+         A(1,i) = one
      enddo ! over i={1,n} loop
+
+     ! fill the rest using recurrence relation
+     do i=2,n
+         do j=2,n
+             A(i,j) = A(i-1,j) + A(i,j-1)
+         enddo ! over j={2,n} loop
+     enddo ! over i={2,n} loop
 
 !! body]
 
