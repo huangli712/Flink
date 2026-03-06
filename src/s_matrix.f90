@@ -6373,6 +6373,7 @@
 !!
   subroutine s_random_hermitian_z(n, A)
      use constants, only : dp
+     use constants, only : two
 
      implicit none
 
@@ -6388,7 +6389,7 @@
      integer  :: i, j
 
      ! random values
-     real(dp) :: r1, r2, r3, r4
+     real(dp) :: r1, r2
 
 !! [body
 
@@ -6397,16 +6398,14 @@
          do j=1,n
              call random_number(r1)
              call random_number(r2)
-             call random_number(r3)
-             call random_number(r4)
-             A(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+             A(i,j) = dcmplx(r1, r2)
          enddo ! over j={1,n} loop
      enddo ! over i={1,n} loop
 
      ! Hermitize the matrix: A(i,j) = conjg(A(j,i))
      do i=1,n
          do j=i+1,n
-             A(i,j) = (A(i,j) + conjg(A(j,i))) / 2.0_dp
+             A(i,j) = (A(i,j) + conjg(A(j,i))) / two
              A(j,i) = conjg(A(i,j))
          enddo ! over j={i+1,n} loop
      enddo ! over i={1,n} loop
