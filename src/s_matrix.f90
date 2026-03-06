@@ -2868,14 +2868,14 @@
 
 !! local variables
      ! loop index
-     integer :: i, j
+     integer :: i
 
      ! error flag
      integer :: ierror
 
 !! [body
 
-     ! allocate ipiv and perform LU factorization
+     ! perform LU factorization
      call DGETRF(n, n, A, n, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
@@ -2885,18 +2885,14 @@
      ! extract L matrix (lower triangular, unit diagonal)
      L = zero
      do i=1,n
+         L(i,1:i-1) = A(i,1:i-1)
          L(i,i) = one
-         do j=1,i-1
-             L(i,j) = A(i,j)
-         enddo ! over j={1,i-1} loop
      enddo ! over i={1,n} loop
 
      ! extract U matrix (upper triangular)
      U = zero
      do i=1,n
-         do j=i,n
-             U(i,j) = A(i,j)
-         enddo ! over j={i,n} loop
+         U(i,i:n) = A(i,i:n)
      enddo ! over i={1,n} loop
 
 !! body]
@@ -2936,7 +2932,7 @@
 
 !! local variables
      ! loop index
-     integer :: i, j
+     integer :: i
 
      ! error flag
      integer :: ierror
@@ -2953,23 +2949,19 @@
      ! extract L matrix (lower triangular, unit diagonal)
      L = czero
      do i=1,n
+         L(i,1:i-1) = A(i,1:i-1)
          L(i,i) = cone
-         do j=1,i-1
-             L(i,j) = A(i,j)
-         enddo ! over j={1,i-1} loop
      enddo ! over i={1,n} loop
 
      ! extract U matrix (upper triangular)
      U = czero
      do i=1,n
-         do j=i,n
-             U(i,j) = A(i,j)
-         enddo ! over j={i,n} loop
+         U(i,i:n) = A(i,i:n)
      enddo ! over i={1,n} loop
 
 !! body]
 
-      return
+     return
   end subroutine s_lu_z
 
 !!
