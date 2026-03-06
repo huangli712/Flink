@@ -6318,3 +6318,102 @@
 
      return
   end subroutine s_sparse_random_z
+
+!!
+!! @sub s_random_symmetric_d
+!!
+!! build a random symmetric real(dp) matrix.
+!!
+   subroutine s_random_symmetric_d(n, A)
+      use constants, only : dp
+      use iso_fortran_env, only : real64
+
+      implicit none
+
+!! external arguments
+      ! size of matrix
+      integer, intent(in)   :: n
+
+      ! output random symmetric matrix
+      real(dp), intent(out) :: A(n,n)
+
+!! local variables
+      ! loop indices
+      integer :: i, j
+
+      ! random values
+      real(real64) :: r
+
+!! [body
+
+      ! generate random matrix first
+      do i=1,n
+          do j=1,n
+              call random_number(r)
+              A(i,j) = real(r, dp)
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! symmetrize the matrix: A = (A + A^T) / 2
+      do i=2,n
+          do j=1,i-1
+              A(i,j) = (A(i,j) + A(j,i)) / 2.0_dp
+              A(j,i) = A(i,j)
+          enddo ! over j={1,i-1} loop
+      enddo ! over i={2,n} loop
+
+!! body]
+
+      return
+   end subroutine s_random_symmetric_d
+
+!!
+!! @sub s_random_hermitian_z
+!!
+!! build a random Hermitian complex(dp) matrix.
+!!
+   subroutine s_random_hermitian_z(n, A)
+      use constants, only : dp
+      use iso_fortran_env, only : real64
+
+      implicit none
+
+!! external arguments
+      ! size of matrix
+      integer, intent(in)      :: n
+
+      ! output random Hermitian matrix
+      complex(dp), intent(out) :: A(n,n)
+
+!! local variables
+      ! loop indices
+      integer :: i, j
+
+      ! random values
+      real(real64) :: r1, r2, r3, r4
+
+!! [body
+
+      ! generate random complex matrix first
+      do i=1,n
+          do j=1,n
+              call random_number(r1)
+              call random_number(r2)
+              call random_number(r3)
+              call random_number(r4)
+              A(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! Hermitize the matrix: A(i,j) = conjg(A(j,i))
+      do i=1,n
+          do j=i+1,n
+              A(i,j) = (A(i,j) + conjg(A(j,i))) / 2.0_dp
+              A(j,i) = conjg(A(i,j))
+          enddo ! over j={i+1,n} loop
+      enddo ! over i={1,n} loop
+
+!! body]
+
+      return
+   end subroutine s_random_hermitian_z
