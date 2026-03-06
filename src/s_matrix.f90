@@ -3396,7 +3396,7 @@
 !! estimate the rank of a real(dp) m-by-n matrix A using SVD.
 !! returns the number of singular values greater than tolerance.
 !!
-  subroutine s_rank_d(m, n, min_mn, A, rank, tol)
+  subroutine s_rank_d(m, n, A, rank, tol)
      use constants, only : dp
      use constants, only : eps8
 
@@ -3409,9 +3409,6 @@
      ! number of columns of A matrix
      integer, intent(in)     :: n
 
-     ! minimal value of m and n
-     integer, intent(in)     :: min_mn
-
      ! A matrix (will be destroyed by SVD)
      real(dp), intent(inout) :: A(m,n)
 
@@ -3422,8 +3419,11 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop index
-     integer :: i
+     ! status flag for allocation
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -3441,6 +3441,9 @@
 
 !! [body
 
+     ! compute minimal dimension
+     min_mn = min(m, n)
+
      ! set tolerance (use default if not provided)
      if ( present(tol) ) then
          actual_tol = tol
@@ -3449,9 +3452,12 @@
      endif ! back if ( present(tol) ) block
 
      ! allocate arrays for SVD
-     allocate(umat(m,min_mn))
-     allocate(svec(min_mn))
-     allocate(vmat(min_mn,n))
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     if ( istat /= 0 ) then
+         call s_print_error('s_rank_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! compute SVD decomposition
      call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
@@ -3463,12 +3469,7 @@
      thresh = max_sval * actual_tol * real(max(m,n), dp)
 
      ! count singular values greater than threshold
-     rank = 0
-     do i=1,min_mn
-         if ( svec(i) > thresh ) then
-             rank = rank + 1
-         endif ! back if ( svec(i) > thresh ) block
-     enddo ! over i={1,min_mn} loop
+     rank = count(svec > thresh)
 
      ! deallocate arrays
      if ( allocated(umat) ) deallocate(umat)
@@ -3486,7 +3487,7 @@
 !! estimate the rank of a complex(dp) m-by-n matrix A using SVD.
 !! returns the number of singular values greater than tolerance.
 !!
-  subroutine s_rank_z(m, n, min_mn, A, rank, tol)
+  subroutine s_rank_z(m, n, A, rank, tol)
      use constants, only : dp
      use constants, only : eps8
 
@@ -3499,9 +3500,6 @@
      ! number of columns of A matrix
      integer, intent(in)        :: n
 
-     ! minimal value of m and n
-     integer, intent(in)        :: min_mn
-
      ! A matrix (will be destroyed by SVD)
      complex(dp), intent(inout) :: A(m,n)
 
@@ -3512,6 +3510,12 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
+     ! status flag for allocation
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
+
      ! actual tolerance value
      real(dp) :: actual_tol
 
@@ -3521,15 +3525,15 @@
      ! tolerance threshold
      real(dp) :: thresh
 
-     ! loop index
-     integer :: i
-
      ! SVD output arrays
      complex(dp), allocatable :: umat(:,:)
      real(dp), allocatable    :: svec(:)
      complex(dp), allocatable :: vmat(:,:)
 
 !! [body
+
+     ! compute minimal dimension
+     min_mn = min(m, n)
 
      ! set tolerance (use default if not provided)
      if ( present(tol) ) then
@@ -3539,9 +3543,12 @@
      endif ! back if ( present(tol) ) block
 
      ! allocate arrays for SVD
-     allocate(umat(m,min_mn))
-     allocate(svec(min_mn))
-     allocate(vmat(min_mn,n))
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     if ( istat /= 0 ) then
+         call s_print_error('s_rank_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! compute SVD decomposition
      call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
@@ -3553,12 +3560,7 @@
      thresh = max_sval * actual_tol * real(max(m,n), dp)
 
      ! count singular values greater than threshold
-     rank = 0
-     do i=1,min_mn
-         if ( svec(i) > thresh ) then
-             rank = rank + 1
-         endif ! back if ( svec(i) > thresh ) block
-     enddo ! over i={1,min_mn} loop
+     rank = count(svec > thresh)
 
      ! deallocate arrays
      if ( allocated(umat) ) deallocate(umat)
@@ -3577,7 +3579,7 @@
 !! extracts rows i_start:i_end and columns j_start:j_end.
 !!
   subroutine s_extract_submatrix_d(m_src, n_src, A_src, &
-                                  i_start, i_end, j_start, j_end, &
+                                  i_start, j_start, &
                                   m_sub, n_sub, A_sub)
      use constants, only : dp
 
@@ -3596,14 +3598,8 @@
      ! start row index (1-based)
      integer, intent(in)   :: i_start
 
-     ! end row index (1-based)
-     integer, intent(in)   :: i_end
-
      ! start column index (1-based)
      integer, intent(in)   :: j_start
-
-     ! end column index (1-based)
-     integer, intent(in)   :: j_end
 
      ! number of rows of submatrix
      integer, intent(in)   :: m_sub
@@ -3639,7 +3635,7 @@
 !! extracts rows i_start:i_end and columns j_start:j_end.
 !!
   subroutine s_extract_submatrix_z(m_src, n_src, A_src, &
-                                  i_start, i_end, j_start, j_end, &
+                                  i_start, j_start, &
                                   m_sub, n_sub, A_sub)
      use constants, only : dp
 
@@ -3658,14 +3654,8 @@
      ! start row index (1-based)
      integer, intent(in)      :: i_start
 
-     ! end row index (1-based)
-     integer, intent(in)      :: i_end
-
      ! start column index (1-based)
      integer, intent(in)      :: j_start
-
-     ! end column index (1-based)
-     integer, intent(in)      :: j_end
 
      ! number of rows of submatrix
      integer, intent(in)      :: m_sub
