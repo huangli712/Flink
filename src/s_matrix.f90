@@ -4178,8 +4178,8 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop indices
-     integer :: i, j, k
+     ! loop index
+     integer :: i
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -4225,25 +4225,13 @@
      allocate(temp2(n,m))
      temp1 = zero
      temp2 = zero
-
+     !
      ! temp1 = SIGMA^+ * U^T
-     do i=1,min_mn
-         do j=1,m
-             do k=1,min_mn
-                 temp1(i,j) = temp1(i,j) + sigma_pinv(i,k) * umat(j,k)
-             enddo ! over k={1,min_mn} loop
-         enddo ! over j={1,m} loop
-     enddo ! over i={1,min_mn} loop
-
+     temp1 = matmul(sigma_pinv, transpose(umat))
+     !
      ! temp2 = V * temp1
-     do i=1,n
-         do j=1,m
-             do k=1,min_mn
-                 temp2(i,j) = temp2(i,j) + vmat(i,k) * temp1(k,j)
-             enddo ! over k={1,min_mn} loop
-         enddo ! over j={1,m} loop
-     enddo ! over i={1,n} loop
-
+     temp2 = matmul(vmat, temp1)
+     !
      ! copy result to pinv
      pinv = temp2
 
