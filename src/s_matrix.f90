@@ -5604,7 +5604,7 @@
        ! output: sparsity ratio (0.0 to 1.0)
        real(dp), intent(out)    :: ratio
 
-       !! local variables
+ !! local variables
        ! loop indices
        integer :: i, j
 
@@ -5614,7 +5614,7 @@
        ! total elements
        real(dp) :: total
 
-       !! [body
+ !! [body
 
        ! initialize
        zero_count = 0
@@ -5684,73 +5684,73 @@
  !! construct an upper triangular matrix from a complex(dp) matrix.
  !! sets all elements below the main diagonal to zero.
  !!
-    subroutine s_upper_triangular_z(n, A)
-       use constants, only : dp
-       use constants, only : czero
+   subroutine s_upper_triangular_z(n, A)
+     use constants, only : dp
+     use constants, only : czero
 
-       implicit none
+      implicit none
 
- !! external arguments
-       ! size of matrix (must be square)
-       integer, intent(in)      :: n
+!! external arguments
+      ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-       ! input/output matrix
-       complex(dp), intent(inout) :: A(n,n)
+     ! input/output matrix
+     complex(dp), intent(inout) :: A(n,n)
 
- !! local variables
-       ! loop indices
-       integer :: i, j
+     !! local variables
+     ! loop indices
+     integer :: i, j
 
- !! [body
+     !! [body
 
-       ! set elements below main diagonal to zero
-       do i=2,n
-           do j=1,i-1
-               A(i,j) = czero
-           enddo ! over j={1,i-1} loop
-       enddo ! over i={2,n} loop
+     ! set elements above main diagonal to zero
+     do i=1,n-1
+         do j=i+1,n
+             A(i,j) = czero
+         enddo ! over j={i+1,n} loop
+     enddo ! over i={1,n-1} loop
 
- !! body]
+     !! body]
 
-       return
-     end subroutine s_upper_triangular_z
+     return
+   end subroutine s_upper_triangular_z
 
- !!
- !! @sub s_lower_triangular_d
- !!
- !! construct a lower triangular matrix from a real(dp) matrix.
- !! sets all elements above main diagonal to zero.
- !!
-    subroutine s_lower_triangular_d(n, A)
-       use constants, only : dp
-       use constants, only : zero
+!!
+!! @sub s_lower_triangular_d
+!!
+!! construct a lower triangular matrix from a real(dp) matrix.
+!! sets all elements above main diagonal to zero.
+!!
+  subroutine s_lower_triangular_d(n, A)
+     use constants, only : dp
+     use constants, only : zero
 
-       implicit none
+     implicit none
 
- !! external arguments
-       ! size of matrix (must be square)
-       integer, intent(in)   :: n
+     !! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-       ! input/output matrix
-       real(dp), intent(inout) :: A(n,n)
+     ! input/output matrix
+     real(dp), intent(inout) :: A(n,n)
 
- !! local variables
-       ! loop indices
-       integer :: i, j
+     !! local variables
+     ! loop indices
+     integer :: i, j
 
- !! [body
+     !! [body
 
-       ! set elements above main diagonal to zero
-       do i=1,n-1
-           do j=i+1,n
-               A(i,j) = zero
-           enddo ! over j={i+1,n} loop
-       enddo ! over i={1,n-1} loop
+     ! set elements above main diagonal to zero
+     do i=1,n-1
+         do j=i+1,n
+             A(i,j) = zero
+         enddo ! over j={i+1,n} loop
+     enddo ! over i={1,n-1} loop
 
- !! body]
+     !! body]
 
-       return
-    end subroutine s_lower_triangular_d
+     return
+   end subroutine s_lower_triangular_d
 
 !!
 !! @sub s_lower_triangular_z
@@ -5786,5 +5786,87 @@
 
      !! body]
 
+      return
+   end subroutine s_lower_triangular_z
+
+!!
+!! @sub s_tridiagonal_d
+!!
+!! construct a tridiagonal matrix from a real(dp) matrix.
+!! sets all elements except main diagonal, super-diagonal,
+!! and sub-diagonal to zero.
+!!
+  subroutine s_tridiagonal_d(n, A)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)    :: n
+
+     ! input/output matrix
+     real(dp), intent(inout):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+!! [body
+
+     ! set elements with |i-j| > 1 to zero
+     ! keep only main diagonal, super-diagonal, and sub-diagonal
+     do i=1,n
+         do j=1,n
+             if ( abs(i-j) > 1 ) then
+                 A(i,j) = zero
+             endif ! back if ( abs(i-j) > 1 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
      return
-  end subroutine s_lower_triangular_z
+  end subroutine s_tridiagonal_d
+
+!!
+!! @sub s_tridiagonal_z
+!!
+!! construct a tridiagonal matrix from a complex(dp) matrix.
+!! sets all elements except main diagonal, super-diagonal,
+!! and sub-diagonal to zero.
+!!
+  subroutine s_tridiagonal_z(n, A)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)       :: n
+
+     ! input/output matrix
+     complex(dp), intent(inout):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+!! [body
+
+     ! set elements with |i-j| > 1 to zero
+     ! keep only main diagonal, super-diagonal, and sub-diagonal
+     do i=1,n
+         do j=1,n
+             if ( abs(i-j) > 1 ) then
+                 A(i,j) = czero
+             endif ! back if ( abs(i-j) > 1 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_tridiagonal_z
