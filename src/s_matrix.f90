@@ -3218,6 +3218,8 @@
      ! workspace arrays for lapack subroutines
      integer, allocatable  :: ipiv(:)
      real(dp), allocatable :: work(:)
+     real(dp), allocatable :: iwork(:)
+     real(dp), allocatable :: A_lu(:,:)
 
 !! [body
 
@@ -3229,18 +3231,20 @@
      endif ! back if ( present(norm_type) ) block
 
      ! allocate memory
-     allocate(ipiv(n),   stat=ierror)
-     allocate(work(4*n), stat=ierror)
+     allocate(ipiv(n),     stat=ierror)
+     allocate(work(4*n),   stat=ierror)
+     allocate(iwork(n),    stat=ierror)
+     allocate(A_lu(n,n),   stat=ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_d','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-     ! copy A to work for LU factorization
-     work(1:n*n) = reshape(A, (/n*n/))
+     ! copy A to A_lu for LU factorization
+     A_lu = A
 
      ! compute LU factorization
-     call DGETRF(n, n, work, n, ipiv, ierror)
+     call DGETRF(n, n, A_lu, n, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_d','error in lapack subroutine dgetrf')
@@ -3259,8 +3263,7 @@
      endif
 
      ! estimate reciprocal condition number
-     call DGECON(actual_norm, n, work, n, anorm, rcond, work(2*n), &
-               & ipiv, ierror)
+     call DGECON(actual_norm, n, A_lu, n, anorm, rcond, work, iwork, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_d','error in lapack subroutine dgecon')
@@ -3275,8 +3278,10 @@
      endif
 
      ! deallocate memory
-     if ( allocated(ipiv) ) deallocate(ipiv)
-     if ( allocated(work) ) deallocate(work)
+     if ( allocated(ipiv)  ) deallocate(ipiv)
+     if ( allocated(work)  ) deallocate(work)
+     if ( allocated(iwork) ) deallocate(iwork)
+     if ( allocated(A_lu)  ) deallocate(A_lu)
 
 !! body]
 
@@ -3325,6 +3330,7 @@
      integer, allocatable     :: ipiv(:)
      complex(dp), allocatable :: work(:)
      real(dp), allocatable    :: rwork(:)
+     complex(dp), allocatable :: A_lu(:,:)
 
 !! [body
 
@@ -3336,19 +3342,20 @@
      endif ! back if ( present(norm_type) ) block
 
      ! allocate memory
-     allocate(ipiv(n),   stat=ierror)
-     allocate(work(2*n), stat=ierror)
-     allocate(rwork(n),   stat=ierror)
+     allocate(ipiv(n),     stat=ierror)
+     allocate(work(2*n),   stat=ierror)
+     allocate(rwork(2*n),  stat=ierror)
+     allocate(A_lu(n,n),   stat=ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_z','can not allocate enough memory')
      endif ! back if ( ierror /= 0 ) block
 
-     ! copy A to work for LU factorization
-     work(1:n*n) = reshape(A, (/n*n/))
+     ! copy A to A_lu for LU factorization
+     A_lu = A
 
      ! compute LU factorization
-     call ZGETRF(n, n, work, n, ipiv, ierror)
+     call ZGETRF(n, n, A_lu, n, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_z','error in lapack subroutine zgetrf')
@@ -3367,8 +3374,7 @@
      endif
 
      ! estimate reciprocal condition number
-     call ZGECON(actual_norm, n, work, n, anorm, rcond, work(n+1:), &
-               & rwork, ipiv, ierror)
+     call ZGECON(actual_norm, n, A_lu, n, anorm, rcond, work, rwork, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_z','error in lapack subroutine zgecon')
@@ -3383,9 +3389,10 @@
      endif
 
      ! deallocate memory
-     if ( allocated(ipiv) ) deallocate(ipiv)
-     if ( allocated(work) ) deallocate(work)
+     if ( allocated(ipiv)  ) deallocate(ipiv)
+     if ( allocated(work)  ) deallocate(work)
      if ( allocated(rwork) ) deallocate(rwork)
+     if ( allocated(A_lu)  ) deallocate(A_lu)
 
 !! body]
 
