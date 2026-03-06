@@ -5279,7 +5279,7 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)  :: n
 
      ! input matrix to check
      real(dp), intent(in) :: A(n,n)
@@ -5291,8 +5291,8 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop indices
-     integer :: i, j
+     ! loop index
+     integer  :: i
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -5327,18 +5327,11 @@
      ! compute right product = A * A^T using matmul
      right_product = matmul(A, transpose(A))
 
-     ! check if left_product equals right_product within tolerance
-     outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
-                 is_normal = .false.
-                 exit outer_loop
-             endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
+ ! check if left_product equals right_product within tolerance
+     is_normal = ( maxval( abs( left_product - right_product ) ) <= actual_tol )
 
      ! deallocate matrices
-     if ( allocated(left_product) ) deallocate(left_product)
+     if ( allocated(left_product) )  deallocate(left_product)
      if ( allocated(right_product) ) deallocate(right_product)
 
 !! body]
@@ -5359,20 +5352,20 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix to check
      complex(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is normal, .false. otherwise
-     logical, intent(out)       :: is_normal
+     logical, intent(out)    :: is_normal
 
      ! tolerance for floating point comparison (optional, default 1.0e-8)
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop indices
-     integer :: i, j
+     ! loop index
+     integer  :: i
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -5408,17 +5401,10 @@
      right_product = matmul(A, conjg(transpose(A)))
 
      ! check if left_product equals right_product within tolerance
-     outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
-                 is_normal = .false.
-                 exit outer_loop
-             endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
+     is_normal = ( maxval( abs( left_product - right_product ) ) <= actual_tol )
 
      ! deallocate matrices
-     if ( allocated(left_product) ) deallocate(left_product)
+     if ( allocated(left_product) )  deallocate(left_product)
      if ( allocated(right_product) ) deallocate(right_product)
 
 !! body]
