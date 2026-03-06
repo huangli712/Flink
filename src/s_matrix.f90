@@ -2290,124 +2290,124 @@
 !!
 !! check if a real(dp) matrix is diagonal (all off-diagonal elements are zero).
 !!
-   subroutine s_is_diagonal_d(n, A, is_diagonal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_diagonal_d(n, A, is_diagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      real(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is diagonal, .false. otherwise
-      logical, intent(out) :: is_diagonal
+     ! output: .true. if matrix is diagonal, .false. otherwise
+     logical, intent(out) :: is_diagonal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_diagonal = .true.
+     ! initialize
+     is_diagonal = .true.
 
-      ! check all off-diagonal elements
-      ! diagonal condition: A(i,j) = 0 for i /= j
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              ! skip diagonal elements
-              if ( i == j ) CYCLE
-              ! check if off-diagonal element is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_diagonal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check all off-diagonal elements
+     ! diagonal condition: A(i,j) = 0 for i /= j
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! skip diagonal elements
+             if ( i == j ) CYCLE
+             ! check if off-diagonal element is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_diagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_diagonal_d
+     return
+  end subroutine s_is_diagonal_d
 
 !!
 !! @sub s_is_diagonal_z
 !!
 !! check if a complex(dp) matrix is diagonal (all off-diagonal elements are zero).
 !!
-   subroutine s_is_diagonal_z(n, A, is_diagonal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_diagonal_z(n, A, is_diagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is diagonal, .false. otherwise
-      logical, intent(out)       :: is_diagonal
+     ! output: .true. if matrix is diagonal, .false. otherwise
+     logical, intent(out)       :: is_diagonal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_diagonal = .true.
+     ! initialize
+     is_diagonal = .true.
 
-      ! check all off-diagonal elements
-      ! diagonal condition: A(i,j) = 0 for i /= j
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              ! skip diagonal elements
-              if ( i == j ) CYCLE
-              ! check if off-diagonal element is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_diagonal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check all off-diagonal elements
+     ! diagonal condition: A(i,j) = 0 for i /= j
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! skip diagonal elements
+             if ( i == j ) CYCLE
+             ! check if off-diagonal element is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_diagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_diagonal_z
+     return
+  end subroutine s_is_diagonal_z
 
 !!
 !! @sub s_is_tridiagonal_d
@@ -2415,62 +2415,62 @@
 !! check if a real(dp) matrix is tridiagonal (only main diagonal and
 !! adjacent diagonals can be non-zero).
 !!
-   subroutine s_is_tridiagonal_d(n, A, is_tridiagonal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_tridiagonal_d(n, A, is_tridiagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      real(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is tridiagonal, .false. otherwise
-      logical, intent(out) :: is_tridiagonal
+     ! output: .true. if matrix is tridiagonal, .false. otherwise
+     logical, intent(out) :: is_tridiagonal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_tridiagonal = .true.
+     ! initialize
+     is_tridiagonal = .true.
 
-      ! check all elements except main diagonal and adjacent diagonals
-      ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              ! skip main diagonal and adjacent diagonals
-              if ( abs( i - j ) <= 1 ) CYCLE
-              ! check if element is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_tridiagonal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check all elements except main diagonal and adjacent diagonals
+     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! skip main diagonal and adjacent diagonals
+             if ( abs( i - j ) <= 1 ) CYCLE
+             ! check if element is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_tridiagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_tridiagonal_d
+     return
+  end subroutine s_is_tridiagonal_d
 
 !!
 !! @sub s_is_tridiagonal_z
@@ -2478,62 +2478,62 @@
 !! check if a complex(dp) matrix is tridiagonal (only main diagonal and
 !! adjacent diagonals can be non-zero).
 !!
-   subroutine s_is_tridiagonal_z(n, A, is_tridiagonal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_tridiagonal_z(n, A, is_tridiagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is tridiagonal, .false. otherwise
-      logical, intent(out)       :: is_tridiagonal
+     ! output: .true. if matrix is tridiagonal, .false. otherwise
+     logical, intent(out)       :: is_tridiagonal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_tridiagonal = .true.
+     ! initialize
+     is_tridiagonal = .true.
 
-      ! check all elements except main diagonal and adjacent diagonals
-      ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              ! skip main diagonal and adjacent diagonals
-              if ( abs( i - j ) <= 1 ) CYCLE
-              ! check if element is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_tridiagonal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check all elements except main diagonal and adjacent diagonals
+     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! skip main diagonal and adjacent diagonals
+             if ( abs( i - j ) <= 1 ) CYCLE
+             ! check if element is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_tridiagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_tridiagonal_z
+     return
+  end subroutine s_is_tridiagonal_z
 
 !!
 !! @sub s_qr_d
@@ -2541,99 +2541,99 @@
 !! perform QR decomposition for a general real(dp) m-by-n matrix A,
 !! where A = Q * R, return orthogonal matrix Q and upper triangular R.
 !!
-   subroutine s_qr_d(m, n, min_mn, amat, qmat, rmat)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_qr_d(m, n, min_mn, amat, qmat, rmat)
+     use constants, only : dp
+     use constants, only : zero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)     :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)     :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)     :: n
+     ! number of columns of A matrix
+     integer, intent(in)     :: n
 
-      ! minimal value of m and n
-      integer, intent(in)     :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)     :: min_mn
 
-      ! A matrix, on entry contains original matrix,
-      ! on exit destroyed and contains Householder vectors
-      real(dp), intent(inout) :: amat(m,n)
+     ! A matrix, on entry contains original matrix,
+     ! on exit destroyed and contains Householder vectors
+     real(dp), intent(inout) :: amat(m,n)
 
-      ! orthogonal matrix Q from QR decomposition
-      real(dp), intent(out)   :: qmat(m,min_mn)
+     ! orthogonal matrix Q from QR decomposition
+     real(dp), intent(out)   :: qmat(m,min_mn)
 
-      ! upper triangular matrix R from QR decomposition
-      real(dp), intent(out)   :: rmat(min_mn,n)
+     ! upper triangular matrix R from QR decomposition
+     real(dp), intent(out)   :: rmat(min_mn,n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! status flag
-      integer :: istat
+     ! status flag
+     integer :: istat
 
-      ! return information from lapack subroutines
-      integer :: info
+     ! return information from lapack subroutines
+     integer :: info
 
-      ! length of work array, lwork >= max(1,n)
-      integer :: lwork
+     ! length of work array, lwork >= max(1,n)
+     integer :: lwork
 
-      ! workspace array for lapack subroutines
-      real(dp), allocatable :: work(:)
+     ! workspace array for lapack subroutines
+     real(dp), allocatable :: work(:)
 
-      ! pivot array for lapack subroutines
-      integer, allocatable  :: tau(:)
+     ! pivot array for lapack subroutines
+     integer, allocatable  :: tau(:)
 
- !! [body
+!! [body
 
-      ! initialize lwork
-      lwork = n
+     ! initialize lwork
+     lwork = n
 
-      ! allocate memory
-      allocate(work(lwork), stat=istat)
-      allocate(tau(min_mn), stat=istat)
-      !
-      if ( istat /= 0 ) then
-          call s_print_error('s_qr_d','can not allocate enough memory')
-      endif ! back if ( istat /= 0 ) block
+     ! allocate memory
+     allocate(work(lwork), stat=istat)
+     allocate(tau(min_mn), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_qr_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
-      ! compute QR factorization of general m-by-n matrix
-      ! on exit, amat contains the elementary reflectors and tau contains scalars
-      call DGEQRF(m, n, amat, m, tau, work, lwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_qr_d','error in lapack subroutine dgeqrf')
-      endif ! back if ( info /= 0 ) block
+     ! compute QR factorization of general m-by-n matrix
+     ! on exit, amat contains the elementary reflectors and tau contains scalars
+     call DGEQRF(m, n, amat, m, tau, work, lwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_qr_d','error in lapack subroutine dgeqrf')
+     endif ! back if ( info /= 0 ) block
 
-      ! extract R matrix from amat (upper triangular part)
-      rmat = zero
-      rmat(1:min_mn,1:n) = amat(1:min_mn,1:n)
-      !
-      ! zero out lower triangular part of R
-      do i=1,min_mn
-          do j=1,i-1
-              rmat(j,i) = zero
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={1,min_mn} loop
+     ! extract R matrix from amat (upper triangular part)
+     rmat = zero
+     rmat(1:min_mn,1:n) = amat(1:min_mn,1:n)
+     !
+     ! zero out lower triangular part of R
+     do i=1,min_mn
+         do j=1,i-1
+             rmat(j,i) = zero
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={1,min_mn} loop
 
-      ! generate orthogonal matrix Q from elementary reflectors
-      qmat = amat(1:m,1:min_mn)
-      call DORGQR(m, min_mn, min_mn, qmat, m, tau, work, lwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_qr_d','error in lapack subroutine dorgqr')
-      endif ! back if ( info /= 0 ) block
+     ! generate orthogonal matrix Q from elementary reflectors
+     qmat = amat(1:m,1:min_mn)
+     call DORGQR(m, min_mn, min_mn, qmat, m, tau, work, lwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_qr_d','error in lapack subroutine dorgqr')
+     endif ! back if ( info /= 0 ) block
 
-      ! deallocate memory for workspace arrays
-      if ( allocated(work) ) deallocate(work)
-      if ( allocated(tau) ) deallocate(tau)
+     ! deallocate memory for workspace arrays
+     if ( allocated(work) ) deallocate(work)
+     if ( allocated(tau) ) deallocate(tau)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_qr_d
+     return
+  end subroutine s_qr_d
 
 !!
 !! @sub s_qr_z
@@ -2641,99 +2641,99 @@
 !! perform QR decomposition for a general complex(dp) m-by-n matrix A,
 !! where A = Q * R, return unitary matrix Q and upper triangular R.
 !!
-   subroutine s_qr_z(m, n, min_mn, amat, qmat, rmat)
-      use constants, only : dp
-      use constants, only : czero
+  subroutine s_qr_z(m, n, min_mn, amat, qmat, rmat)
+     use constants, only : dp
+     use constants, only : czero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)        :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)        :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)        :: n
+     ! number of columns of A matrix
+     integer, intent(in)        :: n
 
-      ! minimal value of m and n
-      integer, intent(in)        :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)        :: min_mn
 
-      ! A matrix, on entry contains original matrix,
-      ! on exit destroyed and contains Householder vectors
-      complex(dp), intent(inout) :: amat(m,n)
+     ! A matrix, on entry contains original matrix,
+     ! on exit destroyed and contains Householder vectors
+     complex(dp), intent(inout) :: amat(m,n)
 
-      ! unitary matrix Q from QR decomposition
-      complex(dp), intent(out)   :: qmat(m,min_mn)
+     ! unitary matrix Q from QR decomposition
+     complex(dp), intent(out)   :: qmat(m,min_mn)
 
-      ! upper triangular matrix R from QR decomposition
-      complex(dp), intent(out)   :: rmat(min_mn,n)
+     ! upper triangular matrix R from QR decomposition
+     complex(dp), intent(out)   :: rmat(min_mn,n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! status flag
-      integer :: istat
+     ! status flag
+     integer :: istat
 
-      ! return information from lapack subroutines
-      integer :: info
+     ! return information from lapack subroutines
+     integer :: info
 
-      ! length of work array, lwork >= max(1,n)
-      integer :: lwork
+     ! length of work array, lwork >= max(1,n)
+     integer :: lwork
 
-      ! workspace array for lapack subroutines
-      complex(dp), allocatable :: work(:)
+     ! workspace array for lapack subroutines
+     complex(dp), allocatable :: work(:)
 
-      ! pivot array for lapack subroutines
-      complex(dp), allocatable :: tau(:)
+     ! pivot array for lapack subroutines
+     complex(dp), allocatable :: tau(:)
 
- !! [body
+!! [body
 
-      ! initialize lwork
-      lwork = n
+     ! initialize lwork
+     lwork = n
 
-      ! allocate memory
-      allocate(work(lwork), stat=istat)
-      allocate(tau(min_mn), stat=istat)
-      !
-      if ( istat /= 0 ) then
-          call s_print_error('s_qr_z','can not allocate enough memory')
-      endif ! back if ( istat /= 0 ) block
+     ! allocate memory
+     allocate(work(lwork), stat=istat)
+     allocate(tau(min_mn), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_qr_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
-      ! compute QR factorization of general m-by-n matrix
-      ! on exit, amat contains the elementary reflectors and tau contains scalars
-      call ZGEQRF(m, n, amat, m, tau, work, lwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_qr_z','error in lapack subroutine zgeqrf')
-      endif ! back if ( info /= 0 ) block
+     ! compute QR factorization of general m-by-n matrix
+     ! on exit, amat contains the elementary reflectors and tau contains scalars
+     call ZGEQRF(m, n, amat, m, tau, work, lwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_qr_z','error in lapack subroutine zgeqrf')
+     endif ! back if ( info /= 0 ) block
 
-      ! extract R matrix from amat (upper triangular part)
-      rmat = czero
-      rmat(1:min_mn,1:n) = amat(1:min_mn,1:n)
-      !
-      ! zero out lower triangular part of R
-      do i=1,min_mn
-          do j=1,i-1
-              rmat(j,i) = czero
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={1,min_mn} loop
+     ! extract R matrix from amat (upper triangular part)
+     rmat = czero
+     rmat(1:min_mn,1:n) = amat(1:min_mn,1:n)
+     !
+     ! zero out lower triangular part of R
+     do i=1,min_mn
+         do j=1,i-1
+             rmat(j,i) = czero
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={1,min_mn} loop
 
-      ! generate unitary matrix Q from elementary reflectors
-      qmat = amat(1:m,1:min_mn)
-      call ZUNGQR(m, min_mn, min_mn, qmat, m, tau, work, lwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_qr_z','error in lapack subroutine zungqr')
-      endif ! back if ( info /= 0 ) block
+     ! generate unitary matrix Q from elementary reflectors
+     qmat = amat(1:m,1:min_mn)
+     call ZUNGQR(m, min_mn, min_mn, qmat, m, tau, work, lwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_qr_z','error in lapack subroutine zungqr')
+     endif ! back if ( info /= 0 ) block
 
-      ! deallocate memory for workspace arrays
-      if ( allocated(work) ) deallocate(work)
-      if ( allocated(tau) ) deallocate(tau)
+     ! deallocate memory for workspace arrays
+     if ( allocated(work) ) deallocate(work)
+     if ( allocated(tau) ) deallocate(tau)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_qr_z
+     return
+  end subroutine s_qr_z
 
 !!
 !! @sub s_cholesky_d
@@ -2741,54 +2741,54 @@
 !! perform Cholesky decomposition for a real(dp) symmetric positive-definite
 !! matrix A, where A = L * L^T, return lower triangular matrix L.
 !!
-   subroutine s_cholesky_d(n, A, L)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_cholesky_d(n, A, L)
+     use constants, only : dp
+     use constants, only : zero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)     :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! on entry, symmetric positive-definite matrix A;
-      ! on exit, lower triangular Cholesky factor L in lower triangle
-      real(dp), intent(inout) :: A(n,n)
+     ! on entry, symmetric positive-definite matrix A;
+     ! on exit, lower triangular Cholesky factor L in lower triangle
+     real(dp), intent(inout) :: A(n,n)
 
-      ! lower triangular Cholesky factor L (output only)
-      real(dp), intent(out)   :: L(n,n)
+     ! lower triangular Cholesky factor L (output only)
+     real(dp), intent(out)   :: L(n,n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
- !! [body
+!! [body
 
-      ! copy A to L
-      L = A
+     ! copy A to L
+     L = A
 
-      ! compute Cholesky factorization of symmetric positive-definite matrix
-      ! on exit, lower triangle of L contains Cholesky factor
-      call DPOTRF('L', n, L, n, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cholesky_d','error in lapack subroutine dpotrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! compute Cholesky factorization of symmetric positive-definite matrix
+     ! on exit, lower triangle of L contains Cholesky factor
+     call DPOTRF('L', n, L, n, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cholesky_d','error in lapack subroutine dpotrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! zero out upper triangular part of L
-      do i=1,n
-          do j=i+1,n
-              L(i,j) = zero
-          enddo ! over j={i+1,n} loop
-      enddo ! over i={1,n} loop
+     ! zero out upper triangular part of L
+     do i=1,n
+         do j=i+1,n
+             L(i,j) = zero
+         enddo ! over j={i+1,n} loop
+     enddo ! over i={1,n} loop
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_cholesky_d
+     return
+  end subroutine s_cholesky_d
 
 !!
 !! @sub s_cholesky_z
@@ -2796,54 +2796,54 @@
 !! perform Cholesky decomposition for a complex(dp) Hermitian positive-definite
 !! matrix A, where A = L * L^H, return lower triangular matrix L.
 !!
-   subroutine s_cholesky_z(n, A, L)
-      use constants, only : dp
-      use constants, only : czero
+  subroutine s_cholesky_z(n, A, L)
+     use constants, only : dp
+     use constants, only : czero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)        :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)        :: n
 
-      ! on entry, Hermitian positive-definite matrix A;
-      ! on exit, lower triangular Cholesky factor L in lower triangle
-      complex(dp), intent(inout) :: A(n,n)
+     ! on entry, Hermitian positive-definite matrix A;
+     ! on exit, lower triangular Cholesky factor L in lower triangle
+     complex(dp), intent(inout) :: A(n,n)
 
-      ! lower triangular Cholesky factor L (output only)
-      complex(dp), intent(out)   :: L(n,n)
+     ! lower triangular Cholesky factor L (output only)
+     complex(dp), intent(out)   :: L(n,n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
- !! [body
+!! [body
 
-      ! copy A to L
-      L = A
+     ! copy A to L
+     L = A
 
-      ! compute Cholesky factorization of Hermitian positive-definite matrix
-      ! on exit, lower triangle of L contains Cholesky factor
-      call ZPOTRF('L', n, L, n, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cholesky_z','error in lapack subroutine zpotrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! compute Cholesky factorization of Hermitian positive-definite matrix
+     ! on exit, lower triangle of L contains Cholesky factor
+     call ZPOTRF('L', n, L, n, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cholesky_z','error in lapack subroutine zpotrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! zero out upper triangular part of L
-      do i=1,n
-          do j=i+1,n
-              L(i,j) = czero
-          enddo ! over j={i+1,n} loop
-      enddo ! over i={1,n} loop
+     ! zero out upper triangular part of L
+     do i=1,n
+         do j=i+1,n
+             L(i,j) = czero
+         enddo ! over j={i+1,n} loop
+     enddo ! over i={1,n} loop
 
- !! body]
+!! body]
 
-       return
-   end subroutine s_cholesky_z
+      return
+  end subroutine s_cholesky_z
 
 !!
 !! @sub s_lu_d
@@ -2852,66 +2852,66 @@
 !! where A = P * L * U, return lower triangular L and upper triangular U,
 !! and permutation vector P (represented by ipiv).
 !!
-   subroutine s_lu_d(n, A, L, U, ipiv)
-      use constants, only : dp
-      use constants, only : zero, one
+  subroutine s_lu_d(n, A, L, U, ipiv)
+     use constants, only : dp
+     use constants, only : zero, one
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)     :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! on entry, original matrix A;
-      ! on exit, destroyed and contains L and U factors
-      real(dp), intent(inout) :: A(n,n)
+     ! on entry, original matrix A;
+     ! on exit, destroyed and contains L and U factors
+     real(dp), intent(inout) :: A(n,n)
 
-      ! lower triangular matrix L (output only)
-      real(dp), intent(out)   :: L(n,n)
+     ! lower triangular matrix L (output only)
+     real(dp), intent(out)   :: L(n,n)
 
-      ! upper triangular matrix U (output only)
-      real(dp), intent(out)   :: U(n,n)
+     ! upper triangular matrix U (output only)
+     real(dp), intent(out)   :: U(n,n)
 
-      ! pivot indices representing permutation P (output)
-      integer, intent(out)    :: ipiv(n)
+     ! pivot indices representing permutation P (output)
+     integer, intent(out)    :: ipiv(n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
- !! [body
+!! [body
 
-      ! allocate ipiv and perform LU factorization
-      call DGETRF(n, n, A, n, ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_lu_d','error in lapack subroutine dgetrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate ipiv and perform LU factorization
+     call DGETRF(n, n, A, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_lu_d','error in lapack subroutine dgetrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! extract L matrix (lower triangular, unit diagonal)
-      L = zero
-      do i=1,n
-          L(i,i) = one
-          do j=1,i-1
-              L(i,j) = A(i,j)
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={1,n} loop
+     ! extract L matrix (lower triangular, unit diagonal)
+     L = zero
+     do i=1,n
+         L(i,i) = one
+         do j=1,i-1
+             L(i,j) = A(i,j)
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={1,n} loop
 
-      ! extract U matrix (upper triangular)
-      U = zero
-      do i=1,n
-          do j=i,n
-              U(i,j) = A(i,j)
-          enddo ! over j={i,n} loop
-      enddo ! over i={1,n} loop
+     ! extract U matrix (upper triangular)
+     U = zero
+     do i=1,n
+         do j=i,n
+             U(i,j) = A(i,j)
+         enddo ! over j={i,n} loop
+     enddo ! over i={1,n} loop
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_lu_d
+     return
+  end subroutine s_lu_d
 
 !!
 !! @sub s_lu_z
@@ -2920,66 +2920,66 @@
 !! where A = P * L * U, return lower triangular L and upper triangular U,
 !! and permutation vector P (represented by ipiv).
 !!
-   subroutine s_lu_z(n, A, L, U, ipiv)
-      use constants, only : dp
-      use constants, only : czero, cone
+  subroutine s_lu_z(n, A, L, U, ipiv)
+     use constants, only : dp
+     use constants, only : czero, cone
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)        :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)        :: n
 
-      ! on entry, original matrix A;
-      ! on exit, destroyed and contains L and U factors
-      complex(dp), intent(inout) :: A(n,n)
+     ! on entry, original matrix A;
+     ! on exit, destroyed and contains L and U factors
+     complex(dp), intent(inout) :: A(n,n)
 
-      ! lower triangular matrix L (output only)
-      complex(dp), intent(out)   :: L(n,n)
+     ! lower triangular matrix L (output only)
+     complex(dp), intent(out)   :: L(n,n)
 
-      ! upper triangular matrix U (output only)
-      complex(dp), intent(out)   :: U(n,n)
+     ! upper triangular matrix U (output only)
+     complex(dp), intent(out)   :: U(n,n)
 
-      ! pivot indices representing permutation P (output)
-      integer, intent(out)       :: ipiv(n)
+     ! pivot indices representing permutation P (output)
+     integer, intent(out)       :: ipiv(n)
 
- !! local variables
-      ! loop index
-      integer :: i, j
+!! local variables
+     ! loop index
+     integer :: i, j
 
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
- !! [body
+!! [body
 
-      ! allocate ipiv and perform LU factorization
-      call ZGETRF(n, n, A, n, ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_lu_z','error in lapack subroutine zgetrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate ipiv and perform LU factorization
+     call ZGETRF(n, n, A, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_lu_z','error in lapack subroutine zgetrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! extract L matrix (lower triangular, unit diagonal)
-      L = czero
-      do i=1,n
-          L(i,i) = cone
-          do j=1,i-1
-              L(i,j) = A(i,j)
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={1,n} loop
+     ! extract L matrix (lower triangular, unit diagonal)
+     L = czero
+     do i=1,n
+         L(i,i) = cone
+         do j=1,i-1
+             L(i,j) = A(i,j)
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={1,n} loop
 
-      ! extract U matrix (upper triangular)
-      U = czero
-      do i=1,n
-          do j=i,n
-              U(i,j) = A(i,j)
-          enddo ! over j={i,n} loop
-      enddo ! over i={1,n} loop
+     ! extract U matrix (upper triangular)
+     U = czero
+     do i=1,n
+         do j=i,n
+             U(i,j) = A(i,j)
+         enddo ! over j={i,n} loop
+     enddo ! over i={1,n} loop
 
- !! body]
+!! body]
 
-       return
-   end subroutine s_lu_z
+      return
+  end subroutine s_lu_z
 
 !!
 !! @sub s_schur_d
@@ -2988,96 +2988,96 @@
 !! where A = Q * T * Q^T, return orthogonal matrix Q and
 !! block upper triangular Schur form T.
 !!
-   subroutine s_schur_d(ldim, n, A, T, Q)
-      use constants, only : dp
+  subroutine s_schur_d(ldim, n, A, T, Q)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! leading dimension of matrix A
-      integer, intent(in)     :: ldim
+!! external arguments
+     ! leading dimension of matrix A
+     integer, intent(in)     :: ldim
 
-      ! order of the matrix A
-      integer, intent(in)     :: n
+     ! order of the matrix A
+     integer, intent(in)     :: n
 
-      ! on entry, original general real(dp) matrix A;
-      ! on exit, contains Schur form T in upper triangle
-      real(dp), intent(inout) :: A(ldim,n)
+     ! on entry, original general real(dp) matrix A;
+     ! on exit, contains Schur form T in upper triangle
+     real(dp), intent(inout) :: A(ldim,n)
 
-      ! Schur form T (block upper triangular)
-      real(dp), intent(out)   :: T(ldim,n)
+     ! Schur form T (block upper triangular)
+     real(dp), intent(out)   :: T(ldim,n)
 
-      ! orthogonal matrix Q from Schur decomposition
-      real(dp), intent(out)   :: Q(ldim,n)
+     ! orthogonal matrix Q from Schur decomposition
+     real(dp), intent(out)   :: Q(ldim,n)
 
- !! local variables
-      ! status flag
-      integer :: istat
+!! local variables
+     ! status flag
+     integer :: istat
 
-      ! return information from lapack subroutine dgees
-      integer :: info
+     ! return information from lapack subroutine dgees
+     integer :: info
 
-      ! length of the array work
-      ! lwork >= max(1,3*n)
-      integer :: lwork
+     ! length of the array work
+     ! lwork >= max(1,3*n)
+     integer :: lwork
 
-      ! workspace array
-      real(dp), allocatable :: work(:)
+     ! workspace array
+     real(dp), allocatable :: work(:)
 
-      ! auxiliary real(dp) matrix: real and imaginary parts of eigenvalues
-      real(dp), allocatable :: wr(:)
-      real(dp), allocatable :: wi(:)
+     ! auxiliary real(dp) matrix: real and imaginary parts of eigenvalues
+     real(dp), allocatable :: wr(:)
+     real(dp), allocatable :: wi(:)
 
-      ! auxiliary real(dp) matrix: Schur vectors
-      real(dp), allocatable :: vs(:,:)
+     ! auxiliary real(dp) matrix: Schur vectors
+     real(dp), allocatable :: vs(:,:)
 
-      ! boolean array for workspace
-      logical, allocatable  :: bwork(:)
+     ! boolean array for workspace
+     logical, allocatable  :: bwork(:)
 
- !! [body
+!! [body
 
-      ! initialize lwork
-      lwork = 3 * n
+     ! initialize lwork
+     lwork = 3 * n
 
-      ! allocate memory
-      allocate(work(lwork),    stat=istat)
-      allocate(wr(n),          stat=istat)
-      allocate(wi(n),          stat=istat)
-      allocate(vs(ldim,n),     stat=istat)
-      allocate(bwork(n),       stat=istat)
-      !
-      if ( istat /= 0 ) then
-          call s_print_error('s_schur_d','can not allocate enough memory')
-      endif ! back if ( istat /= 0 ) block
+     ! allocate memory
+     allocate(work(lwork),    stat=istat)
+     allocate(wr(n),          stat=istat)
+     allocate(wi(n),          stat=istat)
+     allocate(vs(ldim,n),     stat=istat)
+     allocate(bwork(n),       stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_schur_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
-      ! initialize output arrays
-      vs = A
+     ! initialize output arrays
+     vs = A
 
-      ! perform Schur decomposition: A = Q * T * Q^T
-      ! on exit, vs contains orthogonal matrix Q,
-      ! and A contains Schur form T
-      call DGEES('V', 'N', 'N', n, A, ldim, wr, wi, vs, ldim, &
-                & work, lwork, bwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_schur_d','error in lapack subroutine dgees')
-      endif ! back if ( info /= 0 ) block
+     ! perform Schur decomposition: A = Q * T * Q^T
+     ! on exit, vs contains orthogonal matrix Q,
+     ! and A contains Schur form T
+     call DGEES('V', 'N', 'N', n, A, ldim, wr, wi, vs, ldim, &
+               & work, lwork, bwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_schur_d','error in lapack subroutine dgees')
+     endif ! back if ( info /= 0 ) block
 
-      ! copy Schur form T and orthogonal matrix Q
-      T(1:ldim,1:n) = A(1:ldim,1:n)
-      Q(1:ldim,1:n) = vs(1:ldim,1:n)
+     ! copy Schur form T and orthogonal matrix Q
+     T(1:ldim,1:n) = A(1:ldim,1:n)
+     Q(1:ldim,1:n) = vs(1:ldim,1:n)
 
-      ! deallocate memory for workspace arrays
-      if ( allocated(work ) ) deallocate(work )
-      if ( allocated(wr   ) ) deallocate(wr   )
-      if ( allocated(wi   ) ) deallocate(wi   )
-      if ( allocated(vs   ) ) deallocate(vs   )
-      if ( allocated(bwork) ) deallocate(bwork)
+     ! deallocate memory for workspace arrays
+     if ( allocated(work ) ) deallocate(work )
+     if ( allocated(wr   ) ) deallocate(wr   )
+     if ( allocated(wi   ) ) deallocate(wi   )
+     if ( allocated(vs   ) ) deallocate(vs   )
+     if ( allocated(bwork) ) deallocate(bwork)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_schur_d
+     return
+  end subroutine s_schur_d
 
 !!
 !! @sub s_schur_z
@@ -3086,98 +3086,98 @@
 !! where A = Q * T * Q^H, return unitary matrix Q and
 !! upper triangular Schur form T.
 !!
-   subroutine s_schur_z(ldim, n, A, T, Q)
-      use constants, only : dp
+  subroutine s_schur_z(ldim, n, A, T, Q)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! leading dimension of matrix A
-      integer, intent(in)        :: ldim
+!! external arguments
+     ! leading dimension of matrix A
+     integer, intent(in)        :: ldim
 
-      ! order of the matrix A
-      integer, intent(in)        :: n
+     ! order of the matrix A
+     integer, intent(in)        :: n
 
-      ! on entry, original general complex(dp) matrix A;
-      ! on exit, contains Schur form T in upper triangle
-      complex(dp), intent(inout) :: A(ldim,n)
+     ! on entry, original general complex(dp) matrix A;
+     ! on exit, contains Schur form T in upper triangle
+     complex(dp), intent(inout) :: A(ldim,n)
 
-      ! Schur form T (upper triangular)
-      complex(dp), intent(out)   :: T(ldim,n)
+     ! Schur form T (upper triangular)
+     complex(dp), intent(out)   :: T(ldim,n)
 
-      ! unitary matrix Q from Schur decomposition
-      complex(dp), intent(out)   :: Q(ldim,n)
+     ! unitary matrix Q from Schur decomposition
+     complex(dp), intent(out)   :: Q(ldim,n)
 
- !! local variables
-      ! status flag
-      integer :: istat
+!! local variables
+     ! status flag
+     integer :: istat
 
-      ! return information from lapack subroutine zgees
-      integer :: info
+     ! return information from lapack subroutine zgees
+     integer :: info
 
-      ! length of the array work
-      ! lwork >= max(1,2*n)
-      integer :: lwork
+     ! length of the array work
+     ! lwork >= max(1,2*n)
+     integer :: lwork
 
-      ! workspace array
-      complex(dp), allocatable :: work(:)
+     ! workspace array
+     complex(dp), allocatable :: work(:)
 
-      ! auxiliary real(dp) matrix
-      real(dp), allocatable    :: rwork(:)
+     ! auxiliary real(dp) matrix
+     real(dp), allocatable    :: rwork(:)
 
-      ! auxiliary complex(dp) matrix: eigenvalues
-      complex(dp), allocatable :: w(:)
+     ! auxiliary complex(dp) matrix: eigenvalues
+     complex(dp), allocatable :: w(:)
 
-      ! auxiliary complex(dp) matrix: Schur vectors
-      complex(dp), allocatable :: vs(:,:)
+     ! auxiliary complex(dp) matrix: Schur vectors
+     complex(dp), allocatable :: vs(:,:)
 
-      ! boolean array for workspace
-      logical, allocatable     :: bwork(:)
+     ! boolean array for workspace
+     logical, allocatable     :: bwork(:)
 
- !! [body
+!! [body
 
-      ! initialize lwork
-      lwork = 2 * n
+     ! initialize lwork
+     lwork = 2 * n
 
-      ! allocate memory
-      allocate(work(lwork),    stat=istat)
-      allocate(rwork(n),       stat=istat)
-      allocate(w(n),           stat=istat)
-      allocate(vs(ldim,n),     stat=istat)
-      allocate(bwork(n),       stat=istat)
-      !
-      if ( istat /= 0 ) then
-          call s_print_error('s_schur_z','can not allocate enough memory')
-      endif ! back if ( istat /= 0 ) block
+     ! allocate memory
+     allocate(work(lwork),    stat=istat)
+     allocate(rwork(n),       stat=istat)
+     allocate(w(n),           stat=istat)
+     allocate(vs(ldim,n),     stat=istat)
+     allocate(bwork(n),       stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_schur_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
-      ! initialize output arrays
-      vs = A
+     ! initialize output arrays
+     vs = A
 
-      ! perform Schur decomposition: A = Q * T * Q^H
-      ! on exit, vs contains unitary matrix Q,
-      ! and A contains Schur form T
-      call ZGEES('V', 'N', 'N', n, A, ldim, w, vs, ldim, &
-                & work, lwork, rwork, bwork, info)
-      !
-      if ( info /= 0 ) then
-          call s_print_error('s_schur_z','error in lapack subroutine zgees')
-      endif ! back if ( info /= 0 ) block
+     ! perform Schur decomposition: A = Q * T * Q^H
+     ! on exit, vs contains unitary matrix Q,
+     ! and A contains Schur form T
+     call ZGEES('V', 'N', 'N', n, A, ldim, w, vs, ldim, &
+               & work, lwork, rwork, bwork, info)
+     !
+     if ( info /= 0 ) then
+         call s_print_error('s_schur_z','error in lapack subroutine zgees')
+     endif ! back if ( info /= 0 ) block
 
-      ! copy Schur form T and unitary matrix Q
-      T(1:ldim,1:n) = A(1:ldim,1:n)
-      Q(1:ldim,1:n) = vs(1:ldim,1:n)
+     ! copy Schur form T and unitary matrix Q
+     T(1:ldim,1:n) = A(1:ldim,1:n)
+     Q(1:ldim,1:n) = vs(1:ldim,1:n)
 
-      ! deallocate memory for workspace arrays
-      if ( allocated(work ) ) deallocate(work )
-      if ( allocated(rwork) ) deallocate(rwork)
-      if ( allocated(w    ) ) deallocate(w    )
-      if ( allocated(vs   ) ) deallocate(vs   )
-      if ( allocated(bwork) ) deallocate(bwork)
+     ! deallocate memory for workspace arrays
+     if ( allocated(work ) ) deallocate(work )
+     if ( allocated(rwork) ) deallocate(rwork)
+     if ( allocated(w    ) ) deallocate(w    )
+     if ( allocated(vs   ) ) deallocate(vs   )
+     if ( allocated(bwork) ) deallocate(bwork)
 
- !! body]
+!! body]
 
-       return
-   end subroutine s_schur_z
+      return
+  end subroutine s_schur_z
 
 !!
 !! @sub s_cond_d
@@ -3185,105 +3185,105 @@
 !! estimate the condition number of a real(dp) matrix A in the
 !! 1-norm, infinity norm, or Frobenius norm using LAPACK.
 !!
-   subroutine s_cond_d(n, A, cond, norm_type)
-      use constants, only : dp
-      use constants, only : zero, one
+  subroutine s_cond_d(n, A, cond, norm_type)
+     use constants, only : dp
+     use constants, only : zero, one
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      real(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
 
-      ! estimated condition number
-      real(dp), intent(out) :: cond
+     ! estimated condition number
+     real(dp), intent(out) :: cond
 
-      ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
-      character(len=1), intent(in), optional :: norm_type
+     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
+     character(len=1), intent(in), optional :: norm_type
 
- !! local variables
-      ! actual norm type (default: 1-norm)
-      character(len=1) :: actual_norm
+!! local variables
+     ! actual norm type (default: 1-norm)
+     character(len=1) :: actual_norm
 
-      ! norm of A
-      real(dp) :: anorm
+     ! norm of A
+     real(dp) :: anorm
 
-      ! reciprocal of condition number
-      real(dp) :: rcond
+     ! reciprocal of condition number
+     real(dp) :: rcond
 
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
-      ! workspace arrays for lapack subroutines
-      integer, allocatable  :: ipiv(:)
-      real(dp), allocatable :: work(:)
+     ! workspace arrays for lapack subroutines
+     integer, allocatable  :: ipiv(:)
+     real(dp), allocatable :: work(:)
 
- !! [body
+!! [body
 
-      ! set norm type (use '1' if not provided)
-      if ( present(norm_type) ) then
-          actual_norm = norm_type
-      else
-          actual_norm = '1'
-      endif ! back if ( present(norm_type) ) block
+     ! set norm type (use '1' if not provided)
+     if ( present(norm_type) ) then
+         actual_norm = norm_type
+     else
+         actual_norm = '1'
+     endif ! back if ( present(norm_type) ) block
 
-      ! allocate memory
-      allocate(ipiv(n),   stat=ierror)
-      allocate(work(4*n), stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_d','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate memory
+     allocate(ipiv(n),   stat=ierror)
+     allocate(work(4*n), stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy A to work for LU factorization
-      work(1:n*n) = reshape(A, (/n*n/))
+     ! copy A to work for LU factorization
+     work(1:n*n) = reshape(A, (/n*n/))
 
-      ! compute LU factorization
-      call DGETRF(n, n, work, n, ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_d','error in lapack subroutine dgetrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! compute LU factorization
+     call DGETRF(n, n, work, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','error in lapack subroutine dgetrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! compute norm of original matrix A
-      if ( actual_norm == '1' ) then
-          ! 1-norm: maximum absolute column sum
-          anorm = maxval(sum(abs(A), dim=1))
-      elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
-          ! infinity norm: maximum absolute row sum
-          anorm = maxval(sum(abs(A), dim=2))
-      elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
-          ! Frobenius norm: sqrt(sum of squares)
-          anorm = sqrt(sum(A**2))
-      endif
+     ! compute norm of original matrix A
+     if ( actual_norm == '1' ) then
+         ! 1-norm: maximum absolute column sum
+         anorm = maxval(sum(abs(A), dim=1))
+     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
+         ! infinity norm: maximum absolute row sum
+         anorm = maxval(sum(abs(A), dim=2))
+     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
+         ! Frobenius norm: sqrt(sum of squares)
+         anorm = sqrt(sum(A**2))
+     endif
 
-      ! estimate reciprocal condition number
-      call DGECON(actual_norm, n, work, n, anorm, rcond, work(2*n), &
-                & ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_d','error in lapack subroutine dgecon')
-      endif ! back if ( ierror /= 0 ) block
+     ! estimate reciprocal condition number
+     call DGECON(actual_norm, n, work, n, anorm, rcond, work(2*n), &
+               & ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','error in lapack subroutine dgecon')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! compute condition number
-      if ( rcond > zero ) then
-          cond = one / rcond
-      else
-          ! matrix is singular or near-singular
-          cond = huge(one)
-      endif
+     ! compute condition number
+     if ( rcond > zero ) then
+         cond = one / rcond
+     else
+         ! matrix is singular or near-singular
+         cond = huge(one)
+     endif
 
-      ! deallocate memory
-      if ( allocated(ipiv) ) deallocate(ipiv)
-      if ( allocated(work) ) deallocate(work)
+     ! deallocate memory
+     if ( allocated(ipiv) ) deallocate(ipiv)
+     if ( allocated(work) ) deallocate(work)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_cond_d
+     return
+  end subroutine s_cond_d
 
 !!
 !! @sub s_cond_z
