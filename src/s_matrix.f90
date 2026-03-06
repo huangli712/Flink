@@ -5876,8 +5876,8 @@
 
 !! body]
 
-      return
-   end subroutine s_tridiagonal_z
+     return
+  end subroutine s_tridiagonal_z
 
 !!
 !! @sub s_hilbert_d
