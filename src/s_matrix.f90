@@ -2419,10 +2419,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)  :: n
 
      ! input matrix
-     real(dp), intent(in)  :: A(n,n)
+     real(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is tridiagonal, .false. otherwise
      logical, intent(out) :: is_tridiagonal
@@ -2432,7 +2432,7 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -2453,13 +2453,11 @@
      ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
      outer_loop: do i=1,n
          inner_loop: do j=1,n
-             ! skip main diagonal and adjacent diagonals
-             if ( abs( i - j ) <= 1 ) CYCLE
-             ! check if element is zero
-             if ( abs( A(i,j) ) > actual_tol ) then
+             ! check if element outside tridiagonal band is zero
+             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
                  is_tridiagonal = .false.
                  exit outer_loop
-             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
          enddo inner_loop ! over j={1,n} loop (inner_loop)
      enddo outer_loop ! over i={1,n} loop (outer_loop)
 
@@ -2482,20 +2480,20 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix
-     complex(dp), intent(in)  :: A(n,n)
+     complex(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is tridiagonal, .false. otherwise
-     logical, intent(out)       :: is_tridiagonal
+     logical, intent(out)    :: is_tridiagonal
 
      ! tolerance for floating point comparison (optional, default 1.0e-8)
      real(dp), intent(in), optional :: tol
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -2516,13 +2514,11 @@
      ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
      outer_loop: do i=1,n
          inner_loop: do j=1,n
-             ! skip main diagonal and adjacent diagonals
-             if ( abs( i - j ) <= 1 ) CYCLE
-             ! check if element is zero
-             if ( abs( A(i,j) ) > actual_tol ) then
+             ! check if element outside tridiagonal band is zero
+             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
                  is_tridiagonal = .false.
                  exit outer_loop
-             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
          enddo inner_loop ! over j={1,n} loop (inner_loop)
      enddo outer_loop ! over i={1,n} loop (outer_loop)
 
