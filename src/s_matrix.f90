@@ -48,6 +48,8 @@
 !!!           s_vandermonde_z
 !!!           s_pascal_d
 !!!           s_wilkinson_d
+!!!           s_sparse_random_d
+!!!           s_sparse_random_z
 !!! source  : s_matrix.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -6205,3 +6207,158 @@
 
      return
   end subroutine s_wilkinson_d
+
+!!
+!! @sub s_sparse_random_d
+!!
+!! build a sparse random real(dp) matrix.
+!! sparsity parameter controls fraction of non-zero elements (0-1).
+!!
+  subroutine s_sparse_random_d(n, sparsity, A)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! sparsity level (0 = dense, 1 = sparse)
+     real(dp), intent(in)  :: sparsity
+
+     ! output sparse random matrix
+     real(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, k
+
+     ! number of non-zero elements
+     integer :: nnz
+
+     ! random values
+     real(dp) :: rval
+
+     ! indices for random selection
+     integer, allocatable :: idx_i(:)
+     integer, allocatable :: idx_j(:)
+
+!! [body
+
+     ! initialize matrix to zero
+     A = zero
+
+     ! calculate number of non-zero elements
+     nnz = int(n * n * sparsity)
+
+     ! allocate index arrays for random selection
+     allocate(idx_i(nnz), stat=k)
+     allocate(idx_j(nnz), stat=k)
+     !
+     if ( k /= 0 ) then
+         deallocate(idx_i)
+         deallocate(idx_j)
+         return
+     endif ! back if ( k /= 0 ) block
+
+     ! generate random positions using selection without replacement
+     do k=1,nnz
+         idx_i(k) = int(random_number(dp) * real(n, dp)) + 1
+         idx_j(k) = int(random_number(dp) * real(n, dp)) + 1
+     enddo ! over k={1,nnz} loop
+
+     ! assign random values to selected positions
+     do k=1,nnz
+         i = idx_i(k)
+         j = idx_j(k)
+         rval = random_number(dp)
+         A(i,j) = rval
+     enddo ! over k={1,nnz} loop
+
+     ! deallocate index arrays
+     deallocate(idx_i)
+     deallocate(idx_j)
+
+!! body]
+
+     return
+  end subroutine s_sparse_random_d
+
+!!
+!! @sub s_sparse_random_z
+!!
+!! build a sparse random complex(dp) matrix.
+!! sparsity parameter controls fraction of non-zero elements (0-1).
+!!
+  subroutine s_sparse_random_z(n, sparsity, A)
+     use constants, only : dp
+     use constants, only : czero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
+
+     ! sparsity level (0 = dense, 1 = sparse)
+     real(dp), intent(in)  :: sparsity
+
+     ! output sparse random matrix
+     complex(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, k
+
+     ! number of non-zero elements
+     integer :: nnz
+
+     ! random values
+     real(dp) :: rval, ival
+
+     ! indices for random selection
+     integer, allocatable :: idx_i(:)
+     integer, allocatable :: idx_j(:)
+
+!! [body
+
+     ! initialize matrix to zero
+     A = czero
+
+     ! calculate number of non-zero elements
+     nnz = int(n * n * sparsity)
+
+     ! allocate index arrays for random selection
+     allocate(idx_i(nnz), stat=k)
+     allocate(idx_j(nnz), stat=k)
+     !
+     if ( k /= 0 ) then
+         deallocate(idx_i)
+         deallocate(idx_j)
+         return
+     endif ! back if ( k /= 0 ) block
+
+     ! generate random positions using selection without replacement
+     do k=1,nnz
+         idx_i(k) = int(random_number(dp) * real(n, dp)) + 1
+         idx_j(k) = int(random_number(dp) * real(n, dp)) + 1
+     enddo ! over k={1,nnz} loop
+
+     ! assign random values to selected positions
+     do k=1,nnz
+         i = idx_i(k)
+         j = idx_j(k)
+         rval = random_number(dp)
+         ival = random_number(dp)
+         A(i,j) = dcmplx(rval, ival)
+     enddo ! over k={1,nnz} loop
+
+     ! deallocate index arrays
+     deallocate(idx_i)
+     deallocate(idx_j)
+
+!! body]
+
+     return
+  end subroutine s_sparse_random_z
