@@ -5996,8 +5996,8 @@
 
 !! body]
 
-      return
-   end subroutine s_inverse_hilbert_d
+     return
+  end subroutine s_inverse_hilbert_d
 
 !!
 !! @sub s_vandermonde_d
@@ -6045,7 +6045,7 @@
 
 !! body]
 
-     return
+    return
   end subroutine s_vandermonde_d
 
 !!
@@ -6324,224 +6324,224 @@
 !!
 !! build a random symmetric real(dp) matrix.
 !!
-   subroutine s_random_symmetric_d(n, A)
-      use constants, only : dp
-      use iso_fortran_env, only : real64
+  subroutine s_random_symmetric_d(n, A)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix
-      integer, intent(in)   :: n
+     ! size of matrix
+     integer, intent(in)   :: n
 
-      ! output random symmetric matrix
-      real(dp), intent(out) :: A(n,n)
+     ! output random symmetric matrix
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
-      ! loop indices
-      integer :: i, j
+     ! loop indices
+     integer :: i, j
 
-      ! random values
-      real(real64) :: r
+     ! random values
+     real(dp) :: r
 
 !! [body
 
-      ! generate random matrix first
-      do i=1,n
-          do j=1,n
-              call random_number(r)
-              A(i,j) = real(r, dp)
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! generate random matrix first
+     do i=1,n
+         do j=1,n
+             call random_number(r)
+             A(i,j) = real(r, dp)
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! symmetrize the matrix: A = (A + A^T) / 2
-      do i=2,n
-          do j=1,i-1
-              A(i,j) = (A(i,j) + A(j,i)) / 2.0_dp
-              A(j,i) = A(i,j)
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={2,n} loop
+     ! symmetrize the matrix: A = (A + A^T) / 2
+     do i=2,n
+         do j=1,i-1
+             A(i,j) = (A(i,j) + A(j,i)) / 2.0_dp
+             A(j,i) = A(i,j)
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_random_symmetric_d
+     return
+  end subroutine s_random_symmetric_d
 
 !!
 !! @sub s_random_hermitian_z
 !!
 !! build a random Hermitian complex(dp) matrix.
 !!
-   subroutine s_random_hermitian_z(n, A)
-      use constants, only : dp
-      use iso_fortran_env, only : real64
+  subroutine s_random_hermitian_z(n, A)
+     use constants, only : dp
+     use iso_fortran_env, only : real64
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix
-      integer, intent(in)      :: n
+     ! size of matrix
+     integer, intent(in)      :: n
 
-      ! output random Hermitian matrix
-      complex(dp), intent(out) :: A(n,n)
+     ! output random Hermitian matrix
+     complex(dp), intent(out) :: A(n,n)
 
 !! local variables
-      ! loop indices
-      integer :: i, j
+     ! loop indices
+     integer :: i, j
 
-      ! random values
-      real(real64) :: r1, r2, r3, r4
+     ! random values
+     real(real64) :: r1, r2, r3, r4
 
 !! [body
 
-      ! generate random complex matrix first
-      do i=1,n
-          do j=1,n
-              call random_number(r1)
-              call random_number(r2)
-              call random_number(r3)
-              call random_number(r4)
-              A(i,j) = dcmplx(real(r1, dp), real(r2, dp))
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! generate random complex matrix first
+     do i=1,n
+         do j=1,n
+             call random_number(r1)
+             call random_number(r2)
+             call random_number(r3)
+             call random_number(r4)
+             A(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! Hermitize the matrix: A(i,j) = conjg(A(j,i))
-      do i=1,n
-          do j=i+1,n
-              A(i,j) = (A(i,j) + conjg(A(j,i))) / 2.0_dp
-              A(j,i) = conjg(A(i,j))
-          enddo ! over j={i+1,n} loop
-      enddo ! over i={1,n} loop
+     ! Hermitize the matrix: A(i,j) = conjg(A(j,i))
+     do i=1,n
+         do j=i+1,n
+             A(i,j) = (A(i,j) + conjg(A(j,i))) / 2.0_dp
+             A(j,i) = conjg(A(i,j))
+         enddo ! over j={i+1,n} loop
+     enddo ! over i={1,n} loop
 
 !! body]
 
-      return
-   end subroutine s_random_hermitian_z
+     return
+  end subroutine s_random_hermitian_z
+
 !!
 !! @sub s_random_positive_definite_d
 !!
 !! build a random positive definite real(dp) matrix.
 !!
-   subroutine s_random_positive_definite_d(n, A)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_random_positive_definite_d(n, A)
+     use constants, only : dp
+     use constants, only : zero, one
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix
-      integer, intent(in)   :: n
+     ! size of matrix
+     integer, intent(in)   :: n
 
-      ! output random positive definite matrix
-      real(dp), intent(out) :: A(n,n)
+     ! output random positive definite matrix
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
-      ! loop indices
-      integer :: i, j, k
+     ! loop indices
+     integer :: i, j, k
 
-      ! random matrix B used to construct A = B * B^T
-      real(dp), allocatable :: B(:,:)
+     ! random matrix B used to construct A = B * B^T
+     real(dp), allocatable :: B(:,:)
 
-      ! random values
-      real(dp) :: r
+     ! random values
+     real(dp) :: r
 
 !! [body
 
-      ! allocate temporary matrix B
-      allocate(B(n,n), stat=i)
+     ! allocate temporary matrix B
+     allocate(B(n,n), stat=i)
 
-      ! generate random matrix B
-      do i=1,n
-          do j=1,n
-              call random_number(r)
-              B(i,j) = real(r, dp)
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! generate random matrix B
+     do i=1,n
+         do j=1,n
+             call random_number(r)
+             B(i,j) = real(r, dp)
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! compute A = B * B^T to ensure positive definiteness
-      A = zero
-      do i=1,n
-          do j=1,n
-              do k=1,n
-                  A(i,j) = A(i,j) + B(i,k) * B(j,k)
-              enddo ! over k={1,n} loop
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! compute A = B * B^T to ensure positive definiteness
+     A = zero
+     do i=1,n
+         do j=1,n
+             do k=1,n
+                 A(i,j) = A(i,j) + B(i,k) * B(j,k)
+             enddo ! over k={1,n} loop
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! add small positive value to diagonal to ensure strict positive definiteness
-      do i=1,n
-          A(i,i) = A(i,i) + 1.0_dp
-      enddo ! over i={1,n} loop
+     ! add small positive value to diagonal to ensure strict positive definiteness
+     do i=1,n
+         A(i,i) = A(i,i) + one
+     enddo ! over i={1,n} loop
 
-      ! deallocate temporary matrix
-      deallocate(B)
+     ! deallocate temporary matrix
+     deallocate(B)
 
 !! body]
 
-      return
-   end subroutine s_random_positive_definite_d
+     return
+  end subroutine s_random_positive_definite_d
 
 !!
 !! @sub s_random_positive_definite_z
 !!
 !! build a random positive definite complex(dp) Hermitian matrix.
 !!
-   subroutine s_random_positive_definite_z(n, A)
-      use constants, only : dp
-      use constants, only : czero
+  subroutine s_random_positive_definite_z(n, A)
+     use constants, only : dp
+     use constants, only : czero, cone
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix
-      integer, intent(in)      :: n
+     ! size of matrix
+     integer, intent(in)      :: n
 
-      ! output random positive definite Hermitian matrix
-      complex(dp), intent(out) :: A(n,n)
+     ! output random positive definite Hermitian matrix
+     complex(dp), intent(out) :: A(n,n)
 
 !! local variables
-      ! loop indices
-      integer :: i, j, k
+     ! loop indices
+     integer :: i, j, k
 
-      ! random matrix B used to construct A = B * B^H
-      complex(dp), allocatable :: B(:,:)
+     ! random matrix B used to construct A = B * B^H
+     complex(dp), allocatable :: B(:,:)
 
-      ! random values
-      real(dp) :: r1, r2
+     ! random values
+     real(dp) :: r1, r2
 
 !! [body
 
-      ! allocate temporary matrix B
-      allocate(B(n,n), stat=i)
+     ! allocate temporary matrix B
+     allocate(B(n,n), stat=i)
 
-      ! generate random complex matrix B
-      do i=1,n
-          do j=1,n
-              call random_number(r1)
-              call random_number(r2)
-              B(i,j) = dcmplx(real(r1, dp), real(r2, dp))
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! generate random complex matrix B
+     do i=1,n
+         do j=1,n
+             call random_number(r1)
+             call random_number(r2)
+             B(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! compute A = B * B^H to ensure positive definiteness
-      A = czero
-      do i=1,n
-          do j=1,n
-              do k=1,n
-                  A(i,j) = A(i,j) + B(i,k) * conjg(B(j,k))
-              enddo ! over k={1,n} loop
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! compute A = B * B^H to ensure positive definiteness
+     A = czero
+     do i=1,n
+         do j=1,n
+             do k=1,n
+                 A(i,j) = A(i,j) + B(i,k) * conjg(B(j,k))
+             enddo ! over k={1,n} loop
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! add small positive value to diagonal to ensure strict positive definiteness
-      do i=1,n
-          A(i,i) = A(i,i) + 1.0_dp
-      enddo ! over i={1,n} loop
+     ! add small positive value to diagonal to ensure strict positive definiteness
+     do i=1,n
+         A(i,i) = A(i,i) + cone
+     enddo ! over i={1,n} loop
 
-      ! deallocate temporary matrix
-      deallocate(B)
+     ! deallocate temporary matrix
+     deallocate(B)
 
 !! body]
 
-      return
-   end subroutine s_random_positive_definite_z
+     return
+  end subroutine s_random_positive_definite_z
