@@ -5713,4 +5713,78 @@
  !! body]
 
        return
-    end subroutine s_upper_triangular_z
+     end subroutine s_upper_triangular_z
+
+ !!
+ !! @sub s_lower_triangular_d
+ !!
+ !! construct a lower triangular matrix from a real(dp) matrix.
+ !! sets all elements above main diagonal to zero.
+ !!
+    subroutine s_lower_triangular_d(n, A)
+       use constants, only : dp
+       use constants, only : zero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)   :: n
+
+       ! input/output matrix
+       real(dp), intent(inout) :: A(n,n)
+
+ !! local variables
+       ! loop indices
+       integer :: i, j
+
+ !! [body
+
+       ! set elements above main diagonal to zero
+       do i=1,n-1
+           do j=i+1,n
+               A(i,j) = zero
+           enddo ! over j={i+1,n} loop
+       enddo ! over i={1,n-1} loop
+
+ !! body]
+
+       return
+    end subroutine s_lower_triangular_d
+
+ !!
+ !! @sub s_lower_triangular_z
+ !!
+ !! construct a lower triangular matrix from a complex(dp) matrix.
+ !! sets all elements above main diagonal to zero.
+ !!
+    subroutine s_lower_triangular_z(n, A)
+       use constants, only : dp
+       use constants, only : czero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)      :: n
+
+       ! input/output matrix
+       complex(dp), intent(inout) :: A(n,n)
+
+ !! local variables
+       ! loop indices
+       integer :: i, j
+
+ !! [body
+
+       ! set elements above main diagonal to zero
+       do i=1,n-1
+           do j=i+1,n
+               A(i,j) = czero
+           enddo ! over j={i+1,n} loop
+       enddo ! over i={1,n-1} loop
+
+ !! body]
+
+       return
+    end subroutine s_lower_triangular_z
