@@ -5705,11 +5705,11 @@
     ! input/output matrix
     complex(dp), intent(inout) :: A(n,n)
 
-    !! local variables
+!! local variables
     ! loop indices
     integer :: i, j
 
-    !! [body
+!! [body
 
     ! set elements above main diagonal to zero
     do i=1,n-1
@@ -5718,7 +5718,7 @@
         enddo ! over j={i+1,n} loop
     enddo ! over i={1,n-1} loop
 
-    !! body]
+!! body]
 
     return
   end subroutine s_upper_triangular_z
@@ -5735,18 +5735,18 @@
 
      implicit none
 
-     !! external arguments
+!! external arguments
      ! size of matrix (must be square)
      integer, intent(in)   :: n
 
      ! input/output matrix
      real(dp), intent(inout) :: A(n,n)
 
-     !! local variables
+!! local variables
      ! loop indices
      integer :: i, j
 
-     !! [body
+!! [body
 
      ! set elements above main diagonal to zero
      do i=1,n-1
