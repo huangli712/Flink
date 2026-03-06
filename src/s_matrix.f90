@@ -1024,15 +1024,21 @@
      ! error flag
      integer :: ierror
 
+     ! the length of the array work
+     integer :: lwork
+
      ! working arrays for lapack subroutines
      integer, allocatable     :: ipiv(:)
      complex(dp), allocatable :: work(:)
 
 !! [body
 
+     ! initialize lwork
+     lwork = 4 * ndim
+
      ! allocate memory
      allocate(ipiv(ndim), stat=ierror)
-     allocate(work(ndim), stat=ierror)
+     allocate(work(lwork), stat=ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','can not allocate enough memory')
@@ -1048,7 +1054,7 @@
 
      ! computes the inverse of an LU-factored general matrix.
      ! need lapack package (zgetri subroutine).
-     call ZGETRI(ndim, zmat, ndim, ipiv, work, ndim, ierror)
+     call ZGETRI(ndim, zmat, ndim, ipiv, work, lwork, ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_inv_z','error in lapack subroutine zgetri')
