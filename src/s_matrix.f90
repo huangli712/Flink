@@ -6436,7 +6436,7 @@
 
 !! local variables
      ! loop indices
-     integer  :: i, j, k
+     integer  :: i, j
 
      ! random values
      real(dp) :: r
@@ -6458,14 +6458,7 @@
      enddo ! over i={1,n} loop
 
      ! compute A = B * B^T to ensure positive definiteness
-     A = zero
-     do i=1,n
-         do j=1,n
-             do k=1,n
-                 A(i,j) = A(i,j) + B(i,k) * B(j,k)
-             enddo ! over k={1,n} loop
-         enddo ! over j={1,n} loop
-     enddo ! over i={1,n} loop
+     A = matmul(B, transpose(B))
 
      ! add small positive value to diagonal to ensure strict positive definiteness
      do i=1,n
@@ -6500,7 +6493,7 @@
 
 !! local variables
      ! loop indices
-     integer  :: i, j, k
+     integer  :: i, j
 
      ! random values
      real(dp) :: r1, r2
