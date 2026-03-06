@@ -5465,3 +5465,178 @@
 
        return
     end subroutine s_is_normal_z
+
+ !!
+ !! @sub s_sparsity_ratio_i
+ !!
+ !! calculate sparsity ratio for an integer matrix (ratio of zero elements).
+ !!
+    subroutine s_sparsity_ratio_i(n, A, ratio)
+       use constants, only : dp
+       use constants, only : zero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)   :: n
+
+       ! input matrix
+       integer, intent(in) :: A(n,n)
+
+       ! output: sparsity ratio (0.0 to 1.0)
+       real(dp), intent(out) :: ratio
+
+  !! local variables
+       ! loop indices
+       integer :: i, j
+
+       ! counter for zero elements
+       integer :: zero_count
+
+       ! total elements
+       integer :: total
+
+  !! [body
+
+       ! initialize
+       zero_count = 0
+       total = n * n
+
+       ! count zero elements
+       do i=1,n
+           do j=1,n
+               if ( A(i,j) == 0 ) then
+                   zero_count = zero_count + 1
+               endif ! back if ( A(i,j) == 0 ) block
+           enddo ! over j={1,n} loop
+       enddo ! over i={1,n} loop
+
+       ! compute sparsity ratio
+       if ( total > 0 ) then
+           ratio = real(zero_count, dp) / real(total, dp)
+       else
+           ratio = zero
+       endif ! back if ( total > 0 ) block
+
+  !! body]
+
+       return
+    end subroutine s_sparsity_ratio_i
+
+ !!
+ !! @sub s_sparsity_ratio_d
+ !!
+ !! calculate sparsity ratio for a real(dp) matrix (ratio of zero elements).
+ !!
+    subroutine s_sparsity_ratio_d(n, A, ratio)
+       use constants, only : dp
+       use constants, only : zero
+
+       implicit none
+
+  !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)   :: n
+
+       ! input matrix
+       real(dp), intent(in) :: A(n,n)
+
+       ! output: sparsity ratio (0.0 to 1.0)
+       real(dp), intent(out) :: ratio
+
+       ! local variables
+       ! loop indices
+       integer :: i, j
+
+       ! counter for zero elements
+       integer :: zero_count
+
+       ! total elements
+       real(dp) :: total
+
+  !! [body
+
+       ! initialize
+       zero_count = 0
+       total = real(n, dp) * real(n, dp)
+
+       ! count zero elements
+       do i=1,n
+           do j=1,n
+               if ( abs( A(i,j) ) < 1.0e-12_dp ) then
+                   zero_count = zero_count + 1
+               endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
+           enddo ! over j={1,n} loop
+       enddo ! over i={1,n} loop
+
+       ! compute sparsity ratio
+       if ( total > 0.0_dp ) then
+           ratio = real(zero_count, dp) / total
+       else
+           ratio = zero
+       endif ! back if ( total > 0.0_dp ) block
+
+  !! body]
+
+       return
+    end subroutine s_sparsity_ratio_d
+
+ !!
+ !! @sub s_sparsity_ratio_z
+ !!
+ !! calculate sparsity ratio for a complex(dp) matrix (ratio of zero elements).
+ !!
+    subroutine s_sparsity_ratio_z(n, A, ratio)
+       use constants, only : dp
+       use constants, only : zero
+       use constants, only : czero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)      :: n
+
+       ! input matrix
+       complex(dp), intent(in) :: A(n,n)
+
+       ! output: sparsity ratio (0.0 to 1.0)
+       real(dp), intent(out)    :: ratio
+
+       !! local variables
+       ! loop indices
+       integer :: i, j
+
+       ! counter for zero elements
+       integer :: zero_count
+
+       ! total elements
+       real(dp) :: total
+
+       !! [body
+
+       ! initialize
+       zero_count = 0
+       total = real(n, dp) * real(n, dp)
+
+       ! count zero elements
+       do i=1,n
+           do j=1,n
+               if ( abs( A(i,j) ) < 1.0e-12_dp ) then
+                   zero_count = zero_count + 1
+               endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
+           enddo ! over j={1,n} loop
+       enddo ! over i={1,n} loop
+
+       ! compute sparsity ratio
+       if ( total > 0.0_dp ) then
+           ratio = real(zero_count, dp) / total
+       else
+           ratio = zero
+       endif ! back if ( total > 0.0_dp ) block
+
+  !! body]
+
+       return
+    end subroutine s_sparsity_ratio_z
