@@ -1201,7 +1201,7 @@
      complex(dp), allocatable :: work(:)
 
      ! auxiliary real(dp) matrix
-     complex(dp), allocatable :: rwork(:)
+     real(dp), allocatable    :: rwork(:)
 
      ! auxiliary complex(dp) matrix: left and right eigenvectors
      complex(dp), allocatable :: vr(:,:)
@@ -1386,7 +1386,7 @@
      complex(dp), allocatable :: work(:)
 
      ! auxiliary real(dp) matrix
-     complex(dp), allocatable :: rwork(:)
+     real(dp), allocatable    :: rwork(:)
 
      ! auxiliary complex(dp) matrix: left and right eigenvectors
      complex(dp), allocatable :: vr(:,:)
