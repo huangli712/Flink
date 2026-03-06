@@ -2593,7 +2593,7 @@
 !! [body
 
      ! initialize lwork
-     lwork = n
+     lwork = 4*n
 
      ! allocate memory
      allocate(work(lwork), stat=istat)
@@ -2693,7 +2693,7 @@
 !! [body
 
      ! initialize lwork
-     lwork = n
+     lwork = 4*n
 
      ! allocate memory
      allocate(work(lwork), stat=istat)
