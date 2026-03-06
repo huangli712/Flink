@@ -3013,6 +3013,9 @@
      ! lwork >= max(1,3*n)
      integer :: lwork
 
+     ! dimension of stable invariant subspace (output from dgees)
+     integer :: sdim
+
      ! workspace array
      real(dp), allocatable :: work(:)
 
@@ -3048,7 +3051,7 @@
      ! perform Schur decomposition: A = Q * T * Q^T
      ! on exit, vs contains orthogonal matrix Q,
      ! and A contains Schur form T
-     call DGEES('V', 'N', 'N', n, A, ldim, wr, wi, vs, ldim, &
+     call DGEES('V', 'N', 'N', n, A, ldim, sdim, wr, wi, vs, ldim, &
                & work, lwork, bwork, info)
      !
      if ( info /= 0 ) then
@@ -3111,6 +3114,9 @@
      ! lwork >= max(1,2*n)
      integer :: lwork
 
+     ! dimension of stable invariant subspace (output from zgees)
+     integer :: sdim
+
      ! workspace array
      complex(dp), allocatable :: work(:)
 
@@ -3148,7 +3154,7 @@
      ! perform Schur decomposition: A = Q * T * Q^H
      ! on exit, vs contains unitary matrix Q,
      ! and A contains Schur form T
-     call ZGEES('V', 'N', 'N', n, A, ldim, w, vs, ldim, &
+     call ZGEES('V', 'N', 'N', n, A, ldim, sdim, w, vs, ldim, &
                & work, lwork, rwork, bwork, info)
      !
      if ( info /= 0 ) then
