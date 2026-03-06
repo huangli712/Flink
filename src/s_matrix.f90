@@ -4152,113 +4152,113 @@
 !! compute Moore-Penrose pseudo-inverse of a general real(dp) m-by-n
 !! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^T.
 !!
-   subroutine s_pinv_d(m, n, min_mn, A, pinv, tol)
-      use constants, only : dp
-      use constants, only : zero, one, eps8
+  subroutine s_pinv_d(m, n, min_mn, A, pinv, tol)
+     use constants, only : dp
+     use constants, only : zero, one, eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)   :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)   :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)   :: n
+     ! number of columns of A matrix
+     integer, intent(in)   :: n
 
-      ! minimal value of m and n
-      integer, intent(in)   :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)   :: min_mn
 
-      ! A matrix
-      real(dp), intent(in)  :: A(m,n)
+     ! A matrix
+     real(dp), intent(in)  :: A(m,n)
 
-      ! pseudo-inverse matrix (n-by-m)
-      real(dp), intent(out) :: pinv(n,m)
+     ! pseudo-inverse matrix (n-by-m)
+     real(dp), intent(out) :: pinv(n,m)
 
-      ! tolerance for singular value cutoff (optional, default: 1.0e-12)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j, k
+!! local variables
+     ! loop indices
+     integer :: i, j, k
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! SVD output arrays
-      real(dp), allocatable :: umat(:,:)
-      real(dp), allocatable :: svec(:)
-      real(dp), allocatable :: vmat(:,:)
+     ! SVD output arrays
+     real(dp), allocatable :: umat(:,:)
+     real(dp), allocatable :: svec(:)
+     real(dp), allocatable :: vmat(:,:)
 
-      ! temporary matrices for pseudo-inverse computation
-      real(dp), allocatable :: sigma_pinv(:,:)
-      real(dp), allocatable :: temp1(:,:)
-      real(dp), allocatable :: temp2(:,:)
+     ! temporary matrices for pseudo-inverse computation
+     real(dp), allocatable :: sigma_pinv(:,:)
+     real(dp), allocatable :: temp1(:,:)
+     real(dp), allocatable :: temp2(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate arrays for SVD
-      allocate(umat(m,min_mn))
-      allocate(svec(min_mn))
-      allocate(vmat(min_mn,n))
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn))
+     allocate(svec(min_mn))
+     allocate(vmat(min_mn,n))
 
-      ! compute SVD decomposition
-      call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
+     ! compute SVD decomposition
+     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
 
-      ! compute SIGMA^+: reciprocal of singular values with cutoff
-      allocate(sigma_pinv(min_mn,min_mn))
-      sigma_pinv = zero
-      do i=1,min_mn
-          if ( svec(i) > actual_tol ) then
-              sigma_pinv(i,i) = one / svec(i)
-          endif ! back if ( svec(i) > actual_tol ) block
-      enddo ! over i={1,min_mn} loop
+     ! compute SIGMA^+: reciprocal of singular values with cutoff
+     allocate(sigma_pinv(min_mn,min_mn))
+     sigma_pinv = zero
+     do i=1,min_mn
+         if ( svec(i) > actual_tol ) then
+             sigma_pinv(i,i) = one / svec(i)
+         endif ! back if ( svec(i) > actual_tol ) block
+     enddo ! over i={1,min_mn} loop
 
-      ! compute pinv(A) = V * SIGMA^+ * U^T
-      allocate(temp1(min_mn,m))
-      allocate(temp2(n,m))
-      temp1 = zero
-      temp2 = zero
+     ! compute pinv(A) = V * SIGMA^+ * U^T
+     allocate(temp1(min_mn,m))
+     allocate(temp2(n,m))
+     temp1 = zero
+     temp2 = zero
 
-      ! temp1 = SIGMA^+ * U^T
-      do i=1,min_mn
-          do j=1,m
-              do k=1,min_mn
-                  temp1(i,j) = temp1(i,j) + sigma_pinv(i,k) * umat(j,k)
-              enddo ! over k={1,min_mn} loop
-          enddo ! over j={1,m} loop
-      enddo ! over i={1,min_mn} loop
+     ! temp1 = SIGMA^+ * U^T
+     do i=1,min_mn
+         do j=1,m
+             do k=1,min_mn
+                 temp1(i,j) = temp1(i,j) + sigma_pinv(i,k) * umat(j,k)
+             enddo ! over k={1,min_mn} loop
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,min_mn} loop
 
-      ! temp2 = V * temp1
-      do i=1,n
-          do j=1,m
-              do k=1,min_mn
-                  temp2(i,j) = temp2(i,j) + vmat(i,k) * temp1(k,j)
-              enddo ! over k={1,min_mn} loop
-          enddo ! over j={1,m} loop
-      enddo ! over i={1,n} loop
+     ! temp2 = V * temp1
+     do i=1,n
+         do j=1,m
+             do k=1,min_mn
+                 temp2(i,j) = temp2(i,j) + vmat(i,k) * temp1(k,j)
+             enddo ! over k={1,min_mn} loop
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,n} loop
 
-      ! copy result to pinv
-      pinv = temp2
+     ! copy result to pinv
+     pinv = temp2
 
-      ! deallocate arrays
-      if ( allocated(umat) ) deallocate(umat)
-      if ( allocated(svec) ) deallocate(svec)
-      if ( allocated(vmat) ) deallocate(vmat)
-      if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
-      if ( allocated(temp1) ) deallocate(temp1)
-      if ( allocated(temp2) ) deallocate(temp2)
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
+     if ( allocated(temp1) ) deallocate(temp1)
+     if ( allocated(temp2) ) deallocate(temp2)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_pinv_d
+     return
+  end subroutine s_pinv_d
 
 !!
 !! @sub s_pinv_z
@@ -4266,236 +4266,236 @@
 !! compute Moore-Penrose pseudo-inverse of a general complex(dp) m-by-n
 !! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^H.
 !!
-   subroutine s_pinv_z(m, n, min_mn, A, pinv, tol)
-      use constants, only : dp
-      use constants, only : zero, one, eps8
-      use constants, only : czero
+  subroutine s_pinv_z(m, n, min_mn, A, pinv, tol)
+     use constants, only : dp
+     use constants, only : zero, one, eps8
+     use constants, only : czero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)     :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)     :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)     :: n
+     ! number of columns of A matrix
+     integer, intent(in)     :: n
 
-      ! minimal value of m and n
-      integer, intent(in)     :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)     :: min_mn
 
-      ! A matrix
-      complex(dp), intent(in) :: A(m,n)
+     ! A matrix
+     complex(dp), intent(in) :: A(m,n)
 
-      ! pseudo-inverse matrix (n-by-m)
-      complex(dp), intent(out) :: pinv(n,m)
+     ! pseudo-inverse matrix (n-by-m)
+     complex(dp), intent(out) :: pinv(n,m)
 
-      ! tolerance for singular value cutoff (optional, default: 1.0e-12)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j, k
+!! local variables
+     ! loop indices
+     integer :: i, j, k
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! SVD output arrays
-      complex(dp), allocatable :: umat(:,:)
-      real(dp), allocatable    :: svec(:)
-      complex(dp), allocatable :: vmat(:,:)
+     ! SVD output arrays
+     complex(dp), allocatable :: umat(:,:)
+     real(dp), allocatable    :: svec(:)
+     complex(dp), allocatable :: vmat(:,:)
 
-      ! temporary matrices for pseudo-inverse computation
-      real(dp), allocatable    :: sigma_pinv(:,:)
-      complex(dp), allocatable :: temp1(:,:)
-      complex(dp), allocatable :: temp2(:,:)
+     ! temporary matrices for pseudo-inverse computation
+     real(dp), allocatable    :: sigma_pinv(:,:)
+     complex(dp), allocatable :: temp1(:,:)
+     complex(dp), allocatable :: temp2(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate arrays for SVD
-      allocate(umat(m,min_mn))
-      allocate(svec(min_mn))
-      allocate(vmat(min_mn,n))
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn))
+     allocate(svec(min_mn))
+     allocate(vmat(min_mn,n))
 
-      ! compute SVD decomposition
-      call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
+     ! compute SVD decomposition
+     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
 
-      ! compute SIGMA^+: reciprocal of singular values with cutoff
-      allocate(sigma_pinv(min_mn,min_mn))
-      sigma_pinv = zero
-      do i=1,min_mn
-          if ( svec(i) > actual_tol ) then
-              sigma_pinv(i,i) = one / svec(i)
-          endif ! back if ( svec(i) > actual_tol ) block
-      enddo ! over i={1,min_mn} loop
+     ! compute SIGMA^+: reciprocal of singular values with cutoff
+     allocate(sigma_pinv(min_mn,min_mn))
+     sigma_pinv = zero
+     do i=1,min_mn
+         if ( svec(i) > actual_tol ) then
+             sigma_pinv(i,i) = one / svec(i)
+         endif ! back if ( svec(i) > actual_tol ) block
+     enddo ! over i={1,min_mn} loop
 
-      ! compute pinv(A) = V * SIGMA^+ * U^H
-      allocate(temp1(min_mn,m))
-      allocate(temp2(n,m))
-      temp1 = czero
-      temp2 = czero
+     ! compute pinv(A) = V * SIGMA^+ * U^H
+     allocate(temp1(min_mn,m))
+     allocate(temp2(n,m))
+     temp1 = czero
+     temp2 = czero
 
-      ! temp1 = SIGMA^+ * U^H
-      do i=1,min_mn
-          do j=1,m
-              do k=1,min_mn
-                  temp1(i,j) = temp1(i,j) + sigma_pinv(i,k) * conjg(umat(j,k))
-              enddo ! over k={1,min_mn} loop
-          enddo ! over j={1,m} loop
-      enddo ! over i={1,min_mn} loop
+     ! temp1 = SIGMA^+ * U^H
+     do i=1,min_mn
+         do j=1,m
+             do k=1,min_mn
+                 temp1(i,j) = temp1(i,j) + sigma_pinv(i,k) * conjg(umat(j,k))
+             enddo ! over k={1,min_mn} loop
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,min_mn} loop
 
-      ! temp2 = V * temp1
-      do i=1,n
-          do j=1,m
-              do k=1,min_mn
-                  temp2(i,j) = temp2(i,j) + vmat(i,k) * temp1(k,j)
-              enddo ! over k={1,min_mn} loop
-          enddo ! over j={1,m} loop
-      enddo ! over i={1,n} loop
+     ! temp2 = V * temp1
+     do i=1,n
+         do j=1,m
+             do k=1,min_mn
+                 temp2(i,j) = temp2(i,j) + vmat(i,k) * temp1(k,j)
+             enddo ! over k={1,min_mn} loop
+         enddo ! over j={1,m} loop
+     enddo ! over i={1,n} loop
 
-      ! copy result to pinv
-      pinv = temp2
+     ! copy result to pinv
+     pinv = temp2
 
-      ! deallocate arrays
-      if ( allocated(umat) ) deallocate(umat)
-      if ( allocated(svec) ) deallocate(svec)
-      if ( allocated(vmat) ) deallocate(vmat)
-      if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
-      if ( allocated(temp1) ) deallocate(temp1)
-      if ( allocated(temp2) ) deallocate(temp2)
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
+     if ( allocated(temp1) ) deallocate(temp1)
+     if ( allocated(temp2) ) deallocate(temp2)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_pinv_z
+     return
+  end subroutine s_pinv_z
 
 !!
 !! @sub s_is_skew_symmetric_d
 !!
 !! check if a real(dp) matrix is skew-symmetric (A = -A^T).
 !!
-   subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      real(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is skew-symmetric, .false. otherwise
-      logical, intent(out) :: is_skew_symmetric
+     ! output: .true. if matrix is skew-symmetric, .false. otherwise
+     logical, intent(out) :: is_skew_symmetric
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_skew_symmetric = .true.
+     ! initialize
+     is_skew_symmetric = .true.
 
-      ! compare upper triangular part with lower triangular part
-      ! skew-symmetric condition: A(i,j) = -A(j,i)
-      ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-      outer_loop: do i=2,n
-          inner_loop: do j=1,i-1
-              ! check skew-symmetric condition with tolerance
-              if ( abs( A(i,j) + A(j,i) ) > actual_tol ) then
-                  is_skew_symmetric = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) + A(j,i) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-      enddo outer_loop ! over i={2,n} loop (outer_loop)
+     ! compare upper triangular part with lower triangular part
+     ! skew-symmetric condition: A(i,j) = -A(j,i)
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check skew-symmetric condition with tolerance
+             if ( abs( A(i,j) + A(j,i) ) > actual_tol ) then
+                 is_skew_symmetric = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) + A(j,i) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_skew_symmetric_d
+     return
+  end subroutine s_is_skew_symmetric_d
 
 !!
 !! @sub s_is_skew_hermitian_z
 !!
 !! check if a complex(dp) matrix is skew-Hermitian (A = -A^H).
 !!
-   subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in)  :: A(n,n)
 
-      ! output: .true. if matrix is skew-Hermitian, .false. otherwise
-      logical, intent(out)       :: is_skew_hermitian
+     ! output: .true. if matrix is skew-Hermitian, .false. otherwise
+     logical, intent(out)       :: is_skew_hermitian
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_skew_hermitian = .true.
+     ! initialize
+     is_skew_hermitian = .true.
 
-      ! compare upper triangular part with lower triangular part
-      ! skew-Hermitian condition: A(i,j) = -conj(A(j,i))
-      ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-      outer_loop: do i=2,n
-          inner_loop: do j=1,i-1
-              ! check skew-Hermitian condition with tolerance
-              if ( abs( A(i,j) + conjg( A(j,i) ) ) > actual_tol ) then
-                  is_skew_hermitian = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) + conj( A(j,i) ) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-      enddo outer_loop ! over i={2,n} loop (outer_loop)
+     ! compare upper triangular part with lower triangular part
+     ! skew-Hermitian condition: A(i,j) = -conj(A(j,i))
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check skew-Hermitian condition with tolerance
+             if ( abs( A(i,j) + conjg( A(j,i) ) ) > actual_tol ) then
+                 is_skew_hermitian = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) + conj( A(j,i) ) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_skew_hermitian_z
+     return
+  end subroutine s_is_skew_hermitian_z
 
 !!
 !! @sub s_is_positive_definite_d
@@ -4503,60 +4503,60 @@
 !! check if a real(dp) symmetric matrix is positive-definite
 !! using Cholesky decomposition (A = L * L^T).
 !!
-   subroutine s_is_positive_definite_d(n, A, is_positive_definite)
-      use constants, only : dp
+  subroutine s_is_positive_definite_d(n, A, is_positive_definite)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)  :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)  :: n
 
-      ! input matrix (must be symmetric)
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix (must be symmetric)
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is symmetric positive-definite, .false. otherwise
-      logical, intent(out) :: is_positive_definite
+     ! output: .true. if matrix is symmetric positive-definite, .false. otherwise
+     logical, intent(out) :: is_positive_definite
 
- !! local variables
-      ! error flag
-      integer :: ierror
+!! local variables
+     ! error flag
+     integer :: ierror
 
-      ! Cholesky factor (temporary)
-      real(dp), allocatable :: L(:,:)
+     ! Cholesky factor (temporary)
+     real(dp), allocatable :: L(:,:)
 
- !! [body
+!! [body
 
-      ! allocate temporary matrix for Cholesky factorization
-      allocate(L(n,n), stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_is_positive_definite_d','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate temporary matrix for Cholesky factorization
+     allocate(L(n,n), stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_is_positive_definite_d','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy A to L
-      L = A
+     ! copy A to L
+     L = A
 
-      ! attempt Cholesky decomposition using LAPACK subroutine dpotrf
-      ! on exit, lower triangle of L contains Cholesky factor
-      call DPOTRF('L', n, L, n, ierror)
-      !
-      if ( ierror == 0 ) then
-          ! Cholesky decomposition succeeded: matrix is positive-definite
-          is_positive_definite = .true.
-      else
-          ! Cholesky decomposition failed: matrix is not positive-definite
-          ! (either not symmetric, not positive-definite, or numerically singular)
-          is_positive_definite = .false.
-      endif ! back if ( ierror == 0 ) block
+     ! attempt Cholesky decomposition using LAPACK subroutine dpotrf
+     ! on exit, lower triangle of L contains Cholesky factor
+     call DPOTRF('L', n, L, n, ierror)
+     !
+     if ( ierror == 0 ) then
+         ! Cholesky decomposition succeeded: matrix is positive-definite
+         is_positive_definite = .true.
+     else
+         ! Cholesky decomposition failed: matrix is not positive-definite
+         ! (either not symmetric, not positive-definite, or numerically singular)
+         is_positive_definite = .false.
+     endif ! back if ( ierror == 0 ) block
 
-      ! deallocate temporary matrix
-      if ( allocated(L) ) deallocate(L)
+     ! deallocate temporary matrix
+     if ( allocated(L) ) deallocate(L)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_positive_definite_d
+     return
+  end subroutine s_is_positive_definite_d
 
 !!
 !! @sub s_is_positive_definite_z
@@ -4564,60 +4564,60 @@
 !! check if a complex(dp) Hermitian matrix is positive-definite
 !! using Cholesky decomposition (A = L * L^H).
 !!
-   subroutine s_is_positive_definite_z(n, A, is_positive_definite)
-      use constants, only : dp
+  subroutine s_is_positive_definite_z(n, A, is_positive_definite)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)     :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! input matrix (must be Hermitian)
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix (must be Hermitian)
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is Hermitian positive-definite, .false. otherwise
-      logical, intent(out)    :: is_positive_definite
+     ! output: .true. if matrix is Hermitian positive-definite, .false. otherwise
+     logical, intent(out)    :: is_positive_definite
 
- !! local variables
-      ! error flag
-      integer :: ierror
+!! local variables
+     ! error flag
+     integer :: ierror
 
-      ! Cholesky factor (temporary)
-      complex(dp), allocatable :: L(:,:)
+     ! Cholesky factor (temporary)
+     complex(dp), allocatable :: L(:,:)
 
- !! [body
+!! [body
 
-      ! allocate temporary matrix for Cholesky factorization
-      allocate(L(n,n), stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_is_positive_definite_z','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate temporary matrix for Cholesky factorization
+     allocate(L(n,n), stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_is_positive_definite_z','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy A to L
-      L = A
+     ! copy A to L
+     L = A
 
-      ! attempt Cholesky decomposition using LAPACK subroutine zpotrf
-      ! on exit, lower triangle of L contains Cholesky factor
-      call ZPOTRF('L', n, L, n, ierror)
-      !
-      if ( ierror == 0 ) then
-          ! Cholesky decomposition succeeded: matrix is positive-definite
-          is_positive_definite = .true.
-      else
-          ! Cholesky decomposition failed: matrix is not positive-definite
-          ! (either not Hermitian, not positive-definite, or numerically singular)
-          is_positive_definite = .false.
-      endif ! back if ( ierror == 0 ) block
+     ! attempt Cholesky decomposition using LAPACK subroutine zpotrf
+     ! on exit, lower triangle of L contains Cholesky factor
+     call ZPOTRF('L', n, L, n, ierror)
+     !
+     if ( ierror == 0 ) then
+         ! Cholesky decomposition succeeded: matrix is positive-definite
+         is_positive_definite = .true.
+     else
+         ! Cholesky decomposition failed: matrix is not positive-definite
+         ! (either not Hermitian, not positive-definite, or numerically singular)
+         is_positive_definite = .false.
+     endif ! back if ( ierror == 0 ) block
 
-      ! deallocate temporary matrix
-      if ( allocated(L) ) deallocate(L)
+     ! deallocate temporary matrix
+     if ( allocated(L) ) deallocate(L)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_positive_definite_z
+     return
+  end subroutine s_is_positive_definite_z
 
 !!
 !! @sub s_is_positive_semidefinite_d
@@ -4625,72 +4625,72 @@
 !! check if a real(dp) symmetric matrix is positive-semidefinite.
 !! all eigenvalues >= 0 (with tolerance).
 !!
-   subroutine s_is_positive_semidefinite_d(ldim, n, A, is_positive_semidefinite, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_positive_semidefinite_d(ldim, n, A, is_positive_semidefinite, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! leading dimension of matrix A
-      integer, intent(in)  :: ldim
+!! external arguments
+     ! leading dimension of matrix A
+     integer, intent(in)  :: ldim
 
-      ! order of the matrix A
-      integer, intent(in)  :: n
+     ! order of the matrix A
+     integer, intent(in)  :: n
 
-      ! input matrix (must be symmetric)
-      real(dp), intent(in) :: A(ldim,n)
+     ! input matrix (must be symmetric)
+     real(dp), intent(in) :: A(ldim,n)
 
-      ! output: .true. if matrix is positive-semidefinite, .false. otherwise
-      logical, intent(out) :: is_positive_semidefinite
+     ! output: .true. if matrix is positive-semidefinite, .false. otherwise
+     logical, intent(out) :: is_positive_semidefinite
 
-      ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop index
-      integer  :: i
+!! local variables
+     ! loop index
+     integer  :: i
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! eigenvalues
-      real(dp), allocatable :: eval(:)
+     ! eigenvalues
+     real(dp), allocatable :: eval(:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate eigenvalue array
-      allocate(eval(n), stat=i)
-      if ( i /= 0 ) then
-          call s_print_error('s_is_positive_semidefinite_d','can not allocate enough memory')
-      endif ! back if ( i /= 0 ) block
+     ! allocate eigenvalue array
+     allocate(eval(n), stat=i)
+     if ( i /= 0 ) then
+         call s_print_error('s_is_positive_semidefinite_d','can not allocate enough memory')
+     endif ! back if ( i /= 0 ) block
 
-      ! compute eigenvalues
-      call s_eigvals_sy(ldim, n, A, eval)
+     ! compute eigenvalues
+     call s_eigvals_sy(ldim, n, A, eval)
 
-      ! check if all eigenvalues >= -tol
-      is_positive_semidefinite = .true.
-      do i=1,n
-          if ( eval(i) < -actual_tol ) then
-              is_positive_semidefinite = .false.
-              exit
-          endif ! back if ( eval(i) < -actual_tol ) block
-      enddo ! over i={1,n} loop
+     ! check if all eigenvalues >= -tol
+     is_positive_semidefinite = .true.
+     do i=1,n
+         if ( eval(i) < -actual_tol ) then
+             is_positive_semidefinite = .false.
+             exit
+         endif ! back if ( eval(i) < -actual_tol ) block
+     enddo ! over i={1,n} loop
 
-      ! deallocate eigenvalue array
-      if ( allocated(eval) ) deallocate(eval)
+     ! deallocate eigenvalue array
+     if ( allocated(eval) ) deallocate(eval)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_positive_semidefinite_d
+     return
+  end subroutine s_is_positive_semidefinite_d
 
 !!
 !! @sub s_is_positive_semidefinite_z
@@ -4698,72 +4698,72 @@
 !! check if a complex(dp) Hermitian matrix is positive-semidefinite.
 !! all eigenvalues >= 0 (with tolerance).
 !!
-   subroutine s_is_positive_semidefinite_z(ldim, n, A, is_positive_semidefinite, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_positive_semidefinite_z(ldim, n, A, is_positive_semidefinite, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! leading dimension of matrix A
-      integer, intent(in)     :: ldim
+!! external arguments
+     ! leading dimension of matrix A
+     integer, intent(in)     :: ldim
 
-      ! order of the matrix A
-      integer, intent(in)     :: n
+     ! order of the matrix A
+     integer, intent(in)     :: n
 
-      ! input matrix (must be Hermitian)
-      complex(dp), intent(in) :: A(ldim,n)
+     ! input matrix (must be Hermitian)
+     complex(dp), intent(in) :: A(ldim,n)
 
-      ! output: .true. if matrix is positive-semidefinite, .false. otherwise
-      logical, intent(out)    :: is_positive_semidefinite
+     ! output: .true. if matrix is positive-semidefinite, .false. otherwise
+     logical, intent(out)    :: is_positive_semidefinite
 
-      ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for eigenvalue comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop index
-      integer  :: i
+!! local variables
+     ! loop index
+     integer  :: i
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! eigenvalues
-      real(dp), allocatable :: eval(:)
+     ! eigenvalues
+     real(dp), allocatable :: eval(:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate eigenvalue array
-      allocate(eval(n), stat=i)
-      if ( i /= 0 ) then
-          call s_print_error('s_is_positive_semidefinite_z','can not allocate enough memory')
-      endif ! back if ( i /= 0 ) block
+     ! allocate eigenvalue array
+     allocate(eval(n), stat=i)
+     if ( i /= 0 ) then
+         call s_print_error('s_is_positive_semidefinite_z','can not allocate enough memory')
+     endif ! back if ( i /= 0 ) block
 
-      ! compute eigenvalues
-      call s_eigvals_he(ldim, n, A, eval)
+     ! compute eigenvalues
+     call s_eigvals_he(ldim, n, A, eval)
 
-      ! check if all eigenvalues >= -tol
-      is_positive_semidefinite = .true.
-      do i=1,n
-          if ( eval(i) < -actual_tol ) then
-              is_positive_semidefinite = .false.
-              exit
-          endif ! back if ( eval(i) < -actual_tol ) block
-      enddo ! over i={1,n} loop
+     ! check if all eigenvalues >= -tol
+     is_positive_semidefinite = .true.
+     do i=1,n
+         if ( eval(i) < -actual_tol ) then
+             is_positive_semidefinite = .false.
+             exit
+         endif ! back if ( eval(i) < -actual_tol ) block
+     enddo ! over i={1,n} loop
 
-      ! deallocate eigenvalue array
-      if ( allocated(eval) ) deallocate(eval)
+     ! deallocate eigenvalue array
+     if ( allocated(eval) ) deallocate(eval)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_positive_semidefinite_z
+     return
+  end subroutine s_is_positive_semidefinite_z
 
 !!
 !! @sub s_is_upper_triangular_d
@@ -4771,60 +4771,60 @@
 !! check if a real(dp) matrix is upper triangular
 !! (all elements below main diagonal are zero).
 !!
-   subroutine s_is_upper_triangular_d(n, A, is_upper_triangular, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_upper_triangular_d(n, A, is_upper_triangular, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)  :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
 
-      ! input matrix
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is upper triangular, .false. otherwise
-      logical, intent(out) :: is_upper_triangular
+     ! output: .true. if matrix is upper triangular, .false. otherwise
+     logical, intent(out) :: is_upper_triangular
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer  :: i, j
+!! local variables
+     ! loop indices
+     integer  :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_upper_triangular = .true.
+     ! initialize
+     is_upper_triangular = .true.
 
-      ! check all elements below main diagonal
-      ! upper triangular condition: A(i,j) = 0 for i > j
-      outer_loop: do i=2,n
-          inner_loop: do j=1,i-1
-              ! check if element below diagonal is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_upper_triangular = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-      enddo outer_loop ! over i={2,n} loop (outer_loop)
+     ! check all elements below main diagonal
+     ! upper triangular condition: A(i,j) = 0 for i > j
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check if element below diagonal is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_upper_triangular = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_upper_triangular_d
+     return
+  end subroutine s_is_upper_triangular_d
 
 !!
 !! @sub s_is_upper_triangular_z
@@ -4832,60 +4832,60 @@
 !! check if a complex(dp) matrix is upper triangular
 !! (all elements below main diagonal are zero).
 !!
-   subroutine s_is_upper_triangular_z(n, A, is_upper_triangular, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_upper_triangular_z(n, A, is_upper_triangular, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)     :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! input matrix
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is upper triangular, .false. otherwise
-      logical, intent(out)    :: is_upper_triangular
+     ! output: .true. if matrix is upper triangular, .false. otherwise
+     logical, intent(out)    :: is_upper_triangular
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer  :: i, j
+!! local variables
+     ! loop indices
+     integer  :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_upper_triangular = .true.
+     ! initialize
+     is_upper_triangular = .true.
 
-      ! check all elements below main diagonal
-      ! upper triangular condition: A(i,j) = 0 for i > j
-      outer_loop: do i=2,n
-          inner_loop: do j=1,i-1
-              ! check if element below diagonal is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_upper_triangular = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-      enddo outer_loop ! over i={2,n} loop (outer_loop)
+     ! check all elements below main diagonal
+     ! upper triangular condition: A(i,j) = 0 for i > j
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check if element below diagonal is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_upper_triangular = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
 
-  !! body]
+ !! body]
 
-       return
-    end subroutine s_is_upper_triangular_z
+      return
+   end subroutine s_is_upper_triangular_z
 
 !!
 !! @sub s_is_lower_triangular_d
@@ -4893,60 +4893,60 @@
 !! check if a real(dp) matrix is lower triangular
 !! (all elements above main diagonal are zero).
 !!
-   subroutine s_is_lower_triangular_d(n, A, is_lower_triangular, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_lower_triangular_d(n, A, is_lower_triangular, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)  :: n
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
 
-      ! input matrix
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is lower triangular, .false. otherwise
-      logical, intent(out) :: is_lower_triangular
+     ! output: .true. if matrix is lower triangular, .false. otherwise
+     logical, intent(out) :: is_lower_triangular
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
 !! local variables
-      ! loop indices
-      integer  :: i, j
+     ! loop indices
+     integer  :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
 !! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_lower_triangular = .true.
+     ! initialize
+     is_lower_triangular = .true.
 
-      ! check all elements above main diagonal
-      ! lower triangular condition: A(i,j) = 0 for i < j
-      outer_loop: do i=1,n-1
-          inner_loop: do j=i+1,n
-              ! check if element above diagonal is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_lower_triangular = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={i+1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n-1} loop (outer_loop)
+     ! check all elements above main diagonal
+     ! lower triangular condition: A(i,j) = 0 for i < j
+     outer_loop: do i=1,n-1
+         inner_loop: do j=i+1,n
+             ! check if element above diagonal is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_lower_triangular = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={i+1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n-1} loop (outer_loop)
 
 !! body]
 
-      return
-   end subroutine s_is_lower_triangular_d
+     return
+  end subroutine s_is_lower_triangular_d
 
 !!
 !! @sub s_is_lower_triangular_z
