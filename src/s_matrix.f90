@@ -6523,14 +6523,7 @@
      enddo ! over i={1,n} loop
 
      ! compute A = B * B^H to ensure positive definiteness
-     A = czero
-     do i=1,n
-         do j=1,n
-             do k=1,n
-                 A(i,j) = A(i,j) + B(i,k) * conjg(B(j,k))
-             enddo ! over k={1,n} loop
-         enddo ! over j={1,n} loop
-     enddo ! over i={1,n} loop
+     A = matmul(B, conjg(transpose(B)))
 
      ! add small positive value to diagonal to ensure strict positive definiteness
      do i=1,n
