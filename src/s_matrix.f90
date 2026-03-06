@@ -2575,8 +2575,8 @@
      ! workspace array for lapack subroutines
      real(dp), allocatable :: work(:)
 
-     ! pivot array for lapack subroutines
-     integer, allocatable  :: tau(:)
+     ! scalar factors for elementary reflectors
+     real(dp), allocatable :: tau(:)
 
 !! [body
 
@@ -2605,9 +2605,9 @@
      !
      ! zero out lower triangular part of R
      do i=1,min_mn
-         do j=1,i-1
+         do j=i+1,min_mn
              rmat(j,i) = zero
-         enddo ! over j={1,i-1} loop
+         enddo ! over j={i+1,min_mn} loop
      enddo ! over i={1,min_mn} loop
 
      ! generate orthogonal matrix Q from elementary reflectors
@@ -2675,7 +2675,7 @@
      ! workspace array for lapack subroutines
      complex(dp), allocatable :: work(:)
 
-     ! pivot array for lapack subroutines
+     ! scalar factors for elementary reflectors
      complex(dp), allocatable :: tau(:)
 
 !! [body
@@ -2701,13 +2701,12 @@
 
      ! extract R matrix from amat (upper triangular part)
      rmat = czero
-     rmat(1:min_mn,1:n) = amat(1:min_mn,1:n)
      !
-     ! zero out lower triangular part of R
+     ! copy upper triangular part of R from amat
      do i=1,min_mn
-         do j=1,i-1
-             rmat(j,i) = czero
-         enddo ! over j={1,i-1} loop
+         do j=i,n
+             rmat(i,j) = amat(i,j)
+         enddo ! over j={i,n} loop
      enddo ! over i={1,min_mn} loop
 
      ! generate unitary matrix Q from elementary reflectors
