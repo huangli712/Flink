@@ -44,6 +44,10 @@
 !!!           s_is_singular_z
 !!!           s_hilbert_d
 !!!           s_inverse_hilbert_d
+!!!           s_vandermonde_d
+!!!           s_vandermonde_z
+!!!           s_pascal_d
+!!!           s_wilkinson_d
 !!! source  : s_matrix.f90
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
@@ -5990,5 +5994,214 @@
 
 !! body]
 
+      return
+   end subroutine s_inverse_hilbert_d
+
+!!
+!! @sub s_vandermonde_d
+!!
+!! build a real(dp) Vandermonde matrix.
+!! Vandermonde matrix elements: V(i,j) = x_i^(j-1)
+!!
+  subroutine s_vandermonde_d(n, x, A)
+     use constants, only : dp
+     use constants, only : one, zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! input vector of points
+     real(dp), intent(in)  :: x(n)
+
+     ! output Vandermonde matrix
+     real(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! temporary value for power
+     real(dp) :: val
+
+!! [body
+
+     ! build Vandermonde matrix: V(i,j) = x(i)^(j-1)
+     do i=1,n
+         val = one
+         do j=1,n
+             if ( j == 1 ) then
+                 A(i,j) = one
+             else
+                 val = val * x(i)
+                 A(i,j) = val
+             endif ! back if ( j == 1 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
      return
-  end subroutine s_inverse_hilbert_d
+  end subroutine s_vandermonde_d
+
+!!
+!! @sub s_vandermonde_z
+!!
+!! build a complex(dp) Vandermonde matrix.
+!! Vandermonde matrix elements: V(i,j) = x_i^(j-1)
+!!
+  subroutine s_vandermonde_z(n, x, A)
+     use constants, only : dp
+     use constants, only : cone, czero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
+
+     ! input vector of points
+     complex(dp), intent(in) :: x(n)
+
+     ! output Vandermonde matrix
+     complex(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! temporary value for power
+     complex(dp) :: val
+
+!! [body
+
+     ! build Vandermonde matrix: V(i,j) = x(i)^(j-1)
+     do i=1,n
+         val = cone
+         do j=1,n
+             if ( j == 1 ) then
+                 A(i,j) = cone
+             else
+                 val = val * x(i)
+                 A(i,j) = val
+             endif ! back if ( j == 1 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_vandermonde_z
+
+!!
+!! @sub s_pascal_d
+!!
+!! build a real(dp) Pascal matrix.
+!! Pascal matrix elements: P(i,j) = C(i+j-2, j-1) = C(i+j-2, i-1)
+!!
+  subroutine s_pascal_d(n, A)
+     use constants, only : dp
+     use constants, only : one, zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! output Pascal matrix
+     real(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j, k
+
+     ! computed value
+     real(dp) :: val
+
+     ! auxiliary indices
+     integer :: ij, im1
+
+!! [body
+
+     ! build Pascal matrix: P(i,j) = C(i+j-2, j-1)
+     ! using multiplicative formula for combinations
+     do i=1,n
+         do j=1,n
+             ij = i + j - 2
+             im1 = i - 1
+
+             ! compute C(i+j-2, j-1) = (i+j-2)!/(j-1)!/(i-1)!
+             if ( ij >= j-1 .and. ij >= im1 ) then
+                 val = one
+                 do k=1, ij
+                     val = val * real(k, dp)
+                 enddo
+                 do k=1, j-1
+                     val = val / real(k, dp)
+                 enddo
+                 do k=1, im1
+                     val = val / real(k, dp)
+                 enddo
+                 A(i,j) = val
+             else
+                 A(i,j) = zero
+             endif ! back if ( ij >= j-1 .and. ij >= im1 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
+
+!! body]
+
+     return
+  end subroutine s_pascal_d
+
+!!
+!! @sub s_wilkinson_d
+!!
+!! build a real(dp) Wilkinson's W_{+} matrix.
+!! Wilkinson matrix has main diagonal: W(i,i) = n/2 + 1 - i
+!! and super/sub-diagonal elements equal to 1.
+!!
+  subroutine s_wilkinson_d(n, A)
+     use constants, only : dp
+     use constants, only : one, zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! output Wilkinson's W_{+} matrix
+     real(dp), intent(out):: A(n,n)
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! main diagonal value
+     real(dp) :: diag_val
+
+!! [body
+
+     ! initialize matrix to zero
+     A = zero
+
+     ! set main diagonal: W(i,i) = n/2 + 1 - i
+     do i=1,n
+         diag_val = real(n/2 + 1 - i, dp)
+         A(i,i) = diag_val
+     enddo ! over i={1,n} loop
+
+     ! set super-diagonal and sub-diagonal to 1
+     do i=1,n-1
+         A(i,i+1) = one
+         A(i+1,i) = one
+     enddo ! over i={1,n-1} loop
+
+!! body]
+
+     return
+  end subroutine s_wilkinson_d
