@@ -5937,13 +5937,13 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j, k, l
+     integer  :: i, j, k, l
 
      ! auxiliary variables for formula
-     integer :: ij
-     integer :: n_i, n_j
-     integer :: ij_2
-     integer :: i_1
+     integer  :: ij
+     integer  :: n_i, n_j
+     integer  :: ij_2
+     integer  :: i_1
 
      ! computed value
      real(dp) :: hinv
@@ -6007,23 +6007,23 @@
 !!
   subroutine s_vandermonde_d(n, x, A)
      use constants, only : dp
-     use constants, only : one, zero
+     use constants, only : one
 
      implicit none
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! input vector of points
      real(dp), intent(in)  :: x(n)
 
      ! output Vandermonde matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! temporary value for power
      real(dp) :: val
@@ -6056,7 +6056,7 @@
 !!
   subroutine s_vandermonde_z(n, x, A)
      use constants, only : dp
-     use constants, only : cone, czero
+     use constants, only : cone
 
      implicit none
 
@@ -6065,10 +6065,10 @@
      integer, intent(in)      :: n
 
      ! input vector of points
-     complex(dp), intent(in) :: x(n)
+     complex(dp), intent(in)  :: x(n)
 
      ! output Vandermonde matrix
-     complex(dp), intent(out):: A(n,n)
+     complex(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
@@ -6111,20 +6111,20 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! output Pascal matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
-     integer :: i, j, k
+     integer  :: i, j, k
+
+     ! auxiliary indices
+     integer  :: ij, im1
 
      ! computed value
      real(dp) :: val
-
-     ! auxiliary indices
-     integer :: ij, im1
 
 !! [body
 
@@ -6174,14 +6174,14 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! output Wilkinson's W_{+} matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! main diagonal value
      real(dp) :: diag_val
@@ -6222,20 +6222,20 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! sparsity level (0 = dense, 1 = sparse)
      real(dp), intent(in)  :: sparsity
 
      ! output sparse random matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
-     integer :: i, j, k
+     integer  :: i, j, k
 
      ! number of non-zero elements
-     integer :: nnz
+     integer  :: nnz
 
      ! random values
      real(dp) :: r1, r2, r3
@@ -6280,17 +6280,17 @@
      integer, intent(in)      :: n
 
      ! sparsity level (0 = dense, 1 = sparse)
-     real(dp), intent(in)  :: sparsity
+     real(dp), intent(in)     :: sparsity
 
      ! output sparse random matrix
-     complex(dp), intent(out):: A(n,n)
+     complex(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
      integer :: i, j, k
 
      ! number of non-zero elements
-     integer :: nnz
+     integer  :: nnz
 
      ! random values
      real(dp) :: r1, r2, r3, r4
@@ -6338,7 +6338,7 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! random values
      real(dp) :: r
@@ -6373,7 +6373,6 @@
 !!
   subroutine s_random_hermitian_z(n, A)
      use constants, only : dp
-     use iso_fortran_env, only : real64
 
      implicit none
 
@@ -6386,10 +6385,10 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! random values
-     real(real64) :: r1, r2, r3, r4
+     real(dp) :: r1, r2, r3, r4
 
 !! [body
 
@@ -6437,13 +6436,13 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j, k
-
-     ! random matrix B used to construct A = B * B^T
-     real(dp), allocatable :: B(:,:)
+     integer  :: i, j, k
 
      ! random values
      real(dp) :: r
+
+     ! random matrix B used to construct A = B * B^T
+     real(dp), allocatable :: B(:,:)
 
 !! [body
 
@@ -6501,13 +6500,13 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j, k
-
-     ! random matrix B used to construct A = B * B^H
-     complex(dp), allocatable :: B(:,:)
+     integer  :: i, j, k
 
      ! random values
      real(dp) :: r1, r2
+
+     ! random matrix B used to construct A = B * B^H
+     complex(dp), allocatable :: B(:,:)
 
 !! [body
 
