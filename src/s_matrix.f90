@@ -54,7 +54,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           03/07/2026 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
