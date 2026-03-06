@@ -4195,19 +4195,19 @@
 
 !! [body
 
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
      ! allocate arrays for SVD
      allocate(umat(m,min_mn))
      allocate(svec(min_mn))
      allocate(vmat(min_mn,n))
      allocate(sigma_pinv(min_mn,min_mn))
      allocate(temp1(min_mn,m))
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
      ! compute SVD decomposition
      call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
