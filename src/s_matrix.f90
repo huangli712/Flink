@@ -2298,10 +2298,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)  :: n
 
      ! input matrix
-     real(dp), intent(in)  :: A(n,n)
+     real(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is diagonal, .false. otherwise
      logical, intent(out) :: is_diagonal
@@ -2332,13 +2332,11 @@
      ! diagonal condition: A(i,j) = 0 for i /= j
      outer_loop: do i=1,n
          inner_loop: do j=1,n
-             ! skip diagonal elements
-             if ( i == j ) CYCLE
              ! check if off-diagonal element is zero
-             if ( abs( A(i,j) ) > actual_tol ) then
+             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
                  is_diagonal = .false.
                  exit outer_loop
-             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
          enddo inner_loop ! over j={1,n} loop (inner_loop)
      enddo outer_loop ! over i={1,n} loop (outer_loop)
 
@@ -2360,13 +2358,13 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix
-     complex(dp), intent(in)  :: A(n,n)
+     complex(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is diagonal, .false. otherwise
-     logical, intent(out)       :: is_diagonal
+     logical, intent(out)    :: is_diagonal
 
      ! tolerance for floating point comparison (optional, default 1.0e-8)
      real(dp), intent(in), optional :: tol
@@ -2392,15 +2390,13 @@
 
      ! check all off-diagonal elements
      ! diagonal condition: A(i,j) = 0 for i /= j
-     outer_loop: do i=1,n
+      outer_loop: do i=1,n
          inner_loop: do j=1,n
-             ! skip diagonal elements
-             if ( i == j ) CYCLE
              ! check if off-diagonal element is zero
-             if ( abs( A(i,j) ) > actual_tol ) then
+             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
                  is_diagonal = .false.
                  exit outer_loop
-             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
          enddo inner_loop ! over j={1,n} loop (inner_loop)
      enddo outer_loop ! over i={1,n} loop (outer_loop)
 
