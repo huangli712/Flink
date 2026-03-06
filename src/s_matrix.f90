@@ -5132,3 +5132,176 @@
 
       return
    end subroutine s_is_singular_z
+
+ !!
+ !! @sub s_is_orthogonal_d
+ !!
+ !! check if a real(dp) matrix is orthogonal (Q^T * Q = I).
+ !!
+    subroutine s_is_orthogonal_d(n, Q, is_orthogonal, tol)
+       use constants, only : dp
+       use constants, only : zero, one, eps8
+
+       implicit none
+
+  !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)  :: n
+
+       ! input matrix to check
+       real(dp), intent(in) :: Q(n,n)
+
+       ! output: .true. if matrix is orthogonal, .false. otherwise
+       logical, intent(out) :: is_orthogonal
+
+       ! tolerance for floating point comparison (optional, default 1.0e-8)
+       real(dp), intent(in), optional :: tol
+
+  !! local variables
+       ! loop indices
+       integer  :: i, j
+
+       ! actual tolerance value
+       real(dp) :: actual_tol
+
+       ! product matrix: Q^T * Q
+       real(dp), allocatable :: product(:,:)
+
+       ! identity matrix for comparison
+       real(dp), allocatable :: identity(:,:)
+
+  !! [body
+
+       ! set tolerance (use default if not provided)
+       if ( present(tol) ) then
+           actual_tol = tol
+       else
+           actual_tol = eps8
+       endif ! back if ( present(tol) ) block
+
+       ! allocate matrices
+       allocate(product(n,n), stat=i)
+       allocate(identity(n,n), stat=i)
+       !
+       if ( i /= 0 ) then
+           call s_print_error('s_is_orthogonal_d','can not allocate enough memory')
+       endif ! back if ( i /= 0 ) block
+
+       ! initialize
+       is_orthogonal = .true.
+       product = zero
+       identity = zero
+
+        ! compute identity matrix
+        do i=1,n
+            identity(i,i) = one
+        enddo ! over i={1,n} loop
+
+        ! compute product = Q^T * Q using matmul
+        product = matmul(transpose(Q), Q)
+
+       ! check if product equals identity matrix within tolerance
+       outer_loop: do i=1,n
+           inner_loop: do j=1,n
+               if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) then
+                   is_orthogonal = .false.
+                   exit outer_loop
+               endif ! back if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) block
+           enddo inner_loop ! over j={1,n} loop (inner_loop)
+       enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+       ! deallocate matrices
+       if ( allocated(product) )  deallocate(product)
+       if ( allocated(identity) ) deallocate(identity)
+
+  !! body]
+
+       return
+    end subroutine s_is_orthogonal_d
+
+ !!
+ !! @sub s_is_unitary_z
+ !!
+ !! check if a complex(dp) matrix is unitary (Q^H * Q = I).
+ !!
+    subroutine s_is_unitary_z(n, Q, is_unitary, tol)
+       use constants, only : dp
+       use constants, only : zero, one, eps8
+       use constants, only : czero, cone
+
+       implicit none
+
+  !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)     :: n
+
+       ! input matrix to check
+       complex(dp), intent(in) :: Q(n,n)
+
+       ! output: .true. if matrix is unitary, .false. otherwise
+       logical, intent(out)    :: is_unitary
+
+       ! tolerance for floating point comparison (optional, default 1.0e-8)
+       real(dp), intent(in), optional :: tol
+
+  !! local variables
+       ! loop indices
+       integer  :: i, j
+
+       ! actual tolerance value
+       real(dp) :: actual_tol
+
+       ! product matrix: Q^H * Q
+       complex(dp), allocatable :: product(:,:)
+
+       ! identity matrix for comparison
+       complex(dp), allocatable :: identity(:,:)
+
+  !! [body
+
+       ! set tolerance (use default if not provided)
+       if ( present(tol) ) then
+           actual_tol = tol
+       else
+           actual_tol = eps8
+       endif ! back if ( present(tol) ) block
+
+       ! allocate matrices
+       allocate(product(n,n), stat=i)
+       allocate(identity(n,n), stat=i)
+       !
+       if ( i /= 0 ) then
+           call s_print_error('s_is_unitary_z','can not allocate enough memory')
+       endif ! back if ( i /= 0 ) block
+
+       ! initialize
+       is_unitary = .true.
+       product = czero
+       identity = czero
+
+        ! compute identity matrix
+        do i=1,n
+            identity(i,i) = cone
+        enddo ! over i={1,n} loop
+
+        ! compute product = Q^H * Q using matmul
+        product = matmul(conjg(transpose(Q)), Q)
+
+       ! check if product equals identity matrix within tolerance
+       outer_loop: do i=1,n
+           inner_loop: do j=1,n
+               if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) then
+                   is_unitary = .false.
+                   exit outer_loop
+               endif ! back if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) block
+           enddo inner_loop ! over j={1,n} loop (inner_loop)
+       enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+       ! deallocate matrices
+       if ( allocated(product) ) deallocate(product)
+       if ( allocated(identity) ) deallocate(identity)
+
+  !! body]
+
+       return
+    end subroutine s_is_unitary_z
