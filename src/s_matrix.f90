@@ -4954,192 +4954,192 @@
 !! check if a complex(dp) matrix is lower triangular
 !! (all elements above main diagonal are zero).
 !!
-   subroutine s_is_lower_triangular_z(n, A, is_lower_triangular, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_lower_triangular_z(n, A, is_lower_triangular, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is lower triangular, .false. otherwise
-      logical, intent(out)     :: is_lower_triangular
+     ! output: .true. if matrix is lower triangular, .false. otherwise
+     logical, intent(out)     :: is_lower_triangular
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
 !! local variables
-      ! loop indices
-      integer  :: i, j
+     ! loop indices
+     integer  :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
 !! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! initialize
-      is_lower_triangular = .true.
+     ! initialize
+     is_lower_triangular = .true.
 
-      ! check all elements above main diagonal
-      ! lower triangular condition: A(i,j) = 0 for i < j
-      outer_loop: do i=1,n-1
-          inner_loop: do j=i+1,n
-              ! check if element above diagonal is zero
-              if ( abs( A(i,j) ) > actual_tol ) then
-                  is_lower_triangular = .false.
-                  exit outer_loop
-              endif ! back if ( abs( A(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={i+1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n-1} loop (outer_loop)
+     ! check all elements above main diagonal
+     ! lower triangular condition: A(i,j) = 0 for i < j
+     outer_loop: do i=1,n-1
+         inner_loop: do j=i+1,n
+             ! check if element above diagonal is zero
+             if ( abs( A(i,j) ) > actual_tol ) then
+                 is_lower_triangular = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={i+1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n-1} loop (outer_loop)
 
-  !! body]
+!! body]
 
-       return
-    end subroutine s_is_lower_triangular_z
+     return
+  end subroutine s_is_lower_triangular_z
 
 !!
 !! @sub s_is_singular_d
 !!
 !! check if a real(dp) matrix is singular (determinant is zero).
 !!
-   subroutine s_is_singular_d(n, A, is_singular)
-      use constants, only : dp
+  subroutine s_is_singular_d(n, A, is_singular)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)  :: n
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
 
-      ! input matrix
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is singular, .false. otherwise
-      logical, intent(out) :: is_singular
+     ! output: .true. if matrix is singular, .false. otherwise
+     logical, intent(out) :: is_singular
 
 !! local variables
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
-      ! working array for LU decomposition
-      real(dp), allocatable :: dmat(:,:)
+     ! working array for LU decomposition
+     real(dp), allocatable :: dmat(:,:)
 
-      ! working arrays for lapack subroutines: dgetrf
-      integer, allocatable  :: ipiv(:)
+     ! working arrays for lapack subroutines: dgetrf
+     integer, allocatable  :: ipiv(:)
 
 !! [body
 
-      ! allocate memory
-      allocate(dmat(n,n), stat=ierror)
-      allocate(ipiv(n),   stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_is_singular_d','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate memory
+     allocate(dmat(n,n), stat=ierror)
+     allocate(ipiv(n),   stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_is_singular_d','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy input matrix to working array
-      dmat = A
+     ! copy input matrix to working array
+     dmat = A
 
-      ! computes the LU factorization of a general n-by-n matrix.
-      ! need lapack package (dgetrf subroutine).
-      ! if ierror > 0, the matrix is singular
-      call DGETRF(n, n, dmat, n, ipiv, ierror)
+     ! computes the LU factorization of a general n-by-n matrix.
+     ! need lapack package (dgetrf subroutine).
+     ! if ierror > 0, the matrix is singular
+     call DGETRF(n, n, dmat, n, ipiv, ierror)
 
-      ! check if matrix is singular
-      ! ierror > 0: U(i,i) is exactly zero. The factorization
-      ! has been completed, but the factor U is exactly singular.
-      if ( ierror > 0 ) then
-          is_singular = .true.
-      else
-          is_singular = .false.
-      endif ! back if ( ierror > 0 ) block
+     ! check if matrix is singular
+     ! ierror > 0: U(i,i) is exactly zero. The factorization
+     ! has been completed, but the factor U is exactly singular.
+     if ( ierror > 0 ) then
+         is_singular = .true.
+     else
+         is_singular = .false.
+     endif ! back if ( ierror > 0 ) block
 
-      ! deallocate memory
-      if ( allocated(dmat) ) deallocate(dmat)
-      if ( allocated(ipiv) ) deallocate(ipiv)
+     ! deallocate memory
+     if ( allocated(dmat) ) deallocate(dmat)
+     if ( allocated(ipiv) ) deallocate(ipiv)
 
 !! body]
 
-      return
-   end subroutine s_is_singular_d
+     return
+  end subroutine s_is_singular_d
 
 !!
 !! @sub s_is_singular_z
 !!
 !! check if a complex(dp) matrix is singular (determinant is zero).
 !!
-   subroutine s_is_singular_z(n, A, is_singular)
-      use constants, only : dp
+  subroutine s_is_singular_z(n, A, is_singular)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)     :: n
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! input matrix
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is singular, .false. otherwise
-      logical, intent(out)    :: is_singular
+     ! output: .true. if matrix is singular, .false. otherwise
+     logical, intent(out)    :: is_singular
 
 !! local variables
-      ! error flag
-      integer :: ierror
+     ! error flag
+     integer :: ierror
 
-      ! working array for LU decomposition
-      complex(dp), allocatable :: zmat(:,:)
+     ! working array for LU decomposition
+     complex(dp), allocatable :: zmat(:,:)
 
-      ! working arrays for lapack subroutines: zgetrf
-      integer, allocatable     :: ipiv(:)
+     ! working arrays for lapack subroutines: zgetrf
+     integer, allocatable     :: ipiv(:)
 
 !! [body
 
-      ! allocate memory
-      allocate(zmat(n,n), stat=ierror)
-      allocate(ipiv(n),   stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_is_singular_z','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate memory
+     allocate(zmat(n,n), stat=ierror)
+     allocate(ipiv(n),   stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_is_singular_z','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy input matrix to working array
-      zmat = A
+     ! copy input matrix to working array
+     zmat = A
 
-      ! computes the LU factorization of a general n-by-n matrix.
-      ! need lapack package (zgetrf subroutine).
-      ! if ierror > 0, the matrix is singular
-      call ZGETRF(n, n, zmat, n, ipiv, ierror)
+     ! computes the LU factorization of a general n-by-n matrix.
+     ! need lapack package (zgetrf subroutine).
+     ! if ierror > 0, the matrix is singular
+     call ZGETRF(n, n, zmat, n, ipiv, ierror)
 
-      ! check if matrix is singular
-      ! ierror > 0: U(i,i) is exactly zero. The factorization
-      ! has been completed, but the factor U is exactly singular.
-      if ( ierror > 0 ) then
-          is_singular = .true.
-      else
-          is_singular = .false.
-      endif ! back if ( ierror > 0 ) block
+     ! check if matrix is singular
+     ! ierror > 0: U(i,i) is exactly zero. The factorization
+     ! has been completed, but the factor U is exactly singular.
+     if ( ierror > 0 ) then
+         is_singular = .true.
+     else
+         is_singular = .false.
+     endif ! back if ( ierror > 0 ) block
 
-      ! deallocate memory
-      if ( allocated(zmat) ) deallocate(zmat)
-      if ( allocated(ipiv) ) deallocate(ipiv)
+     ! deallocate memory
+     if ( allocated(zmat) ) deallocate(zmat)
+     if ( allocated(ipiv) ) deallocate(ipiv)
 
 !! body]
 
-      return
-   end subroutine s_is_singular_z
+     return
+  end subroutine s_is_singular_z
 
  !!
  !! @sub s_is_orthogonal_d
