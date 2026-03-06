@@ -2053,7 +2053,7 @@
 
 !! [body
 
-     ! initialize lwrok
+     ! initialize lwork
      lwork = max(1, 3 * min_mn + max(m,n), 5 * min_mn)
 
      ! allocate memory
@@ -2131,7 +2131,7 @@
 
 !! [body
 
-     ! initialize lwrok
+     ! initialize lwork
      lwork = max(1, 2 * min_mn + max(m,n))
 
      ! allocate memory
