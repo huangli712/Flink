@@ -6180,8 +6180,8 @@
      real(dp), intent(out):: A(n,n)
 
 !! local variables
-     ! loop indices
-     integer :: i, j
+     ! loop index
+     integer :: i
 
      ! main diagonal value
      real(dp) :: diag_val
@@ -6238,11 +6238,7 @@
      integer :: nnz
 
      ! random values
-     real(dp) :: rval
-
-     ! indices for random selection
-     integer, allocatable :: idx_i(:)
-     integer, allocatable :: idx_j(:)
+     real(dp) :: r1, r2, r3
 
 !! [body
 
@@ -6252,33 +6248,15 @@
      ! calculate number of non-zero elements
      nnz = int(n * n * sparsity)
 
-     ! allocate index arrays for random selection
-     allocate(idx_i(nnz), stat=k)
-     allocate(idx_j(nnz), stat=k)
-     !
-     if ( k /= 0 ) then
-         deallocate(idx_i)
-         deallocate(idx_j)
-         return
-     endif ! back if ( k /= 0 ) block
-
-     ! generate random positions using selection without replacement
+     ! fill matrix randomly
      do k=1,nnz
-         idx_i(k) = int(random_number(dp) * real(n, dp)) + 1
-         idx_j(k) = int(random_number(dp) * real(n, dp)) + 1
+         call random_number(r1)
+         call random_number(r2)
+         i = int(r1 * real(n, dp)) + 1
+         j = int(r2 * real(n, dp)) + 1
+         call random_number(r3)
+         A(i,j) = r3
      enddo ! over k={1,nnz} loop
-
-     ! assign random values to selected positions
-     do k=1,nnz
-         i = idx_i(k)
-         j = idx_j(k)
-         rval = random_number(dp)
-         A(i,j) = rval
-     enddo ! over k={1,nnz} loop
-
-     ! deallocate index arrays
-     deallocate(idx_i)
-     deallocate(idx_j)
 
 !! body]
 
@@ -6315,11 +6293,7 @@
      integer :: nnz
 
      ! random values
-     real(dp) :: rval, ival
-
-     ! indices for random selection
-     integer, allocatable :: idx_i(:)
-     integer, allocatable :: idx_j(:)
+     real(dp) :: r1, r2, r3, r4
 
 !! [body
 
@@ -6329,34 +6303,16 @@
      ! calculate number of non-zero elements
      nnz = int(n * n * sparsity)
 
-     ! allocate index arrays for random selection
-     allocate(idx_i(nnz), stat=k)
-     allocate(idx_j(nnz), stat=k)
-     !
-     if ( k /= 0 ) then
-         deallocate(idx_i)
-         deallocate(idx_j)
-         return
-     endif ! back if ( k /= 0 ) block
-
-     ! generate random positions using selection without replacement
+     ! fill matrix randomly
      do k=1,nnz
-         idx_i(k) = int(random_number(dp) * real(n, dp)) + 1
-         idx_j(k) = int(random_number(dp) * real(n, dp)) + 1
+         call random_number(r1)
+         call random_number(r2)
+         call random_number(r3)
+         call random_number(r4)
+         i = int(r1 * real(n, dp)) + 1
+         j = int(r2 * real(n, dp)) + 1
+         A(i,j) = dcmplx(r3, r4)
      enddo ! over k={1,nnz} loop
-
-     ! assign random values to selected positions
-     do k=1,nnz
-         i = idx_i(k)
-         j = idx_j(k)
-         rval = random_number(dp)
-         ival = random_number(dp)
-         A(i,j) = dcmplx(rval, ival)
-     enddo ! over k={1,nnz} loop
-
-     ! deallocate index arrays
-     deallocate(idx_i)
-     deallocate(idx_j)
 
 !! body]
 
