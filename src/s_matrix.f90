@@ -5298,10 +5298,170 @@
        enddo outer_loop ! over i={1,n} loop (outer_loop)
 
        ! deallocate matrices
-       if ( allocated(product) ) deallocate(product)
+       if ( allocated(product) )  deallocate(product)
        if ( allocated(identity) ) deallocate(identity)
 
   !! body]
 
-       return
+        return
     end subroutine s_is_unitary_z
+
+ !!
+ !! @sub s_is_normal_d
+ !!
+ !! check if a real(dp) matrix is normal (A^T * A = A * A^T).
+ !!
+    subroutine s_is_normal_d(n, A, is_normal, tol)
+       use constants, only : dp
+       use constants, only : eps8
+
+       implicit none
+
+  !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)   :: n
+
+       ! input matrix to check
+       real(dp), intent(in) :: A(n,n)
+
+       ! output: .true. if matrix is normal, .false. otherwise
+       logical, intent(out) :: is_normal
+
+       ! tolerance for floating point comparison (optional, default 1.0e-8)
+       real(dp), intent(in), optional :: tol
+
+  !! local variables
+       ! loop indices
+       integer :: i, j
+
+       ! actual tolerance value
+       real(dp) :: actual_tol
+
+       ! product matrices: A^T * A and A * A^T
+       real(dp), allocatable :: left_product(:,:)
+       real(dp), allocatable :: right_product(:,:)
+
+  !! [body
+
+       ! set tolerance (use default if not provided)
+       if ( present(tol) ) then
+           actual_tol = tol
+       else
+           actual_tol = eps8
+       endif ! back if ( present(tol) ) block
+
+       ! allocate matrices
+       allocate(left_product(n,n), stat=i)
+       allocate(right_product(n,n), stat=i)
+       !
+       if ( i /= 0 ) then
+           call s_print_error('s_is_normal_d','can not allocate enough memory')
+       endif ! back if ( i /= 0 ) block
+
+       ! initialize
+       is_normal = .true.
+
+       ! compute left product = A^T * A using matmul
+       left_product = matmul(transpose(A), A)
+
+       ! compute right product = A * A^T using matmul
+       right_product = matmul(A, transpose(A))
+
+       ! check if left_product equals right_product within tolerance
+       outer_loop: do i=1,n
+           inner_loop: do j=1,n
+               if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
+                   is_normal = .false.
+                   exit outer_loop
+               endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
+           enddo inner_loop ! over j={1,n} loop (inner_loop)
+       enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+       ! deallocate matrices
+       if ( allocated(left_product) ) deallocate(left_product)
+       if ( allocated(right_product) ) deallocate(right_product)
+
+  !! body]
+
+       return
+    end subroutine s_is_normal_d
+
+ !!
+ !! @sub s_is_normal_z
+ !!
+ !! check if a complex(dp) matrix is normal (A^H * A = A * A^H).
+ !!
+    subroutine s_is_normal_z(n, A, is_normal, tol)
+       use constants, only : dp
+       use constants, only : eps8
+
+       implicit none
+
+  !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)      :: n
+
+       ! input matrix to check
+       complex(dp), intent(in) :: A(n,n)
+
+       ! output: .true. if matrix is normal, .false. otherwise
+       logical, intent(out)       :: is_normal
+
+       ! tolerance for floating point comparison (optional, default 1.0e-8)
+       real(dp), intent(in), optional :: tol
+
+  !! local variables
+       ! loop indices
+       integer :: i, j
+
+       ! actual tolerance value
+       real(dp) :: actual_tol
+
+       ! product matrices: A^H * A and A * A^H
+       complex(dp), allocatable :: left_product(:,:)
+       complex(dp), allocatable :: right_product(:,:)
+
+  !! [body
+
+       ! set tolerance (use default if not provided)
+       if ( present(tol) ) then
+           actual_tol = tol
+       else
+           actual_tol = eps8
+       endif ! back if ( present(tol) ) block
+
+       ! allocate matrices
+       allocate(left_product(n,n), stat=i)
+       allocate(right_product(n,n), stat=i)
+       !
+       if ( i /= 0 ) then
+           call s_print_error('s_is_normal_z','can not allocate enough memory')
+       endif ! back if ( i /= 0 ) block
+
+       ! initialize
+       is_normal = .true.
+
+       ! compute left product = A^H * A using matmul
+       left_product = matmul(conjg(transpose(A)), A)
+
+       ! compute right product = A * A^H using matmul
+       right_product = matmul(A, conjg(transpose(A)))
+
+       ! check if left_product equals right_product within tolerance
+       outer_loop: do i=1,n
+           inner_loop: do j=1,n
+               if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
+                   is_normal = .false.
+                   exit outer_loop
+               endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
+           enddo inner_loop ! over j={1,n} loop (inner_loop)
+       enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+       ! deallocate matrices
+       if ( allocated(left_product) ) deallocate(left_product)
+       if ( allocated(right_product) ) deallocate(right_product)
+
+  !! body]
+
+       return
+    end subroutine s_is_normal_z
