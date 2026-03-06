@@ -6417,3 +6417,131 @@
 
       return
    end subroutine s_random_hermitian_z
+!!
+!! @sub s_random_positive_definite_d
+!!
+!! build a random positive definite real(dp) matrix.
+!!
+   subroutine s_random_positive_definite_d(n, A)
+      use constants, only : dp
+      use constants, only : zero
+
+      implicit none
+
+!! external arguments
+      ! size of matrix
+      integer, intent(in)   :: n
+
+      ! output random positive definite matrix
+      real(dp), intent(out) :: A(n,n)
+
+!! local variables
+      ! loop indices
+      integer :: i, j, k
+
+      ! random matrix B used to construct A = B * B^T
+      real(dp), allocatable :: B(:,:)
+
+      ! random values
+      real(dp) :: r
+
+!! [body
+
+      ! allocate temporary matrix B
+      allocate(B(n,n), stat=i)
+
+      ! generate random matrix B
+      do i=1,n
+          do j=1,n
+              call random_number(r)
+              B(i,j) = real(r, dp)
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! compute A = B * B^T to ensure positive definiteness
+      A = zero
+      do i=1,n
+          do j=1,n
+              do k=1,n
+                  A(i,j) = A(i,j) + B(i,k) * B(j,k)
+              enddo ! over k={1,n} loop
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! add small positive value to diagonal to ensure strict positive definiteness
+      do i=1,n
+          A(i,i) = A(i,i) + 1.0_dp
+      enddo ! over i={1,n} loop
+
+      ! deallocate temporary matrix
+      deallocate(B)
+
+!! body]
+
+      return
+   end subroutine s_random_positive_definite_d
+
+!!
+!! @sub s_random_positive_definite_z
+!!
+!! build a random positive definite complex(dp) Hermitian matrix.
+!!
+   subroutine s_random_positive_definite_z(n, A)
+      use constants, only : dp
+      use constants, only : czero
+
+      implicit none
+
+!! external arguments
+      ! size of matrix
+      integer, intent(in)      :: n
+
+      ! output random positive definite Hermitian matrix
+      complex(dp), intent(out) :: A(n,n)
+
+!! local variables
+      ! loop indices
+      integer :: i, j, k
+
+      ! random matrix B used to construct A = B * B^H
+      complex(dp), allocatable :: B(:,:)
+
+      ! random values
+      real(dp) :: r1, r2
+
+!! [body
+
+      ! allocate temporary matrix B
+      allocate(B(n,n), stat=i)
+
+      ! generate random complex matrix B
+      do i=1,n
+          do j=1,n
+              call random_number(r1)
+              call random_number(r2)
+              B(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! compute A = B * B^H to ensure positive definiteness
+      A = czero
+      do i=1,n
+          do j=1,n
+              do k=1,n
+                  A(i,j) = A(i,j) + B(i,k) * conjg(B(j,k))
+              enddo ! over k={1,n} loop
+          enddo ! over j={1,n} loop
+      enddo ! over i={1,n} loop
+
+      ! add small positive value to diagonal to ensure strict positive definiteness
+      do i=1,n
+          A(i,i) = A(i,i) + 1.0_dp
+      enddo ! over i={1,n} loop
+
+      ! deallocate temporary matrix
+      deallocate(B)
+
+!! body]
+
+      return
+   end subroutine s_random_positive_definite_z
