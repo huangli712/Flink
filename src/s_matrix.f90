@@ -5232,422 +5232,422 @@
 !!
 !! check if a complex(dp) matrix is unitary (Q^H * Q = I).
 !!
-   subroutine s_is_unitary_z(n, Q, is_unitary, tol)
-      use constants, only : dp
-      use constants, only : zero, one, eps8
-      use constants, only : czero, cone
+  subroutine s_is_unitary_z(n, Q, is_unitary, tol)
+     use constants, only : dp
+     use constants, only : zero, one, eps8
+     use constants, only : czero, cone
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)     :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
 
-      ! input matrix to check
-      complex(dp), intent(in) :: Q(n,n)
+     ! input matrix to check
+     complex(dp), intent(in) :: Q(n,n)
 
-      ! output: .true. if matrix is unitary, .false. otherwise
-      logical, intent(out)    :: is_unitary
+     ! output: .true. if matrix is unitary, .false. otherwise
+     logical, intent(out)    :: is_unitary
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer  :: i, j
+!! local variables
+     ! loop indices
+     integer  :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! product matrix: Q^H * Q
-      complex(dp), allocatable :: product(:,:)
+     ! product matrix: Q^H * Q
+     complex(dp), allocatable :: product(:,:)
 
-      ! identity matrix for comparison
-      complex(dp), allocatable :: identity(:,:)
+     ! identity matrix for comparison
+     complex(dp), allocatable :: identity(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate matrices
-      allocate(product(n,n), stat=i)
-      allocate(identity(n,n), stat=i)
-      !
-      if ( i /= 0 ) then
-          call s_print_error('s_is_unitary_z','can not allocate enough memory')
-      endif ! back if ( i /= 0 ) block
+     ! allocate matrices
+     allocate(product(n,n), stat=i)
+     allocate(identity(n,n), stat=i)
+     !
+     if ( i /= 0 ) then
+         call s_print_error('s_is_unitary_z','can not allocate enough memory')
+     endif ! back if ( i /= 0 ) block
 
-      ! initialize
-      is_unitary = .true.
-      product = czero
-      identity = czero
+     ! initialize
+     is_unitary = .true.
+     product = czero
+     identity = czero
 
-       ! compute identity matrix
-       do i=1,n
-           identity(i,i) = cone
-       enddo ! over i={1,n} loop
+      ! compute identity matrix
+      do i=1,n
+          identity(i,i) = cone
+      enddo ! over i={1,n} loop
 
-       ! compute product = Q^H * Q using matmul
-       product = matmul(conjg(transpose(Q)), Q)
+      ! compute product = Q^H * Q using matmul
+      product = matmul(conjg(transpose(Q)), Q)
 
-      ! check if product equals identity matrix within tolerance
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) then
-                  is_unitary = .false.
-                  exit outer_loop
-              endif ! back if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check if product equals identity matrix within tolerance
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) then
+                 is_unitary = .false.
+                 exit outer_loop
+             endif ! back if ( abs( product(i,j) - identity(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
-      ! deallocate matrices
-      if ( allocated(product) )  deallocate(product)
-      if ( allocated(identity) ) deallocate(identity)
+     ! deallocate matrices
+     if ( allocated(product) )  deallocate(product)
+     if ( allocated(identity) ) deallocate(identity)
 
- !! body]
+!! body]
 
-       return
-   end subroutine s_is_unitary_z
+      return
+  end subroutine s_is_unitary_z
 
 !!
 !! @sub s_is_normal_d
 !!
 !! check if a real(dp) matrix is normal (A^T * A = A * A^T).
 !!
-   subroutine s_is_normal_d(n, A, is_normal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_normal_d(n, A, is_normal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix to check
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix to check
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is normal, .false. otherwise
-      logical, intent(out) :: is_normal
+     ! output: .true. if matrix is normal, .false. otherwise
+     logical, intent(out) :: is_normal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! product matrices: A^T * A and A * A^T
-      real(dp), allocatable :: left_product(:,:)
-      real(dp), allocatable :: right_product(:,:)
+     ! product matrices: A^T * A and A * A^T
+     real(dp), allocatable :: left_product(:,:)
+     real(dp), allocatable :: right_product(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate matrices
-      allocate(left_product(n,n), stat=i)
-      allocate(right_product(n,n), stat=i)
-      !
-      if ( i /= 0 ) then
-          call s_print_error('s_is_normal_d','can not allocate enough memory')
-      endif ! back if ( i /= 0 ) block
+     ! allocate matrices
+     allocate(left_product(n,n), stat=i)
+     allocate(right_product(n,n), stat=i)
+     !
+     if ( i /= 0 ) then
+         call s_print_error('s_is_normal_d','can not allocate enough memory')
+     endif ! back if ( i /= 0 ) block
 
-      ! initialize
-      is_normal = .true.
+     ! initialize
+     is_normal = .true.
 
-      ! compute left product = A^T * A using matmul
-      left_product = matmul(transpose(A), A)
+     ! compute left product = A^T * A using matmul
+     left_product = matmul(transpose(A), A)
 
-      ! compute right product = A * A^T using matmul
-      right_product = matmul(A, transpose(A))
+     ! compute right product = A * A^T using matmul
+     right_product = matmul(A, transpose(A))
 
-      ! check if left_product equals right_product within tolerance
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
-                  is_normal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check if left_product equals right_product within tolerance
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
+                 is_normal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
-      ! deallocate matrices
-      if ( allocated(left_product) ) deallocate(left_product)
-      if ( allocated(right_product) ) deallocate(right_product)
+     ! deallocate matrices
+     if ( allocated(left_product) ) deallocate(left_product)
+     if ( allocated(right_product) ) deallocate(right_product)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_normal_d
+     return
+  end subroutine s_is_normal_d
 
 !!
 !! @sub s_is_normal_z
 !!
 !! check if a complex(dp) matrix is normal (A^H * A = A * A^H).
 !!
-   subroutine s_is_normal_z(n, A, is_normal, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_is_normal_z(n, A, is_normal, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix to check
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix to check
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: .true. if matrix is normal, .false. otherwise
-      logical, intent(out)       :: is_normal
+     ! output: .true. if matrix is normal, .false. otherwise
+     logical, intent(out)       :: is_normal
 
-      ! tolerance for floating point comparison (optional, default 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! product matrices: A^H * A and A * A^H
-      complex(dp), allocatable :: left_product(:,:)
-      complex(dp), allocatable :: right_product(:,:)
+     ! product matrices: A^H * A and A * A^H
+     complex(dp), allocatable :: left_product(:,:)
+     complex(dp), allocatable :: right_product(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate matrices
-      allocate(left_product(n,n), stat=i)
-      allocate(right_product(n,n), stat=i)
-      !
-      if ( i /= 0 ) then
-          call s_print_error('s_is_normal_z','can not allocate enough memory')
-      endif ! back if ( i /= 0 ) block
+     ! allocate matrices
+     allocate(left_product(n,n), stat=i)
+     allocate(right_product(n,n), stat=i)
+     !
+     if ( i /= 0 ) then
+         call s_print_error('s_is_normal_z','can not allocate enough memory')
+     endif ! back if ( i /= 0 ) block
 
-      ! initialize
-      is_normal = .true.
+     ! initialize
+     is_normal = .true.
 
-      ! compute left product = A^H * A using matmul
-      left_product = matmul(conjg(transpose(A)), A)
+     ! compute left product = A^H * A using matmul
+     left_product = matmul(conjg(transpose(A)), A)
 
-      ! compute right product = A * A^H using matmul
-      right_product = matmul(A, conjg(transpose(A)))
+     ! compute right product = A * A^H using matmul
+     right_product = matmul(A, conjg(transpose(A)))
 
-      ! check if left_product equals right_product within tolerance
-      outer_loop: do i=1,n
-          inner_loop: do j=1,n
-              if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
-                  is_normal = .false.
-                  exit outer_loop
-              endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
-          enddo inner_loop ! over j={1,n} loop (inner_loop)
-      enddo outer_loop ! over i={1,n} loop (outer_loop)
+     ! check if left_product equals right_product within tolerance
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) then
+                 is_normal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( left_product(i,j) - right_product(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
 
-      ! deallocate matrices
-      if ( allocated(left_product) ) deallocate(left_product)
-      if ( allocated(right_product) ) deallocate(right_product)
+     ! deallocate matrices
+     if ( allocated(left_product) ) deallocate(left_product)
+     if ( allocated(right_product) ) deallocate(right_product)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_is_normal_z
+     return
+  end subroutine s_is_normal_z
 
 !!
 !! @sub s_sparsity_ratio_i
 !!
 !! calculate sparsity ratio for an integer matrix (ratio of zero elements).
 !!
-   subroutine s_sparsity_ratio_i(n, A, ratio)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_sparsity_ratio_i(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      integer, intent(in) :: A(n,n)
+     ! input matrix
+     integer, intent(in) :: A(n,n)
 
-      ! output: sparsity ratio (0.0 to 1.0)
-      real(dp), intent(out) :: ratio
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out) :: ratio
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! counter for zero elements
-      integer :: zero_count
+     ! counter for zero elements
+     integer :: zero_count
 
-      ! total elements
-      integer :: total
+     ! total elements
+     integer :: total
 
- !! [body
+!! [body
 
-      ! initialize
-      zero_count = 0
-      total = n * n
+     ! initialize
+     zero_count = 0
+     total = n * n
 
-      ! count zero elements
-      do i=1,n
-          do j=1,n
-              if ( A(i,j) == 0 ) then
-                  zero_count = zero_count + 1
-              endif ! back if ( A(i,j) == 0 ) block
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! count zero elements
+     do i=1,n
+         do j=1,n
+             if ( A(i,j) == 0 ) then
+                 zero_count = zero_count + 1
+             endif ! back if ( A(i,j) == 0 ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! compute sparsity ratio
-      if ( total > 0 ) then
-          ratio = real(zero_count, dp) / real(total, dp)
-      else
-          ratio = zero
-      endif ! back if ( total > 0 ) block
+     ! compute sparsity ratio
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
+     else
+         ratio = zero
+     endif ! back if ( total > 0 ) block
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_sparsity_ratio_i
+     return
+  end subroutine s_sparsity_ratio_i
 
 !!
 !! @sub s_sparsity_ratio_d
 !!
 !! calculate sparsity ratio for a real(dp) matrix (ratio of zero elements).
 !!
-   subroutine s_sparsity_ratio_d(n, A, ratio)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_sparsity_ratio_d(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input matrix
-      real(dp), intent(in) :: A(n,n)
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
 
-      ! output: sparsity ratio (0.0 to 1.0)
-      real(dp), intent(out) :: ratio
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out) :: ratio
 
-      ! local variables
-      ! loop indices
-      integer :: i, j
+     ! local variables
+     ! loop indices
+     integer :: i, j
 
-      ! counter for zero elements
-      integer :: zero_count
+     ! counter for zero elements
+     integer :: zero_count
 
-      ! total elements
-      real(dp) :: total
+     ! total elements
+     real(dp) :: total
 
- !! [body
+!! [body
 
-      ! initialize
-      zero_count = 0
-      total = real(n, dp) * real(n, dp)
+     ! initialize
+     zero_count = 0
+     total = real(n, dp) * real(n, dp)
 
-      ! count zero elements
-      do i=1,n
-          do j=1,n
-              if ( abs( A(i,j) ) < 1.0e-12_dp ) then
-                  zero_count = zero_count + 1
-              endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! count zero elements
+     do i=1,n
+         do j=1,n
+             if ( abs( A(i,j) ) < 1.0e-12_dp ) then
+                 zero_count = zero_count + 1
+             endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! compute sparsity ratio
-      if ( total > 0.0_dp ) then
-          ratio = real(zero_count, dp) / total
-      else
-          ratio = zero
-      endif ! back if ( total > 0.0_dp ) block
+     ! compute sparsity ratio
+     if ( total > 0.0_dp ) then
+         ratio = real(zero_count, dp) / total
+     else
+         ratio = zero
+     endif ! back if ( total > 0.0_dp ) block
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_sparsity_ratio_d
+     return
+  end subroutine s_sparsity_ratio_d
 
 !!
 !! @sub s_sparsity_ratio_z
 !!
 !! calculate sparsity ratio for a complex(dp) matrix (ratio of zero elements).
 !!
-   subroutine s_sparsity_ratio_z(n, A, ratio)
-      use constants, only : dp
-      use constants, only : zero
-      use constants, only : czero
+  subroutine s_sparsity_ratio_z(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero
+     use constants, only : czero
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)      :: n
+     ! size of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in) :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
 
-      ! output: sparsity ratio (0.0 to 1.0)
-      real(dp), intent(out)    :: ratio
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out)    :: ratio
 
 !! local variables
-      ! loop indices
-      integer :: i, j
+     ! loop indices
+     integer :: i, j
 
-      ! counter for zero elements
-      integer :: zero_count
+     ! counter for zero elements
+     integer :: zero_count
 
-      ! total elements
-      real(dp) :: total
+     ! total elements
+     real(dp) :: total
 
 !! [body
 
-      ! initialize
-      zero_count = 0
-      total = real(n, dp) * real(n, dp)
+     ! initialize
+     zero_count = 0
+     total = real(n, dp) * real(n, dp)
 
-      ! count zero elements
-      do i=1,n
-          do j=1,n
-              if ( abs( A(i,j) ) < 1.0e-12_dp ) then
-                  zero_count = zero_count + 1
-              endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
-          enddo ! over j={1,n} loop
-      enddo ! over i={1,n} loop
+     ! count zero elements
+     do i=1,n
+         do j=1,n
+             if ( abs( A(i,j) ) < 1.0e-12_dp ) then
+                 zero_count = zero_count + 1
+             endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
-      ! compute sparsity ratio
-      if ( total > 0.0_dp ) then
-          ratio = real(zero_count, dp) / total
-      else
-          ratio = zero
-      endif ! back if ( total > 0.0_dp ) block
+     ! compute sparsity ratio
+     if ( total > 0.0_dp ) then
+         ratio = real(zero_count, dp) / total
+     else
+         ratio = zero
+     endif ! back if ( total > 0.0_dp ) block
 
- !! body]
+!! body]
 
-      return
-    end subroutine s_sparsity_ratio_z
+     return
+  end subroutine s_sparsity_ratio_z
 
 !!
 !! @sub s_upper_triangular_d
@@ -5655,36 +5655,36 @@
 !! construct an upper triangular matrix from a real(dp) matrix.
 !! sets all elements below the main diagonal to zero.
 !!
-   subroutine s_upper_triangular_d(n, A)
-      use constants, only : dp
-      use constants, only : zero
+  subroutine s_upper_triangular_d(n, A)
+     use constants, only : dp
+     use constants, only : zero
 
-      implicit none
+     implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-      integer, intent(in)   :: n
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
 
-      ! input/output matrix
-      real(dp), intent(inout) :: A(n,n)
+     ! input/output matrix
+     real(dp), intent(inout) :: A(n,n)
 
 !! local variables
-      ! loop indices
-      integer :: i, j
+     ! loop indices
+     integer :: i, j
 
 !! [body
 
-      ! set elements below main diagonal to zero
-      do i=2,n
-          do j=1,i-1
-              A(i,j) = zero
-          enddo ! over j={1,i-1} loop
-      enddo ! over i={2,n} loop
+     ! set elements below main diagonal to zero
+     do i=2,n
+         do j=1,i-1
+             A(i,j) = zero
+         enddo ! over j={1,i-1} loop
+     enddo ! over i={2,n} loop
 
 !! body]
 
-      return
-   end subroutine s_upper_triangular_d
+     return
+  end subroutine s_upper_triangular_d
 
 !!
 !! @sub s_upper_triangular_z
@@ -5696,32 +5696,32 @@
     use constants, only : dp
     use constants, only : czero
 
-     implicit none
+    implicit none
 
 !! external arguments
-      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     ! size of matrix (must be square)
+    integer, intent(in)      :: n
 
-     ! input/output matrix
-     complex(dp), intent(inout) :: A(n,n)
+    ! input/output matrix
+    complex(dp), intent(inout) :: A(n,n)
 
-     !! local variables
-     ! loop indices
-     integer :: i, j
+    !! local variables
+    ! loop indices
+    integer :: i, j
 
-     !! [body
+    !! [body
 
-     ! set elements above main diagonal to zero
-     do i=1,n-1
-         do j=i+1,n
-             A(i,j) = czero
-         enddo ! over j={i+1,n} loop
-     enddo ! over i={1,n-1} loop
+    ! set elements above main diagonal to zero
+    do i=1,n-1
+        do j=i+1,n
+            A(i,j) = czero
+        enddo ! over j={i+1,n} loop
+    enddo ! over i={1,n-1} loop
 
-     !! body]
+    !! body]
 
-     return
-   end subroutine s_upper_triangular_z
+    return
+  end subroutine s_upper_triangular_z
 
 !!
 !! @sub s_lower_triangular_d
