@@ -3291,108 +3291,108 @@
 !! estimate the condition number of a complex(dp) matrix A in the
 !! 1-norm, infinity norm, or Frobenius norm using LAPACK.
 !!
-   subroutine s_cond_z(n, A, cond, norm_type)
-      use constants, only : dp
-      use constants, only : zero, one
+  subroutine s_cond_z(n, A, cond, norm_type)
+     use constants, only : dp
+     use constants, only : zero, one
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! dimension of matrix (must be square)
-      integer, intent(in)      :: n
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)      :: n
 
-      ! input matrix
-      complex(dp), intent(in)  :: A(n,n)
+     ! input matrix
+     complex(dp), intent(in)  :: A(n,n)
 
-      ! estimated condition number
-      real(dp), intent(out)    :: cond
+     ! estimated condition number
+     real(dp), intent(out)    :: cond
 
-      ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
-      character(len=1), intent(in), optional :: norm_type
+     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
+     character(len=1), intent(in), optional :: norm_type
 
- !! local variables
-      ! actual norm type (default: 1-norm)
-      character(len=1) :: actual_norm
+!! local variables
+     ! actual norm type (default: 1-norm)
+     character(len=1) :: actual_norm
 
-      ! norm of A
-      real(dp) :: anorm
+     ! norm of A
+     real(dp) :: anorm
 
-      ! reciprocal of condition number
-      real(dp) :: rcond
+     ! reciprocal of condition number
+     real(dp) :: rcond
 
-      ! error flag
-      integer  :: ierror
+     ! error flag
+     integer  :: ierror
 
-      ! workspace arrays for lapack subroutines
-      integer, allocatable     :: ipiv(:)
-      complex(dp), allocatable :: work(:)
-      real(dp), allocatable    :: rwork(:)
+     ! workspace arrays for lapack subroutines
+     integer, allocatable     :: ipiv(:)
+     complex(dp), allocatable :: work(:)
+     real(dp), allocatable    :: rwork(:)
 
- !! [body
+!! [body
 
-      ! set norm type (use '1' if not provided)
-      if ( present(norm_type) ) then
-          actual_norm = norm_type
-      else
-          actual_norm = '1'
-      endif ! back if ( present(norm_type) ) block
+     ! set norm type (use '1' if not provided)
+     if ( present(norm_type) ) then
+         actual_norm = norm_type
+     else
+         actual_norm = '1'
+     endif ! back if ( present(norm_type) ) block
 
-      ! allocate memory
-      allocate(ipiv(n),   stat=ierror)
-      allocate(work(2*n), stat=ierror)
-      allocate(rwork(n),   stat=ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_z','can not allocate enough memory')
-      endif ! back if ( ierror /= 0 ) block
+     ! allocate memory
+     allocate(ipiv(n),   stat=ierror)
+     allocate(work(2*n), stat=ierror)
+     allocate(rwork(n),   stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! copy A to work for LU factorization
-      work(1:n*n) = reshape(A, (/n*n/))
+     ! copy A to work for LU factorization
+     work(1:n*n) = reshape(A, (/n*n/))
 
-      ! compute LU factorization
-      call ZGETRF(n, n, work, n, ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_z','error in lapack subroutine zgetrf')
-      endif ! back if ( ierror /= 0 ) block
+     ! compute LU factorization
+     call ZGETRF(n, n, work, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','error in lapack subroutine zgetrf')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! compute norm of original matrix A
-      if ( actual_norm == '1' ) then
-          ! 1-norm: maximum absolute column sum
-          anorm = maxval(sum(abs(A), dim=1))
-      elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
-          ! infinity norm: maximum absolute row sum
-          anorm = maxval(sum(abs(A), dim=2))
-      elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
-          ! Frobenius norm: sqrt(sum of squares)
-          anorm = sqrt(real(sum(conjg(A)*A)))
-      endif
+     ! compute norm of original matrix A
+     if ( actual_norm == '1' ) then
+         ! 1-norm: maximum absolute column sum
+         anorm = maxval(sum(abs(A), dim=1))
+     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
+         ! infinity norm: maximum absolute row sum
+         anorm = maxval(sum(abs(A), dim=2))
+     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
+         ! Frobenius norm: sqrt(sum of squares)
+         anorm = sqrt(real(sum(conjg(A)*A)))
+     endif
 
-      ! estimate reciprocal condition number
-      call ZGECON(actual_norm, n, work, n, anorm, rcond, work(n+1:), &
-                & rwork, ipiv, ierror)
-      !
-      if ( ierror /= 0 ) then
-          call s_print_error('s_cond_z','error in lapack subroutine zgecon')
-      endif ! back if ( ierror /= 0 ) block
+     ! estimate reciprocal condition number
+     call ZGECON(actual_norm, n, work, n, anorm, rcond, work(n+1:), &
+               & rwork, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','error in lapack subroutine zgecon')
+     endif ! back if ( ierror /= 0 ) block
 
-      ! compute condition number
-      if ( rcond > zero ) then
-          cond = one / rcond
-      else
-          ! matrix is singular or near-singular
-          cond = huge(one)
-      endif
+     ! compute condition number
+     if ( rcond > zero ) then
+         cond = one / rcond
+     else
+         ! matrix is singular or near-singular
+         cond = huge(one)
+     endif
 
-      ! deallocate memory
-      if ( allocated(ipiv) ) deallocate(ipiv)
-      if ( allocated(work) ) deallocate(work)
-      if ( allocated(rwork) ) deallocate(rwork)
+     ! deallocate memory
+     if ( allocated(ipiv) ) deallocate(ipiv)
+     if ( allocated(work) ) deallocate(work)
+     if ( allocated(rwork) ) deallocate(rwork)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_cond_z
+     return
+  end subroutine s_cond_z
 
 !!
 !! @sub s_rank_d
@@ -3400,89 +3400,89 @@
 !! estimate the rank of a real(dp) m-by-n matrix A using SVD.
 !! returns the number of singular values greater than tolerance.
 !!
-   subroutine s_rank_d(m, n, min_mn, A, rank, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_rank_d(m, n, min_mn, A, rank, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)     :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)     :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)     :: n
+     ! number of columns of A matrix
+     integer, intent(in)     :: n
 
-      ! minimal value of m and n
-      integer, intent(in)     :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)     :: min_mn
 
-      ! A matrix (will be destroyed by SVD)
-      real(dp), intent(inout) :: A(m,n)
+     ! A matrix (will be destroyed by SVD)
+     real(dp), intent(inout) :: A(m,n)
 
-      ! estimated rank of matrix A
-      integer, intent(out)    :: rank
+     ! estimated rank of matrix A
+     integer, intent(out)    :: rank
 
-      ! tolerance for singular value comparison (optional, default: 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for singular value comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! loop index
-      integer :: i
+!! local variables
+     ! loop index
+     integer :: i
 
-      ! actual tolerance value
-      real(dp) :: actual_tol
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! maximum singular value
-      real(dp) :: max_sval
+     ! maximum singular value
+     real(dp) :: max_sval
 
-      ! tolerance threshold
-      real(dp) :: thresh
+     ! tolerance threshold
+     real(dp) :: thresh
 
-      ! SVD output arrays
-      real(dp), allocatable :: umat(:,:)
-      real(dp), allocatable :: svec(:)
-      real(dp), allocatable :: vmat(:,:)
+     ! SVD output arrays
+     real(dp), allocatable :: umat(:,:)
+     real(dp), allocatable :: svec(:)
+     real(dp), allocatable :: vmat(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate arrays for SVD
-      allocate(umat(m,min_mn))
-      allocate(svec(min_mn))
-      allocate(vmat(min_mn,n))
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn))
+     allocate(svec(min_mn))
+     allocate(vmat(min_mn,n))
 
-      ! compute SVD decomposition
-      call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
+     ! compute SVD decomposition
+     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
 
-      ! find maximum singular value
-      max_sval = maxval(svec)
+     ! find maximum singular value
+     max_sval = maxval(svec)
 
-      ! compute threshold: max_sval * tol * max(m,n)
-      thresh = max_sval * actual_tol * real(max(m,n), dp)
+     ! compute threshold: max_sval * tol * max(m,n)
+     thresh = max_sval * actual_tol * real(max(m,n), dp)
 
-      ! count singular values greater than threshold
-      rank = 0
-      do i=1,min_mn
-          if ( svec(i) > thresh ) then
-              rank = rank + 1
-          endif ! back if ( svec(i) > thresh ) block
-      enddo ! over i={1,min_mn} loop
+     ! count singular values greater than threshold
+     rank = 0
+     do i=1,min_mn
+         if ( svec(i) > thresh ) then
+             rank = rank + 1
+         endif ! back if ( svec(i) > thresh ) block
+     enddo ! over i={1,min_mn} loop
 
-      ! deallocate arrays
-      if ( allocated(umat) ) deallocate(umat)
-      if ( allocated(svec) ) deallocate(svec)
-      if ( allocated(vmat) ) deallocate(vmat)
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_rank_d
+     return
+  end subroutine s_rank_d
 
 !!
 !! @sub s_rank_z
@@ -3490,89 +3490,89 @@
 !! estimate the rank of a complex(dp) m-by-n matrix A using SVD.
 !! returns the number of singular values greater than tolerance.
 !!
-   subroutine s_rank_z(m, n, min_mn, A, rank, tol)
-      use constants, only : dp
-      use constants, only : eps8
+  subroutine s_rank_z(m, n, min_mn, A, rank, tol)
+     use constants, only : dp
+     use constants, only : eps8
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of A matrix
-      integer, intent(in)        :: m
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)        :: m
 
-      ! number of columns of A matrix
-      integer, intent(in)        :: n
+     ! number of columns of A matrix
+     integer, intent(in)        :: n
 
-      ! minimal value of m and n
-      integer, intent(in)        :: min_mn
+     ! minimal value of m and n
+     integer, intent(in)        :: min_mn
 
-      ! A matrix (will be destroyed by SVD)
-      complex(dp), intent(inout) :: A(m,n)
+     ! A matrix (will be destroyed by SVD)
+     complex(dp), intent(inout) :: A(m,n)
 
-      ! estimated rank of matrix A
-      integer, intent(out)       :: rank
+     ! estimated rank of matrix A
+     integer, intent(out)       :: rank
 
-      ! tolerance for singular value comparison (optional, default: 1.0e-8)
-      real(dp), intent(in), optional :: tol
+     ! tolerance for singular value comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
 
- !! local variables
-      ! actual tolerance value
-      real(dp) :: actual_tol
+!! local variables
+     ! actual tolerance value
+     real(dp) :: actual_tol
 
-      ! maximum singular value
-      real(dp) :: max_sval
+     ! maximum singular value
+     real(dp) :: max_sval
 
-      ! tolerance threshold
-      real(dp) :: thresh
+     ! tolerance threshold
+     real(dp) :: thresh
 
-      ! loop index
-      integer :: i
+     ! loop index
+     integer :: i
 
-      ! SVD output arrays
-      complex(dp), allocatable :: umat(:,:)
-      real(dp), allocatable    :: svec(:)
-      complex(dp), allocatable :: vmat(:,:)
+     ! SVD output arrays
+     complex(dp), allocatable :: umat(:,:)
+     real(dp), allocatable    :: svec(:)
+     complex(dp), allocatable :: vmat(:,:)
 
- !! [body
+!! [body
 
-      ! set tolerance (use default if not provided)
-      if ( present(tol) ) then
-          actual_tol = tol
-      else
-          actual_tol = eps8
-      endif ! back if ( present(tol) ) block
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
 
-      ! allocate arrays for SVD
-      allocate(umat(m,min_mn))
-      allocate(svec(min_mn))
-      allocate(vmat(min_mn,n))
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn))
+     allocate(svec(min_mn))
+     allocate(vmat(min_mn,n))
 
-      ! compute SVD decomposition
-      call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
+     ! compute SVD decomposition
+     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
 
-      ! find maximum singular value
-      max_sval = maxval(svec)
+     ! find maximum singular value
+     max_sval = maxval(svec)
 
-      ! compute threshold: max_sval * tol * max(m,n)
-      thresh = max_sval * actual_tol * real(max(m,n), dp)
+     ! compute threshold: max_sval * tol * max(m,n)
+     thresh = max_sval * actual_tol * real(max(m,n), dp)
 
-      ! count singular values greater than threshold
-      rank = 0
-      do i=1,min_mn
-          if ( svec(i) > thresh ) then
-              rank = rank + 1
-          endif ! back if ( svec(i) > thresh ) block
-      enddo ! over i={1,min_mn} loop
+     ! count singular values greater than threshold
+     rank = 0
+     do i=1,min_mn
+         if ( svec(i) > thresh ) then
+             rank = rank + 1
+         endif ! back if ( svec(i) > thresh ) block
+     enddo ! over i={1,min_mn} loop
 
-      ! deallocate arrays
-      if ( allocated(umat) ) deallocate(umat)
-      if ( allocated(svec) ) deallocate(svec)
-      if ( allocated(vmat) ) deallocate(vmat)
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_rank_z
+     return
+  end subroutine s_rank_z
 
 !!
 !! @sub s_extract_submatrix_d
@@ -3580,61 +3580,61 @@
 !! extract a submatrix from a real(dp) matrix A_src.
 !! extracts rows i_start:i_end and columns j_start:j_end.
 !!
-   subroutine s_extract_submatrix_d(m_src, n_src, A_src, &
-                                   i_start, i_end, j_start, j_end, &
-                                   m_sub, n_sub, A_sub)
-      use constants, only : dp
+  subroutine s_extract_submatrix_d(m_src, n_src, A_src, &
+                                  i_start, i_end, j_start, j_end, &
+                                  m_sub, n_sub, A_sub)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of source matrix
-      integer, intent(in)   :: m_src
+!! external arguments
+     ! number of rows of source matrix
+     integer, intent(in)   :: m_src
 
-      ! number of columns of source matrix
-      integer, intent(in)   :: n_src
+     ! number of columns of source matrix
+     integer, intent(in)   :: n_src
 
-      ! source matrix
-      real(dp), intent(in)  :: A_src(m_src,n_src)
+     ! source matrix
+     real(dp), intent(in)  :: A_src(m_src,n_src)
 
-      ! start row index (1-based)
-      integer, intent(in)   :: i_start
+     ! start row index (1-based)
+     integer, intent(in)   :: i_start
 
-      ! end row index (1-based)
-      integer, intent(in)   :: i_end
+     ! end row index (1-based)
+     integer, intent(in)   :: i_end
 
-      ! start column index (1-based)
-      integer, intent(in)   :: j_start
+     ! start column index (1-based)
+     integer, intent(in)   :: j_start
 
-      ! end column index (1-based)
-      integer, intent(in)   :: j_end
+     ! end column index (1-based)
+     integer, intent(in)   :: j_end
 
-      ! number of rows of submatrix
-      integer, intent(in)   :: m_sub
+     ! number of rows of submatrix
+     integer, intent(in)   :: m_sub
 
-      ! number of columns of submatrix
-      integer, intent(in)   :: n_sub
+     ! number of columns of submatrix
+     integer, intent(in)   :: n_sub
 
-      ! extracted submatrix
-      real(dp), intent(out) :: A_sub(m_sub,n_sub)
+     ! extracted submatrix
+     real(dp), intent(out) :: A_sub(m_sub,n_sub)
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
- !! [body
+!! [body
 
-      ! copy elements from source to submatrix
-      do i=1,m_sub
-          do j=1,n_sub
-              A_sub(i,j) = A_src(i_start + i - 1, j_start + j - 1)
-          enddo ! over j={1,n_sub} loop
-      enddo ! over i={1,m_sub} loop
+     ! copy elements from source to submatrix
+     do i=1,m_sub
+         do j=1,n_sub
+             A_sub(i,j) = A_src(i_start + i - 1, j_start + j - 1)
+         enddo ! over j={1,n_sub} loop
+     enddo ! over i={1,m_sub} loop
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_extract_submatrix_d
+     return
+  end subroutine s_extract_submatrix_d
 
 !!
 !! @sub s_extract_submatrix_z
@@ -3642,61 +3642,61 @@
 !! extract a submatrix from a complex(dp) matrix A_src.
 !! extracts rows i_start:i_end and columns j_start:j_end.
 !!
-   subroutine s_extract_submatrix_z(m_src, n_src, A_src, &
-                                   i_start, i_end, j_start, j_end, &
-                                   m_sub, n_sub, A_sub)
-      use constants, only : dp
+  subroutine s_extract_submatrix_z(m_src, n_src, A_src, &
+                                  i_start, i_end, j_start, j_end, &
+                                  m_sub, n_sub, A_sub)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of source matrix
-      integer, intent(in)      :: m_src
+!! external arguments
+     ! number of rows of source matrix
+     integer, intent(in)      :: m_src
 
-      ! number of columns of source matrix
-      integer, intent(in)      :: n_src
+     ! number of columns of source matrix
+     integer, intent(in)      :: n_src
 
-      ! source matrix
-      complex(dp), intent(in)  :: A_src(m_src,n_src)
+     ! source matrix
+     complex(dp), intent(in)  :: A_src(m_src,n_src)
 
-      ! start row index (1-based)
-      integer, intent(in)      :: i_start
+     ! start row index (1-based)
+     integer, intent(in)      :: i_start
 
-      ! end row index (1-based)
-      integer, intent(in)      :: i_end
+     ! end row index (1-based)
+     integer, intent(in)      :: i_end
 
-      ! start column index (1-based)
-      integer, intent(in)      :: j_start
+     ! start column index (1-based)
+     integer, intent(in)      :: j_start
 
-      ! end column index (1-based)
-      integer, intent(in)      :: j_end
+     ! end column index (1-based)
+     integer, intent(in)      :: j_end
 
-      ! number of rows of submatrix
-      integer, intent(in)      :: m_sub
+     ! number of rows of submatrix
+     integer, intent(in)      :: m_sub
 
-      ! number of columns of submatrix
-      integer, intent(in)      :: n_sub
+     ! number of columns of submatrix
+     integer, intent(in)      :: n_sub
 
-      ! extracted submatrix
-      complex(dp), intent(out) :: A_sub(m_sub,n_sub)
+     ! extracted submatrix
+     complex(dp), intent(out) :: A_sub(m_sub,n_sub)
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
- !! [body
+!! [body
 
-      ! copy elements from source to submatrix
-      do i=1,m_sub
-          do j=1,n_sub
-              A_sub(i,j) = A_src(i_start + i - 1, j_start + j - 1)
-          enddo ! over j={1,n_sub} loop
-      enddo ! over i={1,m_sub} loop
+     ! copy elements from source to submatrix
+     do i=1,m_sub
+         do j=1,n_sub
+             A_sub(i,j) = A_src(i_start + i - 1, j_start + j - 1)
+         enddo ! over j={1,n_sub} loop
+     enddo ! over i={1,m_sub} loop
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_extract_submatrix_z
+     return
+  end subroutine s_extract_submatrix_z
 
 !!
 !! @sub s_concat_horiz_d
@@ -3704,63 +3704,63 @@
 !! concatenate two real(dp) matrices horizontally: C = [A | B].
 !! matrices A and B must have the same number of rows.
 !!
-   subroutine s_concat_horiz_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
-      use constants, only : dp
+  subroutine s_concat_horiz_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+     use constants, only : dp
 
-      implicit none
+     implicit none
 
- !! external arguments
-      ! number of rows of matrix A
-      integer, intent(in)   :: m_A
+!! external arguments
+     ! number of rows of matrix A
+     integer, intent(in)   :: m_A
 
-      ! number of columns of matrix A
-      integer, intent(in)   :: n_A
+     ! number of columns of matrix A
+     integer, intent(in)   :: n_A
 
-      ! first input matrix
-      real(dp), intent(in)  :: A(m_A,n_A)
+     ! first input matrix
+     real(dp), intent(in)  :: A(m_A,n_A)
 
-      ! number of rows of matrix B
-      integer, intent(in)   :: m_B
+     ! number of rows of matrix B
+     integer, intent(in)   :: m_B
 
-      ! number of columns of matrix B
-      integer, intent(in)   :: n_B
+     ! number of columns of matrix B
+     integer, intent(in)   :: n_B
 
-      ! second input matrix
-      real(dp), intent(in)  :: B(m_B,n_B)
+     ! second input matrix
+     real(dp), intent(in)  :: B(m_B,n_B)
 
-      ! number of rows of concatenated matrix C
-      integer, intent(in)   :: m_C
+     ! number of rows of concatenated matrix C
+     integer, intent(in)   :: m_C
 
-      ! number of columns of concatenated matrix C
-      integer, intent(in)   :: n_C
+     ! number of columns of concatenated matrix C
+     integer, intent(in)   :: n_C
 
-      ! concatenated matrix [A | B]
-      real(dp), intent(out) :: C(m_C,n_C)
+     ! concatenated matrix [A | B]
+     real(dp), intent(out) :: C(m_C,n_C)
 
- !! local variables
-      ! loop indices
-      integer :: i, j
+!! local variables
+     ! loop indices
+     integer :: i, j
 
- !! [body
+!! [body
 
-      ! copy matrix A to left part of C
-      do i=1,m_A
-          do j=1,n_A
-              C(i,j) = A(i,j)
-          enddo ! over j={1,n_A} loop
-      enddo ! over i={1,m_A} loop
+     ! copy matrix A to left part of C
+     do i=1,m_A
+         do j=1,n_A
+             C(i,j) = A(i,j)
+         enddo ! over j={1,n_A} loop
+     enddo ! over i={1,m_A} loop
 
-      ! copy matrix B to right part of C
-      do i=1,m_B
-          do j=1,n_B
-              C(i, n_A + j) = B(i,j)
-          enddo ! over j={1,n_B} loop
-      enddo ! over i={1,m_B} loop
+     ! copy matrix B to right part of C
+     do i=1,m_B
+         do j=1,n_B
+             C(i, n_A + j) = B(i,j)
+         enddo ! over j={1,n_B} loop
+     enddo ! over i={1,m_B} loop
 
- !! body]
+!! body]
 
-      return
-   end subroutine s_concat_horiz_d
+     return
+  end subroutine s_concat_horiz_d
 
 !!
 !! @sub s_concat_horiz_z
