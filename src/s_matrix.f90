@@ -4192,7 +4192,6 @@
      ! temporary matrices for pseudo-inverse computation
      real(dp), allocatable :: sigma_pinv(:,:)
      real(dp), allocatable :: temp1(:,:)
-     real(dp), allocatable :: temp2(:,:)
 
 !! [body
 
@@ -4207,12 +4206,13 @@
      allocate(umat(m,min_mn))
      allocate(svec(min_mn))
      allocate(vmat(min_mn,n))
+     allocate(sigma_pinv(min_mn,min_mn))
+     allocate(temp1(min_mn,m))
 
      ! compute SVD decomposition
      call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
 
      ! compute SIGMA^+: reciprocal of singular values with cutoff
-     allocate(sigma_pinv(min_mn,min_mn))
      sigma_pinv = zero
      do i=1,min_mn
          if ( svec(i) > actual_tol ) then
@@ -4221,19 +4221,12 @@
      enddo ! over i={1,min_mn} loop
 
      ! compute pinv(A) = V * SIGMA^+ * U^T
-     allocate(temp1(min_mn,m))
-     allocate(temp2(n,m))
-     temp1 = zero
-     temp2 = zero
      !
      ! temp1 = SIGMA^+ * U^T
      temp1 = matmul(sigma_pinv, transpose(umat))
      !
-     ! temp2 = V * temp1
-     temp2 = matmul(vmat, temp1)
-     !
-     ! copy result to pinv
-     pinv = temp2
+     ! pinv = V * temp1
+     pinv = matmul(vmat, temp1)
 
      ! deallocate arrays
      if ( allocated(umat) ) deallocate(umat)
@@ -4241,7 +4234,6 @@
      if ( allocated(vmat) ) deallocate(vmat)
      if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
      if ( allocated(temp1) ) deallocate(temp1)
-     if ( allocated(temp2) ) deallocate(temp2)
 
 !! body]
 
