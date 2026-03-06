@@ -5548,17 +5548,17 @@
      integer, intent(in)   :: n
 
      ! input matrix
-     real(dp), intent(in) :: A(n,n)
+     real(dp), intent(in)  :: A(n,n)
 
      ! output: sparsity ratio (0.0 to 1.0)
      real(dp), intent(out) :: ratio
 
      ! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! counter for zero elements
-     integer :: zero_count
+     integer  :: zero_count
 
      ! total elements
      real(dp) :: total
@@ -5604,13 +5604,13 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix
      complex(dp), intent(in) :: A(n,n)
 
      ! output: sparsity ratio (0.0 to 1.0)
-     real(dp), intent(out)    :: ratio
+     real(dp), intent(out)   :: ratio
 
 !! local variables
      ! loop indices
@@ -5663,7 +5663,7 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)     :: n
 
      ! input/output matrix
      real(dp), intent(inout) :: A(n,n)
@@ -5700,7 +5700,7 @@
 
 !! external arguments
      ! size of matrix (must be square)
-    integer, intent(in)      :: n
+    integer, intent(in)        :: n
 
     ! input/output matrix
     complex(dp), intent(inout) :: A(n,n)
@@ -5737,7 +5737,7 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)     :: n
 
      ! input/output matrix
      real(dp), intent(inout) :: A(n,n)
@@ -5774,7 +5774,7 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)        :: n
 
      ! input/output matrix
      complex(dp), intent(inout) :: A(n,n)
@@ -5812,10 +5812,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)    :: n
+     integer, intent(in)     :: n
 
      ! input/output matrix
-     real(dp), intent(inout):: A(n,n)
+     real(dp), intent(inout) :: A(n,n)
 
 !! local variables
      ! loop indices
@@ -5853,10 +5853,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)       :: n
+     integer, intent(in)        :: n
 
      ! input/output matrix
-     complex(dp), intent(inout):: A(n,n)
+     complex(dp), intent(inout) :: A(n,n)
 
 !! local variables
      ! loop indices
@@ -5893,10 +5893,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! output Hilbert matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
@@ -5924,16 +5924,16 @@
 !!
   subroutine s_inverse_hilbert_d(n, A)
      use constants, only : dp
-     use constants, only : one, zero
+     use constants, only : one
 
      implicit none
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)  :: n
+     integer, intent(in)   :: n
 
      ! output inverse Hilbert matrix
-     real(dp), intent(out):: A(n,n)
+     real(dp), intent(out) :: A(n,n)
 
 !! local variables
      ! loop indices
