@@ -5639,4 +5639,78 @@
   !! body]
 
        return
-    end subroutine s_sparsity_ratio_z
+     end subroutine s_sparsity_ratio_z
+
+ !!
+ !! @sub s_upper_triangular_d
+ !!
+ !! construct an upper triangular matrix from a real(dp) matrix.
+ !! sets all elements below the main diagonal to zero.
+ !!
+    subroutine s_upper_triangular_d(n, A)
+       use constants, only : dp
+       use constants, only : zero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)   :: n
+
+       ! input/output matrix
+       real(dp), intent(inout) :: A(n,n)
+
+ !! local variables
+       ! loop indices
+       integer :: i, j
+
+ !! [body
+
+       ! set elements below main diagonal to zero
+       do i=2,n
+           do j=1,i-1
+               A(i,j) = zero
+           enddo ! over j={1,i-1} loop
+       enddo ! over i={2,n} loop
+
+ !! body]
+
+       return
+    end subroutine s_upper_triangular_d
+
+ !!
+ !! @sub s_upper_triangular_z
+ !!
+ !! construct an upper triangular matrix from a complex(dp) matrix.
+ !! sets all elements below the main diagonal to zero.
+ !!
+    subroutine s_upper_triangular_z(n, A)
+       use constants, only : dp
+       use constants, only : czero
+
+       implicit none
+
+ !! external arguments
+       ! size of matrix (must be square)
+       integer, intent(in)      :: n
+
+       ! input/output matrix
+       complex(dp), intent(inout) :: A(n,n)
+
+ !! local variables
+       ! loop indices
+       integer :: i, j
+
+ !! [body
+
+       ! set elements below main diagonal to zero
+       do i=2,n
+           do j=1,i-1
+               A(i,j) = czero
+           enddo ! over j={1,i-1} loop
+       enddo ! over i={2,n} loop
+
+ !! body]
+
+       return
+    end subroutine s_upper_triangular_z
