@@ -5845,15 +5845,12 @@
 
      ! build Vandermonde matrix: V(i,j) = x(i)^(j-1)
      do i=1,n
+         A(i,1) = one
          val = one
-         do j=1,n
-             if ( j == 1 ) then
-                 A(i,j) = one
-             else
-                 val = val * x(i)
-                 A(i,j) = val
-             endif ! back if ( j == 1 ) block
-         enddo ! over j={1,n} loop
+         do j=2,n
+             val = val * x(i)
+             A(i,j) = val
+         enddo ! over j={2,n} loop
      enddo ! over i={1,n} loop
 
 !! body]
@@ -5894,15 +5891,12 @@
 
      ! build Vandermonde matrix: V(i,j) = x(i)^(j-1)
      do i=1,n
+         A(i,1) = cone
          val = cone
-         do j=1,n
-             if ( j == 1 ) then
-                 A(i,j) = cone
-             else
-                 val = val * x(i)
-                 A(i,j) = val
-             endif ! back if ( j == 1 ) block
-         enddo ! over j={1,n} loop
+         do j=2,n
+             val = val * x(i)
+             A(i,j) = val
+         enddo ! over j={2,n} loop
      enddo ! over i={1,n} loop
 
 !! body]
