@@ -5437,9 +5437,6 @@
      real(dp), intent(out) :: ratio
 
 !! local variables
-     ! loop indices
-     integer :: i, j
-
      ! counter for zero elements
      integer :: zero_count
 
@@ -5449,17 +5446,10 @@
 !! [body
 
      ! initialize
-     zero_count = 0
      total = n * n
 
-     ! count zero elements
-     do i=1,n
-         do j=1,n
-             if ( A(i,j) == 0 ) then
-                 zero_count = zero_count + 1
-             endif ! back if ( A(i,j) == 0 ) block
-         enddo ! over j={1,n} loop
-     enddo ! over i={1,n} loop
+     ! count zero elements using intrinsic function
+     zero_count = count(A(1:n,1:n) == 0)
 
      ! compute sparsity ratio
      if ( total > 0 ) then
@@ -5480,7 +5470,7 @@
 !!
   subroutine s_sparsity_ratio_d(n, A, ratio)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, eps8
 
      implicit none
 
@@ -5494,37 +5484,27 @@
      ! output: sparsity ratio (0.0 to 1.0)
      real(dp), intent(out) :: ratio
 
-     ! local variables
-     ! loop indices
-     integer  :: i, j
-
+! local variables
      ! counter for zero elements
-     integer  :: zero_count
+     integer :: zero_count
 
      ! total elements
-     real(dp) :: total
+     integer :: total
 
 !! [body
 
      ! initialize
-     zero_count = 0
-     total = real(n, dp) * real(n, dp)
+     total = n * n
 
-     ! count zero elements
-     do i=1,n
-         do j=1,n
-             if ( abs( A(i,j) ) < 1.0e-12_dp ) then
-                 zero_count = zero_count + 1
-             endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
-         enddo ! over j={1,n} loop
-     enddo ! over i={1,n} loop
+     ! count zero elements using intrinsic function
+     zero_count = count(abs(A(1:n,1:n)) < eps8)
 
      ! compute sparsity ratio
-     if ( total > 0.0_dp ) then
-         ratio = real(zero_count, dp) / total
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
      else
          ratio = zero
-     endif ! back if ( total > 0.0_dp ) block
+     endif ! back if ( total > 0 ) block
 
 !! body]
 
@@ -5538,8 +5518,7 @@
 !!
   subroutine s_sparsity_ratio_z(n, A, ratio)
      use constants, only : dp
-     use constants, only : zero
-     use constants, only : czero
+     use constants, only : zero, eps8
 
      implicit none
 
@@ -5554,36 +5533,26 @@
      real(dp), intent(out)   :: ratio
 
 !! local variables
-     ! loop indices
-     integer  :: i, j
-
      ! counter for zero elements
-     integer  :: zero_count
+     integer :: zero_count
 
      ! total elements
-     real(dp) :: total
+     integer :: total
 
 !! [body
 
      ! initialize
-     zero_count = 0
-     total = real(n, dp) * real(n, dp)
+     total = n * n
 
-     ! count zero elements
-     do i=1,n
-         do j=1,n
-             if ( abs( A(i,j) ) < 1.0e-12_dp ) then
-                 zero_count = zero_count + 1
-             endif ! back if ( abs( A(i,j) ) < 1.0e-12_dp ) block
-         enddo ! over j={1,n} loop
-     enddo ! over i={1,n} loop
+     ! count zero elements using intrinsic function
+     zero_count = count(abs(A(1:n,1:n)) < eps8)
 
      ! compute sparsity ratio
-     if ( total > 0.0_dp ) then
-         ratio = real(zero_count, dp) / total
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
      else
          ratio = zero
-     endif ! back if ( total > 0.0_dp ) block
+     endif ! back if ( total > 0 ) block
 
 !! body]
 
