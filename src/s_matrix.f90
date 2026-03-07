@@ -3624,10 +3624,6 @@
      ! extracted submatrix
      real(dp), intent(out) :: A_sub(m_sub,n_sub)
 
-!! local variables
-     ! error flag
-     integer :: ierror
-
 !! [body
 
      ! check boundary conditions
@@ -3693,18 +3689,27 @@
      ! extracted submatrix
      complex(dp), intent(out) :: A_sub(m_sub,n_sub)
 
-!! local variables
-     ! loop indices
-     integer :: i, j
-
 !! [body
 
-     ! copy elements from source to submatrix
-     do i=1,m_sub
-         do j=1,n_sub
-             A_sub(i,j) = A_src(i_start + i - 1, j_start + j - 1)
-         enddo ! over j={1,n_sub} loop
-     enddo ! over i={1,m_sub} loop
+     ! check boundary conditions
+     if ( i_start < 1 .or. i_start > m_src ) then
+         call s_print_error('s_extract_submatrix_z','i_start is out of bounds')
+     endif ! back if ( i_start < 1 .or. i_start > m_src ) block
+
+     if ( j_start < 1 .or. j_start > n_src ) then
+         call s_print_error('s_extract_submatrix_z','j_start is out of bounds')
+     endif ! back if ( j_start < 1 .or. j_start > n_src ) block
+
+     if ( i_start + m_sub - 1 > m_src ) then
+         call s_print_error('s_extract_submatrix_z','submatrix rows exceed source matrix bounds')
+     endif ! back if ( i_start + m_sub - 1 > m_src ) block
+
+     if ( j_start + n_sub - 1 > n_src ) then
+         call s_print_error('s_extract_submatrix_z','submatrix columns exceed source matrix bounds')
+     endif ! back if ( j_start + n_sub - 1 > n_src ) block
+
+     ! use array slicing for efficient copy
+     A_sub = A_src(i_start:i_start+m_sub-1, j_start:j_start+n_sub-1)
 
 !! body]
 
