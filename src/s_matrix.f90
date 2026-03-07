@@ -2951,7 +2951,7 @@
 
 !! [body
 
-     ! allocate ipiv and perform LU factorization
+     ! perform LU factorization
      call ZGETRF(n, n, A, n, ipiv, ierror)
      !
      if ( ierror /= 0 ) then
@@ -3038,11 +3038,11 @@
      lwork = 3 * n
 
      ! allocate memory
-     allocate(work(lwork),    stat=istat)
-     allocate(wr(n),          stat=istat)
-     allocate(wi(n),          stat=istat)
-     allocate(vs(ldim,n),     stat=istat)
-     allocate(bwork(n),       stat=istat)
+     allocate(work(lwork), stat=istat)
+     allocate(wr(n),       stat=istat)
+     allocate(wi(n),       stat=istat)
+     allocate(vs(ldim,n),  stat=istat)
+     allocate(bwork(n),    stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_schur_d','can not allocate enough memory')
@@ -3141,11 +3141,11 @@
      lwork = 2 * n
 
      ! allocate memory
-     allocate(work(lwork),    stat=istat)
-     allocate(rwork(n),       stat=istat)
-     allocate(w(n),           stat=istat)
-     allocate(vs(ldim,n),     stat=istat)
-     allocate(bwork(n),       stat=istat)
+     allocate(work(lwork), stat=istat)
+     allocate(rwork(n),    stat=istat)
+     allocate(w(n),        stat=istat)
+     allocate(vs(ldim,n),  stat=istat)
+     allocate(bwork(n),    stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_schur_z','can not allocate enough memory')
@@ -3234,10 +3234,10 @@
      endif ! back if ( present(norm_type) ) block
 
      ! allocate memory
-     allocate(ipiv(n),     stat=ierror)
-     allocate(work(4*n),   stat=ierror)
-     allocate(iwork(n),    stat=ierror)
-     allocate(A_lu(n,n),   stat=ierror)
+     allocate(ipiv(n),   stat=ierror)
+     allocate(work(4*n), stat=ierror)
+     allocate(iwork(n),  stat=ierror)
+     allocate(A_lu(n,n), stat=ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_d','can not allocate enough memory')
@@ -3345,10 +3345,10 @@
      endif ! back if ( present(norm_type) ) block
 
      ! allocate memory
-     allocate(ipiv(n),     stat=ierror)
-     allocate(work(2*n),   stat=ierror)
-     allocate(rwork(2*n),  stat=ierror)
-     allocate(A_lu(n,n),   stat=ierror)
+     allocate(ipiv(n),    stat=ierror)
+     allocate(work(2*n),  stat=ierror)
+     allocate(rwork(2*n), stat=ierror)
+     allocate(A_lu(n,n),  stat=ierror)
      !
      if ( ierror /= 0 ) then
          call s_print_error('s_cond_z','can not allocate enough memory')
@@ -3465,8 +3465,9 @@
 
      ! allocate arrays for SVD
      allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn), stat=istat)
+     allocate(svec(min_mn),   stat=istat)
      allocate(vmat(min_mn,n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_rank_d','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
@@ -3556,8 +3557,9 @@
 
      ! allocate arrays for SVD
      allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn), stat=istat)
+     allocate(svec(min_mn),   stat=istat)
      allocate(vmat(min_mn,n), stat=istat)
+     !
      if ( istat /= 0 ) then
          call s_print_error('s_rank_z','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
@@ -4007,9 +4009,9 @@
      lwork = 3 * n
 
      ! allocate memory
-     allocate(work(lwork),    stat=istat)
-     allocate(amat(ldim,n),   stat=istat)
-     allocate(bmat(ldim,n),   stat=istat)
+     allocate(work(lwork),  stat=istat)
+     allocate(amat(ldim,n), stat=istat)
+     allocate(bmat(ldim,n), stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_geig_sy','can not allocate enough memory')
@@ -4061,10 +4063,10 @@
 
 !! external arguments
      ! leading dimension of matrices A and B
-     integer, intent(in)        :: ldim
+     integer, intent(in)      :: ldim
 
      ! order of the matrices A and B
-     integer, intent(in)        :: n
+     integer, intent(in)      :: n
 
      ! original matrix A, Hermitian
      complex(dp), intent(in)  :: A(ldim,n)
@@ -4073,10 +4075,10 @@
      complex(dp), intent(in)  :: B(ldim,n)
 
      ! output: eigenvalues in ascending order
-     real(dp), intent(out)      :: eval(n)
+     real(dp), intent(out)    :: eval(n)
 
      ! output: unitary eigenvectors
-     complex(dp), intent(out)  :: evec(ldim,n)
+     complex(dp), intent(out) :: evec(ldim,n)
 
 !! local variables
      ! status flag
@@ -4102,10 +4104,10 @@
      lwork = 2 * n
 
      ! allocate memory
-     allocate(rwork(3*n),      stat=istat)
-     allocate(work(lwork),       stat=istat)
-     allocate(amat(ldim,n),    stat=istat)
-     allocate(bmat(ldim,n),    stat=istat)
+     allocate(rwork(3*n),   stat=istat)
+     allocate(work(lwork),  stat=istat)
+     allocate(amat(ldim,n), stat=istat)
+     allocate(bmat(ldim,n), stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_geig_he','can not allocate enough memory')
@@ -4626,6 +4628,7 @@
 
      ! allocate eigenvalue array
      allocate(eval(n), stat=i)
+     !
      if ( i /= 0 ) then
          call s_print_error('s_is_positive_semidefinite_d','can not allocate enough memory')
      endif ! back if ( i /= 0 ) block
@@ -4699,6 +4702,7 @@
 
      ! allocate eigenvalue array
      allocate(eval(n), stat=i)
+     !
      if ( i /= 0 ) then
          call s_print_error('s_is_positive_semidefinite_z','can not allocate enough memory')
      endif ! back if ( i /= 0 ) block
