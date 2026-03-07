@@ -4167,7 +4167,7 @@
 !! compute Moore-Penrose pseudo-inverse of a general real(dp) m-by-n
 !! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^T.
 !!
-  subroutine s_pinv_d(m, n, min_mn, A, pinv, tol)
+  subroutine s_pinv_d(m, n, A, pinv, tol)
      use constants, only : dp
      use constants, only : zero, one, eps8
 
@@ -4180,9 +4180,6 @@
      ! number of columns of A matrix
      integer, intent(in)   :: n
 
-     ! minimal value of m and n
-     integer, intent(in)   :: min_mn
-
      ! A matrix
      real(dp), intent(in)  :: A(m,n)
 
@@ -4193,8 +4190,11 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
+     ! minimal value of m and n
+     integer  :: min_mn
+
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -4209,6 +4209,9 @@
      real(dp), allocatable :: temp1(:,:)
 
 !! [body
+
+     ! calculate min_mn
+     min_mn = min(m, n)
 
      ! allocate arrays for SVD
      allocate(umat(m,min_mn))
@@ -4261,25 +4264,21 @@
 !! compute Moore-Penrose pseudo-inverse of a general complex(dp) m-by-n
 !! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^H.
 !!
-  subroutine s_pinv_z(m, n, min_mn, A, pinv, tol)
+  subroutine s_pinv_z(m, n, A, pinv, tol)
      use constants, only : dp
      use constants, only : zero, one, eps8
-     use constants, only : czero
 
      implicit none
 
 !! external arguments
      ! number of rows of A matrix
-     integer, intent(in)     :: m
+     integer, intent(in)      :: m
 
      ! number of columns of A matrix
-     integer, intent(in)     :: n
-
-     ! minimal value of m and n
-     integer, intent(in)     :: min_mn
+     integer, intent(in)      :: n
 
      ! A matrix
-     complex(dp), intent(in) :: A(m,n)
+     complex(dp), intent(in)  :: A(m,n)
 
      ! pseudo-inverse matrix (n-by-m)
      complex(dp), intent(out) :: pinv(n,m)
@@ -4288,8 +4287,11 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
+     ! minimal value of m and n
+     integer  :: min_mn
+
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -4304,6 +4306,9 @@
      complex(dp), allocatable :: temp1(:,:)
 
 !! [body
+
+     ! calculate min_mn
+     min_mn = min(m, n)
 
      ! allocate arrays for SVD
      allocate(umat(m,min_mn))
