@@ -4958,13 +4958,13 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix
      complex(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is lower triangular, .false. otherwise
-     logical, intent(out)     :: is_lower_triangular
+     logical, intent(out)    :: is_lower_triangular
 
      ! tolerance for floating point comparison (optional, default 1.0e-8)
      real(dp), intent(in), optional :: tol
@@ -5472,7 +5472,7 @@
      integer, intent(in)   :: n
 
      ! input matrix
-     integer, intent(in) :: A(n,n)
+     integer, intent(in)   :: A(n,n)
 
      ! output: sparsity ratio (0.0 to 1.0)
      real(dp), intent(out) :: ratio
@@ -5596,10 +5596,10 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! counter for zero elements
-     integer :: zero_count
+     integer  :: zero_count
 
      ! total elements
      real(dp) :: total
