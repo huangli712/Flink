@@ -4190,6 +4190,9 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
+     ! status flag
+     integer  :: istat
+
      ! minimal value of m and n
      integer  :: min_mn
 
@@ -4214,11 +4217,15 @@
      min_mn = min(m, n)
 
      ! allocate arrays for SVD
-     allocate(umat(m,min_mn))
-     allocate(svec(min_mn))
-     allocate(vmat(min_mn,n))
-     allocate(sigma_pinv(min_mn,min_mn))
-     allocate(temp1(min_mn,m))
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
+     allocate(temp1(min_mn,m), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_pinv_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! set tolerance (use default if not provided)
      if ( present(tol) ) then
@@ -4287,6 +4294,9 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
+     ! status flag
+     integer  :: istat
+
      ! minimal value of m and n
      integer  :: min_mn
 
@@ -4311,11 +4321,15 @@
      min_mn = min(m, n)
 
      ! allocate arrays for SVD
-     allocate(umat(m,min_mn))
-     allocate(svec(min_mn))
-     allocate(vmat(min_mn,n))
-     allocate(sigma_pinv(min_mn,min_mn))
-     allocate(temp1(min_mn,m))
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
+     allocate(temp1(min_mn,m), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_pinv_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! set tolerance (use default if not provided)
      if ( present(tol) ) then
