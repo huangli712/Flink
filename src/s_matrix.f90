@@ -5720,19 +5720,16 @@
      real(dp), intent(inout) :: A(n,n)
 
 !! local variables
-     ! loop indices
-     integer :: i, j
+     ! loop index
+     integer :: i
 
 !! [body
 
      ! set elements with |i-j| > 1 to zero
      ! keep only main diagonal, super-diagonal, and sub-diagonal
      do i=1,n
-         do j=1,n
-             if ( abs(i-j) > 1 ) then
-                 A(i,j) = zero
-             endif ! back if ( abs(i-j) > 1 ) block
-         enddo ! over j={1,n} loop
+         if ( i > 2 ) A(i,1:i-2) = zero
+         if ( i+2 <= n ) A(i,i+2:n) = zero
      enddo ! over i={1,n} loop
 
 !! body]
@@ -5761,19 +5758,16 @@
      complex(dp), intent(inout) :: A(n,n)
 
 !! local variables
-     ! loop indices
-     integer :: i, j
+     ! loop index
+     integer :: i
 
 !! [body
 
      ! set elements with |i-j| > 1 to zero
      ! keep only main diagonal, super-diagonal, and sub-diagonal
      do i=1,n
-         do j=1,n
-             if ( abs(i-j) > 1 ) then
-                 A(i,j) = czero
-             endif ! back if ( abs(i-j) > 1 ) block
-         enddo ! over j={1,n} loop
+         if ( i > 2 ) A(i,1:i-2) = czero
+         if ( i+2 <= n ) A(i,i+2:n) = czero
      enddo ! over i={1,n} loop
 
 !! body]
