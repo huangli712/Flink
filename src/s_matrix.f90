@@ -4020,7 +4020,7 @@
 !! [body
 
      ! initialize lwork: lwork >= max(1,3*n)
-     lwork = 3 * n
+     lwork = 4 * n
 
      ! allocate memory
      allocate(work(lwork),  stat=istat)
@@ -4072,6 +4072,7 @@
 !!
   subroutine s_geig_he(ldim, n, A, B, eval, evec)
      use constants, only : dp
+     use constants, only : zero
 
      implicit none
 
@@ -4115,7 +4116,7 @@
 !! [body
 
      ! initialize lwork: lwork >= max(1,2*n)
-     lwork = 2 * n
+     lwork = 4 * n
 
      ! allocate memory
      allocate(rwork(3*n),   stat=istat)
@@ -4132,7 +4133,7 @@
      bmat = B
 
      ! initialize output arrays
-     eval = 0.0_dp
+     eval = zero
      evec = amat
 
      ! call LAPACK subroutine: zhegv
