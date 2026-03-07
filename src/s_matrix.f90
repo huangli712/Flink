@@ -5912,7 +5912,7 @@
 !!
   subroutine s_pascal_d(n, A)
      use constants, only : dp
-     use constants, only : one, zero
+     use constants, only : one
 
      implicit none
 
@@ -5960,7 +5960,7 @@
 !!
   subroutine s_wilkinson_d(n, A)
      use constants, only : dp
-     use constants, only : one, zero
+     use constants, only : one, two, zero
 
      implicit none
 
@@ -5985,7 +5985,7 @@
 
      ! set main diagonal: W(i,i) = n/2 + 1 - i
      do i=1,n
-         diag_val = real(n/2 + 1 - i, dp)
+         diag_val = real(n, dp) / two + one - real(i, dp)
          A(i,i) = diag_val
      enddo ! over i={1,n} loop
 
