@@ -4382,10 +4382,10 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)   :: n
+     integer, intent(in)  :: n
 
      ! input matrix
-     real(dp), intent(in)  :: A(n,n)
+     real(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is skew-symmetric, .false. otherwise
      logical, intent(out) :: is_skew_symmetric
@@ -4395,7 +4395,7 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -4443,20 +4443,20 @@
 
 !! external arguments
      ! size of matrix (must be square)
-     integer, intent(in)      :: n
+     integer, intent(in)     :: n
 
      ! input matrix
-     complex(dp), intent(in)  :: A(n,n)
+     complex(dp), intent(in) :: A(n,n)
 
      ! output: .true. if matrix is skew-Hermitian, .false. otherwise
-     logical, intent(out)       :: is_skew_hermitian
+     logical, intent(out)    :: is_skew_hermitian
 
      ! tolerance for floating point comparison (optional, default 1.0e-8)
      real(dp), intent(in), optional :: tol
 
 !! local variables
      ! loop indices
-     integer :: i, j
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
