@@ -3209,14 +3209,14 @@
      ! actual norm type (default: 1-norm)
      character(len=1) :: actual_norm
 
+     ! error flag
+     integer  :: ierror
+
      ! norm of A
      real(dp) :: anorm
 
      ! reciprocal of condition number
      real(dp) :: rcond
-
-     ! error flag
-     integer :: ierror
 
      ! workspace arrays for lapack subroutines
      integer, allocatable  :: ipiv(:)
@@ -3320,14 +3320,14 @@
      ! actual norm type (default: 1-norm)
      character(len=1) :: actual_norm
 
+     ! error flag
+     integer  :: ierror
+
      ! norm of A
      real(dp) :: anorm
 
      ! reciprocal of condition number
      real(dp) :: rcond
-
-     ! error flag
-     integer  :: ierror
 
      ! workspace arrays for lapack subroutines
      integer, allocatable     :: ipiv(:)
