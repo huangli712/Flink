@@ -3755,25 +3755,24 @@
      ! concatenated matrix [A | B]
      real(dp), intent(out) :: C(m_C,n_C)
 
-!! local variables
-     ! loop indices
-     integer :: i, j
-
 !! [body
 
-     ! copy matrix A to left part of C
-     do i=1,m_A
-         do j=1,n_A
-             C(i,j) = A(i,j)
-         enddo ! over j={1,n_A} loop
-     enddo ! over i={1,m_A} loop
+     ! check boundary conditions
+     if ( m_A /= m_B ) then
+         call s_print_error('s_concat_horiz_d','matrices A and B must have the same number of rows')
+     endif ! back if ( m_A /= m_B ) block
 
-     ! copy matrix B to right part of C
-     do i=1,m_B
-         do j=1,n_B
-             C(i, n_A + j) = B(i,j)
-         enddo ! over j={1,n_B} loop
-     enddo ! over i={1,m_B} loop
+     if ( n_C /= n_A + n_B ) then
+         call s_print_error('s_concat_horiz_d','n_C must equal n_A + n_B')
+     endif ! back if ( n_C /= n_A + n_B ) block
+
+     if ( m_C /= m_A ) then
+         call s_print_error('s_concat_horiz_d','m_C must equal m_A')
+     endif ! back if ( m_C /= m_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
 
 !! body]
 
@@ -3819,25 +3818,24 @@
      ! concatenated matrix [A | B]
      complex(dp), intent(out) :: C(m_C,n_C)
 
-!! local variables
-     ! loop indices
-     integer :: i, j
-
 !! [body
 
-     ! copy matrix A to left part of C
-     do i=1,m_A
-         do j=1,n_A
-             C(i,j) = A(i,j)
-         enddo ! over j={1,n_A} loop
-     enddo ! over i={1,m_A} loop
+     ! check boundary conditions
+     if ( m_A /= m_B ) then
+         call s_print_error('s_concat_horiz_z','matrices A and B must have the same number of rows')
+     endif ! back if ( m_A /= m_B ) block
 
-     ! copy matrix B to right part of C
-     do i=1,m_B
-         do j=1,n_B
-             C(i, n_A + j) = B(i,j)
-         enddo ! over j={1,n_B} loop
-     enddo ! over i={1,m_B} loop
+     if ( n_C /= n_A + n_B ) then
+         call s_print_error('s_concat_horiz_z','n_C must equal n_A + n_B')
+     endif ! back if ( n_C /= n_A + n_B ) block
+
+     if ( m_C /= m_A ) then
+         call s_print_error('s_concat_horiz_z','m_C must equal m_A')
+     endif ! back if ( m_C /= m_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
 
 !! body]
 
@@ -3883,25 +3881,24 @@
      ! concatenated matrix [A; B]
      real(dp), intent(out) :: C(m_C,n_C)
 
-!! local variables
-     ! loop indices
-     integer :: i, j
-
 !! [body
 
-     ! copy matrix A to upper part of C
-     do i=1,m_A
-         do j=1,n_A
-             C(i,j) = A(i,j)
-         enddo ! over j={1,n_A} loop
-     enddo ! over i={1,m_A} loop
+     ! check boundary conditions
+     if ( n_A /= n_B ) then
+         call s_print_error('s_concat_vert_d','matrices A and B must have the same number of columns')
+     endif ! back if ( n_A /= n_B ) block
 
-     ! copy matrix B to lower part of C
-     do i=1,m_B
-         do j=1,n_B
-             C(m_A + i, j) = B(i,j)
-         enddo ! over j={1,n_B} loop
-     enddo ! over i={1,m_B} loop
+     if ( m_C /= m_A + m_B ) then
+         call s_print_error('s_concat_vert_d','m_C must equal m_A + m_B')
+     endif ! back if ( m_C /= m_A + m_B ) block
+
+     if ( n_C /= n_A ) then
+         call s_print_error('s_concat_vert_d','n_C must equal n_A')
+     endif ! back if ( n_C /= n_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
 
 !! body]
 
@@ -3947,25 +3944,24 @@
      ! concatenated matrix [A; B]
      complex(dp), intent(out) :: C(m_C,n_C)
 
-!! local variables
-     ! loop indices
-     integer :: i, j
-
 !! [body
 
-     ! copy matrix A to upper part of C
-     do i=1,m_A
-         do j=1,n_A
-             C(i,j) = A(i,j)
-         enddo ! over j={1,n_A} loop
-     enddo ! over i={1,m_A} loop
+     ! check boundary conditions
+     if ( n_A /= n_B ) then
+         call s_print_error('s_concat_vert_z','matrices A and B must have the same number of columns')
+     endif ! back if ( n_A /= n_B ) block
 
-     ! copy matrix B to lower part of C
-     do i=1,m_B
-         do j=1,n_B
-             C(m_A + i, j) = B(i,j)
-         enddo ! over j={1,n_B} loop
-     enddo ! over i={1,m_B} loop
+     if ( m_C /= m_A + m_B ) then
+         call s_print_error('s_concat_vert_z','m_C must equal m_A + m_B')
+     endif ! back if ( m_C /= m_A + m_B ) block
+
+     if ( n_C /= n_A ) then
+         call s_print_error('s_concat_vert_z','n_C must equal n_A')
+     endif ! back if ( n_C /= n_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
 
 !! body]
 
