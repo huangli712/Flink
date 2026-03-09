@@ -1475,6 +1475,214 @@
      return
   end subroutine s_inv_z
 
+!!
+!! @sub s_pinv_d
+!!
+!! compute Moore-Penrose pseudo-inverse of a general real(dp) m-by-n
+!! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^T.
+!!
+  subroutine s_pinv_d(m, n, A, pinv, tol)
+     use constants, only : dp
+     use constants, only : zero, one, eps8
+
+     implicit none
+
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)   :: m
+
+     ! number of columns of A matrix
+     integer, intent(in)   :: n
+
+     ! A matrix
+     real(dp), intent(in)  :: A(m,n)
+
+     ! pseudo-inverse matrix (n-by-m)
+     real(dp), intent(out) :: pinv(n,m)
+
+     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! status flag
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
+
+     ! loop index
+     integer  :: i
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+     ! SVD output arrays
+     real(dp), allocatable :: umat(:,:)
+     real(dp), allocatable :: svec(:)
+     real(dp), allocatable :: vmat(:,:)
+
+     ! temporary matrices for pseudo-inverse computation
+     real(dp), allocatable :: sigma_pinv(:,:)
+     real(dp), allocatable :: temp1(:,:)
+
+!! [body
+
+     ! calculate min_mn
+     min_mn = min(m, n)
+
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
+     allocate(temp1(min_mn,m), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_pinv_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! compute SVD decomposition
+     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
+
+     ! compute SIGMA^+: reciprocal of singular values with cutoff
+     sigma_pinv = zero
+     do i=1,min_mn
+         if ( svec(i) > actual_tol ) then
+             sigma_pinv(i,i) = one / svec(i)
+         endif ! back if ( svec(i) > actual_tol ) block
+     enddo ! over i={1,min_mn} loop
+
+     ! compute pinv(A) = V * SIGMA^+ * U^T
+     !
+     ! temp1 = SIGMA^+ * U^T
+     temp1 = matmul(sigma_pinv, transpose(umat))
+     !
+     ! pinv = V * temp1
+     pinv = matmul(vmat, temp1)
+
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
+     if ( allocated(temp1) ) deallocate(temp1)
+
+!! body]
+
+     return
+  end subroutine s_pinv_d
+
+!!
+!! @sub s_pinv_z
+!!
+!! compute Moore-Penrose pseudo-inverse of a general complex(dp) m-by-n
+!! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^H.
+!!
+  subroutine s_pinv_z(m, n, A, pinv, tol)
+     use constants, only : dp
+     use constants, only : zero, one, eps8
+
+     implicit none
+
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)      :: m
+
+     ! number of columns of A matrix
+     integer, intent(in)      :: n
+
+     ! A matrix
+     complex(dp), intent(in)  :: A(m,n)
+
+     ! pseudo-inverse matrix (n-by-m)
+     complex(dp), intent(out) :: pinv(n,m)
+
+     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! status flag
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
+
+     ! loop index
+     integer  :: i
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+     ! SVD output arrays
+     complex(dp), allocatable :: umat(:,:)
+     real(dp), allocatable    :: svec(:)
+     complex(dp), allocatable :: vmat(:,:)
+
+     ! temporary matrices for pseudo-inverse computation
+     real(dp), allocatable    :: sigma_pinv(:,:)
+     complex(dp), allocatable :: temp1(:,:)
+
+!! [body
+
+     ! calculate min_mn
+     min_mn = min(m, n)
+
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn), stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
+     allocate(temp1(min_mn,m), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_pinv_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! compute SVD decomposition
+     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
+
+     ! compute SIGMA^+: reciprocal of singular values with cutoff
+     sigma_pinv = zero
+     do i=1,min_mn
+         if ( svec(i) > actual_tol ) then
+             sigma_pinv(i,i) = one / svec(i)
+         endif ! back if ( svec(i) > actual_tol ) block
+     enddo ! over i={1,min_mn} loop
+
+     ! compute pinv(A) = V * SIGMA^+ * U^H
+     !
+     ! temp1 = SIGMA^+ * U^H
+     temp1 = matmul(sigma_pinv, conjg(transpose(umat)))
+     !
+     ! pinv = V * temp1
+     pinv = matmul(vmat, temp1)
+
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
+     if ( allocated(temp1) ) deallocate(temp1)
+
+!! body]
+
+     return
+  end subroutine s_pinv_z
+
 !!========================================================================
 !!>>> matrix manipulation: solve eigenvalues and eigenvectors problem  <<<
 !!========================================================================
