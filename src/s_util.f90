@@ -24,7 +24,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           01/16/2025 by li huang (last modified)
+!!!           03/10/2026 by li huang (last modified)
 !!! purpose : these subroutines are used to provide some useful features,
 !!!           including string manipulation, date time information, etc.
 !!! status  : unstable
@@ -148,8 +148,8 @@
 
 !! local variables
      ! dataset index
-     integer :: i = 0
-     integer :: j = 0
+     integer :: i
+     integer :: j
 
      ! dummy variables
      integer :: swap
@@ -202,8 +202,8 @@
 
 !! local variables
      ! dataset index
-     integer  :: i = 0
-     integer  :: j = 0
+     integer  :: i
+     integer  :: j
 
      ! dummy variables
      real(dp) :: swap
@@ -386,7 +386,7 @@
          list(1) = swap
 
          j = 1
-         do while ( 2*j < i )
+         do while ( 2*j <= i )
              k = 2*j
              if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
              if ( list(j) < list(k) ) then
@@ -448,7 +448,7 @@
          list(1) = swap
 
          j = 1
-         do while ( 2*j < i )
+         do while ( 2*j <= i )
              k = 2*j
              if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
              if ( list(j) < list(k) ) then
@@ -524,7 +524,7 @@
          indx(1) = int_tmp
 
          j = 1
-         do while ( 2*j < i )
+         do while ( 2*j <= i )
              k = 2*j
              if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
              if ( list(j) < list(k) ) then
@@ -606,7 +606,7 @@
          indx(1) = int_tmp
 
          j = 1
-         do while ( 2*j < i )
+         do while ( 2*j <= i )
              k = 2*j
              if ( ( k < i-1 ) .and. ( list(k+1) > list(k) ) ) k = k + 1
              if ( list(j) < list(k) ) then
@@ -910,6 +910,11 @@
 
 !! [body
 
+     if ( len(substr) == 0 ) then
+          count = 0
+          return
+     endif
+
      count = 0
      start = 0
      !
@@ -1049,9 +1054,9 @@
      write(cdate,'(1X,a3,1X,i2,1X,i4)') months(date_time(2)), &
                                       & date_time(3), &
                                       & date_time(1)
-     write(ctime,'(i2,":",i2,":",i2)') date_time(5), &
-                                     & date_time(6), &
-                                     & date_time(7)
+     write(ctime,'(i2.2,":",i2.2,":",i2.2)') date_time(5), &
+                                           & date_time(6), &
+                                           & date_time(7)
 
      ! build final output string by concating them
      date_time_string = ctime // cdate
