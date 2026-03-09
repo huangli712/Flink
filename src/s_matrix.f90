@@ -1335,6 +1335,150 @@
      return
   end subroutine s_rank_z
 
+!!
+!! @sub s_sparsity_ratio_i
+!!
+!! calculate sparsity ratio for an integer matrix (ratio of zero elements).
+!!
+  subroutine s_sparsity_ratio_i(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
+
+     ! input matrix
+     integer, intent(in)   :: A(n,n)
+
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out) :: ratio
+
+!! local variables
+     ! counter for zero elements
+     integer :: zero_count
+
+     ! total elements
+     integer :: total
+
+!! [body
+
+     ! initialize
+     total = n * n
+
+     ! count zero elements using intrinsic function
+     zero_count = count(A(1:n,1:n) == 0)
+
+     ! compute sparsity ratio
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
+     else
+         ratio = zero
+     endif ! back if ( total > 0 ) block
+
+!! body]
+
+     return
+  end subroutine s_sparsity_ratio_i
+
+!!
+!! @sub s_sparsity_ratio_d
+!!
+!! calculate sparsity ratio for a real(dp) matrix (ratio of zero elements).
+!!
+  subroutine s_sparsity_ratio_d(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero, eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
+
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
+
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out) :: ratio
+
+! local variables
+     ! counter for zero elements
+     integer :: zero_count
+
+     ! total elements
+     integer :: total
+
+!! [body
+
+     ! initialize
+     total = n * n
+
+     ! count zero elements using intrinsic function
+     zero_count = count(abs(A(1:n,1:n)) < eps8)
+
+     ! compute sparsity ratio
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
+     else
+         ratio = zero
+     endif ! back if ( total > 0 ) block
+
+!! body]
+
+     return
+  end subroutine s_sparsity_ratio_d
+
+!!
+!! @sub s_sparsity_ratio_z
+!!
+!! calculate sparsity ratio for a complex(dp) matrix (ratio of zero elements).
+!!
+  subroutine s_sparsity_ratio_z(n, A, ratio)
+     use constants, only : dp
+     use constants, only : zero, eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
+
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
+
+     ! output: sparsity ratio (0.0 to 1.0)
+     real(dp), intent(out)   :: ratio
+
+!! local variables
+     ! counter for zero elements
+     integer :: zero_count
+
+     ! total elements
+     integer :: total
+
+!! [body
+
+     ! initialize
+     total = n * n
+
+     ! count zero elements using intrinsic function
+     zero_count = count(abs(A(1:n,1:n)) < eps8)
+
+     ! compute sparsity ratio
+     if ( total > 0 ) then
+         ratio = real(zero_count, dp) / real(total, dp)
+     else
+         ratio = zero
+     endif ! back if ( total > 0 ) block
+
+!! body]
+
+     return
+  end subroutine s_sparsity_ratio_z
+
 !!========================================================================
 !!>>> matrix manipulation: calculate matrix's inversion                <<<
 !!========================================================================
@@ -3621,7 +3765,7 @@
   end subroutine s_schur_z
 
 !!========================================================================
-!!>>> matrix properties: check matrix properties                       <<<
+!!>>> matrix query: check matrix properties                            <<<
 !!========================================================================
 
 !!
@@ -5033,6 +5177,10 @@
      return
   end subroutine s_is_normal_z
 
+!!========================================================================
+!!>>> matrix construction                                              <<<
+!!========================================================================
+
 !!
 !! @sub s_extract_submatrix_d
 !!
@@ -5416,150 +5564,6 @@
   end subroutine s_concat_vert_z
 
 !!
-!! @sub s_sparsity_ratio_i
-!!
-!! calculate sparsity ratio for an integer matrix (ratio of zero elements).
-!!
-  subroutine s_sparsity_ratio_i(n, A, ratio)
-     use constants, only : dp
-     use constants, only : zero
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)   :: n
-
-     ! input matrix
-     integer, intent(in)   :: A(n,n)
-
-     ! output: sparsity ratio (0.0 to 1.0)
-     real(dp), intent(out) :: ratio
-
-!! local variables
-     ! counter for zero elements
-     integer :: zero_count
-
-     ! total elements
-     integer :: total
-
-!! [body
-
-     ! initialize
-     total = n * n
-
-     ! count zero elements using intrinsic function
-     zero_count = count(A(1:n,1:n) == 0)
-
-     ! compute sparsity ratio
-     if ( total > 0 ) then
-         ratio = real(zero_count, dp) / real(total, dp)
-     else
-         ratio = zero
-     endif ! back if ( total > 0 ) block
-
-!! body]
-
-     return
-  end subroutine s_sparsity_ratio_i
-
-!!
-!! @sub s_sparsity_ratio_d
-!!
-!! calculate sparsity ratio for a real(dp) matrix (ratio of zero elements).
-!!
-  subroutine s_sparsity_ratio_d(n, A, ratio)
-     use constants, only : dp
-     use constants, only : zero, eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)   :: n
-
-     ! input matrix
-     real(dp), intent(in)  :: A(n,n)
-
-     ! output: sparsity ratio (0.0 to 1.0)
-     real(dp), intent(out) :: ratio
-
-! local variables
-     ! counter for zero elements
-     integer :: zero_count
-
-     ! total elements
-     integer :: total
-
-!! [body
-
-     ! initialize
-     total = n * n
-
-     ! count zero elements using intrinsic function
-     zero_count = count(abs(A(1:n,1:n)) < eps8)
-
-     ! compute sparsity ratio
-     if ( total > 0 ) then
-         ratio = real(zero_count, dp) / real(total, dp)
-     else
-         ratio = zero
-     endif ! back if ( total > 0 ) block
-
-!! body]
-
-     return
-  end subroutine s_sparsity_ratio_d
-
-!!
-!! @sub s_sparsity_ratio_z
-!!
-!! calculate sparsity ratio for a complex(dp) matrix (ratio of zero elements).
-!!
-  subroutine s_sparsity_ratio_z(n, A, ratio)
-     use constants, only : dp
-     use constants, only : zero, eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)     :: n
-
-     ! input matrix
-     complex(dp), intent(in) :: A(n,n)
-
-     ! output: sparsity ratio (0.0 to 1.0)
-     real(dp), intent(out)   :: ratio
-
-!! local variables
-     ! counter for zero elements
-     integer :: zero_count
-
-     ! total elements
-     integer :: total
-
-!! [body
-
-     ! initialize
-     total = n * n
-
-     ! count zero elements using intrinsic function
-     zero_count = count(abs(A(1:n,1:n)) < eps8)
-
-     ! compute sparsity ratio
-     if ( total > 0 ) then
-         ratio = real(zero_count, dp) / real(total, dp)
-     else
-         ratio = zero
-     endif ! back if ( total > 0 ) block
-
-!! body]
-
-     return
-  end subroutine s_sparsity_ratio_z
-
-!!
 !! @sub s_upper_triangular_d
 !!
 !! construct an upper triangular matrix from a real(dp) matrix.
@@ -5774,6 +5778,10 @@
 
      return
   end subroutine s_tridiagonal_z
+
+!!========================================================================
+!!>>> matrix construction:                                             <<<
+!!========================================================================
 
 !!
 !! @sub s_hilbert_d
@@ -5999,6 +6007,10 @@
 
      return
   end subroutine s_wilkinson_d
+
+!!========================================================================
+!!>>> matrix construction:                                             <<<
+!!========================================================================
 
 !!
 !! @sub s_sparse_random_d
