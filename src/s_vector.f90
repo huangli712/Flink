@@ -5729,7 +5729,7 @@
      integer, intent(inout) :: ix(n)
 
      ! seed for random number generator
-     integer, intent(in)    :: seed
+     integer, intent(in)    :: seed(1)
 
 !! local variables
      ! loop index
@@ -5751,7 +5751,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed(seed)
+     call random_seed(put=seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -5783,7 +5783,7 @@
      real(dp), intent(inout) :: dx(n)
 
      ! seed for random number generator
-     integer, intent(in)     :: seed
+     integer, intent(in)     :: seed(1)
 
 !! local variables
      ! loop index
@@ -5805,7 +5805,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed(seed)
+     call random_seed(put=seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -5837,7 +5837,7 @@
      complex(dp), intent(inout) :: zx(n)
 
      ! seed for random number generator
-     integer, intent(in)        :: seed
+     integer, intent(in)        :: seed(1)
 
 !! local variables
      ! loop index
@@ -5859,7 +5859,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed(seed)
+     call random_seed(put=seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
