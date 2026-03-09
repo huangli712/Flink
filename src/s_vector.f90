@@ -3420,47 +3420,6 @@
 !!========================================================================
 
 !!
-!! @sub s_sqrt_i
-!!
-!! compute square root of an integer vector in-place: x = sqrt(x)
-!!
-  subroutine s_sqrt_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         if (ix(i) >= 0) then
-             ix(i) = int(sqrt(real(ix(i), dp)))
-         else
-             ix(i) = 0
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_sqrt_i
-
-!!
 !! @sub s_sqrt_d
 !!
 !! compute square root of a real(dp) vector in-place: x = sqrt(x)
@@ -3619,47 +3578,6 @@
 !!========================================================================
 
 !!
-!! @sub s_log_i
-!!
-!! compute natural logarithm of an integer vector in-place: x = log(x)
-!!
-  subroutine s_log_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         if (ix(i) > 0) then
-             ix(i) = int(log(real(ix(i), dp)))
-         else
-             ix(i) = 0
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_log_i
-
-!!
 !! @sub s_log_d
 !!
 !! compute natural logarithm of a real(dp) vector in-place: x = log(x)
@@ -3740,47 +3658,6 @@
 !!========================================================================
 !!>>> log10 operations                                                <<<
 !!========================================================================
-
-!!
-!! @sub s_log10_i
-!!
-!! compute base-10 logarithm of an integer vector in-place: x = log10(x)
-!!
-  subroutine s_log10_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         if (ix(i) > 0) then
-             ix(i) = int(log10(real(ix(i), dp)))
-         else
-             ix(i) = 0
-         endif
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_log10_i
 
 !!
 !! @sub s_log10_d
@@ -4093,44 +3970,6 @@
 !!========================================================================
 
 !!
-!! @sub s_sinh_i
-!!
-!! compute hyperbolic sine of an integer vector in-place: x = sinh(x)
-!! note: result is cast back to integer
-!!
-   subroutine s_sinh_i(n, ix)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
-
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(sinh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_sinh_i
-
-!!
 !! @sub s_sinh_d
 !!
 !! compute hyperbolic sine of a real(dp) vector in-place: x = sinh(x)
@@ -4207,44 +4046,6 @@
 !!========================================================================
 
 !!
-!! @sub s_cosh_i
-!!
-!! compute hyperbolic cosine of an integer vector in-place: x = cosh(x)
-!! note: result is cast back to integer
-!!
-   subroutine s_cosh_i(n, ix)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
-
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(cosh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_cosh_i
-
-!!
 !! @sub s_cosh_d
 !!
 !! compute hyperbolic cosine of a real(dp) vector in-place: x = cosh(x)
@@ -4319,44 +4120,6 @@
 !!========================================================================
 !!>>> hyperbolic tangent operations                                    <<<
 !!========================================================================
-
-!!
-!! @sub s_tanh_i
-!!
-!! compute hyperbolic tangent of an integer vector in-place: x = tanh(x)
-!! note: result is cast back to integer
-!!
-   subroutine s_tanh_i(n, ix)
-      use constants, only : dp
-
-      implicit none
-
-!! external arguments
-      ! size of vector
-      integer, intent(in)    :: n
-
-      ! integer vector to be modified (in-place)
-      ! note: result is cast back to integer
-      integer, intent(inout) :: ix(n)
-
-!! local variables
-      ! loop index
-      integer :: i
-
-!! [body
-
-      if (n <= 0) then
-          return
-      endif
-      !
-      do i=1,n
-          ix(i) = int(tanh(real(ix(i), dp)))
-      enddo ! over i={1,n} loop
-
-!! body]
-
-      return
-   end subroutine s_tanh_i
 
 !!
 !! @sub s_tanh_d
@@ -5983,7 +5746,7 @@
 
 !! [body
 
-     if (n < 2) then
+     if (n <= 2) then
          return
      endif
      !
@@ -6037,7 +5800,7 @@
 
 !! [body
 
-     if (n < 2) then
+     if (n <= 2) then
          return
      endif
      !
@@ -6091,7 +5854,7 @@
 
 !! [body
 
-     if (n < 2) then
+     if (n <= 2) then
          return
      endif
      !
