@@ -54,7 +54,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/07/2026 by li huang (last modified)
+!!!           03/09/2026 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
@@ -928,6 +928,412 @@
 
      return
   end subroutine s_det_z
+
+!!
+!! @sub s_cond_d
+!!
+!! estimate the condition number of a real(dp) matrix A in the
+!! 1-norm, infinity norm, or Frobenius norm using LAPACK.
+!!
+  subroutine s_cond_d(n, A, cond, norm_type)
+     use constants, only : dp
+     use constants, only : zero, one
+
+     implicit none
+
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)   :: n
+
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
+
+     ! estimated condition number
+     real(dp), intent(out) :: cond
+
+     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
+     character(len=1), intent(in), optional :: norm_type
+
+!! local variables
+     ! actual norm type (default: 1-norm)
+     character(len=1) :: actual_norm
+
+     ! error flag
+     integer  :: ierror
+
+     ! norm of A
+     real(dp) :: anorm
+
+     ! reciprocal of condition number
+     real(dp) :: rcond
+
+     ! workspace arrays for lapack subroutines
+     integer, allocatable  :: ipiv(:)
+     real(dp), allocatable :: work(:)
+     real(dp), allocatable :: iwork(:)
+     real(dp), allocatable :: A_lu(:,:)
+
+!! [body
+
+     ! set norm type (use '1' if not provided)
+     if ( present(norm_type) ) then
+         actual_norm = norm_type
+     else
+         actual_norm = '1'
+     endif ! back if ( present(norm_type) ) block
+
+     ! allocate memory
+     allocate(ipiv(n),   stat=ierror)
+     allocate(work(4*n), stat=ierror)
+     allocate(iwork(n),  stat=ierror)
+     allocate(A_lu(n,n), stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! copy A to A_lu for LU factorization
+     A_lu = A
+
+     ! compute LU factorization
+     call DGETRF(n, n, A_lu, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','error in lapack subroutine dgetrf')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! compute norm of original matrix A
+     if ( actual_norm == '1' ) then
+         ! 1-norm: maximum absolute column sum
+         anorm = maxval(sum(abs(A), dim=1))
+     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
+         ! infinity norm: maximum absolute row sum
+         anorm = maxval(sum(abs(A), dim=2))
+     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
+         ! Frobenius norm: sqrt(sum of squares)
+         anorm = sqrt(sum(A**2))
+     endif
+
+     ! estimate reciprocal condition number
+     call DGECON(actual_norm, n, A_lu, n, anorm, rcond, work, iwork, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_d','error in lapack subroutine dgecon')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! compute condition number
+     if ( rcond > zero ) then
+         cond = one / rcond
+     else
+         ! matrix is singular or near-singular
+         cond = huge(one)
+     endif
+
+     ! deallocate memory
+     if ( allocated(ipiv)  ) deallocate(ipiv)
+     if ( allocated(work)  ) deallocate(work)
+     if ( allocated(iwork) ) deallocate(iwork)
+     if ( allocated(A_lu)  ) deallocate(A_lu)
+
+!! body]
+
+     return
+  end subroutine s_cond_d
+
+!!
+!! @sub s_cond_z
+!!
+!! estimate the condition number of a complex(dp) matrix A in the
+!! 1-norm, infinity norm, or Frobenius norm using LAPACK.
+!!
+  subroutine s_cond_z(n, A, cond, norm_type)
+     use constants, only : dp
+     use constants, only : zero, one
+
+     implicit none
+
+!! external arguments
+     ! dimension of matrix (must be square)
+     integer, intent(in)      :: n
+
+     ! input matrix
+     complex(dp), intent(in)  :: A(n,n)
+
+     ! estimated condition number
+     real(dp), intent(out)    :: cond
+
+     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
+     character(len=1), intent(in), optional :: norm_type
+
+!! local variables
+     ! actual norm type (default: 1-norm)
+     character(len=1) :: actual_norm
+
+     ! error flag
+     integer  :: ierror
+
+     ! norm of A
+     real(dp) :: anorm
+
+     ! reciprocal of condition number
+     real(dp) :: rcond
+
+     ! workspace arrays for lapack subroutines
+     integer, allocatable     :: ipiv(:)
+     complex(dp), allocatable :: work(:)
+     real(dp), allocatable    :: rwork(:)
+     complex(dp), allocatable :: A_lu(:,:)
+
+!! [body
+
+     ! set norm type (use '1' if not provided)
+     if ( present(norm_type) ) then
+         actual_norm = norm_type
+     else
+         actual_norm = '1'
+     endif ! back if ( present(norm_type) ) block
+
+     ! allocate memory
+     allocate(ipiv(n),    stat=ierror)
+     allocate(work(2*n),  stat=ierror)
+     allocate(rwork(2*n), stat=ierror)
+     allocate(A_lu(n,n),  stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! copy A to A_lu for LU factorization
+     A_lu = A
+
+     ! compute LU factorization
+     call ZGETRF(n, n, A_lu, n, ipiv, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','error in lapack subroutine zgetrf')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! compute norm of original matrix A
+     if ( actual_norm == '1' ) then
+         ! 1-norm: maximum absolute column sum
+         anorm = maxval(sum(abs(A), dim=1))
+     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
+         ! infinity norm: maximum absolute row sum
+         anorm = maxval(sum(abs(A), dim=2))
+     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
+         ! Frobenius norm: sqrt(sum of squares)
+         anorm = sqrt(real(sum(conjg(A)*A)))
+     endif
+
+     ! estimate reciprocal condition number
+     call ZGECON(actual_norm, n, A_lu, n, anorm, rcond, work, rwork, ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_cond_z','error in lapack subroutine zgecon')
+     endif ! back if ( ierror /= 0 ) block
+
+     ! compute condition number
+     if ( rcond > zero ) then
+         cond = one / rcond
+     else
+         ! matrix is singular or near-singular
+         cond = huge(one)
+     endif
+
+     ! deallocate memory
+     if ( allocated(ipiv)  ) deallocate(ipiv)
+     if ( allocated(work)  ) deallocate(work)
+     if ( allocated(rwork) ) deallocate(rwork)
+     if ( allocated(A_lu)  ) deallocate(A_lu)
+
+!! body]
+
+     return
+  end subroutine s_cond_z
+
+!!
+!! @sub s_rank_d
+!!
+!! estimate the rank of a real(dp) m-by-n matrix A using SVD.
+!! returns the number of singular values greater than tolerance.
+!!
+  subroutine s_rank_d(m, n, A, rank, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)     :: m
+
+     ! number of columns of A matrix
+     integer, intent(in)     :: n
+
+     ! A matrix (will be destroyed by SVD)
+     real(dp), intent(inout) :: A(m,n)
+
+     ! estimated rank of matrix A
+     integer, intent(out)    :: rank
+
+     ! tolerance for singular value comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! status flag for allocation
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+     ! maximum singular value
+     real(dp) :: max_sval
+
+     ! tolerance threshold
+     real(dp) :: thresh
+
+     ! SVD output arrays
+     real(dp), allocatable :: umat(:,:)
+     real(dp), allocatable :: svec(:)
+     real(dp), allocatable :: vmat(:,:)
+
+!! [body
+
+     ! compute minimal dimension
+     min_mn = min(m, n)
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn),   stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_rank_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+
+     ! compute SVD decomposition
+     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
+
+     ! find maximum singular value
+     max_sval = maxval(svec)
+
+     ! compute threshold: max_sval * tol * max(m,n)
+     thresh = max_sval * actual_tol * real(max(m,n), dp)
+
+     ! count singular values greater than threshold
+     rank = count(svec > thresh)
+
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+
+!! body]
+
+     return
+  end subroutine s_rank_d
+
+!!
+!! @sub s_rank_z
+!!
+!! estimate the rank of a complex(dp) m-by-n matrix A using SVD.
+!! returns the number of singular values greater than tolerance.
+!!
+  subroutine s_rank_z(m, n, A, rank, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! number of rows of A matrix
+     integer, intent(in)        :: m
+
+     ! number of columns of A matrix
+     integer, intent(in)        :: n
+
+     ! A matrix (will be destroyed by SVD)
+     complex(dp), intent(inout) :: A(m,n)
+
+     ! estimated rank of matrix A
+     integer, intent(out)       :: rank
+
+     ! tolerance for singular value comparison (optional, default: 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! status flag for allocation
+     integer  :: istat
+
+     ! minimal value of m and n
+     integer  :: min_mn
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+     ! maximum singular value
+     real(dp) :: max_sval
+
+     ! tolerance threshold
+     real(dp) :: thresh
+
+     ! SVD output arrays
+     complex(dp), allocatable :: umat(:,:)
+     real(dp), allocatable    :: svec(:)
+     complex(dp), allocatable :: vmat(:,:)
+
+!! [body
+
+     ! compute minimal dimension
+     min_mn = min(m, n)
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! allocate arrays for SVD
+     allocate(umat(m,min_mn), stat=istat)
+     allocate(svec(min_mn),   stat=istat)
+     allocate(vmat(min_mn,n), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_rank_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+
+     ! compute SVD decomposition
+     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
+
+     ! find maximum singular value
+     max_sval = maxval(svec)
+
+     ! compute threshold: max_sval * tol * max(m,n)
+     thresh = max_sval * actual_tol * real(max(m,n), dp)
+
+     ! count singular values greater than threshold
+     rank = count(svec > thresh)
+
+     ! deallocate arrays
+     if ( allocated(umat) ) deallocate(umat)
+     if ( allocated(svec) ) deallocate(svec)
+     if ( allocated(vmat) ) deallocate(vmat)
+
+!! body]
+
+     return
+  end subroutine s_rank_z
 
 !!========================================================================
 !!>>> matrix manipulation: calculate matrix's inversion                <<<
@@ -3181,412 +3587,6 @@
   end subroutine s_schur_z
 
 !!
-!! @sub s_cond_d
-!!
-!! estimate the condition number of a real(dp) matrix A in the
-!! 1-norm, infinity norm, or Frobenius norm using LAPACK.
-!!
-  subroutine s_cond_d(n, A, cond, norm_type)
-     use constants, only : dp
-     use constants, only : zero, one
-
-     implicit none
-
-!! external arguments
-     ! dimension of matrix (must be square)
-     integer, intent(in)   :: n
-
-     ! input matrix
-     real(dp), intent(in)  :: A(n,n)
-
-     ! estimated condition number
-     real(dp), intent(out) :: cond
-
-     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
-     character(len=1), intent(in), optional :: norm_type
-
-!! local variables
-     ! actual norm type (default: 1-norm)
-     character(len=1) :: actual_norm
-
-     ! error flag
-     integer  :: ierror
-
-     ! norm of A
-     real(dp) :: anorm
-
-     ! reciprocal of condition number
-     real(dp) :: rcond
-
-     ! workspace arrays for lapack subroutines
-     integer, allocatable  :: ipiv(:)
-     real(dp), allocatable :: work(:)
-     real(dp), allocatable :: iwork(:)
-     real(dp), allocatable :: A_lu(:,:)
-
-!! [body
-
-     ! set norm type (use '1' if not provided)
-     if ( present(norm_type) ) then
-         actual_norm = norm_type
-     else
-         actual_norm = '1'
-     endif ! back if ( present(norm_type) ) block
-
-     ! allocate memory
-     allocate(ipiv(n),   stat=ierror)
-     allocate(work(4*n), stat=ierror)
-     allocate(iwork(n),  stat=ierror)
-     allocate(A_lu(n,n), stat=ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_d','can not allocate enough memory')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! copy A to A_lu for LU factorization
-     A_lu = A
-
-     ! compute LU factorization
-     call DGETRF(n, n, A_lu, n, ipiv, ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_d','error in lapack subroutine dgetrf')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! compute norm of original matrix A
-     if ( actual_norm == '1' ) then
-         ! 1-norm: maximum absolute column sum
-         anorm = maxval(sum(abs(A), dim=1))
-     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
-         ! infinity norm: maximum absolute row sum
-         anorm = maxval(sum(abs(A), dim=2))
-     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
-         ! Frobenius norm: sqrt(sum of squares)
-         anorm = sqrt(sum(A**2))
-     endif
-
-     ! estimate reciprocal condition number
-     call DGECON(actual_norm, n, A_lu, n, anorm, rcond, work, iwork, ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_d','error in lapack subroutine dgecon')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! compute condition number
-     if ( rcond > zero ) then
-         cond = one / rcond
-     else
-         ! matrix is singular or near-singular
-         cond = huge(one)
-     endif
-
-     ! deallocate memory
-     if ( allocated(ipiv)  ) deallocate(ipiv)
-     if ( allocated(work)  ) deallocate(work)
-     if ( allocated(iwork) ) deallocate(iwork)
-     if ( allocated(A_lu)  ) deallocate(A_lu)
-
-!! body]
-
-     return
-  end subroutine s_cond_d
-
-!!
-!! @sub s_cond_z
-!!
-!! estimate the condition number of a complex(dp) matrix A in the
-!! 1-norm, infinity norm, or Frobenius norm using LAPACK.
-!!
-  subroutine s_cond_z(n, A, cond, norm_type)
-     use constants, only : dp
-     use constants, only : zero, one
-
-     implicit none
-
-!! external arguments
-     ! dimension of matrix (must be square)
-     integer, intent(in)      :: n
-
-     ! input matrix
-     complex(dp), intent(in)  :: A(n,n)
-
-     ! estimated condition number
-     real(dp), intent(out)    :: cond
-
-     ! norm type: '1' for 1-norm, 'I' for infinity norm, 'F' for Frobenius
-     character(len=1), intent(in), optional :: norm_type
-
-!! local variables
-     ! actual norm type (default: 1-norm)
-     character(len=1) :: actual_norm
-
-     ! error flag
-     integer  :: ierror
-
-     ! norm of A
-     real(dp) :: anorm
-
-     ! reciprocal of condition number
-     real(dp) :: rcond
-
-     ! workspace arrays for lapack subroutines
-     integer, allocatable     :: ipiv(:)
-     complex(dp), allocatable :: work(:)
-     real(dp), allocatable    :: rwork(:)
-     complex(dp), allocatable :: A_lu(:,:)
-
-!! [body
-
-     ! set norm type (use '1' if not provided)
-     if ( present(norm_type) ) then
-         actual_norm = norm_type
-     else
-         actual_norm = '1'
-     endif ! back if ( present(norm_type) ) block
-
-     ! allocate memory
-     allocate(ipiv(n),    stat=ierror)
-     allocate(work(2*n),  stat=ierror)
-     allocate(rwork(2*n), stat=ierror)
-     allocate(A_lu(n,n),  stat=ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_z','can not allocate enough memory')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! copy A to A_lu for LU factorization
-     A_lu = A
-
-     ! compute LU factorization
-     call ZGETRF(n, n, A_lu, n, ipiv, ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_z','error in lapack subroutine zgetrf')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! compute norm of original matrix A
-     if ( actual_norm == '1' ) then
-         ! 1-norm: maximum absolute column sum
-         anorm = maxval(sum(abs(A), dim=1))
-     elseif ( actual_norm == 'I' .or. actual_norm == 'i' ) then
-         ! infinity norm: maximum absolute row sum
-         anorm = maxval(sum(abs(A), dim=2))
-     elseif ( actual_norm == 'F' .or. actual_norm == 'f' ) then
-         ! Frobenius norm: sqrt(sum of squares)
-         anorm = sqrt(real(sum(conjg(A)*A)))
-     endif
-
-     ! estimate reciprocal condition number
-     call ZGECON(actual_norm, n, A_lu, n, anorm, rcond, work, rwork, ierror)
-     !
-     if ( ierror /= 0 ) then
-         call s_print_error('s_cond_z','error in lapack subroutine zgecon')
-     endif ! back if ( ierror /= 0 ) block
-
-     ! compute condition number
-     if ( rcond > zero ) then
-         cond = one / rcond
-     else
-         ! matrix is singular or near-singular
-         cond = huge(one)
-     endif
-
-     ! deallocate memory
-     if ( allocated(ipiv)  ) deallocate(ipiv)
-     if ( allocated(work)  ) deallocate(work)
-     if ( allocated(rwork) ) deallocate(rwork)
-     if ( allocated(A_lu)  ) deallocate(A_lu)
-
-!! body]
-
-     return
-  end subroutine s_cond_z
-
-!!
-!! @sub s_rank_d
-!!
-!! estimate the rank of a real(dp) m-by-n matrix A using SVD.
-!! returns the number of singular values greater than tolerance.
-!!
-  subroutine s_rank_d(m, n, A, rank, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! number of rows of A matrix
-     integer, intent(in)     :: m
-
-     ! number of columns of A matrix
-     integer, intent(in)     :: n
-
-     ! A matrix (will be destroyed by SVD)
-     real(dp), intent(inout) :: A(m,n)
-
-     ! estimated rank of matrix A
-     integer, intent(out)    :: rank
-
-     ! tolerance for singular value comparison (optional, default: 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! status flag for allocation
-     integer  :: istat
-
-     ! minimal value of m and n
-     integer  :: min_mn
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-     ! maximum singular value
-     real(dp) :: max_sval
-
-     ! tolerance threshold
-     real(dp) :: thresh
-
-     ! SVD output arrays
-     real(dp), allocatable :: umat(:,:)
-     real(dp), allocatable :: svec(:)
-     real(dp), allocatable :: vmat(:,:)
-
-!! [body
-
-     ! compute minimal dimension
-     min_mn = min(m, n)
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! allocate arrays for SVD
-     allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn),   stat=istat)
-     allocate(vmat(min_mn,n), stat=istat)
-     !
-     if ( istat /= 0 ) then
-         call s_print_error('s_rank_d','can not allocate enough memory')
-     endif ! back if ( istat /= 0 ) block
-
-     ! compute SVD decomposition
-     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
-
-     ! find maximum singular value
-     max_sval = maxval(svec)
-
-     ! compute threshold: max_sval * tol * max(m,n)
-     thresh = max_sval * actual_tol * real(max(m,n), dp)
-
-     ! count singular values greater than threshold
-     rank = count(svec > thresh)
-
-     ! deallocate arrays
-     if ( allocated(umat) ) deallocate(umat)
-     if ( allocated(svec) ) deallocate(svec)
-     if ( allocated(vmat) ) deallocate(vmat)
-
-!! body]
-
-     return
-  end subroutine s_rank_d
-
-!!
-!! @sub s_rank_z
-!!
-!! estimate the rank of a complex(dp) m-by-n matrix A using SVD.
-!! returns the number of singular values greater than tolerance.
-!!
-  subroutine s_rank_z(m, n, A, rank, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! number of rows of A matrix
-     integer, intent(in)        :: m
-
-     ! number of columns of A matrix
-     integer, intent(in)        :: n
-
-     ! A matrix (will be destroyed by SVD)
-     complex(dp), intent(inout) :: A(m,n)
-
-     ! estimated rank of matrix A
-     integer, intent(out)       :: rank
-
-     ! tolerance for singular value comparison (optional, default: 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! status flag for allocation
-     integer  :: istat
-
-     ! minimal value of m and n
-     integer  :: min_mn
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-     ! maximum singular value
-     real(dp) :: max_sval
-
-     ! tolerance threshold
-     real(dp) :: thresh
-
-     ! SVD output arrays
-     complex(dp), allocatable :: umat(:,:)
-     real(dp), allocatable    :: svec(:)
-     complex(dp), allocatable :: vmat(:,:)
-
-!! [body
-
-     ! compute minimal dimension
-     min_mn = min(m, n)
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! allocate arrays for SVD
-     allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn),   stat=istat)
-     allocate(vmat(min_mn,n), stat=istat)
-     !
-     if ( istat /= 0 ) then
-         call s_print_error('s_rank_z','can not allocate enough memory')
-     endif ! back if ( istat /= 0 ) block
-
-     ! compute SVD decomposition
-     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
-
-     ! find maximum singular value
-     max_sval = maxval(svec)
-
-     ! compute threshold: max_sval * tol * max(m,n)
-     thresh = max_sval * actual_tol * real(max(m,n), dp)
-
-     ! count singular values greater than threshold
-     rank = count(svec > thresh)
-
-     ! deallocate arrays
-     if ( allocated(umat) ) deallocate(umat)
-     if ( allocated(svec) ) deallocate(svec)
-     if ( allocated(vmat) ) deallocate(vmat)
-
-!! body]
-
-     return
-  end subroutine s_rank_z
-
-!!
 !! @sub s_extract_submatrix_d
 !!
 !! extract a submatrix from a real(dp) matrix A_src.
@@ -4160,214 +4160,6 @@
 
      return
   end subroutine s_geig_he
-
-!!
-!! @sub s_pinv_d
-!!
-!! compute Moore-Penrose pseudo-inverse of a general real(dp) m-by-n
-!! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^T.
-!!
-  subroutine s_pinv_d(m, n, A, pinv, tol)
-     use constants, only : dp
-     use constants, only : zero, one, eps8
-
-     implicit none
-
-!! external arguments
-     ! number of rows of A matrix
-     integer, intent(in)   :: m
-
-     ! number of columns of A matrix
-     integer, intent(in)   :: n
-
-     ! A matrix
-     real(dp), intent(in)  :: A(m,n)
-
-     ! pseudo-inverse matrix (n-by-m)
-     real(dp), intent(out) :: pinv(n,m)
-
-     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! status flag
-     integer  :: istat
-
-     ! minimal value of m and n
-     integer  :: min_mn
-
-     ! loop index
-     integer  :: i
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-     ! SVD output arrays
-     real(dp), allocatable :: umat(:,:)
-     real(dp), allocatable :: svec(:)
-     real(dp), allocatable :: vmat(:,:)
-
-     ! temporary matrices for pseudo-inverse computation
-     real(dp), allocatable :: sigma_pinv(:,:)
-     real(dp), allocatable :: temp1(:,:)
-
-!! [body
-
-     ! calculate min_mn
-     min_mn = min(m, n)
-
-     ! allocate arrays for SVD
-     allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn), stat=istat)
-     allocate(vmat(min_mn,n), stat=istat)
-     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
-     allocate(temp1(min_mn,m), stat=istat)
-     !
-     if ( istat /= 0 ) then
-         call s_print_error('s_pinv_d','can not allocate enough memory')
-     endif ! back if ( istat /= 0 ) block
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! compute SVD decomposition
-     call s_svd_dg(m, n, min_mn, A, umat, svec, vmat)
-
-     ! compute SIGMA^+: reciprocal of singular values with cutoff
-     sigma_pinv = zero
-     do i=1,min_mn
-         if ( svec(i) > actual_tol ) then
-             sigma_pinv(i,i) = one / svec(i)
-         endif ! back if ( svec(i) > actual_tol ) block
-     enddo ! over i={1,min_mn} loop
-
-     ! compute pinv(A) = V * SIGMA^+ * U^T
-     !
-     ! temp1 = SIGMA^+ * U^T
-     temp1 = matmul(sigma_pinv, transpose(umat))
-     !
-     ! pinv = V * temp1
-     pinv = matmul(vmat, temp1)
-
-     ! deallocate arrays
-     if ( allocated(umat) ) deallocate(umat)
-     if ( allocated(svec) ) deallocate(svec)
-     if ( allocated(vmat) ) deallocate(vmat)
-     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
-     if ( allocated(temp1) ) deallocate(temp1)
-
-!! body]
-
-     return
-  end subroutine s_pinv_d
-
-!!
-!! @sub s_pinv_z
-!!
-!! compute Moore-Penrose pseudo-inverse of a general complex(dp) m-by-n
-!! matrix A using SVD decomposition, where pinv(A) = V * SIGMA^+ * U^H.
-!!
-  subroutine s_pinv_z(m, n, A, pinv, tol)
-     use constants, only : dp
-     use constants, only : zero, one, eps8
-
-     implicit none
-
-!! external arguments
-     ! number of rows of A matrix
-     integer, intent(in)      :: m
-
-     ! number of columns of A matrix
-     integer, intent(in)      :: n
-
-     ! A matrix
-     complex(dp), intent(in)  :: A(m,n)
-
-     ! pseudo-inverse matrix (n-by-m)
-     complex(dp), intent(out) :: pinv(n,m)
-
-     ! tolerance for singular value cutoff (optional, default: 1.0e-12)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! status flag
-     integer  :: istat
-
-     ! minimal value of m and n
-     integer  :: min_mn
-
-     ! loop index
-     integer  :: i
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-     ! SVD output arrays
-     complex(dp), allocatable :: umat(:,:)
-     real(dp), allocatable    :: svec(:)
-     complex(dp), allocatable :: vmat(:,:)
-
-     ! temporary matrices for pseudo-inverse computation
-     real(dp), allocatable    :: sigma_pinv(:,:)
-     complex(dp), allocatable :: temp1(:,:)
-
-!! [body
-
-     ! calculate min_mn
-     min_mn = min(m, n)
-
-     ! allocate arrays for SVD
-     allocate(umat(m,min_mn), stat=istat)
-     allocate(svec(min_mn), stat=istat)
-     allocate(vmat(min_mn,n), stat=istat)
-     allocate(sigma_pinv(min_mn,min_mn), stat=istat)
-     allocate(temp1(min_mn,m), stat=istat)
-     !
-     if ( istat /= 0 ) then
-         call s_print_error('s_pinv_z','can not allocate enough memory')
-     endif ! back if ( istat /= 0 ) block
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! compute SVD decomposition
-     call s_svd_zg(m, n, min_mn, A, umat, svec, vmat)
-
-     ! compute SIGMA^+: reciprocal of singular values with cutoff
-     sigma_pinv = zero
-     do i=1,min_mn
-         if ( svec(i) > actual_tol ) then
-             sigma_pinv(i,i) = one / svec(i)
-         endif ! back if ( svec(i) > actual_tol ) block
-     enddo ! over i={1,min_mn} loop
-
-     ! compute pinv(A) = V * SIGMA^+ * U^H
-     !
-     ! temp1 = SIGMA^+ * U^H
-     temp1 = matmul(sigma_pinv, conjg(transpose(umat)))
-     !
-     ! pinv = V * temp1
-     pinv = matmul(vmat, temp1)
-
-     ! deallocate arrays
-     if ( allocated(umat) ) deallocate(umat)
-     if ( allocated(svec) ) deallocate(svec)
-     if ( allocated(vmat) ) deallocate(vmat)
-     if ( allocated(sigma_pinv) ) deallocate(sigma_pinv)
-     if ( allocated(temp1) ) deallocate(temp1)
-
-!! body]
-
-     return
-  end subroutine s_pinv_z
 
 !!
 !! @sub s_is_skew_symmetric_d
