@@ -3987,390 +3987,6 @@
      return
   end subroutine s_is_tridiagonal_z
 
-
-
-!!
-!! @sub s_extract_submatrix_d
-!!
-!! extract a submatrix from a real(dp) matrix A_src.
-!! extracts rows i_start:i_end and columns j_start:j_end.
-!!
-  subroutine s_extract_submatrix_d(m_src, n_src, A_src, &
-                                  i_start, j_start, &
-                                  m_sub, n_sub, A_sub)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of source matrix
-     integer, intent(in)   :: m_src
-
-     ! number of columns of source matrix
-     integer, intent(in)   :: n_src
-
-     ! source matrix
-     real(dp), intent(in)  :: A_src(m_src,n_src)
-
-     ! start row index (1-based)
-     integer, intent(in)   :: i_start
-
-     ! start column index (1-based)
-     integer, intent(in)   :: j_start
-
-     ! number of rows of submatrix
-     integer, intent(in)   :: m_sub
-
-     ! number of columns of submatrix
-     integer, intent(in)   :: n_sub
-
-     ! extracted submatrix
-     real(dp), intent(out) :: A_sub(m_sub,n_sub)
-
-!! [body
-
-     ! check boundary conditions
-     if ( i_start < 1 .or. i_start > m_src ) then
-         call s_print_error('s_extract_submatrix_d','i_start is out of bounds')
-     endif ! back if ( i_start < 1 .or. i_start > m_src ) block
-
-     if ( j_start < 1 .or. j_start > n_src ) then
-         call s_print_error('s_extract_submatrix_d','j_start is out of bounds')
-     endif ! back if ( j_start < 1 .or. j_start > n_src ) block
-
-     if ( i_start + m_sub - 1 > m_src ) then
-         call s_print_error('s_extract_submatrix_d','submatrix rows exceed source matrix bounds')
-     endif ! back if ( i_start + m_sub - 1 > m_src ) block
-
-     if ( j_start + n_sub - 1 > n_src ) then
-         call s_print_error('s_extract_submatrix_d','submatrix columns exceed source matrix bounds')
-     endif ! back if ( j_start + n_sub - 1 > n_src ) block
-
-     ! use array slicing for efficient copy
-     A_sub = A_src(i_start:i_start+m_sub-1, j_start:j_start+n_sub-1)
-
-!! body]
-
-     return
-  end subroutine s_extract_submatrix_d
-
-!!
-!! @sub s_extract_submatrix_z
-!!
-!! extract a submatrix from a complex(dp) matrix A_src.
-!! extracts rows i_start:i_end and columns j_start:j_end.
-!!
-  subroutine s_extract_submatrix_z(m_src, n_src, A_src, &
-                                  i_start, j_start, &
-                                  m_sub, n_sub, A_sub)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of source matrix
-     integer, intent(in)      :: m_src
-
-     ! number of columns of source matrix
-     integer, intent(in)      :: n_src
-
-     ! source matrix
-     complex(dp), intent(in)  :: A_src(m_src,n_src)
-
-     ! start row index (1-based)
-     integer, intent(in)      :: i_start
-
-     ! start column index (1-based)
-     integer, intent(in)      :: j_start
-
-     ! number of rows of submatrix
-     integer, intent(in)      :: m_sub
-
-     ! number of columns of submatrix
-     integer, intent(in)      :: n_sub
-
-     ! extracted submatrix
-     complex(dp), intent(out) :: A_sub(m_sub,n_sub)
-
-!! [body
-
-     ! check boundary conditions
-     if ( i_start < 1 .or. i_start > m_src ) then
-         call s_print_error('s_extract_submatrix_z','i_start is out of bounds')
-     endif ! back if ( i_start < 1 .or. i_start > m_src ) block
-
-     if ( j_start < 1 .or. j_start > n_src ) then
-         call s_print_error('s_extract_submatrix_z','j_start is out of bounds')
-     endif ! back if ( j_start < 1 .or. j_start > n_src ) block
-
-     if ( i_start + m_sub - 1 > m_src ) then
-         call s_print_error('s_extract_submatrix_z','submatrix rows exceed source matrix bounds')
-     endif ! back if ( i_start + m_sub - 1 > m_src ) block
-
-     if ( j_start + n_sub - 1 > n_src ) then
-         call s_print_error('s_extract_submatrix_z','submatrix columns exceed source matrix bounds')
-     endif ! back if ( j_start + n_sub - 1 > n_src ) block
-
-     ! use array slicing for efficient copy
-     A_sub = A_src(i_start:i_start+m_sub-1, j_start:j_start+n_sub-1)
-
-!! body]
-
-     return
-  end subroutine s_extract_submatrix_z
-
-!!
-!! @sub s_concat_horiz_d
-!!
-!! concatenate two real(dp) matrices horizontally: C = [A | B].
-!! matrices A and B must have the same number of rows.
-!!
-  subroutine s_concat_horiz_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of matrix A
-     integer, intent(in)   :: m_A
-
-     ! number of columns of matrix A
-     integer, intent(in)   :: n_A
-
-     ! first input matrix
-     real(dp), intent(in)  :: A(m_A,n_A)
-
-     ! number of rows of matrix B
-     integer, intent(in)   :: m_B
-
-     ! number of columns of matrix B
-     integer, intent(in)   :: n_B
-
-     ! second input matrix
-     real(dp), intent(in)  :: B(m_B,n_B)
-
-     ! number of rows of concatenated matrix C
-     integer, intent(in)   :: m_C
-
-     ! number of columns of concatenated matrix C
-     integer, intent(in)   :: n_C
-
-     ! concatenated matrix [A | B]
-     real(dp), intent(out) :: C(m_C,n_C)
-
-!! [body
-
-     ! check boundary conditions
-     if ( m_A /= m_B ) then
-         call s_print_error('s_concat_horiz_d','matrices A and B must have the same number of rows')
-     endif ! back if ( m_A /= m_B ) block
-
-     if ( n_C /= n_A + n_B ) then
-         call s_print_error('s_concat_horiz_d','n_C must equal n_A + n_B')
-     endif ! back if ( n_C /= n_A + n_B ) block
-
-     if ( m_C /= m_A ) then
-         call s_print_error('s_concat_horiz_d','m_C must equal m_A')
-     endif ! back if ( m_C /= m_A ) block
-
-     ! use array slicing for efficient copy
-     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
-     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
-
-!! body]
-
-     return
-  end subroutine s_concat_horiz_d
-
-!!
-!! @sub s_concat_horiz_z
-!!
-!! concatenate two complex(dp) matrices horizontally: C = [A | B].
-!! matrices A and B must have the same number of rows.
-!!
-  subroutine s_concat_horiz_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of matrix A
-     integer, intent(in)      :: m_A
-
-     ! number of columns of matrix A
-     integer, intent(in)      :: n_A
-
-     ! first input matrix
-     complex(dp), intent(in)  :: A(m_A,n_A)
-
-     ! number of rows of matrix B
-     integer, intent(in)      :: m_B
-
-     ! number of columns of matrix B
-     integer, intent(in)      :: n_B
-
-     ! second input matrix
-     complex(dp), intent(in)  :: B(m_B,n_B)
-
-     ! number of rows of concatenated matrix C
-     integer, intent(in)      :: m_C
-
-     ! number of columns of concatenated matrix C
-     integer, intent(in)      :: n_C
-
-     ! concatenated matrix [A | B]
-     complex(dp), intent(out) :: C(m_C,n_C)
-
-!! [body
-
-     ! check boundary conditions
-     if ( m_A /= m_B ) then
-         call s_print_error('s_concat_horiz_z','matrices A and B must have the same number of rows')
-     endif ! back if ( m_A /= m_B ) block
-
-     if ( n_C /= n_A + n_B ) then
-         call s_print_error('s_concat_horiz_z','n_C must equal n_A + n_B')
-     endif ! back if ( n_C /= n_A + n_B ) block
-
-     if ( m_C /= m_A ) then
-         call s_print_error('s_concat_horiz_z','m_C must equal m_A')
-     endif ! back if ( m_C /= m_A ) block
-
-     ! use array slicing for efficient copy
-     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
-     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
-
-!! body]
-
-     return
-  end subroutine s_concat_horiz_z
-
-!!
-!! @sub s_concat_vert_d
-!!
-!! concatenate two real(dp) matrices vertically: C = [A; B].
-!! matrices A and B must have the same number of columns.
-!!
-  subroutine s_concat_vert_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of matrix A
-     integer, intent(in)   :: m_A
-
-     ! number of columns of matrix A
-     integer, intent(in)   :: n_A
-
-     ! first input matrix
-     real(dp), intent(in)  :: A(m_A,n_A)
-
-     ! number of rows of matrix B
-     integer, intent(in)   :: m_B
-
-     ! number of columns of matrix B
-     integer, intent(in)   :: n_B
-
-     ! second input matrix
-     real(dp), intent(in)  :: B(m_B,n_B)
-
-     ! number of rows of concatenated matrix C
-     integer, intent(in)   :: m_C
-
-     ! number of columns of concatenated matrix C
-     integer, intent(in)   :: n_C
-
-     ! concatenated matrix [A; B]
-     real(dp), intent(out) :: C(m_C,n_C)
-
-!! [body
-
-     ! check boundary conditions
-     if ( n_A /= n_B ) then
-         call s_print_error('s_concat_vert_d','matrices A and B must have the same number of columns')
-     endif ! back if ( n_A /= n_B ) block
-
-     if ( m_C /= m_A + m_B ) then
-         call s_print_error('s_concat_vert_d','m_C must equal m_A + m_B')
-     endif ! back if ( m_C /= m_A + m_B ) block
-
-     if ( n_C /= n_A ) then
-         call s_print_error('s_concat_vert_d','n_C must equal n_A')
-     endif ! back if ( n_C /= n_A ) block
-
-     ! use array slicing for efficient copy
-     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
-     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
-
-!! body]
-
-     return
-  end subroutine s_concat_vert_d
-
-!!
-!! @sub s_concat_vert_z
-!!
-!! concatenate two complex(dp) matrices vertically: C = [A; B].
-!! matrices A and B must have the same number of columns.
-!!
-  subroutine s_concat_vert_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! number of rows of matrix A
-     integer, intent(in)      :: m_A
-
-     ! number of columns of matrix A
-     integer, intent(in)      :: n_A
-
-     ! first input matrix
-     complex(dp), intent(in)  :: A(m_A,n_A)
-
-     ! number of rows of matrix B
-     integer, intent(in)      :: m_B
-
-     ! number of columns of matrix B
-     integer, intent(in)      :: n_B
-
-     ! second input matrix
-     complex(dp), intent(in)  :: B(m_B,n_B)
-
-     ! number of rows of concatenated matrix C
-     integer, intent(in)      :: m_C
-
-     ! number of columns of concatenated matrix C
-     integer, intent(in)      :: n_C
-
-     ! concatenated matrix [A; B]
-     complex(dp), intent(out) :: C(m_C,n_C)
-
-!! [body
-
-     ! check boundary conditions
-     if ( n_A /= n_B ) then
-         call s_print_error('s_concat_vert_z','matrices A and B must have the same number of columns')
-     endif ! back if ( n_A /= n_B ) block
-
-     if ( m_C /= m_A + m_B ) then
-         call s_print_error('s_concat_vert_z','m_C must equal m_A + m_B')
-     endif ! back if ( m_C /= m_A + m_B ) block
-
-     if ( n_C /= n_A ) then
-         call s_print_error('s_concat_vert_z','n_C must equal n_A')
-     endif ! back if ( n_C /= n_A ) block
-
-     ! use array slicing for efficient copy
-     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
-     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
-
-!! body]
-
-     return
-  end subroutine s_concat_vert_z
-
 !!
 !! @sub s_is_skew_symmetric_d
 !!
@@ -5416,6 +5032,388 @@
 
      return
   end subroutine s_is_normal_z
+
+!!
+!! @sub s_extract_submatrix_d
+!!
+!! extract a submatrix from a real(dp) matrix A_src.
+!! extracts rows i_start:i_end and columns j_start:j_end.
+!!
+  subroutine s_extract_submatrix_d(m_src, n_src, A_src, &
+                                  i_start, j_start, &
+                                  m_sub, n_sub, A_sub)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of source matrix
+     integer, intent(in)   :: m_src
+
+     ! number of columns of source matrix
+     integer, intent(in)   :: n_src
+
+     ! source matrix
+     real(dp), intent(in)  :: A_src(m_src,n_src)
+
+     ! start row index (1-based)
+     integer, intent(in)   :: i_start
+
+     ! start column index (1-based)
+     integer, intent(in)   :: j_start
+
+     ! number of rows of submatrix
+     integer, intent(in)   :: m_sub
+
+     ! number of columns of submatrix
+     integer, intent(in)   :: n_sub
+
+     ! extracted submatrix
+     real(dp), intent(out) :: A_sub(m_sub,n_sub)
+
+!! [body
+
+     ! check boundary conditions
+     if ( i_start < 1 .or. i_start > m_src ) then
+         call s_print_error('s_extract_submatrix_d','i_start is out of bounds')
+     endif ! back if ( i_start < 1 .or. i_start > m_src ) block
+
+     if ( j_start < 1 .or. j_start > n_src ) then
+         call s_print_error('s_extract_submatrix_d','j_start is out of bounds')
+     endif ! back if ( j_start < 1 .or. j_start > n_src ) block
+
+     if ( i_start + m_sub - 1 > m_src ) then
+         call s_print_error('s_extract_submatrix_d','submatrix rows exceed source matrix bounds')
+     endif ! back if ( i_start + m_sub - 1 > m_src ) block
+
+     if ( j_start + n_sub - 1 > n_src ) then
+         call s_print_error('s_extract_submatrix_d','submatrix columns exceed source matrix bounds')
+     endif ! back if ( j_start + n_sub - 1 > n_src ) block
+
+     ! use array slicing for efficient copy
+     A_sub = A_src(i_start:i_start+m_sub-1, j_start:j_start+n_sub-1)
+
+!! body]
+
+     return
+  end subroutine s_extract_submatrix_d
+
+!!
+!! @sub s_extract_submatrix_z
+!!
+!! extract a submatrix from a complex(dp) matrix A_src.
+!! extracts rows i_start:i_end and columns j_start:j_end.
+!!
+  subroutine s_extract_submatrix_z(m_src, n_src, A_src, &
+                                  i_start, j_start, &
+                                  m_sub, n_sub, A_sub)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of source matrix
+     integer, intent(in)      :: m_src
+
+     ! number of columns of source matrix
+     integer, intent(in)      :: n_src
+
+     ! source matrix
+     complex(dp), intent(in)  :: A_src(m_src,n_src)
+
+     ! start row index (1-based)
+     integer, intent(in)      :: i_start
+
+     ! start column index (1-based)
+     integer, intent(in)      :: j_start
+
+     ! number of rows of submatrix
+     integer, intent(in)      :: m_sub
+
+     ! number of columns of submatrix
+     integer, intent(in)      :: n_sub
+
+     ! extracted submatrix
+     complex(dp), intent(out) :: A_sub(m_sub,n_sub)
+
+!! [body
+
+     ! check boundary conditions
+     if ( i_start < 1 .or. i_start > m_src ) then
+         call s_print_error('s_extract_submatrix_z','i_start is out of bounds')
+     endif ! back if ( i_start < 1 .or. i_start > m_src ) block
+
+     if ( j_start < 1 .or. j_start > n_src ) then
+         call s_print_error('s_extract_submatrix_z','j_start is out of bounds')
+     endif ! back if ( j_start < 1 .or. j_start > n_src ) block
+
+     if ( i_start + m_sub - 1 > m_src ) then
+         call s_print_error('s_extract_submatrix_z','submatrix rows exceed source matrix bounds')
+     endif ! back if ( i_start + m_sub - 1 > m_src ) block
+
+     if ( j_start + n_sub - 1 > n_src ) then
+         call s_print_error('s_extract_submatrix_z','submatrix columns exceed source matrix bounds')
+     endif ! back if ( j_start + n_sub - 1 > n_src ) block
+
+     ! use array slicing for efficient copy
+     A_sub = A_src(i_start:i_start+m_sub-1, j_start:j_start+n_sub-1)
+
+!! body]
+
+     return
+  end subroutine s_extract_submatrix_z
+
+!!
+!! @sub s_concat_horiz_d
+!!
+!! concatenate two real(dp) matrices horizontally: C = [A | B].
+!! matrices A and B must have the same number of rows.
+!!
+  subroutine s_concat_horiz_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of matrix A
+     integer, intent(in)   :: m_A
+
+     ! number of columns of matrix A
+     integer, intent(in)   :: n_A
+
+     ! first input matrix
+     real(dp), intent(in)  :: A(m_A,n_A)
+
+     ! number of rows of matrix B
+     integer, intent(in)   :: m_B
+
+     ! number of columns of matrix B
+     integer, intent(in)   :: n_B
+
+     ! second input matrix
+     real(dp), intent(in)  :: B(m_B,n_B)
+
+     ! number of rows of concatenated matrix C
+     integer, intent(in)   :: m_C
+
+     ! number of columns of concatenated matrix C
+     integer, intent(in)   :: n_C
+
+     ! concatenated matrix [A | B]
+     real(dp), intent(out) :: C(m_C,n_C)
+
+!! [body
+
+     ! check boundary conditions
+     if ( m_A /= m_B ) then
+         call s_print_error('s_concat_horiz_d','matrices A and B must have the same number of rows')
+     endif ! back if ( m_A /= m_B ) block
+
+     if ( n_C /= n_A + n_B ) then
+         call s_print_error('s_concat_horiz_d','n_C must equal n_A + n_B')
+     endif ! back if ( n_C /= n_A + n_B ) block
+
+     if ( m_C /= m_A ) then
+         call s_print_error('s_concat_horiz_d','m_C must equal m_A')
+     endif ! back if ( m_C /= m_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
+
+!! body]
+
+     return
+  end subroutine s_concat_horiz_d
+
+!!
+!! @sub s_concat_horiz_z
+!!
+!! concatenate two complex(dp) matrices horizontally: C = [A | B].
+!! matrices A and B must have the same number of rows.
+!!
+  subroutine s_concat_horiz_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of matrix A
+     integer, intent(in)      :: m_A
+
+     ! number of columns of matrix A
+     integer, intent(in)      :: n_A
+
+     ! first input matrix
+     complex(dp), intent(in)  :: A(m_A,n_A)
+
+     ! number of rows of matrix B
+     integer, intent(in)      :: m_B
+
+     ! number of columns of matrix B
+     integer, intent(in)      :: n_B
+
+     ! second input matrix
+     complex(dp), intent(in)  :: B(m_B,n_B)
+
+     ! number of rows of concatenated matrix C
+     integer, intent(in)      :: m_C
+
+     ! number of columns of concatenated matrix C
+     integer, intent(in)      :: n_C
+
+     ! concatenated matrix [A | B]
+     complex(dp), intent(out) :: C(m_C,n_C)
+
+!! [body
+
+     ! check boundary conditions
+     if ( m_A /= m_B ) then
+         call s_print_error('s_concat_horiz_z','matrices A and B must have the same number of rows')
+     endif ! back if ( m_A /= m_B ) block
+
+     if ( n_C /= n_A + n_B ) then
+         call s_print_error('s_concat_horiz_z','n_C must equal n_A + n_B')
+     endif ! back if ( n_C /= n_A + n_B ) block
+
+     if ( m_C /= m_A ) then
+         call s_print_error('s_concat_horiz_z','m_C must equal m_A')
+     endif ! back if ( m_C /= m_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(1:m_B, n_A+1:n_A+n_B) = B(1:m_B, 1:n_B)
+
+!! body]
+
+     return
+  end subroutine s_concat_horiz_z
+
+!!
+!! @sub s_concat_vert_d
+!!
+!! concatenate two real(dp) matrices vertically: C = [A; B].
+!! matrices A and B must have the same number of columns.
+!!
+  subroutine s_concat_vert_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of matrix A
+     integer, intent(in)   :: m_A
+
+     ! number of columns of matrix A
+     integer, intent(in)   :: n_A
+
+     ! first input matrix
+     real(dp), intent(in)  :: A(m_A,n_A)
+
+     ! number of rows of matrix B
+     integer, intent(in)   :: m_B
+
+     ! number of columns of matrix B
+     integer, intent(in)   :: n_B
+
+     ! second input matrix
+     real(dp), intent(in)  :: B(m_B,n_B)
+
+     ! number of rows of concatenated matrix C
+     integer, intent(in)   :: m_C
+
+     ! number of columns of concatenated matrix C
+     integer, intent(in)   :: n_C
+
+     ! concatenated matrix [A; B]
+     real(dp), intent(out) :: C(m_C,n_C)
+
+!! [body
+
+     ! check boundary conditions
+     if ( n_A /= n_B ) then
+         call s_print_error('s_concat_vert_d','matrices A and B must have the same number of columns')
+     endif ! back if ( n_A /= n_B ) block
+
+     if ( m_C /= m_A + m_B ) then
+         call s_print_error('s_concat_vert_d','m_C must equal m_A + m_B')
+     endif ! back if ( m_C /= m_A + m_B ) block
+
+     if ( n_C /= n_A ) then
+         call s_print_error('s_concat_vert_d','n_C must equal n_A')
+     endif ! back if ( n_C /= n_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
+
+!! body]
+
+     return
+  end subroutine s_concat_vert_d
+
+!!
+!! @sub s_concat_vert_z
+!!
+!! concatenate two complex(dp) matrices vertically: C = [A; B].
+!! matrices A and B must have the same number of columns.
+!!
+  subroutine s_concat_vert_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
+     use constants, only : dp
+
+     implicit none
+
+!! external arguments
+     ! number of rows of matrix A
+     integer, intent(in)      :: m_A
+
+     ! number of columns of matrix A
+     integer, intent(in)      :: n_A
+
+     ! first input matrix
+     complex(dp), intent(in)  :: A(m_A,n_A)
+
+     ! number of rows of matrix B
+     integer, intent(in)      :: m_B
+
+     ! number of columns of matrix B
+     integer, intent(in)      :: n_B
+
+     ! second input matrix
+     complex(dp), intent(in)  :: B(m_B,n_B)
+
+     ! number of rows of concatenated matrix C
+     integer, intent(in)      :: m_C
+
+     ! number of columns of concatenated matrix C
+     integer, intent(in)      :: n_C
+
+     ! concatenated matrix [A; B]
+     complex(dp), intent(out) :: C(m_C,n_C)
+
+!! [body
+
+     ! check boundary conditions
+     if ( n_A /= n_B ) then
+         call s_print_error('s_concat_vert_z','matrices A and B must have the same number of columns')
+     endif ! back if ( n_A /= n_B ) block
+
+     if ( m_C /= m_A + m_B ) then
+         call s_print_error('s_concat_vert_z','m_C must equal m_A + m_B')
+     endif ! back if ( m_C /= m_A + m_B ) block
+
+     if ( n_C /= n_A ) then
+         call s_print_error('s_concat_vert_z','n_C must equal n_A')
+     endif ! back if ( n_C /= n_A ) block
+
+     ! use array slicing for efficient copy
+     C(1:m_A, 1:n_A) = A(1:m_A, 1:n_A)
+     C(m_A+1:m_A+m_B, 1:n_B) = B(1:m_B, 1:n_B)
+
+!! body]
+
+     return
+  end subroutine s_concat_vert_z
 
 !!
 !! @sub s_sparsity_ratio_i
