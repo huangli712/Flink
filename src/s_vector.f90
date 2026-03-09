@@ -3975,43 +3975,6 @@
 !!========================================================================
 
 !!
-!! @sub s_sin_i
-!!
-!! compute sine of an integer vector in-place: x = sin(x)
-!!
-  subroutine s_sin_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         ix(i) = int(sin(real(ix(i), dp)))
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_sin_i
-
-!!
 !! @sub s_sin_d
 !!
 !! compute sine of a real(dp) vector in-place: x = sin(x)
@@ -4086,43 +4049,6 @@
 !!========================================================================
 !!>>> cos operations                                                   <<<
 !!========================================================================
-
-!!
-!! @sub s_cos_i
-!!
-!! compute cosine of an integer vector in-place: x = cos(x)
-!!
-  subroutine s_cos_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         ix(i) = int(cos(real(ix(i), dp)))
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_cos_i
 
 !!
 !! @sub s_cos_d
@@ -6174,7 +6100,7 @@
 !!
 !! shuffle an integer vector in-place using Fisher-Yates algorithm.
 !!
-  subroutine s_shuffle_i(n, ix)
+  subroutine s_shuffle_i(n, ix, seed)
      use constants, only : dp
 
      implicit none
@@ -6186,15 +6112,18 @@
      ! integer vector to be shuffled (in-place)
      integer, intent(inout) :: ix(n)
 
+     ! seed for random number generator
+     integer, intent(in)    :: seed
+
 !! local variables
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! random index
-     integer :: j
+     integer  :: j
 
      ! temporary variable for swapping
-     integer :: temp
+     integer  :: temp
 
      ! random number
      real(dp) :: r
@@ -6206,7 +6135,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed()
+     call random_seed(seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -6225,7 +6154,7 @@
 !!
 !! shuffle a real(dp) vector in-place using Fisher-Yates algorithm.
 !!
-  subroutine s_shuffle_d(n, dx)
+  subroutine s_shuffle_d(n, dx, seed)
      use constants, only : dp
 
      implicit none
@@ -6237,12 +6166,15 @@
      ! real(dp) vector to be shuffled (in-place)
      real(dp), intent(inout) :: dx(n)
 
+     ! seed for random number generator
+     integer, intent(in)     :: seed
+
 !! local variables
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! random index
-     integer :: j
+     integer  :: j
 
      ! temporary variable for swapping
      real(dp) :: temp
@@ -6257,7 +6189,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed()
+     call random_seed(seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
@@ -6276,7 +6208,7 @@
 !!
 !! shuffle a complex(dp) vector in-place using Fisher-Yates algorithm.
 !!
-  subroutine s_shuffle_z(n, zx)
+  subroutine s_shuffle_z(n, zx, seed)
      use constants, only : dp
 
      implicit none
@@ -6288,12 +6220,15 @@
      ! complex(dp) vector to be shuffled (in-place)
      complex(dp), intent(inout) :: zx(n)
 
+     ! seed for random number generator
+     integer, intent(in)        :: seed
+
 !! local variables
      ! loop index
-     integer :: i
+     integer  :: i
 
      ! random index
-     integer :: j
+     integer  :: j
 
      ! temporary variable for swapping
      complex(dp) :: temp
@@ -6308,7 +6243,7 @@
      endif
      !
      ! Fisher-Yates shuffle algorithm
-     call random_seed()
+     call random_seed(seed)
      do i=n,2,-1
          call random_number(r)
          j = int(r * real(i-1, dp)) + 1
