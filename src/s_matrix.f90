@@ -6208,6 +6208,8 @@
              A(i,j) = (A(i,j) + conjg(A(j,i))) / two
              A(j,i) = conjg(A(i,j))
          enddo ! over j={i+1,n} loop
+         ! diagonal elements must be real for Hermitian matrix
+         A(i,i) = dble(A(i,i))
      enddo ! over i={1,n} loop
 
 !! body]
@@ -6252,7 +6254,7 @@
      do i=1,n
          do j=1,n
              call random_number(r)
-             B(i,j) = real(r, dp)
+             B(i,j) = r
          enddo ! over j={1,n} loop
      enddo ! over i={1,n} loop
 
@@ -6310,7 +6312,7 @@
          do j=1,n
              call random_number(r1)
              call random_number(r2)
-             B(i,j) = dcmplx(real(r1, dp), real(r2, dp))
+             B(i,j) = dcmplx(r1, r2)
          enddo ! over j={1,n} loop
      enddo ! over i={1,n} loop
 
