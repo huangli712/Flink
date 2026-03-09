@@ -54,7 +54,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/09/2026 by li huang (last modified)
+!!!           03/10/2026 by li huang (last modified)
 !!! purpose : these subroutines are used to encapsulate some important and
 !!!           frequently used linear algebra operations.
 !!! status  : unstable
@@ -6396,7 +6396,7 @@
      allocate(B(n,n), stat=istat)
      !
      if ( istat /= 0 ) then
-         call s_print_error('s_random_positive_definite_d','can not allocate enough memory')
+         call s_print_error('s_random_positive_definite_z','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
      ! generate random complex matrix B
