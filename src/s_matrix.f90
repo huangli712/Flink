@@ -6049,9 +6049,9 @@
      do k=1,nnz
          call random_number(r1)
          call random_number(r2)
+         call random_number(r3)
          i = min(int(r1 * real(n, dp)) + 1, n)
          j = min(int(r2 * real(n, dp)) + 1, n)
-         call random_number(r3)
          A(i,j) = r3
      enddo ! over k={1,nnz} loop
 
@@ -6143,26 +6143,23 @@
      ! loop indices
      integer  :: i, j
 
-     ! random values
+     ! random value
      real(dp) :: r
 
 !! [body
 
-     ! generate random matrix first
+     ! generate only lower triangular part including diagonal
+     ! and simultaneously mirror to upper triangular part
      do i=1,n
-         do j=1,n
+         do j=1,i
              call random_number(r)
-             A(i,j) = real(r, dp)
-         enddo ! over j={1,n} loop
+             A(i,j) = r
+             ! mirror to upper triangle if not on diagonal
+             if (i /= j) then
+                 A(j,i) = A(i,j)
+             endif
+         enddo ! over j={1,i} loop
      enddo ! over i={1,n} loop
-
-     ! symmetrize the matrix: A = (A + A^T) / 2
-     do i=2,n
-         do j=1,i-1
-             A(i,j) = (A(i,j) + A(j,i)) / 2.0_dp
-             A(j,i) = A(i,j)
-         enddo ! over j={1,i-1} loop
-     enddo ! over i={2,n} loop
 
 !! body]
 
