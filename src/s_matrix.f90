@@ -2979,374 +2979,6 @@
      return
   end subroutine s_svd_zg
 
-
-!!========================================================================
-!!>>> matrix properties: check if matrix is symmetric                  <<<
-!!========================================================================
-
-!!
-!! @sub s_is_symmetric_d
-!!
-!! check if a real(dp) matrix is symmetric (A = A^T).
-!!
-  subroutine s_is_symmetric_d(n, A, is_symmetric, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)   :: n
-
-     ! input matrix
-     real(dp), intent(in)  :: A(n,n)
-
-     ! output: .true. if matrix is symmetric, .false. otherwise
-     logical, intent(out) :: is_symmetric
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
- !! local variables
-     ! loop indices
-     integer :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_symmetric = .true.
-
-     ! compare upper triangular part with lower triangular part
-     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-     outer_loop: do i=2,n
-         inner_loop: do j=1,i-1
-             ! check symmetry with tolerance
-             if ( abs( A(i,j) - A(j,i) ) > actual_tol ) then
-                 is_symmetric = .false.
-                 exit outer_loop
-             endif ! back if ( abs( A(i,j) - A(j,i) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-     enddo outer_loop ! over i={2,n} loop (outer_loop)
-
- !! body]
-
-      return
-   end subroutine s_is_symmetric_d
-
-!!
-!! @sub s_is_hermitian_z
-!!
-!! check if a complex(dp) matrix is Hermitian (A = A^H).
-!!
-  subroutine s_is_hermitian_z(n, A, is_hermitian, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)        :: n
-
-     ! input matrix
-     complex(dp), intent(in)   :: A(n,n)
-
-     ! output: .true. if matrix is Hermitian, .false. otherwise
-     logical, intent(out)       :: is_hermitian
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_hermitian = .true.
-
-     ! compare upper triangular part with lower triangular part
-     ! Hermitian condition: A(i,j) = conjg(A(j,i))
-     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-     outer_loop: do i=2,n
-         inner_loop: do j=1,i-1
-             ! check Hermitian condition with tolerance
-             if ( abs( A(i,j) - conjg( A(j,i) ) ) > actual_tol ) then
-                 is_hermitian = .false.
-                 exit outer_loop
-             endif ! back if ( abs( A(i,j) - conj( A(j,i) ) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-     enddo outer_loop ! over i={2,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_hermitian_z
-
-!!
-!! @sub s_is_diagonal_d
-!!
-!! check if a real(dp) matrix is diagonal (all off-diagonal elements are zero).
-!!
-  subroutine s_is_diagonal_d(n, A, is_diagonal, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)  :: n
-
-     ! input matrix
-     real(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is diagonal, .false. otherwise
-     logical, intent(out) :: is_diagonal
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_diagonal = .true.
-
-     ! check all off-diagonal elements
-     ! diagonal condition: A(i,j) = 0 for i /= j
-     outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             ! check if off-diagonal element is zero
-             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
-                 is_diagonal = .false.
-                 exit outer_loop
-             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_diagonal_d
-
-!!
-!! @sub s_is_diagonal_z
-!!
-!! check if a complex(dp) matrix is diagonal (all off-diagonal elements are zero).
-!!
-  subroutine s_is_diagonal_z(n, A, is_diagonal, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)     :: n
-
-     ! input matrix
-     complex(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is diagonal, .false. otherwise
-     logical, intent(out)    :: is_diagonal
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_diagonal = .true.
-
-     ! check all off-diagonal elements
-     ! diagonal condition: A(i,j) = 0 for i /= j
-      outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             ! check if off-diagonal element is zero
-             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
-                 is_diagonal = .false.
-                 exit outer_loop
-             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_diagonal_z
-
-!!
-!! @sub s_is_tridiagonal_d
-!!
-!! check if a real(dp) matrix is tridiagonal (only main diagonal and
-!! adjacent diagonals can be non-zero).
-!!
-  subroutine s_is_tridiagonal_d(n, A, is_tridiagonal, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)  :: n
-
-     ! input matrix
-     real(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is tridiagonal, .false. otherwise
-     logical, intent(out) :: is_tridiagonal
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer  :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_tridiagonal = .true.
-
-     ! check all elements except main diagonal and adjacent diagonals
-     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
-     outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             ! check if element outside tridiagonal band is zero
-             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
-                 is_tridiagonal = .false.
-                 exit outer_loop
-             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_tridiagonal_d
-
-!!
-!! @sub s_is_tridiagonal_z
-!!
-!! check if a complex(dp) matrix is tridiagonal (only main diagonal and
-!! adjacent diagonals can be non-zero).
-!!
-  subroutine s_is_tridiagonal_z(n, A, is_tridiagonal, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)     :: n
-
-     ! input matrix
-     complex(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is tridiagonal, .false. otherwise
-     logical, intent(out)    :: is_tridiagonal
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer  :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_tridiagonal = .true.
-
-     ! check all elements except main diagonal and adjacent diagonals
-     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
-     outer_loop: do i=1,n
-         inner_loop: do j=1,n
-             ! check if element outside tridiagonal band is zero
-             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
-                 is_tridiagonal = .false.
-                 exit outer_loop
-             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,n} loop (inner_loop)
-     enddo outer_loop ! over i={1,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_tridiagonal_z
-
 !!
 !! @sub s_qr_d
 !!
@@ -3987,6 +3619,375 @@
 
       return
   end subroutine s_schur_z
+
+!!========================================================================
+!!>>> matrix properties: check matrix properties                       <<<
+!!========================================================================
+
+!!
+!! @sub s_is_symmetric_d
+!!
+!! check if a real(dp) matrix is symmetric (A = A^T).
+!!
+  subroutine s_is_symmetric_d(n, A, is_symmetric, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)   :: n
+
+     ! input matrix
+     real(dp), intent(in)  :: A(n,n)
+
+     ! output: .true. if matrix is symmetric, .false. otherwise
+     logical, intent(out) :: is_symmetric
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+ !! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_symmetric = .true.
+
+     ! compare upper triangular part with lower triangular part
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check symmetry with tolerance
+             if ( abs( A(i,j) - A(j,i) ) > actual_tol ) then
+                 is_symmetric = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) - A(j,i) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+ !! body]
+
+      return
+   end subroutine s_is_symmetric_d
+
+!!
+!! @sub s_is_hermitian_z
+!!
+!! check if a complex(dp) matrix is Hermitian (A = A^H).
+!!
+  subroutine s_is_hermitian_z(n, A, is_hermitian, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)        :: n
+
+     ! input matrix
+     complex(dp), intent(in)   :: A(n,n)
+
+     ! output: .true. if matrix is Hermitian, .false. otherwise
+     logical, intent(out)       :: is_hermitian
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_hermitian = .true.
+
+     ! compare upper triangular part with lower triangular part
+     ! Hermitian condition: A(i,j) = conjg(A(j,i))
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check Hermitian condition with tolerance
+             if ( abs( A(i,j) - conjg( A(j,i) ) ) > actual_tol ) then
+                 is_hermitian = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) - conj( A(j,i) ) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_hermitian_z
+
+!!
+!! @sub s_is_diagonal_d
+!!
+!! check if a real(dp) matrix is diagonal (all off-diagonal elements are zero).
+!!
+  subroutine s_is_diagonal_d(n, A, is_diagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is diagonal, .false. otherwise
+     logical, intent(out) :: is_diagonal
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_diagonal = .true.
+
+     ! check all off-diagonal elements
+     ! diagonal condition: A(i,j) = 0 for i /= j
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! check if off-diagonal element is zero
+             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
+                 is_diagonal = .false.
+                 exit outer_loop
+             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_diagonal_d
+
+!!
+!! @sub s_is_diagonal_z
+!!
+!! check if a complex(dp) matrix is diagonal (all off-diagonal elements are zero).
+!!
+  subroutine s_is_diagonal_z(n, A, is_diagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
+
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is diagonal, .false. otherwise
+     logical, intent(out)    :: is_diagonal
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_diagonal = .true.
+
+     ! check all off-diagonal elements
+     ! diagonal condition: A(i,j) = 0 for i /= j
+      outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! check if off-diagonal element is zero
+             if ( i /= j .and. abs( A(i,j) ) > actual_tol ) then
+                 is_diagonal = .false.
+                 exit outer_loop
+             endif ! back if ( i /= j .and. abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_diagonal_z
+
+!!
+!! @sub s_is_tridiagonal_d
+!!
+!! check if a real(dp) matrix is tridiagonal (only main diagonal and
+!! adjacent diagonals can be non-zero).
+!!
+  subroutine s_is_tridiagonal_d(n, A, is_tridiagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is tridiagonal, .false. otherwise
+     logical, intent(out) :: is_tridiagonal
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer  :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_tridiagonal = .true.
+
+     ! check all elements except main diagonal and adjacent diagonals
+     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! check if element outside tridiagonal band is zero
+             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
+                 is_tridiagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_tridiagonal_d
+
+!!
+!! @sub s_is_tridiagonal_z
+!!
+!! check if a complex(dp) matrix is tridiagonal (only main diagonal and
+!! adjacent diagonals can be non-zero).
+!!
+  subroutine s_is_tridiagonal_z(n, A, is_tridiagonal, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
+
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is tridiagonal, .false. otherwise
+     logical, intent(out)    :: is_tridiagonal
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer  :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_tridiagonal = .true.
+
+     ! check all elements except main diagonal and adjacent diagonals
+     ! tridiagonal condition: A(i,j) = 0 for |i-j| > 1
+     outer_loop: do i=1,n
+         inner_loop: do j=1,n
+             ! check if element outside tridiagonal band is zero
+             if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) then
+                 is_tridiagonal = .false.
+                 exit outer_loop
+             endif ! back if ( abs( i - j ) > 1 .and. abs( A(i,j) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,n} loop (inner_loop)
+     enddo outer_loop ! over i={1,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_tridiagonal_z
+
+
 
 !!
 !! @sub s_extract_submatrix_d
