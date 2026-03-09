@@ -6008,7 +6008,7 @@
 !!
   subroutine s_sparse_random_d(n, sparsity, A)
      use constants, only : dp
-     use constants, only : zero
+     use constants, only : zero, one
 
      implicit none
 
@@ -6016,7 +6016,7 @@
      ! size of matrix (must be square)
      integer, intent(in)   :: n
 
-     ! sparsity level (0 = dense, 1 = sparse)
+     ! sparsity level (1 = dense, 0 = sparse)
      real(dp), intent(in)  :: sparsity
 
      ! output sparse random matrix
@@ -6034,6 +6034,11 @@
 
 !! [body
 
+     ! validate input parameters
+     if ( sparsity < zero .or. sparsity > one ) then
+         call s_print_error('s_sparse_random_d','sparsity must be [0, 1]')
+     endif
+
      ! initialize matrix to zero
      A = zero
 
@@ -6044,8 +6049,8 @@
      do k=1,nnz
          call random_number(r1)
          call random_number(r2)
-         i = int(r1 * real(n, dp)) + 1
-         j = int(r2 * real(n, dp)) + 1
+         i = min(int(r1 * real(n, dp)) + 1, n)
+         j = min(int(r2 * real(n, dp)) + 1, n)
          call random_number(r3)
          A(i,j) = r3
      enddo ! over k={1,nnz} loop
@@ -6063,6 +6068,7 @@
 !!
   subroutine s_sparse_random_z(n, sparsity, A)
      use constants, only : dp
+     use constants, only : zero, one
      use constants, only : czero
 
      implicit none
@@ -6071,7 +6077,7 @@
      ! size of matrix (must be square)
      integer, intent(in)      :: n
 
-     ! sparsity level (0 = dense, 1 = sparse)
+     ! sparsity level (1 = dense, 0 = sparse)
      real(dp), intent(in)     :: sparsity
 
      ! output sparse random matrix
@@ -6079,7 +6085,7 @@
 
 !! local variables
      ! loop indices
-     integer :: i, j, k
+     integer  :: i, j, k
 
      ! number of non-zero elements
      integer  :: nnz
@@ -6088,6 +6094,11 @@
      real(dp) :: r1, r2, r3, r4
 
 !! [body
+
+     ! validate input parameters
+     if ( sparsity < zero .or. sparsity > one ) then
+         call s_print_error('s_sparse_random_z','sparsity must be [0, 1]')
+     endif
 
      ! initialize matrix to zero
      A = czero
@@ -6101,8 +6112,8 @@
          call random_number(r2)
          call random_number(r3)
          call random_number(r4)
-         i = int(r1 * real(n, dp)) + 1
-         j = int(r2 * real(n, dp)) + 1
+         i = min(int(r1 * real(n, dp)) + 1, n)
+         j = min(int(r2 * real(n, dp)) + 1, n)
          A(i,j) = dcmplx(r3, r4)
      enddo ! over k={1,nnz} loop
 
