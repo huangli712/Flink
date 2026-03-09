@@ -47,7 +47,7 @@
 !!! type    : subroutines
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           03/05/2026 by li huang (last modified)
+!!!           03/10/2026 by li huang (last modified)
 !!! purpose : these subroutines are designed for vectors or arrays. they
 !!!           can be used to manipulate grid and mesh.
 !!! status  : unstable
@@ -57,46 +57,6 @@
 !!========================================================================
 !!>>> mesh generation                                                  <<<
 !!========================================================================
-
-!!
-!! @sub s_linspace_i
-!!
-!! create a linear mesh x in interval [xmin, xmax], integer version.
-!!
-  subroutine s_linspace_i(xmin, xmax, n, x)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! left boundary
-     integer, intent(in)  :: xmin
-
-     ! right boundary
-     integer, intent(in)  :: xmax
-
-     ! size of array x
-     integer, intent(in)  :: n
-
-     ! output array, containing the linear mesh
-     integer, intent(out) :: x(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n < 2) return
-     !
-     do i=1,n
-         x(i) = ( xmax - xmin ) * real(i - 1, dp) / real(n - 1, dp) + xmin
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_linspace_i
 
 !!
 !! @sub s_linspace_d
@@ -419,39 +379,6 @@
 !!========================================================================
 !!>>> mix operations                                                   <<<
 !!========================================================================
-
-!!
-!! @sub s_mix_i
-!!
-!! linear mixing for two integer vectors.
-!!
-  subroutine s_mix_i(n, ix, iy, alpha)
-     use constants, only : dp
-     use constants, only : one
-
-     implicit none
-
-!! external arguments
-     ! dimension of integer vector
-     integer, intent(in)    :: n
-
-     ! mixing parameter
-     real(dp), intent(in)   :: alpha
-
-     ! integer vector X
-     integer, intent(in)    :: ix(n)
-
-     ! integer vector Y
-     integer, intent(inout) :: iy(n)
-
-!! [body
-
-     iy = int( real(ix) * (one - alpha) + real(iy) * alpha )
-
-!! body]
-
-     return
-  end subroutine s_mix_i
 
 !!
 !! @sub s_mix_d
@@ -3616,43 +3543,6 @@
 !!========================================================================
 
 !!
-!! @sub s_exp_i
-!!
-!! compute exponential of an integer vector in-place: x = exp(x)
-!!
-  subroutine s_exp_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         ix(i) = int(exp(real(ix(i), dp)))
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_exp_i
-
-!!
 !! @sub s_exp_d
 !!
 !! compute exponential of a real(dp) vector in-place: x = exp(x)
@@ -4125,43 +4015,6 @@
 !!========================================================================
 !!>>> tan operations                                                   <<<
 !!========================================================================
-
-!!
-!! @sub s_tan_i
-!!
-!! compute tangent of an integer vector in-place: x = tan(x)
-!!
-  subroutine s_tan_i(n, ix)
-     use constants, only : dp
-
-     implicit none
-
-!! external arguments
-     ! size of vector
-     integer, intent(in)    :: n
-
-     ! integer vector to be modified (in-place)
-     ! note: result is cast back to integer
-     integer, intent(inout) :: ix(n)
-
-!! local variables
-     ! loop index
-     integer :: i
-
-!! [body
-
-     if (n <= 0) then
-         return
-     endif
-     !
-     do i=1,n
-         ix(i) = int(tan(real(ix(i), dp)))
-     enddo ! over i={1,n} loop
-
-!! body]
-
-     return
-  end subroutine s_tan_i
 
 !!
 !! @sub s_tan_d
