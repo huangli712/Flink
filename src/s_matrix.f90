@@ -324,8 +324,8 @@
 
      ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
-     ! a positive value refers to an upper diagonal;
-     ! and a negative value to a lower diagonal.
+     ! a positive value refers to an lower diagonal;
+     ! and a negative value to a upper diagonal.
      integer, intent(in)  :: k
 
      ! input/output matrix
@@ -366,8 +366,8 @@
 
      ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
-     ! a positive value refers to an upper diagonal;
-     ! and a negative value to a lower diagonal.
+     ! a positive value refers to an lower diagonal;
+     ! and a negative value to a upper diagonal.
      integer, intent(in)   :: k
 
      ! input/output matrix
@@ -408,8 +408,8 @@
 
      ! index of the diagonal, here:
      ! 0 refers to the main diagonal;
-     ! a positive value refers to an upper diagonal;
-     ! and a negative value to a lower diagonal.
+     ! a positive value refers to an lower diagonal;
+     ! and a negative value to a upper diagonal.
      integer, intent(in)      :: k
 
      ! input/output matrix
@@ -2873,25 +2873,30 @@
      ! return information from subroutine dsysv
      integer :: info
 
+     ! length of work array
+     integer :: lwork
+
      ! workspace array, its dimension is at least max(1,n)
      integer, allocatable  :: ipiv(:)
 
-     ! workspace array, its dimension is at least max(1, lwork)
-     ! and lwork >= 1
+     ! workspace array
      real(dp), allocatable :: work(:)
 
 !! [body
 
+     ! initialize lwork
+     lwork = 3*n
+
      ! allocate memory
      allocate(ipiv(n), stat=istat)
-     allocate(work(n), stat=istat)
+     allocate(work(lwork), stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_sy','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
      ! call the computational subroutine: dsysv
-     call DSYSV('U', n, nrhs, A, n, ipiv, B, n, work, n, info)
+     call DSYSV('U', n, nrhs, A, n, ipiv, B, n, work, lwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -2940,25 +2945,30 @@
      ! return information from subroutine zhesv
      integer :: info
 
+     ! length of work array
+     integer :: lwork
+
      ! workspace array, its dimension is at least max(1,n)
      integer, allocatable     :: ipiv(:)
 
-     ! workspace array, its dimension is at least max(1, lwork)
-     ! and lwork >= 1
+     ! workspace array
      complex(dp), allocatable :: work(:)
 
 !! [body
 
+     ! initialize lwork
+     lwork = 3*n
+
      ! allocate memory
      allocate(ipiv(n), stat=istat)
-     allocate(work(n), stat=istat)
+     allocate(work(lwork), stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_solve_he','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
 
      ! call the computational subroutine: zhesv
-     call ZHESV('U', n, nrhs, A, n, ipiv, B, n, work, n, info)
+     call ZHESV('U', n, nrhs, A, n, ipiv, B, n, work, lwork, info)
 
      ! check the status
      if ( info /= 0 ) then
@@ -4918,7 +4928,7 @@
 !!
   subroutine s_is_orthogonal_d(n, Q, is_orthogonal, tol)
      use constants, only : dp
-     use constants, only : eps8
+     use constants, only : one, eps8
 
      implicit none
 
@@ -4936,8 +4946,11 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop index
-     integer  :: i
+     ! status flag
+     integer  :: istat
+
+     ! loop indices
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -4955,9 +4968,9 @@
      endif ! back if ( present(tol) ) block
 
      ! allocate matrix
-     allocate(product(n,n), stat=i)
+     allocate(product(n,n), stat=istat)
      !
-     if ( i /= 0 ) then
+     if ( istat /= 0 ) then
          call s_print_error('s_is_orthogonal_d','can not allocate enough memory')
      endif ! back if ( i /= 0 ) block
 
@@ -4966,8 +4979,23 @@
 
      ! check if product equals identity matrix within tolerance
      ! identity matrix has ones on diagonal, zeros elsewhere
-     ! use maxval to check all elements at once
-     is_orthogonal = ( maxval( abs( product - transpose(product) ) ) <= actual_tol )
+     is_orthogonal = .true.
+     !
+     do i=1,n
+         if ( abs( product(i,i) - one ) > actual_tol ) then
+             is_orthogonal = .false.
+             return
+         endif
+     enddo ! over i={1,n} loop
+     !
+     do i=1,n
+         do j=1,n
+             if ( i /= j .and. abs( product(i,j) ) > actual_tol ) then
+                 is_orthogonal = .false.
+                 return
+             endif
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
      ! deallocate matrix
      if ( allocated(product) ) deallocate(product)
@@ -4984,7 +5012,7 @@
 !!
   subroutine s_is_unitary_z(n, Q, is_unitary, tol)
      use constants, only : dp
-     use constants, only : eps8
+     use constants, only : one, eps8
 
      implicit none
 
@@ -5002,8 +5030,11 @@
      real(dp), intent(in), optional :: tol
 
 !! local variables
-     ! loop index
-     integer  :: i
+     ! status flag
+     integer  :: istat
+
+     ! loop indices
+     integer  :: i, j
 
      ! actual tolerance value
      real(dp) :: actual_tol
@@ -5021,9 +5052,9 @@
      endif ! back if ( present(tol) ) block
 
      ! allocate matrix
-     allocate(product(n,n), stat=i)
+     allocate(product(n,n), stat=istat)
      !
-     if ( i /= 0 ) then
+     if ( istat /= 0 ) then
          call s_print_error('s_is_unitary_z','can not allocate enough memory')
      endif ! back if ( i /= 0 ) block
 
@@ -5032,8 +5063,23 @@
 
      ! check if product equals identity matrix within tolerance
      ! identity matrix has ones on diagonal, zeros elsewhere
-     ! use maxval to check all elements at once
-     is_unitary = ( maxval( abs( product - conjg(transpose(product)) ) ) <= actual_tol )
+     is_unitary = .true.
+     !
+     do i=1,n
+         if ( abs( product(i,i) - one ) > actual_tol ) then
+             is_unitary = .false.
+             return
+         endif
+     enddo ! over i={1,n} loop
+     !
+     do i=1,n
+         do j=1,n
+             if ( i /= j .and. abs( product(i,j) ) > actual_tol ) then
+                 is_unitary = .false.
+                 return
+             endif
+         enddo ! over j={1,n} loop
+     enddo ! over i={1,n} loop
 
      ! deallocate matrix
      if ( allocated(product) ) deallocate(product)
@@ -6268,6 +6314,9 @@
      real(dp), intent(out) :: A(n,n)
 
 !! local variables
+     ! status flag for allocation
+     integer  :: istat
+
      ! loop indices
      integer  :: i, j
 
@@ -6280,7 +6329,11 @@
 !! [body
 
      ! allocate temporary matrix B
-     allocate(B(n,n), stat=i)
+     allocate(B(n,n), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_random_positive_definite_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! generate random matrix B
      do i=1,n
@@ -6325,6 +6378,9 @@
      complex(dp), intent(out) :: A(n,n)
 
 !! local variables
+     ! status flag for allocation
+     integer  :: istat
+
      ! loop indices
      integer  :: i, j
 
@@ -6337,7 +6393,11 @@
 !! [body
 
      ! allocate temporary matrix B
-     allocate(B(n,n), stat=i)
+     allocate(B(n,n), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_random_positive_definite_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
 
      ! generate random complex matrix B
      do i=1,n
