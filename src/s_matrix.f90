@@ -24,10 +24,10 @@
 !!!           s_schur
 !!!           s_is_symmetric
 !!!           s_is_hermitian
-!!!           s_is_diagonal
-!!!           s_is_tridiagonal
 !!!           s_is_skew_symmetric
 !!!           s_is_skew_hermitian
+!!!           s_is_diagonal
+!!!           s_is_tridiagonal
 !!!           s_is_positive_definite
 !!!           s_is_positive_semidefinite
 !!!           s_is_upper_triangular
@@ -929,6 +929,10 @@
      return
   end subroutine s_det_z
 
+!!========================================================================
+!!>>> matrix query: return matrix's conditional number and rank        <<<
+!!========================================================================
+
 !!
 !! @sub s_cond_d
 !!
@@ -1334,6 +1338,10 @@
 
      return
   end subroutine s_rank_z
+
+!!========================================================================
+!!>>> matrix query: return matrix's sparsity ratio                     <<<
+!!========================================================================
 
 !!
 !! @sub s_sparsity_ratio_i
@@ -2509,6 +2517,10 @@
      return
   end subroutine s_eigvals_he
 
+!!========================================================================
+!!>>> matrix manipulation: solve generalized eigenvalues problem       <<<
+!!========================================================================
+
 !!
 !! @sub s_geig_sy
 !!
@@ -2963,7 +2975,7 @@
   end subroutine s_solve_he
 
 !!========================================================================
-!!>>> matrix manipulation: matrix decomposition                        <<<
+!!>>> matrix manipulation: perform matrix's decomposition              <<<
 !!========================================================================
 
 !!
@@ -3765,7 +3777,7 @@
   end subroutine s_schur_z
 
 !!========================================================================
-!!>>> matrix query: check matrix properties                            <<<
+!!>>> matrix query: check matrix's characteristic                      <<<
 !!========================================================================
 
 !!
@@ -3888,6 +3900,128 @@
 
      return
   end subroutine s_is_hermitian_z
+
+!!
+!! @sub s_is_skew_symmetric_d
+!!
+!! check if a real(dp) matrix is skew-symmetric (A = -A^T).
+!!
+  subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)  :: n
+
+     ! input matrix
+     real(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is skew-symmetric, .false. otherwise
+     logical, intent(out) :: is_skew_symmetric
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer  :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_skew_symmetric = .true.
+
+     ! compare upper triangular part with lower triangular part
+     ! skew-symmetric condition: A(i,j) = -A(j,i)
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check skew-symmetric condition with tolerance
+             if ( abs( A(i,j) + A(j,i) ) > actual_tol ) then
+                 is_skew_symmetric = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) + A(j,i) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_skew_symmetric_d
+
+!!
+!! @sub s_is_skew_hermitian_z
+!!
+!! check if a complex(dp) matrix is skew-Hermitian (A = -A^H).
+!!
+  subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
+     use constants, only : dp
+     use constants, only : eps8
+
+     implicit none
+
+!! external arguments
+     ! size of matrix (must be square)
+     integer, intent(in)     :: n
+
+     ! input matrix
+     complex(dp), intent(in) :: A(n,n)
+
+     ! output: .true. if matrix is skew-Hermitian, .false. otherwise
+     logical, intent(out)    :: is_skew_hermitian
+
+     ! tolerance for floating point comparison (optional, default 1.0e-8)
+     real(dp), intent(in), optional :: tol
+
+!! local variables
+     ! loop indices
+     integer  :: i, j
+
+     ! actual tolerance value
+     real(dp) :: actual_tol
+
+!! [body
+
+     ! set tolerance (use default if not provided)
+     if ( present(tol) ) then
+         actual_tol = tol
+     else
+         actual_tol = eps8
+     endif ! back if ( present(tol) ) block
+
+     ! initialize
+     is_skew_hermitian = .true.
+
+     ! compare upper triangular part with lower triangular part
+     ! skew-Hermitian condition: A(i,j) = -conj(A(j,i))
+     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
+     outer_loop: do i=2,n
+         inner_loop: do j=1,i-1
+             ! check skew-Hermitian condition with tolerance
+             if ( abs( A(i,j) + conjg( A(j,i) ) ) > actual_tol ) then
+                 is_skew_hermitian = .false.
+                 exit outer_loop
+             endif ! back if ( abs( A(i,j) + conj( A(j,i) ) ) > actual_tol ) block
+         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
+     enddo outer_loop ! over i={2,n} loop (outer_loop)
+
+!! body]
+
+     return
+  end subroutine s_is_skew_hermitian_z
 
 !!
 !! @sub s_is_diagonal_d
@@ -4130,128 +4264,6 @@
 
      return
   end subroutine s_is_tridiagonal_z
-
-!!
-!! @sub s_is_skew_symmetric_d
-!!
-!! check if a real(dp) matrix is skew-symmetric (A = -A^T).
-!!
-  subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)  :: n
-
-     ! input matrix
-     real(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is skew-symmetric, .false. otherwise
-     logical, intent(out) :: is_skew_symmetric
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer  :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_skew_symmetric = .true.
-
-     ! compare upper triangular part with lower triangular part
-     ! skew-symmetric condition: A(i,j) = -A(j,i)
-     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-     outer_loop: do i=2,n
-         inner_loop: do j=1,i-1
-             ! check skew-symmetric condition with tolerance
-             if ( abs( A(i,j) + A(j,i) ) > actual_tol ) then
-                 is_skew_symmetric = .false.
-                 exit outer_loop
-             endif ! back if ( abs( A(i,j) + A(j,i) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-     enddo outer_loop ! over i={2,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_skew_symmetric_d
-
-!!
-!! @sub s_is_skew_hermitian_z
-!!
-!! check if a complex(dp) matrix is skew-Hermitian (A = -A^H).
-!!
-  subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
-     use constants, only : dp
-     use constants, only : eps8
-
-     implicit none
-
-!! external arguments
-     ! size of matrix (must be square)
-     integer, intent(in)     :: n
-
-     ! input matrix
-     complex(dp), intent(in) :: A(n,n)
-
-     ! output: .true. if matrix is skew-Hermitian, .false. otherwise
-     logical, intent(out)    :: is_skew_hermitian
-
-     ! tolerance for floating point comparison (optional, default 1.0e-8)
-     real(dp), intent(in), optional :: tol
-
-!! local variables
-     ! loop indices
-     integer  :: i, j
-
-     ! actual tolerance value
-     real(dp) :: actual_tol
-
-!! [body
-
-     ! set tolerance (use default if not provided)
-     if ( present(tol) ) then
-         actual_tol = tol
-     else
-         actual_tol = eps8
-     endif ! back if ( present(tol) ) block
-
-     ! initialize
-     is_skew_hermitian = .true.
-
-     ! compare upper triangular part with lower triangular part
-     ! skew-Hermitian condition: A(i,j) = -conj(A(j,i))
-     ! we only need to compare i > j (lower triangle) with (j,i) (upper triangle)
-     outer_loop: do i=2,n
-         inner_loop: do j=1,i-1
-             ! check skew-Hermitian condition with tolerance
-             if ( abs( A(i,j) + conjg( A(j,i) ) ) > actual_tol ) then
-                 is_skew_hermitian = .false.
-                 exit outer_loop
-             endif ! back if ( abs( A(i,j) + conj( A(j,i) ) ) > actual_tol ) block
-         enddo inner_loop ! over j={1,i-1} loop (inner_loop)
-     enddo outer_loop ! over i={2,n} loop (outer_loop)
-
-!! body]
-
-     return
-  end subroutine s_is_skew_hermitian_z
 
 !!
 !! @sub s_is_positive_definite_d
@@ -5178,7 +5190,7 @@
   end subroutine s_is_normal_z
 
 !!========================================================================
-!!>>> matrix construction                                              <<<
+!!>>> matrix construction: submatrix                                   <<<
 !!========================================================================
 
 !!
@@ -5310,6 +5322,10 @@
 
      return
   end subroutine s_extract_submatrix_z
+
+!!========================================================================
+!!>>> matrix construction: concatenate matrix                          <<<
+!!========================================================================
 
 !!
 !! @sub s_concat_horiz_d
@@ -5563,6 +5579,10 @@
      return
   end subroutine s_concat_vert_z
 
+!!========================================================================
+!!>>> matrix construction: special matrix 1                            <<<
+!!========================================================================
+
 !!
 !! @sub s_upper_triangular_d
 !!
@@ -5780,7 +5800,7 @@
   end subroutine s_tridiagonal_z
 
 !!========================================================================
-!!>>> matrix construction:                                             <<<
+!!>>> matrix construction: special matrix 2                            <<<
 !!========================================================================
 
 !!
@@ -6009,7 +6029,7 @@
   end subroutine s_wilkinson_d
 
 !!========================================================================
-!!>>> matrix construction:                                             <<<
+!!>>> matrix construction: random matrix                               <<<
 !!========================================================================
 
 !!
