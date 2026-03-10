@@ -6112,6 +6112,9 @@
      real(dp), intent(out) :: A(n,n)
 
 !! local variables
+     ! status flag
+     integer  :: istat
+
      ! loop indices
      integer  :: i, j, k, m
 
@@ -6209,6 +6212,9 @@
      complex(dp), intent(out) :: A(n,n)
 
 !! local variables
+     ! status flag
+     integer  :: istat
+
      ! loop indices
      integer  :: i, j, k, m
 
@@ -6244,6 +6250,11 @@
 
      ! allocate and initialize index array
      allocate(indices(total))
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_sparse_random_z','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+     !
      do k=1, total
          indices(k) = k
      enddo
