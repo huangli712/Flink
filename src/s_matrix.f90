@@ -781,16 +781,8 @@
 
 !! [body
 
-     ! setup lwork
-     lwork = 4 * ndim
-
      ! allocate memory
      allocate(ipiv(ndim),      stat=ierror)
-     allocate(work(lwork),     stat=ierror)
-     allocate(wi(ndim),        stat=ierror)
-     allocate(wr(ndim),        stat=ierror)
-     allocate(vl(ndim,ndim),   stat=ierror)
-     allocate(vr(ndim,ndim),   stat=ierror)
      allocate(amat(ndim,ndim), stat=ierror)
      !
      if ( ierror /= 0 ) then
@@ -810,25 +802,43 @@
      !
      if ( ierror /= 0 ) then
          call s_print_exception('s_det_d','error in lapack subroutine dgetrf')
+     else ! ierror == 0
+         ! calculate determinant
+         ddet = one
+         !
+         do i=1,ndim
+             if ( ipiv(i) == i ) then
+                 ddet = ddet * ( +dmat(i,i) )
+             else
+                 ddet = ddet * ( -dmat(i,i) )
+             endif ! back if ( ipiv(i) == i ) block
+         enddo ! over i={1,ndim} loop
+
+         ! now we should deallocate memory
+         deallocate(ipiv)
+         deallocate(amat)
+
+         ! everything is ok
+         RETURN
      endif ! back if ( ierror /= 0 ) block
-
-     ! calculate determinant
-     ddet = one
-     !
-     do i=1,ndim
-         if ( ipiv(i) == i ) then
-             ddet = ddet * ( +dmat(i,i) )
-         else
-             ddet = ddet * ( -dmat(i,i) )
-         endif ! back if ( ipiv(i) == i ) block
-     enddo ! over i={1,ndim} loop
-
-     ! everything is ok!
-     if ( ierror == 0 ) RETURN
 
 !-------------------------------------------------------------------------
 ! method B: as a backup
 !-------------------------------------------------------------------------
+
+     ! setup lwork
+     lwork = 4 * ndim
+
+     ! allocate memory
+     allocate(work(lwork),     stat=ierror)
+     allocate(wi(ndim),        stat=ierror)
+     allocate(wr(ndim),        stat=ierror)
+     allocate(vl(ndim,ndim),   stat=ierror)
+     allocate(vr(ndim,ndim),   stat=ierror)
+     !
+     if ( ierror /= 0 ) then
+         call s_print_error('s_det_d','can not allocate enough memory')
+     endif ! back if ( ierror /= 0 ) block
 
      ! diagonalize amat to obtain its eigenvalues: wr and wi.
      call DGEEV('N', 'N', ndim, amat, ndim, wr, wi, vl, ndim, vr, &
@@ -1778,7 +1788,7 @@
      complex(dp), allocatable :: vmat(:,:)
 
      ! temporary matrices for pseudo-inverse computation
-     real(dp), allocatable    :: sigma_pinv(:,:)
+     complex(dp), allocatable :: sigma_pinv(:,:)
      complex(dp), allocatable :: temp1(:,:)
 
 !! [body
