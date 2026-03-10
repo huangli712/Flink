@@ -16,7 +16,7 @@
 !!
 !! @sub s_spl_deriv1
 !!
-!! evaluate the 1-order derivates of yval.
+!! evaluate the 1-order derivatives of yval.
 !!
   subroutine s_spl_deriv1(ydim, xval, yval, d1y)
      use constants, only : dp
@@ -64,7 +64,7 @@
 !!
 !! @sub s_spl_deriv2
 !!
-!! evaluate the 2-order derivates of yval.
+!! evaluate the 2-order derivatives of yval.
 !!
   subroutine s_spl_deriv2(ydim, xval, yval, startu, startd, d2y)
      use constants, only : dp
