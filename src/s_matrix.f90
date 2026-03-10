@@ -6146,7 +6146,12 @@
      if ( nnz < 1 ) return
 
      ! allocate and initialize index array
-     allocate(indices(total))
+     allocate(indices(total), stat=istat)
+     !
+     if ( istat /= 0 ) then
+         call s_print_error('s_qr_d','can not allocate enough memory')
+     endif ! back if ( istat /= 0 ) block
+     !
      do k=1, total
          indices(k) = k
      enddo
