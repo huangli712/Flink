@@ -6092,6 +6092,8 @@
 !!
 !! build a sparse random real(dp) matrix.
 !! sparsity parameter controls fraction of non-zero elements (0-1).
+!! uses Fisher-Yates shuffle to guarantee exactly nnz = int(n*n*sparsity)
+!! non-zero elements without position collision.
 !!
   subroutine s_sparse_random_d(n, sparsity, A)
      use constants, only : dp
@@ -6111,13 +6113,20 @@
 
 !! local variables
      ! loop indices
-     integer  :: i, j, k
+     integer  :: i, j, k, m
 
      ! number of non-zero elements
      integer  :: nnz
 
-     ! random values
-     real(dp) :: r1, r2, r3
+     ! total number of elements
+     integer  :: total
+
+     ! random value and swap temp
+     integer  :: idx
+     real(dp) :: r
+
+     ! index array for Fisher-Yates shuffle
+     integer, allocatable :: indices(:)
 
 !! [body
 
@@ -6130,17 +6139,39 @@
      A = zero
 
      ! calculate number of non-zero elements
-     nnz = int(n * n * sparsity)
+     total = n * n
+     nnz = int(real(total, dp) * sparsity)
 
-     ! fill matrix randomly
-     do k=1,nnz
-         call random_number(r1)
-         call random_number(r2)
-         call random_number(r3)
-         i = min(int(r1 * real(n, dp)) + 1, n)
-         j = min(int(r2 * real(n, dp)) + 1, n)
-         A(i,j) = r3
-     enddo ! over k={1,nnz} loop
+     ! early return if no non-zero elements needed
+     if ( nnz < 1 ) return
+
+     ! allocate and initialize index array
+     allocate(indices(total))
+     do k=1, total
+         indices(k) = k
+     enddo
+
+     ! partial Fisher-Yates shuffle (only first nnz elements)
+     do k=1, nnz
+         call random_number(r)
+         m = int(r * real(total - k + 1, dp)) + k
+         ! swap indices(k) and indices(m)
+         idx = indices(k)
+         indices(k) = indices(m)
+         indices(m) = idx
+     enddo
+
+     ! fill matrix using first nnz shuffled indices
+     do k=1, nnz
+         idx = indices(k)
+         i = (idx - 1) / n + 1       ! row index (1-based)
+         j = mod(idx - 1, n) + 1     ! column index (1-based)
+         call random_number(r)
+         A(i,j) = r
+     enddo
+
+     ! deallocate index array
+     deallocate(indices)
 
 !! body]
 
@@ -6152,6 +6183,8 @@
 !!
 !! build a sparse random complex(dp) matrix.
 !! sparsity parameter controls fraction of non-zero elements (0-1).
+!! uses Fisher-Yates shuffle to guarantee exactly nnz = int(n*n*sparsity)
+!! non-zero elements without position collision.
 !!
   subroutine s_sparse_random_z(n, sparsity, A)
      use constants, only : dp
@@ -6172,13 +6205,20 @@
 
 !! local variables
      ! loop indices
-     integer  :: i, j, k
+     integer  :: i, j, k, m
 
      ! number of non-zero elements
      integer  :: nnz
 
-     ! random values
-     real(dp) :: r1, r2, r3, r4
+     ! total number of elements
+     integer  :: total
+
+     ! random values and swap temp
+     integer  :: idx
+     real(dp) :: r1, r2
+
+     ! index array for Fisher-Yates shuffle
+     integer, allocatable :: indices(:)
 
 !! [body
 
@@ -6191,18 +6231,40 @@
      A = czero
 
      ! calculate number of non-zero elements
-     nnz = int(n * n * sparsity)
+     total = n * n
+     nnz = int(real(total, dp) * sparsity)
 
-     ! fill matrix randomly
-     do k=1,nnz
+     ! early return if no non-zero elements needed
+     if ( nnz < 1 ) return
+
+     ! allocate and initialize index array
+     allocate(indices(total))
+     do k=1, total
+         indices(k) = k
+     enddo
+
+     ! partial Fisher-Yates shuffle (only first nnz elements)
+     do k=1, nnz
+         call random_number(r1)
+         m = int(r1 * real(total - k + 1, dp)) + k
+         ! swap indices(k) and indices(m)
+         idx = indices(k)
+         indices(k) = indices(m)
+         indices(m) = idx
+     enddo
+
+     ! fill matrix using first nnz shuffled indices
+     do k=1, nnz
+         idx = indices(k)
+         i = (idx - 1) / n + 1       ! row index (1-based)
+         j = mod(idx - 1, n) + 1     ! column index (1-based)
          call random_number(r1)
          call random_number(r2)
-         call random_number(r3)
-         call random_number(r4)
-         i = min(int(r1 * real(n, dp)) + 1, n)
-         j = min(int(r2 * real(n, dp)) + 1, n)
-         A(i,j) = dcmplx(r3, r4)
-     enddo ! over k={1,nnz} loop
+         A(i,j) = dcmplx(r1, r2)
+     enddo
+
+     ! deallocate index array
+     deallocate(indices)
 
 !! body]
 
