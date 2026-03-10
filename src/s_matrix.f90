@@ -6249,7 +6249,7 @@
      if ( nnz < 1 ) return
 
      ! allocate and initialize index array
-     allocate(indices(total))
+     allocate(indices(total), stat=istat)
      !
      if ( istat /= 0 ) then
          call s_print_error('s_sparse_random_z','can not allocate enough memory')
