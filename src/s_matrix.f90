@@ -6149,7 +6149,7 @@
      allocate(indices(total), stat=istat)
      !
      if ( istat /= 0 ) then
-         call s_print_error('s_qr_d','can not allocate enough memory')
+         call s_print_error('s_sparse_random_d','can not allocate enough memory')
      endif ! back if ( istat /= 0 ) block
      !
      do k=1, total
