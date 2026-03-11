@@ -985,6 +985,7 @@ Build a Wilkinson's W+ matrix. Main diagonal: `W(i,i) = n/2 + 1 - i`, super/sub-
 
 ```fortran
 subroutine s_sparse_random_d(n, sparsity, A)
+subroutine s_sparse_random_z(n, sparsity, A)
 ```
 
 **Purpose:**
@@ -997,13 +998,12 @@ Build a sparse random matrix. The sparsity parameter controls the fraction of no
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of matrix (must be square) |
 | `sparsity` | `real(dp)` | `in` | Sparsity level (1 = dense, 0 = sparse) |
-| `A` | `real(dp)` | `out` | Output sparse random matrix |
+| `A` | `real(dp)`/`complex(dp)` | `out` | Output sparse random matrix |
 
 ---
 
 ```fortran
 subroutine s_random_symmetric_d(n, A)
-subroutine s_random_symmetric_z(n, A)
 ```
 
 **Purpose:**
@@ -1015,7 +1015,7 @@ Build a random symmetric matrix `A = B + B^T`, where B is random.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of matrix (must be square) |
-| `A` | `real(dp)`/`complex(dp)` | `out` | Output random symmetric matrix |
+| `A` | `real(dp)` | `out` | Output random symmetric matrix |
 
 ---
 
