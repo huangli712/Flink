@@ -240,7 +240,11 @@
 
 !! [body
 
-     data => self%data
+     if ( associated(self) ) then
+         data => self%data
+     else
+         nullify(data)
+     endif
 
 !! body]
 
@@ -264,7 +268,11 @@
 
 !! [body
 
-     next => self%next
+     if ( associated(self) ) then
+         next => self%next
+     else
+         nullify(next)
+     endif
 
 !! body]
 
