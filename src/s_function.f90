@@ -13,7 +13,7 @@
 !!! type    : subroutines & functions
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           03/11/2026 by li huang (last modified)
 !!! purpose : these subroutines / functions are used to generate some
 !!!           special functions, such as the Legendre and Chebyshev
 !!!           orthogonal polynomials, Bessel function, etc.
@@ -59,6 +59,11 @@
      real(dp) :: r1, r2
 
 !! [body
+
+     ! check legrd
+     if ( legrd <= 0 ) then
+         call s_print_error('s_leg_basis','legrd must be positive')
+     endif ! back if ( legrd <= 0 ) block
 
      ! check lemax
      if ( lemax <= 2 ) then
@@ -124,6 +129,11 @@
      integer :: j
 
 !! [body
+
+     ! check chgrd
+     if ( chgrd <= 0 ) then
+         call s_print_error('s_che_basis','chgrd must be positive')
+     endif ! back if ( chgrd <= 0 ) block
 
      ! check chmax
      if ( chmax <= 2 ) then
@@ -295,7 +305,7 @@
      enddo ! over i={1,svgrd} loop
      !
      do i=1,svmax
-         t = two * limit / float(svgrd)
+         t = two * limit / real(svgrd, dp)
          t = t * sum( ( umat(:,i) * wmesh(:) )**2 )
          umat(:,i) = umat(:,i) / sqrt(t)
      enddo ! over i={1,svmax} loop
@@ -303,9 +313,9 @@
      ! copy umat to rep_s
      do i=1,svmax
          if ( umat(svgrd,i) < zero ) then
-             rep_s(:,i) = -one * umat(:,i)
+             rep_s(:,i) = -umat(:,i)
          else
-             rep_s(:,i) = +one * umat(:,i)
+             rep_s(:,i) = +umat(:,i)
          endif ! back if ( umat(svgrd,i) < zero ) block
      enddo ! over i={1,svmax} loop
 
@@ -565,7 +575,7 @@
      real(dp), intent(in) :: x
 
      ! the values of the N+1 bernstein polynomials at X
-     real(dp), intent(inout) :: bern(0:n)
+     real(dp), intent(out) :: bern(0:n)
 
 !! local variables
      ! loop index
