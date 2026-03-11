@@ -164,6 +164,9 @@
 
 !! [body
 
+     ! safety check
+     if ( .not. associated(self) ) return
+
      ! allocate memory for new node
      allocate(next)
 
@@ -201,10 +204,12 @@
 
 !! [body
 
+     ! safety check
+     if ( .not. associated(self) ) return
+
      ! release old memory at first
      if ( associated(self%data) ) then
          deallocate(self%data)
-         nullify(self%data)
      endif ! back if ( associated(self%data) ) block
 
      ! allocate new memory
@@ -216,7 +221,7 @@
 !! body]
 
      return
-  end subroutine list_put
+   end subroutine list_put
 
 !!
 !! @fun list_get
