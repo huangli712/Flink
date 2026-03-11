@@ -256,6 +256,11 @@
          call s_print_error('s_svd_basis','please make sure svmax < wsize')
      endif ! back if ( svmax >= wsize ) block
 
+     ! check beta
+     if ( beta <= zero ) then
+         call s_print_error('s_svd_basis','beta must be positive')
+     endif ! back if ( beta <= zero ) block
+
      ! allocate memory
      allocate(tmesh(svgrd),      stat=istat)
      allocate(wmesh(svgrd),      stat=istat)
