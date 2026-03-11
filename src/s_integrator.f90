@@ -28,7 +28,7 @@
      ! number of data points
      integer, intent(in)  :: n
 
-     ! left and right boundries for numerical integration
+     ! left and right boundaries for numerical integration
      real(dp), intent(in) :: a
      real(dp), intent(in) :: b
 
