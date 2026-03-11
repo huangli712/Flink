@@ -205,23 +205,23 @@ Calculate the differences between consecutive elements: `d[i] = v[i+1] - v[i]`.
 ---
 
 ```fortran
-subroutine s_unique_i(n, v, unique_v, n_unique)
-subroutine s_unique_d(n, v, unique_v, n_unique)
-subroutine s_unique_z(n, v, unique_v, n_unique)
+subroutine s_unique_i(n, ix, m, iy)
+subroutine s_unique_d(n, dx, m, dy)
+subroutine s_unique_z(n, zx, m, zy)
 ```
 
 **Purpose:**
 
-Extract unique elements from a vector, sorted in ascending order.
+Extract unique elements from a vector, preserving original order.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `unique_v` | `integer`/`real(dp)`/`complex(dp)` | `out` | Unique elements (sorted) |
-| `n_unique` | `integer` | `out` | Number of unique elements |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `m` | `integer` | `out` | Number of unique elements |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Unique elements (preserving order, size n but only first m valid) |
 
 ---
 
