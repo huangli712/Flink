@@ -66,7 +66,7 @@
          Sx = Sx + one / rmesh(j)**2
          Sy = Sy + aimag(green(j)) * rmesh(j)
          Sxx = Sxx + one / rmesh(j)**4
-         Sxy = Sxy + aimag(green(j)) * rmesh(j) / rmesh(j)**2
+         Sxy = Sxy + aimag(green(j)) / rmesh(j)
      enddo ! over j={mfreq - nfreq, mfreq} loop
 
      rtail = (Sx * Sxy - Sxx * Sy) / (Sn * Sxx - Sx * Sx)
