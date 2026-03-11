@@ -116,6 +116,15 @@
 
 !! [body
 
+     ! validate input parameters
+     if ( n < 3 ) then
+         call s_print_error('s_int_simpson','n must be at least 3')
+     endif
+
+     if ( a > b ) then
+         call s_print_error('s_int_simpson','a must be less than or equal to b')
+     endif
+
      ! evaluate the step
      h = ( b - a ) / dble(n)
 
