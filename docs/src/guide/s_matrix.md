@@ -30,6 +30,8 @@ subroutine s_zeros_d(n, A)
 subroutine s_zeros_z(n, A)
 ```
 
+**Purpose:**
+
 Build a matrix with all elements set to zero.
 
 **Arguments:**
@@ -47,6 +49,8 @@ subroutine s_ones_d(n, A)
 subroutine s_ones_z(n, A)
 ```
 
+**Purpose:**
+
 Build a matrix with all elements set to one.
 
 **Arguments:**
@@ -63,6 +67,8 @@ subroutine s_any_i(n, i, A)
 subroutine s_any_d(n, d, A)
 subroutine s_any_z(n, z, A)
 ```
+
+**Purpose:**
 
 Build a matrix with all elements set to a specified value.
 
@@ -82,6 +88,8 @@ subroutine s_eye_d(n, k, A)
 subroutine s_eye_z(n, k, A)
 ```
 
+**Purpose:**
+
 Build a matrix with ones on the specified diagonal and zeros elsewhere.
 
 **Arguments:**
@@ -100,6 +108,8 @@ subroutine s_identity_d(n, A)
 subroutine s_identity_z(n, A)
 ```
 
+**Purpose:**
+
 Build an identity matrix (ones on the main diagonal, zeros elsewhere).
 
 **Arguments:**
@@ -116,6 +126,8 @@ subroutine s_diag_i(n, v, A)
 subroutine s_diag_d(n, v, A)
 subroutine s_diag_z(n, v, A)
 ```
+
+**Purpose:**
 
 Build a diagonal matrix from a vector, placing the vector elements on the main diagonal.
 
@@ -134,6 +146,8 @@ subroutine s_trace_d(n, A, tr)
 subroutine s_trace_z(n, A, tr)
 ```
 
+**Purpose:**
+
 Calculate the trace (sum of diagonal elements) of a matrix.
 
 **Arguments:**
@@ -150,6 +164,8 @@ Calculate the trace (sum of diagonal elements) of a matrix.
 subroutine s_det_d(ndim, dmat, ddet)
 subroutine s_det_z(ndim, zmat, zdet)
 ```
+
+**Purpose:**
 
 Calculate the determinant of a matrix using LU factorization.
 
@@ -168,6 +184,8 @@ subroutine s_cond_d(n, A, cond, norm_type)
 subroutine s_cond_z(n, A, cond, norm_type)
 ```
 
+**Purpose:**
+
 Estimate the condition number of a matrix using LAPACK.
 
 **Arguments:**
@@ -185,6 +203,8 @@ Estimate the condition number of a matrix using LAPACK.
 subroutine s_rank_d(m, n, A, rank, tol)
 subroutine s_rank_z(m, n, A, rank, tol)
 ```
+
+**Purpose:**
 
 Estimate the rank of a matrix using SVD. Returns the number of singular values greater than the tolerance threshold.
 
@@ -206,6 +226,8 @@ subroutine s_sparsity_ratio_d(n, A, ratio)
 subroutine s_sparsity_ratio_z(n, A, ratio)
 ```
 
+**Purpose:**
+
 Calculate the sparsity ratio (ratio of zero elements) of a matrix.
 
 **Arguments:**
@@ -223,6 +245,8 @@ subroutine s_inv_d(ndim, dmat)
 subroutine s_inv_z(ndim, zmat)
 ```
 
+**Purpose:**
+
 Invert a matrix using LAPACK (LU factorization).
 
 **Arguments:**
@@ -238,6 +262,8 @@ Invert a matrix using LAPACK (LU factorization).
 subroutine s_pinv_d(m, n, A, pinv, tol)
 subroutine s_pinv_z(m, n, A, pinv, tol)
 ```
+
+**Purpose:**
 
 Compute the Moore-Penrose pseudo-inverse of a general matrix using SVD decomposition: `pinv(A) = V * Σ⁺ * U^T` (or `U^H` for complex).
 
@@ -258,6 +284,8 @@ subroutine s_eig_dg(ldim, ndim, amat, eval, evec)
 subroutine s_eig_zg(ldim, ndim, zmat, zeig, zvec)
 ```
 
+**Purpose:**
+
 Compute all eigenvalues and eigenvectors of a general matrix.
 
 **Arguments:**
@@ -277,6 +305,8 @@ subroutine s_eigvals_dg(ldim, ndim, amat, eval)
 subroutine s_eigvals_zg(ldim, ndim, zmat, zeig)
 ```
 
+**Purpose:**
+
 Compute only eigenvalues of a general matrix (no eigenvectors).
 
 **Arguments:**
@@ -294,6 +324,8 @@ Compute only eigenvalues of a general matrix (no eigenvectors).
 subroutine s_eig_sy(ldim, ndim, amat, eval, evec)
 subroutine s_eig_he(ldim, ndim, amat, eval, evec)
 ```
+
+**Purpose:**
 
 Compute all eigenvalues and eigenvectors of a symmetric/Hermitian matrix.
 
@@ -314,6 +346,8 @@ subroutine s_eigvals_sy(ldim, ndim, amat, eval)
 subroutine s_eigvals_he(ldim, ndim, amat, eval)
 ```
 
+**Purpose:**
+
 Compute only eigenvalues of a symmetric/Hermitian matrix (no eigenvectors).
 
 **Arguments:**
@@ -331,6 +365,8 @@ Compute only eigenvalues of a symmetric/Hermitian matrix (no eigenvectors).
 subroutine s_geig_sy(ldim, n, A, B, eval, evec)
 subroutine s_geig_he(ldim, n, A, B, eval, evec)
 ```
+
+**Purpose:**
 
 Solve the generalized eigenvalue problem `A*x = λ*B*x`, where A and B are symmetric/Hermitian matrices.
 
@@ -354,6 +390,8 @@ subroutine s_solve_sy(n, nrhs, A, B)
 subroutine s_solve_he(n, nrhs, A, B)
 ```
 
+**Purpose:**
+
 Solve a linear system `AX = B`. On exit, `B` is overwritten by the solution matrix `X`.
 
 **Arguments:**
@@ -365,13 +403,14 @@ Solve a linear system `AX = B`. On exit, `B` is overwritten by the solution matr
 | `A` | `real(dp)`/`complex(dp)` | `inout` | Coefficient matrix A; on exit, overwritten by L and U factors |
 | `B` | `real(dp)`/`complex(dp)` | `inout` | Right-hand side matrix B; on exit, overwritten by solution X |
 
-
 ## Matrix Decomposition
 
 ```fortran
 subroutine s_svd_dg(m, n, min_mn, amat, umat, svec, vmat)
 subroutine s_svd_zg(m, n, min_mn, amat, umat, svec, vmat)
 ```
+
+**Purpose:**
 
 Perform the singular value decomposition for a general `m`-by-`n` matrix `A`, where `A = U * Σ * V^T` (or `V^H` for complex).
 
@@ -394,6 +433,8 @@ subroutine s_qr_d(m, n, min_mn, amat, qmat, rmat)
 subroutine s_qr_z(m, n, min_mn, amat, qmat, rmat)
 ```
 
+**Purpose:**
+
 Perform QR decomposition for a general `m`-by-`n` matrix `A`, where `A = Q * R`.
 
 **Arguments:**
@@ -414,6 +455,8 @@ subroutine s_cholesky_d(n, A, L)
 subroutine s_cholesky_z(n, A, L)
 ```
 
+**Purpose:**
+
 Perform Cholesky decomposition for a symmetric/Hermitian positive-definite matrix `A`, where `A = L * L^T` (or `L * L^H`).
 
 **Arguments:**
@@ -430,6 +473,8 @@ Perform Cholesky decomposition for a symmetric/Hermitian positive-definite matri
 subroutine s_lu_d(n, A, L, U, ipiv)
 subroutine s_lu_z(n, A, L, U, ipiv)
 ```
+
+**Purpose:**
 
 Perform LU decomposition for a general matrix `A`, where `A = P * L * U`.
 
@@ -450,6 +495,8 @@ subroutine s_schur_d(ldim, n, A, T, Q)
 subroutine s_schur_z(ldim, n, A, T, Q)
 ```
 
+**Purpose:**
+
 Perform Schur decomposition for a general matrix `A`, where `A = Q * T * Q^T` (or `Q * T * Q^H`).
 
 **Arguments:**
@@ -468,6 +515,8 @@ Perform Schur decomposition for a general matrix `A`, where `A = Q * T * Q^T` (o
 subroutine s_is_symmetric_d(n, A, is_symmetric, tol)
 ```
 
+**Purpose:**
+
 Check if a real matrix is symmetric (`A = A^T`).
 
 **Arguments:**
@@ -484,6 +533,8 @@ Check if a real matrix is symmetric (`A = A^T`).
 ```fortran
 subroutine s_is_hermitian_z(n, A, is_hermitian, tol)
 ```
+
+**Purpose:**
 
 Check if a complex matrix is Hermitian (`A = A^H`).
 
@@ -502,6 +553,8 @@ Check if a complex matrix is Hermitian (`A = A^H`).
 subroutine s_is_skew_symmetric_d(n, A, is_skew_symmetric, tol)
 ```
 
+**Purpose:**
+
 Check if a real matrix is skew-symmetric (`A = -A^T`).
 
 **Arguments:**
@@ -518,6 +571,8 @@ Check if a real matrix is skew-symmetric (`A = -A^T`).
 ```fortran
 subroutine s_is_skew_hermitian_z(n, A, is_skew_hermitian, tol)
 ```
+
+**Purpose:**
 
 Check if a complex matrix is skew-Hermitian (`A = -A^H`).
 
@@ -537,6 +592,8 @@ subroutine s_is_diagonal_d(n, A, is_diagonal, tol)
 subroutine s_is_diagonal_z(n, A, is_diagonal, tol)
 ```
 
+**Purpose:**
+
 Check if a matrix is diagonal (all off-diagonal elements are zero).
 
 **Arguments:**
@@ -554,6 +611,8 @@ Check if a matrix is diagonal (all off-diagonal elements are zero).
 subroutine s_is_tridiagonal_d(n, A, is_tridiagonal, tol)
 subroutine s_is_tridiagonal_z(n, A, is_tridiagonal, tol)
 ```
+
+**Purpose:**
 
 Check if a matrix is tridiagonal (only main diagonal and adjacent diagonals can be non-zero).
 
@@ -573,6 +632,8 @@ subroutine s_is_positive_definite_d(n, A, is_positive_definite)
 subroutine s_is_positive_definite_z(n, A, is_positive_definite)
 ```
 
+**Purpose:**
+
 Check if a symmetric/Hermitian matrix is positive-definite using Cholesky decomposition.
 
 **Arguments:**
@@ -589,6 +650,8 @@ Check if a symmetric/Hermitian matrix is positive-definite using Cholesky decomp
 subroutine s_is_positive_semidefinite_d(ldim, n, A, is_positive_semidefinite, tol)
 subroutine s_is_positive_semidefinite_z(ldim, n, A, is_positive_semidefinite, tol)
 ```
+
+**Purpose:**
 
 Check if a symmetric/Hermitian matrix is positive-semidefinite (all eigenvalues ≥ 0).
 
@@ -609,6 +672,8 @@ subroutine s_is_upper_triangular_d(n, A, is_upper_triangular, tol)
 subroutine s_is_upper_triangular_z(n, A, is_upper_triangular, tol)
 ```
 
+**Purpose:**
+
 Check if a matrix is upper triangular (all elements below main diagonal are zero).
 
 **Arguments:**
@@ -626,6 +691,8 @@ Check if a matrix is upper triangular (all elements below main diagonal are zero
 subroutine s_is_lower_triangular_d(n, A, is_lower_triangular, tol)
 subroutine s_is_lower_triangular_z(n, A, is_lower_triangular, tol)
 ```
+
+**Purpose:**
 
 Check if a matrix is lower triangular (all elements above main diagonal are zero).
 
@@ -645,6 +712,8 @@ subroutine s_is_singular_d(n, A, is_singular)
 subroutine s_is_singular_z(n, A, is_singular)
 ```
 
+**Purpose:**
+
 Check if a matrix is singular (determinant is zero) using LU factorization.
 
 **Arguments:**
@@ -660,6 +729,8 @@ Check if a matrix is singular (determinant is zero) using LU factorization.
 ```fortran
 subroutine s_is_orthogonal_d(n, Q, is_orthogonal, tol)
 ```
+
+**Purpose:**
 
 Check if a real matrix is orthogonal (`Q^T * Q = I`).
 
@@ -677,6 +748,8 @@ Check if a real matrix is orthogonal (`Q^T * Q = I`).
 ```fortran
 subroutine s_is_unitary_z(n, Q, is_unitary, tol)
 ```
+
+**Purpose:**
 
 Check if a complex matrix is unitary (`Q^H * Q = I`).
 
@@ -696,6 +769,8 @@ subroutine s_is_normal_d(n, A, is_normal, tol)
 subroutine s_is_normal_z(n, A, is_normal, tol)
 ```
 
+**Purpose:**
+
 Check if a matrix is normal (`A^T * A = A * A^T` or `A^H * A = A * A^H`).
 
 **Arguments:**
@@ -713,6 +788,8 @@ Check if a matrix is normal (`A^T * A = A * A^T` or `A^H * A = A * A^H`).
 subroutine s_extract_submatrix_d(m_src, n_src, A_src, i_start, j_start, m_sub, n_sub, A_sub)
 subroutine s_extract_submatrix_z(m_src, n_src, A_src, i_start, j_start, m_sub, n_sub, A_sub)
 ```
+
+**Purpose:**
 
 Extract a submatrix from a source matrix.
 
@@ -736,6 +813,8 @@ subroutine s_concat_horiz_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
 subroutine s_concat_horiz_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
 ```
 
+**Purpose:**
+
 Concatenate two matrices horizontally: `C = [A | B]`. Matrices A and B must have the same number of rows.
 
 **Arguments:**
@@ -758,6 +837,8 @@ Concatenate two matrices horizontally: `C = [A | B]`. Matrices A and B must have
 subroutine s_concat_vert_d(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
 subroutine s_concat_vert_z(m_A, n_A, A, m_B, n_B, B, m_C, n_C, C)
 ```
+
+**Purpose:**
 
 Concatenate two matrices vertically: `C = [A; B]`. Matrices A and B must have the same number of columns.
 
@@ -783,6 +864,8 @@ subroutine s_upper_triangular_d(n, A)
 subroutine s_upper_triangular_z(n, A)
 ```
 
+**Purpose:**
+
 Construct an upper triangular matrix by setting all elements below the main diagonal to zero.
 
 **Arguments:**
@@ -798,6 +881,8 @@ Construct an upper triangular matrix by setting all elements below the main diag
 subroutine s_lower_triangular_d(n, A)
 subroutine s_lower_triangular_z(n, A)
 ```
+
+**Purpose:**
 
 Construct a lower triangular matrix by setting all elements above the main diagonal to zero.
 
@@ -815,6 +900,8 @@ subroutine s_tridiagonal_d(n, A)
 subroutine s_tridiagonal_z(n, A)
 ```
 
+**Purpose:**
+
 Construct a tridiagonal matrix by setting all elements except main diagonal, super-diagonal, and sub-diagonal to zero.
 
 **Arguments:**
@@ -829,6 +916,8 @@ Construct a tridiagonal matrix by setting all elements except main diagonal, sup
 ```fortran
 subroutine s_hilbert_d(n, A)
 ```
+
+**Purpose:**
 
 Build a Hilbert matrix with elements `H(i,j) = 1 / (i + j - 1)`.
 
@@ -846,6 +935,8 @@ subroutine s_vandermonde_d(n, x, A)
 subroutine s_vandermonde_z(n, x, A)
 ```
 
+**Purpose:**
+
 Build a Vandermonde matrix with elements `V(i,j) = x_i^(j-1)`.
 
 **Arguments:**
@@ -862,6 +953,8 @@ Build a Vandermonde matrix with elements `V(i,j) = x_i^(j-1)`.
 subroutine s_pascal_d(n, A)
 ```
 
+**Purpose:**
+
 Build a Pascal matrix with elements `P(i,j) = C(i+j-2, j-1)`.
 
 **Arguments:**
@@ -877,6 +970,8 @@ Build a Pascal matrix with elements `P(i,j) = C(i+j-2, j-1)`.
 subroutine s_wilkinson_d(n, A)
 ```
 
+**Purpose:**
+
 Build a Wilkinson's W+ matrix. Main diagonal: `W(i,i) = n/2 + 1 - i`, super/sub-diagonal elements equal to 1.
 
 **Arguments:**
@@ -891,6 +986,8 @@ Build a Wilkinson's W+ matrix. Main diagonal: `W(i,i) = n/2 + 1 - i`, super/sub-
 ```fortran
 subroutine s_sparse_random_d(n, sparsity, A)
 ```
+
+**Purpose:**
 
 Build a sparse random matrix. The sparsity parameter controls the fraction of non-zero elements (0-1). Uses Fisher-Yates shuffle to guarantee exactly `nnz = int(n*n*sparsity)` non-zero elements.
 
@@ -909,6 +1006,8 @@ subroutine s_random_symmetric_d(n, A)
 subroutine s_random_symmetric_z(n, A)
 ```
 
+**Purpose:**
+
 Build a random symmetric matrix `A = B + B^T`, where B is random.
 
 **Arguments:**
@@ -923,6 +1022,8 @@ Build a random symmetric matrix `A = B + B^T`, where B is random.
 ```fortran
 subroutine s_random_hermitian_z(n, A)
 ```
+
+**Purpose:**
 
 Build a random Hermitian matrix `A = B + B^H`, where B is random complex.
 
@@ -939,6 +1040,8 @@ Build a random Hermitian matrix `A = B + B^H`, where B is random complex.
 subroutine s_random_positive_definite_d(n, A)
 subroutine s_random_positive_definite_z(n, A)
 ```
+
+**Purpose:**
 
 Build a random positive-definite matrix `A = B * B^T + I` (or `B * B^H + I` for complex), where B is random.
 
