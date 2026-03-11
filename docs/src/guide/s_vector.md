@@ -143,9 +143,9 @@ Calculate the dot product (inner product) of two vectors: `d = x · y`.
 ---
 
 ```fortran
-subroutine s_outer_i(m, n, x, y, A)
-subroutine s_outer_d(m, n, x, y, A)
-subroutine s_outer_z(m, n, x, y, A)
+subroutine s_outer_i(n, m, ix, iy, ia)
+subroutine s_outer_d(n, m, dx, dy, da)
+subroutine s_outer_z(n, m, zx, zy, za)
 ```
 
 **Purpose:**
@@ -156,11 +156,11 @@ Calculate the outer product of two vectors: `A = x ⊗ y` (A[i,j] = x[i] * y[j])
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `m` | `integer` | `in` | Size of vector `x` |
-| `n` | `integer` | `in` | Size of vector `y` |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector (m elements) |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector (n elements) |
-| `A` | `integer`/`real(dp)`/`complex(dp)` | `out` | Outer product matrix (m-by-n) |
+| `n` | `integer` | `in` | Size of vector `x` |
+| `m` | `integer` | `in` | Size of vector `y` |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector (n elements) |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector (m elements) |
+| `ia`/`da`/`za` | `integer`/`real(dp)`/`complex(dp)` | `out` | Outer product matrix (n-by-m) |
 
 ---
 
@@ -226,9 +226,9 @@ Extract unique elements from a vector, preserving original order.
 ---
 
 ```fortran
-subroutine s_intersect_i(n, a, m, b, c, k)
-subroutine s_intersect_d(n, a, m, b, c, k)
-subroutine s_intersect_z(n, a, m, b, c, k)
+subroutine s_intersect_i(n, ix, m, iy, k, iz)
+subroutine s_intersect_d(n, dx, m, dy, k, dz)
+subroutine s_intersect_z(n, zx, m, zy, k, zz)
 ```
 
 **Purpose:**
@@ -239,19 +239,19 @@ Find the intersection of two vectors (elements common to both).
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `a` |
-| `a` | `integer`/`real(dp)`/`complex(dp)` | `in` | First input vector |
-| `m` | `integer` | `in` | Size of vector `b` |
-| `b` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second input vector |
-| `c` | `integer`/`real(dp)`/`complex(dp)` | `out` | Intersection elements (sorted) |
+| `n` | `integer` | `in` | Size of first vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First input vector |
+| `m` | `integer` | `in` | Size of second vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second input vector |
 | `k` | `integer` | `out` | Number of elements in intersection |
+| `iz`/`dz`/`zz` | `integer`/`real(dp)`/`complex(dp)` | `out` | Intersection elements (unique) |
 
 ---
 
 ```fortran
-subroutine s_union_i(n, a, m, b, c, k)
-subroutine s_union_d(n, a, m, b, c, k)
-subroutine s_union_z(n, a, m, b, c, k)
+subroutine s_union_i(n, ix, m, iy, k, iz)
+subroutine s_union_d(n, dx, m, dy, k, dz)
+subroutine s_union_z(n, zx, m, zy, k, zz)
 ```
 
 **Purpose:**
@@ -262,12 +262,12 @@ Find the union of two vectors (all unique elements from both).
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `a` |
-| `a` | `integer`/`real(dp)`/`complex(dp)` | `in` | First input vector |
-| `m` | `integer` | `in` | Size of vector `b` |
-| `b` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second input vector |
-| `c` | `integer`/`real(dp)`/`complex(dp)` | `out` | Union elements (sorted) |
+| `n` | `integer` | `in` | Size of first vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First input vector |
+| `m` | `integer` | `in` | Size of second vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second input vector |
 | `k` | `integer` | `out` | Number of elements in union |
+| `iz`/`dz`/`zz` | `integer`/`real(dp)`/`complex(dp)` | `out` | Union elements (unique, size n+m) |
 
 ### Statistics
 
@@ -435,240 +435,228 @@ Calculate the L∞ norm (maximum norm) of a vector: `||v||_∞ = max(|v[i]|)`.
 ### Mathematical Operations
 
 ```fortran
-subroutine s_pow_i(n, v, p, w)
-subroutine s_pow_d(n, v, p, w)
-subroutine s_pow_z(n, v, p, w)
+subroutine s_pow_i(n, ix, power)
+subroutine s_pow_d(n, dx, power)
+subroutine s_pow_z(n, zx, power)
 ```
 
 **Purpose:**
 
-Raise each element of a vector to a power: `w[i] = v[i]^p`.
+Raise each element of a vector to a power (in-place): `x[i] = x[i]^power`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `p` | `real(dp)` | `in` | Exponent |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with powered elements |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains powered elements |
+| `power` | `real(dp)` | `in` | Exponent |
 
 ---
 
 ```fortran
-subroutine s_square_i(n, v, w)
-subroutine s_square_d(n, v, w)
-subroutine s_square_z(n, v, w)
+subroutine s_square_i(n, ix)
+subroutine s_square_d(n, dx)
+subroutine s_square_z(n, zx)
 ```
 
 **Purpose:**
 
-Square each element of a vector: `w[i] = v[i]²`.
+Square each element of a vector (in-place): `x[i] = x[i]²`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with squared elements |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains squared elements |
 
 ---
 
 ```fortran
-subroutine s_sqrt_d(n, v, w)
-subroutine s_sqrt_z(n, v, w)
+subroutine s_sqrt_d(n, dx)
+subroutine s_sqrt_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the square root of each element: `w[i] = √v[i]`.
+Calculate the square root of each element (in-place): `x[i] = √x[i]`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with square roots |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains square roots |
 
 ---
 
 ```fortran
-subroutine s_exp_d(n, v, w)
-subroutine s_exp_z(n, v, w)
+subroutine s_exp_d(n, dx)
+subroutine s_exp_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the exponential of each element: `w[i] = exp(v[i])`.
+Calculate the exponential of each element (in-place): `x[i] = exp(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with exponentials |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains exponentials |
 
 ---
 
 ```fortran
-subroutine s_log_d(n, v, w)
-subroutine s_log_z(n, v, w)
+subroutine s_log_d(n, dx)
+subroutine s_log_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the natural logarithm of each element: `w[i] = ln(v[i])`.
+Calculate the natural logarithm of each element (in-place): `x[i] = ln(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with natural logarithms |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains natural logarithms |
 
 ---
 
 ```fortran
-subroutine s_log10_d(n, v, w)
-subroutine s_log10_z(n, v, w)
+subroutine s_log10_d(n, dx)
+subroutine s_log10_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the base-10 logarithm of each element: `w[i] = log₁₀(v[i])`.
+Calculate the base-10 logarithm of each element (in-place): `x[i] = log₁₀(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with base-10 logarithms |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains base-10 logarithms |
 
 ### Trigonometric Functions
 
 ```fortran
-subroutine s_sin_d(n, v, w)
-subroutine s_sin_z(n, v, w)
+subroutine s_sin_d(n, dx)
+subroutine s_sin_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the sine of each element: `w[i] = sin(v[i])`.
+Calculate the sine of each element (in-place): `x[i] = sin(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector (radians) |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with sine values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector (radians); on exit, contains sine values |
 
 ---
 
 ```fortran
-subroutine s_cos_d(n, v, w)
-subroutine s_cos_z(n, v, w)
+subroutine s_cos_d(n, dx)
+subroutine s_cos_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the cosine of each element: `w[i] = cos(v[i])`.
+Calculate the cosine of each element (in-place): `x[i] = cos(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector (radians) |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with cosine values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector (radians); on exit, contains cosine values |
 
 ---
 
 ```fortran
-subroutine s_tan_d(n, v, w)
-subroutine s_tan_z(n, v, w)
+subroutine s_tan_d(n, dx)
+subroutine s_tan_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the tangent of each element: `w[i] = tan(v[i])`.
+Calculate the tangent of each element (in-place): `x[i] = tan(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector (radians) |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with tangent values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector (radians); on exit, contains tangent values |
 
 ---
 
 ```fortran
-subroutine s_sinh_d(n, v, w)
-subroutine s_sinh_z(n, v, w)
+subroutine s_sinh_d(n, dx)
+subroutine s_sinh_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the hyperbolic sine of each element: `w[i] = sinh(v[i])`.
+Calculate the hyperbolic sine of each element (in-place): `x[i] = sinh(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with hyperbolic sine values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains hyperbolic sine values |
 
 ---
 
 ```fortran
-subroutine s_cosh_d(n, v, w)
-subroutine s_cosh_z(n, v, w)
+subroutine s_cosh_d(n, dx)
+subroutine s_cosh_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the hyperbolic cosine of each element: `w[i] = cosh(v[i])`.
+Calculate the hyperbolic cosine of each element (in-place): `x[i] = cosh(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with hyperbolic cosine values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains hyperbolic cosine values |
 
 ---
 
 ```fortran
-subroutine s_tanh_d(n, v, w)
-subroutine s_tanh_z(n, v, w)
+subroutine s_tanh_d(n, dx)
+subroutine s_tanh_z(n, zx)
 ```
 
 **Purpose:**
 
-Calculate the hyperbolic tangent of each element: `w[i] = tanh(v[i])`.
+Calculate the hyperbolic tangent of each element (in-place): `x[i] = tanh(x[i])`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vectors |
-| `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with hyperbolic tangent values |
+| `n` | `integer` | `in` | Size of vector |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains hyperbolic tangent values |
 
 ### Smoothing Operations
 
 ```fortran
-subroutine s_moving_average_i(n, v, w, window)
-subroutine s_moving_average_d(n, v, w, window)
-subroutine s_moving_average_z(n, v, w, window)
+subroutine s_moving_average_i(n, ix, window_size, iy)
+subroutine s_moving_average_d(n, dx, window_size, dy)
+subroutine s_moving_average_z(n, zx, window_size, zy)
 ```
 
 **Purpose:**
@@ -679,17 +667,17 @@ Apply a simple moving average filter with uniform weights.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
-| `window` | `integer` | `in` | Window size for averaging (must be odd) |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `window_size` | `integer` | `in` | Window size for averaging (must be odd) |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
 
 ---
 
 ```fortran
-subroutine s_smooth_box_i(n, v, w, window)
-subroutine s_smooth_box_d(n, v, w, window)
-subroutine s_smooth_box_z(n, v, w, window)
+subroutine s_smooth_box_i(n, ix, window_size, iy)
+subroutine s_smooth_box_d(n, dx, window_size, dy)
+subroutine s_smooth_box_z(n, zx, window_size, zy)
 ```
 
 **Purpose:**
@@ -700,17 +688,17 @@ Apply a box (rectangular) smoothing filter. Similar to moving average but with b
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
-| `window` | `integer` | `in` | Half-width of the box filter |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `window_size` | `integer` | `in` | Half-width of the box filter |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
 
 ---
 
 ```fortran
-subroutine s_smooth_gaussian_i(n, v, w, sigma)
-subroutine s_smooth_gaussian_d(n, v, w, sigma)
-subroutine s_smooth_gaussian_z(n, v, w, sigma)
+subroutine s_smooth_gaussian_i(n, ix, sigma, iy)
+subroutine s_smooth_gaussian_d(n, dx, sigma, dy)
+subroutine s_smooth_gaussian_z(n, zx, sigma, zy)
 ```
 
 **Purpose:**
@@ -721,10 +709,10 @@ Apply a Gaussian smoothing filter with specified standard deviation.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `sigma` | `real(dp)` | `in` | Standard deviation of the Gaussian kernel |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
 
 ### Manipulation Operations
 
@@ -771,33 +759,31 @@ Clip (limit) the values in a vector to a specified range.
 ---
 
 ```fortran
-subroutine s_slice_i(n, v, start, stride, end, w, m)
-subroutine s_slice_d(n, v, start, stride, end, w, m)
-subroutine s_slice_z(n, v, start, stride, end, w, m)
+subroutine s_slice_i(n, ix, start_idx, count, iy)
+subroutine s_slice_d(n, dx, start_idx, count, dy)
+subroutine s_slice_z(n, zx, start_idx, count, zy)
 ```
 
 **Purpose:**
 
-Extract a slice from a vector with specified start, stride, and end indices.
+Extract a contiguous slice from a vector starting at a given index.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `start` | `integer` | `in` | Starting index (1-based) |
-| `stride` | `integer` | `in` | Step size between elements |
-| `end` | `integer` | `in` | Ending index |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Sliced output vector |
-| `m` | `integer` | `out` | Size of output vector |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `start_idx` | `integer` | `in` | Starting index (1-based) |
+| `count` | `integer` | `in` | Number of elements to extract |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Sliced output vector |
 
 ---
 
 ```fortran
-subroutine s_take_i(n, v, indices, m, w)
-subroutine s_take_d(n, v, indices, m, w)
-subroutine s_take_z(n, v, indices, m, w)
+subroutine s_take_i(n, ix, m, idx, iy)
+subroutine s_take_d(n, dx, m, idx, dy)
+subroutine s_take_z(n, zx, m, idx, zy)
 ```
 
 **Purpose:**
@@ -808,18 +794,18 @@ Extract elements from a vector at specified indices.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `indices` | `integer` | `in` | Array of indices to extract (1-based) |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `m` | `integer` | `in` | Number of indices |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with selected elements |
+| `idx` | `integer` | `in` | Array of indices to extract (1-based) |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with selected elements |
 
 ---
 
 ```fortran
-subroutine s_drop_i(n, v, indices, m, w, k)
-subroutine s_drop_d(n, v, indices, m, w, k)
-subroutine s_drop_z(n, v, indices, m, w, k)
+subroutine s_drop_i(n, ix, m, idx, iy)
+subroutine s_drop_d(n, dx, m, idx, dy)
+subroutine s_drop_z(n, zx, m, idx, zy)
 ```
 
 **Purpose:**
@@ -830,19 +816,18 @@ Remove elements from a vector at specified indices.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `indices` | `integer` | `in` | Array of indices to drop (1-based) |
+| `n` | `integer` | `in` | Size of input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `m` | `integer` | `in` | Number of indices to drop |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with elements removed |
-| `k` | `integer` | `out` | Size of output vector |
+| `idx` | `integer` | `in` | Array of indices to drop (1-based) |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output vector with elements removed |
 
 ---
 
 ```fortran
-subroutine s_shuffle_i(n, v)
-subroutine s_shuffle_d(n, v)
-subroutine s_shuffle_z(n, v)
+subroutine s_shuffle_i(n, ix, seed)
+subroutine s_shuffle_d(n, dx, seed)
+subroutine s_shuffle_z(n, zx, seed)
 ```
 
 **Purpose:**
@@ -853,15 +838,16 @@ Randomly shuffle the elements of a vector in place using Fisher-Yates algorithm.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector to shuffle (modified in place) |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector to shuffle (modified in place) |
+| `seed` | `integer` | `in` | Random seed for reproducibility |
 
 ---
 
 ```fortran
-subroutine s_reverse_i(n, v, w)
-subroutine s_reverse_d(n, v, w)
-subroutine s_reverse_z(n, v, w)
+subroutine s_reverse_i(n, ix, iy)
+subroutine s_reverse_d(n, dx, dy)
+subroutine s_reverse_z(n, zx, zy)
 ```
 
 **Purpose:**
@@ -873,20 +859,20 @@ Reverse the order of elements in a vector.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Reversed output vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Reversed output vector |
 
 ---
 
 ```fortran
-subroutine s_concat_i(n, a, m, b, c)
-subroutine s_concat_d(n, a, m, b, c)
-subroutine s_concat_z(n, a, m, b, c)
+subroutine s_concat_i(n, m, ix, iy, iz)
+subroutine s_concat_d(n, m, dx, dy, dz)
+subroutine s_concat_z(n, m, zx, zy, zz)
 ```
 
 **Purpose:**
 
-Concatenate two vectors: `c = [a, b]`.
+Concatenate two vectors: `z = [x, y]`.
 
 **Arguments:**
 
