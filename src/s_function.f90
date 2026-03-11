@@ -743,6 +743,8 @@
      use constants, only : dp
      use constants, only : one, two
 
+     implicit none
+
 !! external arguments
      ! imaginary time point, it is alreay scaled to [-1,1].
      real(dp), intent(in) :: tau
