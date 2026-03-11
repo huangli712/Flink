@@ -21,7 +21,6 @@ subroutines
 ### Mesh Generation
 
 ```fortran
-subroutine s_linspace_i(xmin, xmax, n, x)
 subroutine s_linspace_d(xmin, xmax, n, x)
 subroutine s_linspace_z(xmin, xmax, n, x)
 ```
@@ -34,10 +33,10 @@ Create a linearly spaced vector with `n` points in the interval [`xmin`, `xmax`]
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `xmin` | `integer`/`real(dp)`/`complex(dp)` | `in` | Starting value of the interval |
-| `xmax` | `integer`/`real(dp)`/`complex(dp)` | `in` | Ending value of the interval |
+| `xmin` | `real(dp)`/`complex(dp)` | `in` | Starting value of the interval |
+| `xmax` | `real(dp)`/`complex(dp)` | `in` | Ending value of the interval |
 | `n` | `integer` | `in` | Number of points |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output linearly spaced vector |
+| `x` | `real(dp)`/`complex(dp)` | `out` | Output linearly spaced vector |
 
 ### Cumulative Operations
 
@@ -82,22 +81,21 @@ Calculate the cumulative product of a vector.
 ### Mixing and Add Operations
 
 ```fortran
-subroutine s_mix_i(n, x, y, alpha)
 subroutine s_mix_d(n, x, y, alpha)
 subroutine s_mix_z(n, x, zy, alpha)
 ```
 
 **Purpose:**
 
-Perform linear mixing of two vectors: `x = (1 - alpha) * x + alpha * y`.
+Perform linear mixing of two vectors: `y = (1 - alpha) * x + alpha * y`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `inout` | First vector; on exit, contains the mixed result |
-| `y`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector |
+| `x` | `real(dp)`/`complex(dp)` | `in` | First vector |
+| `y`/`zy` | `real(dp)`/`complex(dp)` | `inout` | Second vector; on exit, contains the mixed result |
 | `alpha` | `real(dp)` | `in` | Mixing parameter (0 ≤ α ≤ 1) |
 
 ---
