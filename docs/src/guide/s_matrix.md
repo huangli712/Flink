@@ -139,7 +139,7 @@ Build a diagonal matrix from a vector, placing the vector elements on the main d
 | `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector of diagonal elements |
 | `A` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output diagonal matrix |
 
-## Matrix Query
+### Matrix Query
 
 ```fortran
 subroutine s_trace_d(n, A, tr)
@@ -238,7 +238,7 @@ Calculate the sparsity ratio (ratio of zero elements) of a matrix.
 | `A` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input matrix |
 | `ratio` | `real(dp)` | `out` | Output sparsity ratio (0.0 to 1.0) |
 
-## Matrix Manipulation
+### Matrix Manipulation
 
 ```fortran
 subroutine s_inv_d(ndim, dmat)
@@ -277,7 +277,7 @@ Compute the Moore-Penrose pseudo-inverse of a general matrix using SVD decomposi
 | `pinv` | `real(dp)`/`complex(dp)` | `out` | Output pseudo-inverse matrix (n-by-m) |
 | `tol` | `real(dp)` | `in`, optional | Tolerance for singular value cutoff. Default: `1.0e-12` |
 
-## Eigenvalue Problems
+### Eigenvalue Problems
 
 ```fortran
 subroutine s_eig_dg(ldim, ndim, amat, eval, evec)
@@ -381,7 +381,7 @@ Solve the generalized eigenvalue problem `A*x = λ*B*x`, where A and B are symme
 | `eval` | `real(dp)` | `out` | Output eigenvalues in ascending order |
 | `evec` | `real(dp)`/`complex(dp)` | `out` | Output orthonormal/unitary eigenvectors |
 
-## Linear Equation Solver
+### Linear Equation Solver
 
 ```fortran
 subroutine s_solve_dg(n, nrhs, A, B)
@@ -403,7 +403,7 @@ Solve a linear system `AX = B`. On exit, `B` is overwritten by the solution matr
 | `A` | `real(dp)`/`complex(dp)` | `inout` | Coefficient matrix A; on exit, overwritten by L and U factors |
 | `B` | `real(dp)`/`complex(dp)` | `inout` | Right-hand side matrix B; on exit, overwritten by solution X |
 
-## Matrix Decomposition
+### Matrix Decomposition
 
 ```fortran
 subroutine s_svd_dg(m, n, min_mn, amat, umat, svec, vmat)
@@ -509,7 +509,7 @@ Perform Schur decomposition for a general matrix `A`, where `A = Q * T * Q^T` (o
 | `T` | `real(dp)`/`complex(dp)` | `out` | Schur form T (block/upper triangular) |
 | `Q` | `real(dp)`/`complex(dp)` | `out` | Orthogonal/unitary matrix Q |
 
-## Matrix Property Checking
+### Matrix Property Checking
 
 ```fortran
 subroutine s_is_symmetric_d(n, A, is_symmetric, tol)
@@ -782,7 +782,7 @@ Check if a matrix is normal (`A^T * A = A * A^T` or `A^H * A = A * A^H`).
 | `is_normal` | `logical` | `out` | `.true.` if matrix is normal, `.false.` otherwise |
 | `tol` | `real(dp)` | `in`, optional | Tolerance for floating point comparison. Default: `1.0e-8` |
 
-## Matrix Extraction and Concatenation
+### Matrix Extraction and Concatenation
 
 ```fortran
 subroutine s_extract_submatrix_d(m_src, n_src, A_src, i_start, j_start, m_sub, n_sub, A_sub)
@@ -857,7 +857,7 @@ Concatenate two matrices vertically: `C = [A; B]`. Matrices A and B must have th
 | `C` | `real(dp)`/`complex(dp)` | `out` | Concatenated matrix `[A; B]` |
 
 
-## Special Matrix Construction
+### Special Matrix Construction
 
 ```fortran
 subroutine s_upper_triangular_d(n, A)
@@ -981,7 +981,7 @@ Build a Wilkinson's W+ matrix. Main diagonal: `W(i,i) = n/2 + 1 - i`, super/sub-
 | `n` | `integer` | `in` | Size of matrix (must be square) |
 | `A` | `real(dp)` | `out` | Output Wilkinson's W+ matrix |
 
-## Random Matrix Construction
+### Random Matrix Construction
 
 ```fortran
 subroutine s_sparse_random_d(n, sparsity, A)
