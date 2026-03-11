@@ -70,6 +70,11 @@
 
 !! [body
 
+     ! safety check: free existing list if already associated
+     if ( associated(self) ) then
+         call list_free(self)
+     endif
+
      ! allocate memory for linked list
      allocate(self)
      nullify(self%next)
@@ -108,9 +113,11 @@
 
 !! [body
 
+     ! early return if not associated
+     if ( .not. associated(self) ) return
+
      ! go through the whole linked list
      curr => self
-     !
      do while ( associated(curr) )
          ! get next node
          next => curr%next
@@ -118,16 +125,17 @@
          ! release memory for the internal data
          if ( associated(curr%data) ) then
              deallocate(curr%data)
-             nullify(curr%data)
          endif ! back if ( associated(curr%data) ) block
          !
          ! release memory for the node itself
          deallocate(curr)
-         nullify(curr)
          !
          ! point to next node
          curr => next
      enddo ! over do while loop
+
+     ! nullify the external pointer to prevent dangling pointer
+     nullify(self)
 
 !! body]
 
@@ -264,7 +272,7 @@
 !! count the number of nodes in the list [self]. in fact, this function
 !! can be used to return the number of nodes after a given node.
 !!
-  pure function list_count(self) result(counter)
+  function list_count(self) result(counter)
      implicit none
 
 !! external arguments
