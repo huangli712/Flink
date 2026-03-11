@@ -41,9 +41,9 @@ Create a linearly spaced vector with `n` points in the interval [`xmin`, `xmax`]
 ### Cumulative Operations
 
 ```fortran
-subroutine s_cumsum_i(n, v, vsum)
-subroutine s_cumsum_d(n, v, vsum)
-subroutine s_cumsum_z(n, v, vsum)
+subroutine s_cumsum_i(n, iv, vsum)
+subroutine s_cumsum_d(n, dv, vsum)
+subroutine s_cumsum_z(n, zv, vsum)
 ```
 
 **Purpose:**
@@ -54,16 +54,16 @@ Calculate the cumulative sum of a vector.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vsum` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cumulative sum vector |
 
 ---
 
 ```fortran
-subroutine s_cumprod_i(n, v, vprod)
-subroutine s_cumprod_d(n, v, vprod)
-subroutine s_cumprod_z(n, v, vprod)
+subroutine s_cumprod_i(n, iv, vprod)
+subroutine s_cumprod_d(n, dv, vprod)
+subroutine s_cumprod_z(n, zv, vprod)
 ```
 
 **Purpose:**
@@ -74,15 +74,15 @@ Calculate the cumulative product of a vector.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vprod` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cumulative product vector |
 
 ### Mixing and Add Operations
 
 ```fortran
-subroutine s_mix_d(n, x, y, alpha)
-subroutine s_mix_z(n, x, zy, alpha)
+subroutine s_mix_d(n, dx, dy, alpha)
+subroutine s_mix_z(n, zx, zy, alpha)
 ```
 
 **Purpose:**
@@ -94,16 +94,16 @@ Perform linear mixing of two vectors: `y = (1 - alpha) * x + alpha * y`.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `x` | `real(dp)`/`complex(dp)` | `in` | First vector |
-| `y`/`zy` | `real(dp)`/`complex(dp)` | `inout` | Second vector; on exit, contains the mixed result |
+| `dx`/`zx` | `real(dp)`/`complex(dp)` | `in` | First vector |
+| `dy`/`zy` | `real(dp)`/`complex(dp)` | `inout` | Second vector; on exit, contains the mixed result |
 | `alpha` | `real(dp)` | `in` | Mixing parameter (0 ≤ α ≤ 1) |
 
 ---
 
 ```fortran
-subroutine s_vecadd_i(n, x, y, alpha)
-subroutine s_vecadd_d(n, x, y, alpha)
-subroutine s_vecadd_z(n, x, y, alpha)
+subroutine s_vecadd_i(n, ix, iy, alpha)
+subroutine s_vecadd_d(n, dx, dy, alpha)
+subroutine s_vecadd_z(n, zx, zy, alpha)
 ```
 
 **Purpose:**
@@ -114,31 +114,31 @@ Add diagonal elements of a matrix to a vector: `x = x + alpha * diag(y)`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Dimension of vector `x` and matrix `y` (n-by-n) |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains `x + alpha * diag(y)` |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | n-by-n matrix |
+| `n` | `integer` | `in` | Dimension of vector and matrix (n-by-n) |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains `x + alpha * diag(y)` |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | n-by-n matrix |
 | `alpha` | `real(dp)` | `in` | Prefactor for the diagonal elements |
 
 ### Vector Products
 
 ```fortran
-subroutine s_dot_i(n, x, y, d)
-subroutine s_dot_d(n, x, y, d)
-subroutine s_dot_z(n, x, y, d)
+subroutine s_dot_i(n, ix, iy, val)
+subroutine s_dot_d(n, dx, dy, val)
+subroutine s_dot_z(n, zx, zy, val)
 ```
 
 **Purpose:**
 
-Calculate the dot product (inner product) of two vectors: `d = x · y`.
+Calculate the dot product (inner product) of two vectors: `val = x · y`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector |
-| `d` | `integer`/`real(dp)`/`complex(dp)` | `out` | Dot product result |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector |
+| `val` | `integer`/`real(dp)`/`complex(dp)` | `out` | Dot product result |
 
 ---
 
@@ -165,9 +165,9 @@ Calculate the outer product of two vectors: `A = x ⊗ y` (A[i,j] = x[i] * y[j])
 ---
 
 ```fortran
-subroutine s_cross_i(x, y, z)
-subroutine s_cross_d(x, y, z)
-subroutine s_cross_z(x, y, z)
+subroutine s_cross_i(ix, iy, iz)
+subroutine s_cross_d(dx, dy, dz)
+subroutine s_cross_z(zx, zy, zz)
 ```
 
 **Purpose:**
@@ -178,29 +178,29 @@ Calculate the cross product of two 3D vectors: `z = x × y`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `in` | First 3D vector |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second 3D vector |
-| `z` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cross product result (3D vector) |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First 3D vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second 3D vector |
+| `iz`/`dz`/`zz` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cross product result (3D vector) |
 
 ### Set Operations
 
 ```fortran
-subroutine s_diff_i(n, v, d)
-subroutine s_diff_d(n, v, d)
-subroutine s_diff_z(n, v, d)
+subroutine s_diff_i(n, iv, diff)
+subroutine s_diff_d(n, dv, diff)
+subroutine s_diff_z(n, zv, diff)
 ```
 
 **Purpose:**
 
-Calculate the differences between consecutive elements: `d[i] = v[i+1] - v[i]`.
+Calculate the differences between consecutive elements: `diff[i] = v[i+1] - v[i]`.
 
 **Arguments:**
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of input vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `d` | `integer`/`real(dp)`/`complex(dp)` | `out` | Difference vector (size n-1) |
+| `n` | `integer` | `in` | Size of input vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `diff` | `integer`/`real(dp)`/`complex(dp)` | `out` | Difference vector (size n-1) |
 
 ---
 
@@ -272,9 +272,9 @@ Find the union of two vectors (all unique elements from both).
 ### Statistics
 
 ```fortran
-subroutine s_stats_i(n, v, mean, stddev)
-subroutine s_stats_d(n, v, mean, stddev)
-subroutine s_stats_z(n, v, mean, stddev)
+subroutine s_stats_i(n, iv, mean, stddev)
+subroutine s_stats_d(n, dv, mean, stddev)
+subroutine s_stats_z(n, zv, mean, stddev)
 ```
 
 **Purpose:**
@@ -285,17 +285,17 @@ Calculate the mean and standard deviation of a vector.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `mean` | `real(dp)`/`complex(dp)` | `out` | Mean value |
 | `stddev` | `real(dp)` | `out` | Standard deviation |
 
 ---
 
 ```fortran
-subroutine s_moment_i(n, v, k, moment)
-subroutine s_moment_d(n, v, k, moment)
-subroutine s_moment_z(n, v, k, moment)
+subroutine s_moment_i(n, iv, order, moment)
+subroutine s_moment_d(n, dv, order, moment)
+subroutine s_moment_z(n, zv, order, moment)
 ```
 
 **Purpose:**
@@ -306,17 +306,17 @@ Calculate the k-th central moment of a vector: `E[(X - μ)^k]`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `k` | `integer` | `in` | Order of the moment |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `order` | `integer` | `in` | Order of the moment |
 | `moment` | `real(dp)` | `out` | k-th central moment |
 
 ---
 
 ```fortran
-subroutine s_skewness_i(n, v, skew)
-subroutine s_skewness_d(n, v, skew)
-subroutine s_skewness_z(n, v, skew)
+subroutine s_skewness_i(n, iv, skewness)
+subroutine s_skewness_d(n, dv, skewness)
+subroutine s_skewness_z(n, zv, skewness)
 ```
 
 **Purpose:**
@@ -327,16 +327,16 @@ Calculate the skewness (asymmetry measure) of a distribution. Positive skew indi
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `skew` | `real(dp)` | `out` | Skewness value |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `skewness` | `real(dp)` | `out` | Skewness value |
 
 ---
 
 ```fortran
-subroutine s_kurtosis_i(n, v, kurt)
-subroutine s_kurtosis_d(n, v, kurt)
-subroutine s_kurtosis_z(n, v, kurt)
+subroutine s_kurtosis_i(n, iv, kurtosis)
+subroutine s_kurtosis_d(n, dv, kurtosis)
+subroutine s_kurtosis_z(n, zv, kurtosis)
 ```
 
 **Purpose:**
@@ -347,16 +347,16 @@ Calculate the kurtosis (tailedness measure) of a distribution. Normal distributi
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
-| `kurt` | `real(dp)` | `out` | Kurtosis value |
+| `n` | `integer` | `in` | Size of vector |
+| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `kurtosis` | `real(dp)` | `out` | Kurtosis value |
 
 ### Distance and Norms
 
 ```fortran
-subroutine s_distance_i(n, x, y, dist)
-subroutine s_distance_d(n, x, y, dist)
-subroutine s_distance_z(n, x, y, dist)
+subroutine s_distance_i(n, ix, iy, dist)
+subroutine s_distance_d(n, dx, dy, dist)
+subroutine s_distance_z(n, zx, zy, dist)
 ```
 
 **Purpose:**
@@ -368,16 +368,16 @@ Calculate the Euclidean distance between two vectors: `dist = ||x - y||_2`.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | First vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second vector |
 | `dist` | `real(dp)` | `out` | Euclidean distance |
 
 ---
 
 ```fortran
-subroutine s_norm1_i(n, v, norm)
-subroutine s_norm1_d(n, v, norm)
-subroutine s_norm1_z(n, v, norm)
+subroutine s_norm1_i(n, ix, norm)
+subroutine s_norm1_d(n, dx, norm)
+subroutine s_norm1_z(n, zx, norm)
 ```
 
 **Purpose:**
@@ -388,16 +388,16 @@ Calculate the L1 norm (Manhattan norm) of a vector: `||v||_1 = Σ|v[i]|`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `norm` | `real(dp)` | `out` | L1 norm value |
 
 ---
 
 ```fortran
-subroutine s_norm2_i(n, v, norm)
-subroutine s_norm2_d(n, v, norm)
-subroutine s_norm2_z(n, v, norm)
+subroutine s_norm2_i(n, ix, norm)
+subroutine s_norm2_d(n, dx, norm)
+subroutine s_norm2_z(n, zx, norm)
 ```
 
 **Purpose:**
@@ -408,16 +408,16 @@ Calculate the L2 norm (Euclidean norm) of a vector: `||v||_2 = √(Σ|v[i]|²)`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `norm` | `real(dp)` | `out` | L2 norm value |
 
 ---
 
 ```fortran
-subroutine s_norminf_i(n, v, norm)
-subroutine s_norminf_d(n, v, norm)
-subroutine s_norminf_z(n, v, norm)
+subroutine s_norminf_i(n, ix, norm)
+subroutine s_norminf_d(n, dx, norm)
+subroutine s_norminf_z(n, zx, norm)
 ```
 
 **Purpose:**
@@ -428,8 +428,8 @@ Calculate the L∞ norm (maximum norm) of a vector: `||v||_∞ = max(|v[i]|)`.
 
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
-| `n` | `integer` | `in` | Size of vector `v` |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `n` | `integer` | `in` | Size of vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `norm` | `real(dp)` | `out` | L∞ norm value |
 
 ### Mathematical Operations
@@ -717,9 +717,9 @@ Apply a Gaussian smoothing filter with specified standard deviation.
 ### Manipulation Operations
 
 ```fortran
-subroutine s_swap_i(n, x, y)
-subroutine s_swap_d(n, x, y)
-subroutine s_swap_z(n, x, y)
+subroutine s_swap_i(n, ix, iy)
+subroutine s_swap_d(n, dx, dy)
+subroutine s_swap_z(n, zx, zy)
 ```
 
 **Purpose:**
@@ -731,15 +731,15 @@ Exchange the contents of two vectors.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `x` | `integer`/`real(dp)`/`complex(dp)` | `inout` | First vector |
-| `y` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Second vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `inout` | First vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Second vector |
 
 ---
 
 ```fortran
-subroutine s_clip_i(n, v, vmin, vmax, w)
-subroutine s_clip_d(n, v, vmin, vmax, w)
-subroutine s_clip_z(n, v, vmin, vmax, w)
+subroutine s_clip_i(n, ix, vmin, vmax, iy)
+subroutine s_clip_d(n, dx, vmin, vmax, dy)
+subroutine s_clip_z(n, zx, vmin, vmax, zy)
 ```
 
 **Purpose:**
@@ -751,10 +751,10 @@ Clip (limit) the values in a vector to a specified range.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vectors |
-| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `ix`/`dx`/`zx` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vmin` | `integer`/`real(dp)`/`complex(dp)` | `in` | Minimum value |
 | `vmax` | `integer`/`real(dp)`/`complex(dp)` | `in` | Maximum value |
-| `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Clipped output vector |
+| `iy`/`dy`/`zy` | `integer`/`real(dp)`/`complex(dp)` | `out` | Clipped output vector |
 
 ---
 
