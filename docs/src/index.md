@@ -6,7 +6,7 @@
 
 !!! info
 
-    Thank you for using Flink. This documentation will help you to be familiar with and explore the Flink toolkit. It is just compatible with Flink v1.2.3-devel.250923.
+    Thank you for using Flink. This documentation will help you to be familiar with and explore the Flink toolkit. It is just compatible with Flink v2.0.0-devel.260311.
 
 !!! warning
 
