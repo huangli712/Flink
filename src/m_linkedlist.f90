@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 07/10/2014 by li huang (created)
-!!!           07/29/2021 by li huang (last modified)
+!!!           03/11/2026 by li huang (last modified)
 !!! purpose : this purpose of this module is to implement a typical and
 !!!           useful data structure --- linked list. it is a generic
 !!!           linked list, capable of storing arbitrary data.
@@ -63,7 +63,7 @@
 
 !! external arguments
      ! pointer to new linked list
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(inout) :: self
 
      ! the data for the first element
      integer, intent(in), optional :: data(:)
@@ -97,7 +97,7 @@
 
 !! external arguments
      ! pointer to the list to be destroyed
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(inout) :: self
 
 !! local variables
      ! pointer to the current node
@@ -145,7 +145,7 @@
 !! external arguments
      ! element in the linked list after which
      ! the new element should be inserted.
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(inout) :: self
 
      ! the data for the new element
      integer, intent(in), optional :: data(:)
@@ -186,7 +186,7 @@
 
 !! external arguments
      ! element in the linked list
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(inout) :: self
 
      ! the data to be stored
      integer, intent(in) :: data(:)
@@ -220,7 +220,7 @@
 
 !! external arguments
      ! node in the linked list
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(in) :: self
 
      ! function value, the node's data
      integer, pointer :: data(:)
@@ -244,7 +244,7 @@
 
 !! external arguments
      ! pointer to the list
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(in) :: self
 
      ! function value, pointer to the next node
      type (list_t), pointer :: next
@@ -264,12 +264,12 @@
 !! count the number of nodes in the list [self]. in fact, this function
 !! can be used to return the number of nodes after a given node.
 !!
-  function list_count(self) result(counter)
+  pure function list_count(self) result(counter)
      implicit none
 
 !! external arguments
      ! pointer to the list
-     type (list_t), pointer :: self
+     type (list_t), pointer, intent(in) :: self
 
      ! function value
      integer :: counter
