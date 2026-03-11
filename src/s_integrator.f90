@@ -110,7 +110,7 @@
      ! step for integration
      real(dp) :: h
 
-     ! sum for trapezoid rule
+     ! sum for simpson rule
      real(dp) :: oddSum
      real(dp) :: evenSum
 
