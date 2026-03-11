@@ -41,9 +41,9 @@ Create a linearly spaced vector with `n` points in the interval [`xmin`, `xmax`]
 ### Cumulative Operations
 
 ```fortran
-subroutine s_cumsum_i(n, iv, vsum)
-subroutine s_cumsum_d(n, dv, vsum)
-subroutine s_cumsum_z(n, zv, vsum)
+subroutine s_cumsum_i(n, v, vsum)
+subroutine s_cumsum_d(n, v, vsum)
+subroutine s_cumsum_z(n, v, vsum)
 ```
 
 **Purpose:**
@@ -55,15 +55,15 @@ Calculate the cumulative sum of a vector.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vector |
-| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vsum` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cumulative sum vector |
 
 ---
 
 ```fortran
-subroutine s_cumprod_i(n, iv, vprod)
-subroutine s_cumprod_d(n, dv, vprod)
-subroutine s_cumprod_z(n, zv, vprod)
+subroutine s_cumprod_i(n, v, vprod)
+subroutine s_cumprod_d(n, v, vprod)
+subroutine s_cumprod_z(n, v, vprod)
 ```
 
 **Purpose:**
@@ -75,7 +75,7 @@ Calculate the cumulative product of a vector.
 | Argument | Type | Intent | Description |
 |----------|------|-------|-------------|
 | `n` | `integer` | `in` | Size of vector |
-| `iv`/`dv`/`zv` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
+| `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vprod` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cumulative product vector |
 
 ### Mixing and Add Operations
