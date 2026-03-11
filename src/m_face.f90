@@ -5,7 +5,7 @@
 !!! type    : module
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 12/31/2024 by li huang (created)
-!!!           01/16/2025 by li huang (last modified)
+!!!           03/11/2026 by li huang (last modified)
 !!! purpose : to support colorful outputs via ascii escape sequences.
 !!! status  : unstable
 !!! comment :
@@ -278,8 +278,8 @@
      character(len=len(string)) :: upper
 
      ! characters counter
-     integer :: n1
-     integer :: n2
+     integer(int32) :: n1
+     integer(int32) :: n2
 
 !! [body
 
