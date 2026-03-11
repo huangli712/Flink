@@ -6,7 +6,7 @@
 !!! type    : functions
 !!! author  : li huang (email:huangli@caep.cn)
 !!! history : 09/20/2014 by li huang (created)
-!!!           06/24/2024 by li huang (last modified)
+!!!           03/11/2026 by li huang (last modified)
 !!! purpose : the purpose of these functions is to implement the composite
 !!!           trapezoid or composite simpson integration algorithms.
 !!! status  : unstable
@@ -50,6 +50,15 @@
      real(dp) :: trapSum
 
 !! [body
+
+     ! validate input parameters
+     if ( n < 1 ) then
+         call s_print_error('s_int_trapezoid','n must be positive')
+     endif
+
+     if ( a > b ) then
+         call s_print_error('s_int_trapezoid','a must be less than or equal to b')
+     endif
 
      ! evaluate the step
      h = ( b - a ) / dble(n)
