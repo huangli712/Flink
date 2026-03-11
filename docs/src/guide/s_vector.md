@@ -39,8 +39,6 @@ Create a linearly spaced vector with `n` points in the interval [`xmin`, `xmax`]
 | `n` | `integer` | `in` | Number of points |
 | `x` | `integer`/`real(dp)`/`complex(dp)` | `out` | Output linearly spaced vector |
 
----
-
 ### Cumulative Operations
 
 ```fortran
@@ -80,8 +78,6 @@ Calculate the cumulative product of a vector.
 | `n` | `integer` | `in` | Size of vector `v` |
 | `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `vprod` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cumulative product vector |
-
----
 
 ### Mixing and Add Operations
 
@@ -124,8 +120,6 @@ Add diagonal elements of a matrix to a vector: `x = x + alpha * diag(y)`.
 | `x` | `integer`/`real(dp)`/`complex(dp)` | `inout` | Vector; on exit, contains `x + alpha * diag(y)` |
 | `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | n-by-n matrix |
 | `alpha` | `real(dp)` | `in` | Prefactor for the diagonal elements |
-
----
 
 ### Vector Products
 
@@ -189,8 +183,6 @@ Calculate the cross product of two 3D vectors: `z = x × y`.
 | `x` | `integer`/`real(dp)`/`complex(dp)` | `in` | First 3D vector |
 | `y` | `integer`/`real(dp)`/`complex(dp)` | `in` | Second 3D vector |
 | `z` | `integer`/`real(dp)`/`complex(dp)` | `out` | Cross product result (3D vector) |
-
----
 
 ### Set Operations
 
@@ -279,8 +271,6 @@ Find the union of two vectors (all unique elements from both).
 | `c` | `integer`/`real(dp)`/`complex(dp)` | `out` | Union elements (sorted) |
 | `k` | `integer` | `out` | Number of elements in union |
 
----
-
 ### Statistics
 
 ```fortran
@@ -363,8 +353,6 @@ Calculate the kurtosis (tailedness measure) of a distribution. Normal distributi
 | `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `kurt` | `real(dp)` | `out` | Kurtosis value |
 
----
-
 ### Distance and Norms
 
 ```fortran
@@ -445,8 +433,6 @@ Calculate the L∞ norm (maximum norm) of a vector: `||v||_∞ = max(|v[i]|)`.
 | `n` | `integer` | `in` | Size of vector `v` |
 | `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `norm` | `real(dp)` | `out` | L∞ norm value |
-
----
 
 ### Mathematical Operations
 
@@ -565,8 +551,6 @@ Calculate the base-10 logarithm of each element: `w[i] = log₁₀(v[i])`.
 | `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
 | `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with base-10 logarithms |
 
----
-
 ### Trigonometric Functions
 
 ```fortran
@@ -681,8 +665,6 @@ Calculate the hyperbolic tangent of each element: `w[i] = tanh(v[i])`.
 | `v` | `real(dp)`/`complex(dp)` | `in` | Input vector |
 | `w` | `real(dp)`/`complex(dp)` | `out` | Output vector with hyperbolic tangent values |
 
----
-
 ### Smoothing Operations
 
 ```fortran
@@ -745,8 +727,6 @@ Apply a Gaussian smoothing filter with specified standard deviation.
 | `v` | `integer`/`real(dp)`/`complex(dp)` | `in` | Input vector |
 | `w` | `integer`/`real(dp)`/`complex(dp)` | `out` | Smoothed output vector |
 | `sigma` | `real(dp)` | `in` | Standard deviation of the Gaussian kernel |
-
----
 
 ### Manipulation Operations
 
@@ -860,8 +840,6 @@ Remove elements from a vector at specified indices.
 | `k` | `integer` | `out` | Size of output vector |
 
 ---
-
-### Final Operations
 
 ```fortran
 subroutine s_shuffle_i(n, v)
